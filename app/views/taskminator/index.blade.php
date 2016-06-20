@@ -6,7 +6,7 @@
 
 @section('head-content')
 {{ $calculated_prog = $intProgress + $reqProgress}}
-{{ $total_prog = $calculated_prog + $optProgress }}
+{{ $total_prog = number_format($calculated_prog + $optProgress) }}
 <style>
     #progressbar {
         background-color: #f6f6f6;
@@ -160,7 +160,11 @@
                                     <div class="panel-body">
                                         <!-- <input name="searchWord" id="searchWord" type="text" class="form-control input-trans" placeholder="Search for workers" required> -->
                                         <div class="col-lg-12">
-                                            <button name="searchBtn" id="searchBtn" class="lato-text btn btn-default btn-trans" style="text-transform: none; border:1px solid #2980b9; width:100%; border-radius: 4px;" type="button">Click here to search for jobs</button>
+                                            @if($total_prog >= 50)
+                                                <button name="searchBtn" id="searchBtn" class="lato-text btn btn-default btn-trans" style="text-transform: none; border:1px solid #2980b9; width:100%; border-radius: 4px;" type="button">Click here to search for jobs</button>
+                                            @else
+                                                <button disabled="true" class="lato-text btn btn-default btn-trans" style="text-transform: none; border:1px solid #2980b9; width:100%; border-radius: 4px;" type="button">Please complete atleast 50% of profile</button>
+                                            @endif
                                         </div>
                                         <!-- <div class="btn-group" data-toggle="buttons" style="width:100%;">
                                             <input value="<?php if(@$searchWord != 0){ echo($searchWord); } ?>" type="text" name="searchWord" id="searchWord" class="form-control" placeholder="Enter keyword" />
@@ -180,7 +184,12 @@
                     <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
                         <div class="widget-content">
                             <div class="padded" style="color:#2980b9; font-size:18pt;">
-                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ number_format($total_prog) }}%
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $total_prog }}%
+                                @if($total_prog < 50)
+                                    <p style="color: #000000;">
+                                        <i style="color: red" class="fa fa-warning"></i> <b>You can start applying for jobs when you complete your profile above 50%. Click <a href="/editProfile">here</a> to edit your profile</b>
+                                    </p>
+                                @endif
                             </div>
                         </div>
                     </div>

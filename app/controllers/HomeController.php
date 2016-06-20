@@ -609,8 +609,8 @@ class HomeController extends BaseController {
                     return Redirect::to('/admin');
                     break;
                 case 'TASKMINATOR' :
-                    $bidCount = Task::join('task_has_bidders', 'task_has_bidders.task_id', '=', 'tasks.id'
-)                        ->where('task_has_bidders.taskminator_id', Auth::user()->id)
+                    $bidCount = Task::join('task_has_bidders', 'task_has_bidders.task_id', '=', 'tasks.id')
+                        ->where('task_has_bidders.taskminator_id', Auth::user()->id)
                         ->where('tasks.status', 'OPEN')
                         ->where('tasks.hiringType', 'BIDDING')->count();
 

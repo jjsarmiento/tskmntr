@@ -6,7 +6,7 @@
 
 @section('head-content')
 {{ $calculated_prog = $intProgress + $reqProgress}}
-{{ $total_prog = $calculated_prog + $optProgress }}
+{{ $total_prog = number_format($calculated_prog + $optProgress) }}
     <style>
         #progressbar {
             background-color: #f6f6f6;
@@ -146,7 +146,12 @@
                 <div class="widget-container weather">
                     <div class="widget-content">
                         <div class="padded text-center" style="min-height:30px; text-align:left; border-bottom:1px solid #e6e6e6; color:#2980b9; font-size:18pt;">
-                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ number_format($total_prog) }}% | {{ $freeDuration }}
+                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $total_prog }}% | {{ $freeDuration }}
+                            @if($total_prog < 50)
+                                <p style="color: #000000;">
+                                    <i style="color: red" class="fa fa-warning"></i> <b>You can start posting jobs when you complete your profile above 50%. Click <a href="/editProfile">here</a> to edit your profile</b>
+                                </p>
+                            @endif
                         </div>
                     </div>
                     <div class="widget-content">
