@@ -161,7 +161,13 @@
                                         <!-- <input name="searchWord" id="searchWord" type="text" class="form-control input-trans" placeholder="Search for workers" required> -->
                                         <div class="col-lg-12">
                                             @if($total_prog >= 50)
-                                                <button name="searchBtn" id="searchBtn" class="lato-text btn btn-default btn-trans" style="text-transform: none; border:1px solid #2980b9; width:100%; border-radius: 4px;" type="button">Click here to search for jobs</button>
+                                                <button name="searchBtn" id="searchBtn" class="lato-text btn btn-default btn-trans" style="text-transform: none; border:1px solid #2980b9; width:100%; border-radius: 4px;" type="button">
+                                                    @if (Session::has('err_search'))
+                                                        <i style="color: red" class="fa fa-warning"></i> {{ Session::get('err_search')  }}
+                                                    @else
+                                                        Click here to search for jobs
+                                                    @endif
+                                                </button>
                                             @else
                                                 <button disabled="true" class="lato-text btn btn-default btn-trans" style="text-transform: none; border:1px solid #2980b9; width:100%; border-radius: 4px;" type="button">Please complete atleast 50% of profile</button>
                                             @endif
@@ -478,13 +484,14 @@
                     searchCity  = '175301',
                     searchWord  = '0',
                     rateRange   = '0',
-                    rangeValue  = '0';
+                    rangeValue  = '0',
+                    totalProg =  {{ $total_prog  }};
 
                 if($('#searchWord').val() != ''){
                     searchWord = $('#searchWord').val();
                 }
 
-                location.href = '/tskmntr/doTaskSearch='+workingTime+'='+searchField+'='+searchCity+'='+searchWord+'='+rateRange+'='+rangeValue;
+                location.href = '/tskmntr/doTaskSearch='+workingTime+'='+searchField+'='+searchCity+'='+searchWord+'='+rateRange+'='+rangeValue+'='+totalProg;
             });
 
         

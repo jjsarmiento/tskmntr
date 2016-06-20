@@ -21,10 +21,15 @@ class TaskminatorController extends \BaseController {
         return View::make('taskminator.search')->with('cities', City::orderBy('cityname', 'ASC')->get());
     }
 
-    public function doTaskSearch($workingTime, $searchField, $searchCity, $searchWord, $rateRange, $rangeValue){
+    public function doTaskSearch($workingTime, $searchField, $searchCity, $searchWord, $rateRange, $rangeValue, $totalProg){
         $errorMsg = null;
 
         $query = new Task;
+
+        if($totalProg < 50){
+            Session::flash('err_search', 'Please fill out your profile atleast 50%');
+            return Redirect::back();
+        }
 
         if($searchField != '0'  && $searchField != null){
             if($searchField == 'city' && $searchWord != '0'){

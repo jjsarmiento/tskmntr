@@ -68,6 +68,9 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+    // CMS ROUTE
+    Route::get('/cms', 'AdminController@cms');
+
     // THE ROLE BASED ROUTES FOR ADMINISTRATORS GOES HERE
     Route::get('/admin', 'AdminController@index');
     Route::get('/userList', 'AdminController@userList');
@@ -122,7 +125,7 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::get('/tskmntr/taskSearch', 'TaskminatorController@taskSearch');
 
    // Route::post('/tskmntr/doTaskSearch', 'TaskminatorController@doTaskSearch');
-    Route::get('/tskmntr/doTaskSearch={workingTime}={searchField}={searchCity}={searchWord}={rateRange}={rangeValue}', 'TaskminatorController@doTaskSearch');
+    Route::get('/tskmntr/doTaskSearch={workingTime}={searchField}={searchCity}={searchWord}={rateRange}={rangeValue}={totalProg}', 'TaskminatorController@doTaskSearch');
 
     Route::get('/tskmntr/currentTask', 'TaskminatorController@currentTask');
     Route::get('/bidPTIME/{id}', 'TaskminatorController@bidPtime');

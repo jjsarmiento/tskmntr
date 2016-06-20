@@ -257,6 +257,7 @@
                                 @endif
                             </li>
                             <li><a href="#"><i class="fa fa-camera-retro fa-fw"></i> Edit Cover Photo</a></li>
+                            <li><a href="/cms"><i class="fa fa-edit fa-fw"></i> CMS</a></li>
                             <li><a href="#"><i class="fa fa-cog fa-fw"></i> Settings</a></li>
                             <li class="divider"></li>
                             <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Log out</a></li>

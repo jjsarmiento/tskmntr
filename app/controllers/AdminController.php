@@ -712,4 +712,11 @@ class AdminController extends \BaseController {
         TaskItem::where('itemcode', $skillcode)->delete();
         return Redirect::back()->with('successMsg', 'Skill has been successfully deleted');
     }
+
+    public function cms(){
+        return View::make('admin.cms')
+            ->with('tasks', Task::where('hiringType', 'BIDDING')->orderBy('created_at', 'ASC')->paginate(10))
+            ->with('pageName', 'Proveek Admin | Content Management System')
+            ->with('formUrl', '/taskListBidding=search');
+    }
 }

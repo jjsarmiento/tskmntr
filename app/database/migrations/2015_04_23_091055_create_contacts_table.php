@@ -20,6 +20,7 @@ class CreateContactsTable extends Migration {
             $table->string('content')->nullable();
             $table->string('priority')->default('0');
             $table->timestamps();
+            $table->string('pincode')->nullable();
 //            Contact types are :
 //            facebook
 //            linkedin
