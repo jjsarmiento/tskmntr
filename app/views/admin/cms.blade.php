@@ -75,52 +75,13 @@
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <a class="accordion-toggle">
-                                User Account List</a>
+                                Contents</a>
                             </div>
                         </div>
                         <div class="panel-body">
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/userListTaskminators" class="sidemenu">Taskminators</a><br>
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/userListClientIndi" class="sidemenu">Client - Individuals</a><br>
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/userListClientComp" class="sidemenu">Client - Companies</a><br>
-                        </div>
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <a class="accordion-toggle">
-                                Pending Users</a>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/pendingTskmntr" class="sidemenu">Taskminators</a><br>
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/pendingClientIndi" class="sidemenu">Client - Individual</a><br>
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/pendingClientComp" class="sidemenu">Client - Companies</a>
-                        </div>
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <a class="accordion-toggle">
-                                Tasks</a>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/" class="sidemenu">Bidding</a><br>
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/taskListAuto" class="sidemenu">Automatic</a><br>
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/taskListDirect" class="sidemenu">Direct</a>
-                        </div>
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <a class="accordion-toggle">
-                                Audit Trail</a>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_taskminator" class="sidemenu">Taskminators</a><br>
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientindi" class="sidemenu">Client (Individual)</a><br>
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientcomp" class="sidemenu">Client (Company)</a>
-                        </div>
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <a class="accordion-toggle" href="/categoryAndSkills">
-                                Category & Skills</a>
-                            </div>
+                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="" class="sidemenu">Heading</a><br>
+                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="" class="sidemenu">News</a><br>
+                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="" class="sidemenu">Articles</a><br>
                         </div>
                     </div>
                 </div>
