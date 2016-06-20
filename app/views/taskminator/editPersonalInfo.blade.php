@@ -85,14 +85,14 @@
             @if(Session::has('errorMsg'))
                 <div class="col-sm-12">
                     <div class="alert alert-danger">
-                        {{ @Session::has('errorMsg') }}
+                        {{ @Session::get('errorMsg') }}
                     </div>
                 </div>
             @endif
             @if(Session::has('successMsg'))
                 <div class="col-sm-12">
                     <div class="alert alert-success">
-                        {{ @Session::has('successMsg') }}
+                        {{ @Session::get('successMsg') }}
                     </div>
                 </div>
             @endif

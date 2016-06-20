@@ -308,13 +308,6 @@
                                     @endif
                                 </div>
                             </div> -->
-                            <div class="col-lg-12 padded" style="padding-top: 25px;">
-                                <div class="col-lg-5"><hr class="hrLine"></div>
-                                <div class="col-lg-2" style="margin-top:10px;"><p style="font-size:10pt;">Available Jobs</p></div>
-                                <div class="col-lg-5"><hr class="hrLine"></div>
-                            </div>
-
-                            <br><br><br><br>
 
 <!-- TEMPLATE -->
                             <!-- <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".5s" data-wow-offset="0" data-wow-delay="0" style="padding-left:10px; padding-right:10px; min-height: 50px;">
@@ -363,41 +356,50 @@
 <!-- END TEMPLATE -->
 
 <!-- LOOP HERE -->
-                            <?php $counter = 0; ?>
-                            @foreach(array_chunk($tasks->getCollection()->all(), 1) as $task)
-                                @foreach($task as $item)
-                                    <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".5s" data-wow-offset="0" data-wow-delay="0" style="padding-left:10px; padding-right:10px; min-height: 50px;">
-                                        <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
-                                            <span style="padding:0;margin:0; flex:1">
-                                                @foreach(User::where('id', $item->user_id)->get() as $user)
-                                                    <img src="{{ $user->profilePic }}" class="thumbnail" style="margin:0; width:64px; height:64px;" >
-                                                @endforeach
-                                            </span>
-                                            <div style="flex:11; padding-left: 5px;">
-                                            <a href="/bid{{$item->workTime}}/{{ $item->id }}" style="text-decoration:none;">
-                                                <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
-                                                    {{ $item->name }}
-                                                </h3>
-                                                <span style="padding:0;margin:0; color:#ccc;">
+                            @if($total_prog >= 50)
+                                <div class="col-lg-12 padded" style="padding-top: 25px;">
+                                    <div class="col-lg-5"><hr class="hrLine"></div>
+                                    <div class="col-lg-2" style="margin-top:10px;"><p style="font-size:10pt;">Available Jobs</p></div>
+                                    <div class="col-lg-5"><hr class="hrLine"></div>
+                                </div>
+
+                                <br><br><br><br>
+                                <?php $counter = 0; ?>
+                                @foreach(array_chunk($tasks->getCollection()->all(), 1) as $task)
+                                    @foreach($task as $item)
+                                        <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".5s" data-wow-offset="0" data-wow-delay="0" style="padding-left:10px; padding-right:10px; min-height: 50px;">
+                                            <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
+                                                <span style="padding:0;margin:0; flex:1">
                                                     @foreach(User::where('id', $item->user_id)->get() as $user)
-                                                        {{ $user->companyName }}
+                                                        <img src="{{ $user->profilePic }}" class="thumbnail" style="margin:0; width:64px; height:64px;" >
                                                     @endforeach
-                                                </span><br>
-                                                <span class="text-right" style="padding:0;margin:0; color:#ccc;">
-                                                    {{ date('m/d/y', $item->created_at->getTimeStamp()) }}
                                                 </span>
-                                                </a>
+                                                <div style="flex:11; padding-left: 5px;">
+                                                <a href="/bid{{$item->workTime}}/{{ $item->id }}" style="text-decoration:none;">
+                                                    <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
+                                                        {{ $item->name }}
+                                                    </h3>
+                                                    <span style="padding:0;margin:0; color:#ccc;">
+                                                        @foreach(User::where('id', $item->user_id)->get() as $user)
+                                                            {{ $user->companyName }}
+                                                        @endforeach
+                                                    </span><br>
+                                                    <span class="text-right" style="padding:0;margin:0; color:#ccc;">
+                                                        {{ date('m/d/y', $item->created_at->getTimeStamp()) }}
+                                                    </span>
+                                                    </a>
+                                                </div>
                                             </div>
+                                            <p class="lato-text no-padding">
+                                                {{ $item->description }}
+                                            </p>
                                         </div>
-                                        <p class="lato-text no-padding">
-                                            {{ $item->description }}
-                                        </p>           
-                                    </div>
-                                    <br>
-                                    <?php $counter++;?>
+                                        <br>
+                                        <?php $counter++;?>
+                                    @endforeach
                                 @endforeach
-                            @endforeach
-                            {{ $tasks->links() }}
+                                {{ $tasks->links() }}
+                            @endif
 <!-- END LOOP -->
                         </div>
                     </div>
