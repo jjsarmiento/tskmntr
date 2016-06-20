@@ -396,6 +396,7 @@ class AdminController extends \BaseController {
     public function index(){
         return View::make('admin.taskList')
             ->with('tasks', Task::where('hiringType', 'BIDDING')->orderBy('created_at', 'ASC')->paginate(10))
+            ->with('pendingUsers', User::where('status', 'PRE_ACTIVATED')->orderBy('created_at', 'ASC')->paginate(10))
             ->with('pageName', 'Proveek Admin | Dashbooard')
             ->with('formUrl', '/taskListBidding=search');
     }
