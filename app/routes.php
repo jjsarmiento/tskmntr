@@ -119,6 +119,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/deleteCategory={categorycode}', 'AdminController@deleteCategory');
     Route::get('/deleteSkill={skillcode}', 'AdminController@deleteSkill');
     Route::get('/adminDoSearch', 'searchTestController@doSearch');
+    Route::get('/jobAds={adType}', 'AdminController@jobAds');
 });
 
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){

@@ -395,7 +395,6 @@ class AdminController extends \BaseController {
 
     public function index(){
         return View::make('admin.taskList')
-            ->with('tasks', Task::where('hiringType', 'BIDDING')->orderBy('created_at', 'ASC')->paginate(10))
             ->with('pendingUsers', User::where('status', 'PRE_ACTIVATED')->orderBy('created_at', 'ASC')->paginate(10))
             ->with('pageName', 'Proveek Admin | Dashbooard')
             ->with('formUrl', '/taskListBidding=search');
@@ -719,5 +718,24 @@ class AdminController extends \BaseController {
             ->with('tasks', Task::where('hiringType', 'BIDDING')->orderBy('created_at', 'ASC')->paginate(10))
             ->with('pageName', 'Proveek Admin | Content Management System')
             ->with('formUrl', '/taskListBidding=search');
+    }
+
+    public function jobAds($adType){
+        switch($adType){
+            case 'INDIVIDUAL' :
+                break;
+            case 'FEATURED' :
+                break;
+            case 'HIRING' :
+                break;
+            case 'REFERRAL' :
+                break;
+        }
+
+        return View::make('admin.jobAds')
+            ->with('pageName', 'Proveek | Job Ads - '.$adType)
+            ->with('pageTitle', 'Proveek | Job Ads - '.$adType)
+            ->with('tasks', Task::where('hiringType', 'BIDDING')->orderBy('created_at', 'ASC')->paginate(10))
+            ->with('formUrl', '/NOTHINGYET');
     }
 }
