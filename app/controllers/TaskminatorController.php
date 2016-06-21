@@ -21,52 +21,52 @@ class TaskminatorController extends \BaseController {
         return View::make('taskminator.search')->with('cities', City::orderBy('cityname', 'ASC')->get());
     }
 
-    public function doTaskSearch($workingTime, $searchField, $searchCity, $searchWord, $rateRange, $rangeValue, $totalProg){
-        $errorMsg = null;
-
-        $query = new Task;
-
-        if($totalProg < 50){
+    public function doTaskSearch($workingTime, $searchField, $searchCity, $searchWord, $rateRange, $rangeValue){
+        if($this->getProfilePercentage(Auth::user()->id) < 50){
             Session::flash('err_search', 'Please fill out your profile atleast 50%');
-            return Redirect::back();
-        }
+            return Redirect::to('/');
+        }else{
+            $errorMsg = null;
 
-        if($searchField != '0'  && $searchField != null){
-            if($searchField == 'city' && $searchWord != '0'){
-                $query = $query->where($searchField, $searchCity)->where('name', 'LIKE', '%'.$searchWord.'%');
-            }else if($searchField == 'city' && $searchWord == '0'){
-                $query = $query->where($searchField, $searchCity);
-            }else{
-                $query = $query->where('name', 'LIKE', '%'.Input::get('searchWord').'%');
+            $query = new Task;
+
+            if($searchField != '0'  && $searchField != null){
+                if($searchField == 'city' && $searchWord != '0'){
+                    $query = $query->where($searchField, $searchCity)->where('name', 'LIKE', '%'.$searchWord.'%');
+                }else if($searchField == 'city' && $searchWord == '0'){
+                    $query = $query->where($searchField, $searchCity);
+                }else{
+                    $query = $query->where('name', 'LIKE', '%'.Input::get('searchWord').'%');
+                }
             }
-        }
 
-        if($rangeValue != '0'){
-            switch($rateRange){
-                case 'ABOVE' :
-                    $query = $query->where('salary', '>', $rangeValue);
-                    break;
-                case 'BELOW' :
-                    $query = $query->where('salary', '<', $rangeValue);
-                    break;
+            if($rangeValue != '0'){
+                switch($rateRange){
+                    case 'ABOVE' :
+                        $query = $query->where('salary', '>', $rangeValue);
+                        break;
+                    case 'BELOW' :
+                        $query = $query->where('salary', '<', $rangeValue);
+                        break;
+                }
             }
+
+            $query = $query->where('workTime', $workingTime)
+                ->where('hiringType', 'BIDDING')
+                ->where('status', 'OPEN')->orderBy('created_at', 'DESC')
+                ->paginate(10);
+
+            return View::make('taskminator.search')
+                ->with('tasks', $query)
+                ->with('errorMsg', $errorMsg)
+                ->with('cities', City::orderBy('cityname', 'ASC')->get())
+                ->with('workingTime', $workingTime)
+                ->with('searchField', $searchField)
+                ->with('searchCity', $searchCity)
+                ->with('searchWord', $searchWord)
+                ->with('rateRange', $rateRange)
+                ->with('rangeValue', $rangeValue);
         }
-
-        $query = $query->where('workTime', $workingTime)
-                    ->where('hiringType', 'BIDDING')
-                    ->where('status', 'OPEN')->orderBy('created_at', 'DESC')
-                    ->paginate(10);
-
-        return View::make('taskminator.search')
-            ->with('tasks', $query)
-            ->with('errorMsg', $errorMsg)
-            ->with('cities', City::orderBy('cityname', 'ASC')->get())
-            ->with('workingTime', $workingTime)
-            ->with('searchField', $searchField)
-            ->with('searchCity', $searchCity)
-            ->with('searchWord', $searchWord)
-            ->with('rateRange', $rateRange)
-            ->with('rangeValue', $rangeValue);
     }
 
     public function messages(){
@@ -75,26 +75,40 @@ class TaskminatorController extends \BaseController {
     }
 
     public function bidPtime($id){
-        if(TaskHasBidder::where('task_id', $id)->where('taskminator_id', Auth::user()->id)->count() > 0){
-            return Redirect::back()->with('errorMsg', 'You have already made a bid for this task');
-        }
-
-        if(Auth::user()->status == 'PRE_ACTIVATED'){
-            return Redirect::back()->with('preAcMsg', 'You have to complete your registration before you can bid for a task.<br/> Click <a href="/editProfile">here</a> to complete your registration<br/><br/>');
+        if($this->getProfilePercentage(Auth::user()->id) < 50){
+            Session::flash('err_search', 'Please fill out your profile atleast 50%');
+            return Redirect::to('/');
         }else{
-            return View::make('taskminator.bid')->with('hiringType', 'PART')->with('task_id', $id)->with('task', Task::where('id', $id)->first());
+            if(TaskHasBidder::where('task_id', $id)->where('taskminator_id', Auth::user()->id)->count() > 0){
+                Session::flash('error', 'You have already placed a bid for this task');
+                return Redirect::back();
+            }
+
+            if(Auth::user()->status == 'PRE_ACTIVATED'){
+                Session::flash('error', 'Your account must first be fully activated by admin before you can apply for jobs');
+                return Redirect::back();
+            }else{
+                return View::make('taskminator.bid')->with('hiringType', 'PART')->with('task_id', $id)->with('task', Task::where('id', $id)->first());
+            }
         }
     }
 
     public function bidFtime($id){
-        if(TaskHasBidder::where('task_id', $id)->where('taskminator_id', Auth::user()->id)->count() > 0){
-            return Redirect::back()->with('errorMsg', 'You have already made a bid for this task');
-        }
-
-        if(Auth::user()->status == 'PRE_ACTIVATED'){
-            return Redirect::back()->with('preAcMsg', 'You have to complete your registration before you can bid for a task.<br/> Click <a href="/editProfile">here</a> to complete your registration<br/><br/>');
+        if($this->getProfilePercentage(Auth::user()->id) < 50){
+            Session::flash('err_search', 'Please fill out your profile atleast 50%');
+            return Redirect::to('/');
         }else{
-            return View::make('taskminator.bid')->with('hiringType', 'FULL')->with('task_id', $id)->with('task', Task::where('id', $id)->first());
+            if(TaskHasBidder::where('task_id', $id)->where('taskminator_id', Auth::user()->id)->count() > 0){
+                Session::flash('error', 'You have already placed a bid for this task');
+                return Redirect::back();
+            }
+
+            if(Auth::user()->status == 'PRE_ACTIVATED'){
+                Session::flash('error', 'Your account must first be fully activated by admin before you can apply for jobs');
+                return Redirect::back();
+            }else{
+                return View::make('taskminator.bid')->with('hiringType', 'FULL')->with('task_id', $id)->with('task', Task::where('id', $id)->first());
+            }
         }
     }
 

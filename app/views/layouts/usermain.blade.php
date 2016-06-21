@@ -257,7 +257,9 @@
                                 @endif
                             </li>
                             <li><a href="#"><i class="fa fa-camera-retro fa-fw"></i> Edit Cover Photo</a></li>
-                            <li><a href="/cms"><i class="fa fa-edit fa-fw"></i> CMS</a></li>
+                            @if(Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')->where('user_has_role.user_id', Auth::user()->id)->pluck('role') == 'ADMIN')
+                                <li><a href="/cms"><i class="fa fa-edit fa-fw"></i> CMS</a></li>
+                            @endif
                             <li><a href="#"><i class="fa fa-cog fa-fw"></i> Settings</a></li>
                             <li class="divider"></li>
                             <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Log out</a></li>

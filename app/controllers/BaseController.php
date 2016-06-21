@@ -62,4 +62,112 @@ class BaseController extends Controller {
 
 //        exit(0);
     }
+
+    // AUTHORED BY Jan Sarmiento -- START
+    // used to get profile percentage
+    public function getProfilePercentage($userid){
+
+        $user = User::where('id', $userid)->first();
+
+        $reqMeter = 0;
+        $optMeter = 0;
+
+        $intProgress = 0;
+        $reqProgress = 0;
+        $optProgress = 0;
+
+        // INITIAL REQUIRED
+        if($user->firstName != ""){
+            $reqMeter++;
+        }
+
+        if($user->lastName != ""){
+            $reqMeter++;
+        }
+
+        if($user->username != ""){
+            $reqMeter++;
+        }
+        if($user->password != ""){
+            $reqMeter++;
+        }
+
+        if(Contact::where('user_id', $user->id)->get() != ""){
+            $reqMeter++;
+        }
+        // END OF INITIAL REQUIRED
+
+        $intProgress = ($reqMeter / 5) * 30;
+        $reqMeter = 0; // to reset the value;
+
+        // REQUIRED
+        if($user->profilePic != ""){
+            $reqMeter++;
+        }
+
+        if($user->birthdate != ""){
+            $reqMeter++;
+        }
+
+        if($user->gender != ""){
+            $reqMeter++;
+        }
+
+        if($user->preferredJob != ""){
+            $reqMeter++;
+        }
+
+        if(Contact::where('user_id', $user->id)->get() != ""){
+            $reqMeter++;
+        }
+
+        if($user->city != ""){
+            $reqMeter++;
+        }
+
+        if($user->address != ""){
+            $reqMeter++;
+        }
+        // END OF REQUIRED
+
+        $reqProgress = ($reqMeter/7) * 40;
+
+        // OPTIONAL PROGRESS
+        if($user->midName != ""){
+            $optMeter++;
+        }
+
+        if($user->nationality != ""){
+            $optMeter++;
+        }
+
+        if($user->minRate != ""){
+            $optMeter++;
+        }
+
+        if($user->maxRate != ""){
+            $optMeter++;
+        }
+
+        if($user->tin != ""){
+            $optMeter++;
+        }
+
+        if($user->skills != ""){
+            $optMeter++;
+        }
+
+        if($user->yearsOfExperience != ""){
+            $optMeter++;
+        }
+
+        if($user->barangay != ""){
+            $optMeter++;
+        }
+
+        $total_prog = number_format(($intProgress + $reqProgress) + (($optMeter / 7) * 30));
+
+        return $total_prog;
+    }
+    // AUTHORED BY Jan Sarmiento -- END
 }

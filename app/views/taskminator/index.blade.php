@@ -121,6 +121,9 @@
 <section>
     <div class="container main-content lato-text">
         <!-- Statistics -->
+        @if(Session::has('error'))
+            <center><h4> <i class="fa fa-warning" style="color: red;"></i> {{ Session::get('error') }}</h4></center>
+        @endif
         <div class="row">
 <!-- PROFILE PIC / INFO  -->
             <div class="col-lg-4"> 
@@ -486,14 +489,13 @@
                     searchCity  = '175301',
                     searchWord  = '0',
                     rateRange   = '0',
-                    rangeValue  = '0',
-                    totalProg =  {{ $total_prog  }};
+                    rangeValue  = '0';
 
                 if($('#searchWord').val() != ''){
                     searchWord = $('#searchWord').val();
                 }
 
-                location.href = '/tskmntr/doTaskSearch='+workingTime+'='+searchField+'='+searchCity+'='+searchWord+'='+rateRange+'='+rangeValue+'='+totalProg;
+                location.href = '/tskmntr/doTaskSearch='+workingTime+'='+searchField+'='+searchCity+'='+searchWord+'='+rateRange+'='+rangeValue;
             });
 
         

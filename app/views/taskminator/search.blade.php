@@ -110,6 +110,11 @@
                     </li>
                 </ul>
             </div>
+            @if(Session::has('error'))
+                <div class="col-lg-12">
+                    <h4><i class="fa fa-warning" style="color:red"></i> {{ Session::get('error') }}</h4>
+                </div>
+            @endif
             <div class="col-sm-3">
                 <div class="widget-container fluid-height">
                     <div class="widget-content">

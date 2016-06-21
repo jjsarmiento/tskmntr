@@ -22,6 +22,7 @@ Route::post('/regTaskminator', 'HomeController@regTaskminator');
 Route::get('/regClientIndi', 'HomeController@regClientIndi');
 Route::get('/regClientComp', 'HomeController@regClientComp');
 Route::post('/regClientComp', 'HomeController@regClientComp');
+Route::get('/getProfilePercentage/{id}', 'HomeController@getProfilePercentage');
 
 
 Route::post('/regWorker', 'HomeController@regWorker');
@@ -125,7 +126,7 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::get('/tskmntr/taskSearch', 'TaskminatorController@taskSearch');
 
    // Route::post('/tskmntr/doTaskSearch', 'TaskminatorController@doTaskSearch');
-    Route::get('/tskmntr/doTaskSearch={workingTime}={searchField}={searchCity}={searchWord}={rateRange}={rangeValue}={totalProg}', 'TaskminatorController@doTaskSearch');
+    Route::get('/tskmntr/doTaskSearch={workingTime}={searchField}={searchCity}={searchWord}={rateRange}={rangeValue}', 'TaskminatorController@doTaskSearch');
 
     Route::get('/tskmntr/currentTask', 'TaskminatorController@currentTask');
     Route::get('/bidPTIME/{id}', 'TaskminatorController@bidPtime');
