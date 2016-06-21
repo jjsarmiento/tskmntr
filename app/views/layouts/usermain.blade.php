@@ -270,6 +270,89 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+
+    {{--MODAL -- START--}}
+    <div class="modal modal-vcenter fade lato-text" id="adSearchModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 style="margin: 0; padding: 0; text-align: center;">Search for Job Ads</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <center><h4><i class="fa fa-map-marker"></i> Location</h4></center>
+                            <div class="form-group">
+                                <select id="adSearch_REG" class="form-control">
+                                    <option>Display from all cities</option>
+                                    @foreach(Region::get() as $reg)
+                                        <option>{{ $reg->regname }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select id="adSearch_CITY" class="form-control">
+                                    <option>Display from all cities</option>
+                                    @foreach(City::get() as $city)
+                                        <option>{{ $city->cityname }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select id="adSearch_PROV" class="form-control">
+                                    <option>Display from all provinces</option>
+                                    {{--@foreach(Province::get() as $prov)--}}
+                                        {{--<option>{{ $city->provname }}</option>--}}
+                                    {{--@endforeach--}}
+                                </select>
+                            </div>
+
+                            <center><h4><i class="fa fa-map-marker"></i> Employment Type</h4></center>
+                            <div class="form-group">
+                                <select id="adSearch_ETYPE" class="form-control">
+                                    <option>Display all employment types</option>
+                                    <option>Overseas</option>
+                                    <option>Local</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <center><h4><i class="fa fa-map-marker"></i> Job Duration</h4></center>
+                            <div class="form-group">
+                                <select id="adSearch_DUR" class="form-control">
+                                    <option>Display all duration</option>
+                                    <option>Less Than 6 months</option>
+                                    <option>Greater Than 6 months</option>
+                                </select>
+                            </div>
+                            <center><h4><i class="fa fa-map-marker"></i> Job Status</h4></center>
+                            <div class="form-group">
+                                <select id="adSearch_STAT" class="form-control">
+                                    <option>Open</option>
+                                    <option>Closed</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <select class="form-control">
+                                <option>Oldest ads first</option>
+                                <option>Newest ads first</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Search</button>
+                    <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--MODAL -- END--}}
+
 <!-- END OF MASTER USER LAYOUT-->
 
 <!-- CONTENT OF THE PAGE -->

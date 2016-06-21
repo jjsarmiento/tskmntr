@@ -418,7 +418,8 @@ class AdminController extends \BaseController {
             $query = $query->where('status', $status);
         }
 
-        return View::make('admin.taskList')
+//        return View::make('admin.taskList')
+        return View::make('admin.jobAds')
             ->with('tasks', $query->paginate(10))
             ->with('pageName', 'Bidding Tasks')
             ->with('formUrl', '/taskListBidding=search')
@@ -736,6 +737,6 @@ class AdminController extends \BaseController {
             ->with('pageName', 'Proveek | Job Ads - '.$adType)
             ->with('pageTitle', 'Proveek | Job Ads - '.$adType)
             ->with('tasks', Task::where('hiringType', 'BIDDING')->orderBy('created_at', 'ASC')->paginate(10))
-            ->with('formUrl', '/NOTHINGYET');
+            ->with('formUrl', '/taskListBidding=search');
     }
 }
