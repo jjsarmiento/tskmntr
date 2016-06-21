@@ -740,7 +740,43 @@ class AdminController extends \BaseController {
             ->with('formUrl', '/taskListBidding=search');
     }
 
-    public function pendingUserSearch(){
+    public function pendingUserSearch($searchBy, $searchUserType, $searchWord){
+        $userList = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
+            ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+            ->where('users.status', ['PRE_ACTIVATED']);
+        
+        if($searchUserType != 'ALL'){
+            $userList->where('user_has_role.role_id', $searchUserType);
+        }
 
+        if($searchBy != 'ALL'){
+            $searchByQuery = 'users.'.$searchBy;
+//            $searchWordQuery = 'users.'.$searchWord;
+//            $userList = $userList->where($searchByQuery, 'LIKE', '%'.$searchWordQuery.'%');
+            $userList = $userList->where($searchByQuery, 'LIKE', '%'.$searchWord.'%');
+        }
+
+        $userList = $userList->orderBy('users.created_at', 'ASC')
+            ->select([
+                'users.id',
+                'users.fullName',
+                'users.status',
+                'users.username',
+            ])
+            ->paginate(10);
+
+        return View::make('admin.taskList')
+            ->with('searchBy', $searchBy)
+            ->with('searchWord', $searchWord)
+            ->with('searchUserType', $searchUserType)
+            ->with('pendingUsers', $userList)
+            ->with('pageName', 'Proveek Admin | Dashbooard')
+            ->with('formUrl', '/pendingUserSearch');
+
+//            ->with('users', $userList)
+//            ->with('searchBy', $searchBy)
+//            ->with('searchWord', $searchWord)
+//            ->with('pageTitle', 'Pending Taskminator Accounts')
+//            ->with('formUrl', '/pendingTskmntr=search');
     }
 }

@@ -28,17 +28,17 @@
                     searchWord = $('#searchWord').val();
                 }
 
-                location.href = '{{$formUrl}}='+$('#searchBy').val()+'='+searchWord+'='+$('#workTimeValue').val()+'='+$('#status').val();
+                location.href = '{{$formUrl}}='+$('#searchBy').val()+'='+$('#searchUserType').val()+'='+searchWord;
             });
 
-            if($('#searchBy').val() == 'name'){
+            if($('#searchBy').val() != 'ALL'){
                 $('#searchWord').prop('disabled', false);
             }else{
                 $('#searchWord').prop('disabled', true);
             }
 
             $('#searchBy').change(function(){
-                if($(this).val() == 'name'){
+                if($(this).val() != 'ALL'){
                     $('#searchWord').prop('disabled', false);
                 }else{
                     $('#searchWord').prop('disabled', true);
@@ -210,14 +210,17 @@
                     <div class="row">
                         <div class="col-md-2">
                             <select id="searchBy" name="searchBy" class="form-control">
+                                <option value="ALL" <?php if(@$searchBy == 'ALL'){ echo('selected'); } ?>>Display all</option>
                                 <option value="fullName" <?php if(@$searchBy == 'fullName'){ echo('selected'); } ?>>Name</option>
                                 <option value="username" <?php if(@$searchBy == 'username'){ echo('selected'); } ?>>Username</option>
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <select id="searchBy" name="searchBy" class="form-control">
-                                <option value="CLIENT" <?php if(@$searchBy == 'fullName'){ echo('selected'); } ?>>Client</option>
-                                <option value="WORKER" <?php if(@$searchBy == 'username'){ echo('selected'); } ?>>Worker</option>
+                            <select id="searchUserType" name="searchUserType" class="form-control">
+                                <option value="ALL" <?php if(@$searchUserType == 'ALL'){ echo('selected'); } ?>>Display All</option>
+                                <option value="3" <?php if(@$searchUserType == '3'){ echo('selected'); } ?>>Client</option>
+                                <option value="4" <?php if(@$searchUserType == '4'){ echo('selected'); } ?>>Company</option>
+                                <option value="2" <?php if(@$searchUserType == '2'){ echo('selected'); } ?>>Worker</option>
                             </select>
                         </div>
                         <div class="col-md-6">

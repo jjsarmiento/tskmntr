@@ -81,12 +81,12 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/adminActivate/{id}', 'AdminController@adminActivate');
     Route::get('/viewUserProfile/{id}', 'AdminController@viewUserProfile');
 
-    Route::get('/pendingTskmntr', 'AdminController@pendingTskmntr');
-    Route::get('/pendingClientIndi', 'AdminController@pendingClientIndi');
-    Route::get('/pendingClientComp', 'AdminController@pendingClientComp');
-    Route::get('/pendingTskmntr=search={searchBy}={searchWord}', 'AdminController@pendingTskmntrSearch');
-    Route::get('/pendingClientIndi=search={searchBy}={searchWord}', 'AdminController@pendingClientIndiSearch');
-    Route::get('/pendingClientComp=search={searchBy}={searchWord}', 'AdminController@pendingClientCompSearch');
+//    Route::get('/pendingTskmntr', 'AdminController@pendingTskmntr');
+//    Route::get('/pendingClientIndi', 'AdminController@pendingClientIndi');
+//    Route::get('/pendingClientComp', 'AdminController@pendingClientComp');
+//    Route::get('/pendingTskmntr=search={searchBy}={searchWord}', 'AdminController@pendingTskmntrSearch');
+//    Route::get('/pendingClientIndi=search={searchBy}={searchWord}', 'AdminController@pendingClientIndiSearch');
+//    Route::get('/pendingClientComp=search={searchBy}={searchWord}', 'AdminController@pendingClientCompSearch');
 
     Route::get('/categoryAndSkills', 'AdminController@categoryAndSkills');
     Route::get('/adminDeactivate/{id}', 'AdminController@adminDeactivate');
@@ -120,7 +120,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/deleteSkill={skillcode}', 'AdminController@deleteSkill');
     Route::get('/adminDoSearch', 'searchTestController@doSearch');
     Route::get('/jobAds={adType}', 'AdminController@jobAds');
-    Route::get('/pendingUserSearch={searchBy}={searchVal}', 'AdminController@pendingUserSearch');
+    Route::get('/pendingUserSearch={searchBy}={searchUserType}={searchVal}', 'AdminController@pendingUserSearch');
 });
 
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
