@@ -272,6 +272,26 @@
     </nav>
 
     {{--MODAL -- START--}}
+
+    {{--MODAL FOR USER SEARCH--}}
+    <div class="modal modal-vcenter fade lato-text" id="userSearchModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 style="margin: 0; padding: 0; text-align: center;">Search for User</h3>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Search</button>
+                    <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{--MODAL FOR AD SEARCH--}}
     <div class="modal modal-vcenter fade lato-text" id="adSearchModal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">

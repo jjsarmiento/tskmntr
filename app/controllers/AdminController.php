@@ -397,7 +397,7 @@ class AdminController extends \BaseController {
         return View::make('admin.taskList')
             ->with('pendingUsers', User::where('status', 'PRE_ACTIVATED')->orderBy('created_at', 'ASC')->paginate(10))
             ->with('pageName', 'Proveek Admin | Dashbooard')
-            ->with('formUrl', '/taskListBidding=search');
+            ->with('formUrl', '/pendingUserSearch');
     }
 
     public function taskListBiddingSearch($searchBy, $searchWord, $workTimeValue, $status){
@@ -738,5 +738,9 @@ class AdminController extends \BaseController {
             ->with('pageTitle', 'Proveek | Job Ads - '.$adType)
             ->with('tasks', Task::where('hiringType', 'BIDDING')->orderBy('created_at', 'ASC')->paginate(10))
             ->with('formUrl', '/taskListBidding=search');
+    }
+
+    public function pendingUserSearch(){
+
     }
 }

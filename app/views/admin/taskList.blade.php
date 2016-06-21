@@ -79,6 +79,7 @@
                             </div>
                         </div>
                         <div class="panel-body">
+                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/admin" class="sidemenu">Pending Users</a><br>
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/userListTaskminators" class="sidemenu">Worker</a><br>
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/userListClientIndi" class="sidemenu">Employer - Individuals</a><br>
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/userListClientComp" class="sidemenu">Employer - Companies</a><br>
@@ -87,9 +88,9 @@
                             <div class="panel-title">
                                 <a class="accordion-toggle">
                                 Job Ads&nbsp;&nbsp;
-                                <span id="searchAdBtn" data-target="#adSearchModal" data-toggle="modal" style="font-size:0.8em; background-color: #2980b9; border-radius: 0.8em; padding: 0.2em; padding-left: 0.5em; padding-right: 0.5em; color: #ffffff; cursor: pointer">
-                                    <i class="fa fa-search"></i> Search
-                                </span>
+                                {{--<span id="searchAdBtn" data-target="#adSearchModal" data-toggle="modal" style="font-size:0.8em; background-color: #2980b9; border-radius: 0.8em; padding: 0.2em; padding-left: 0.5em; padding-right: 0.5em; color: #ffffff; cursor: pointer">--}}
+                                    {{--<i class="fa fa-search"></i> Search--}}
+                                {{--</span>--}}
                                 </a>
                             </div>
                         </div>
@@ -120,7 +121,7 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_taskminator" class="sidemenu">Taskminators</a><br>
+                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_taskminator" class="sidemenu">Workers</a><br>
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientindi" class="sidemenu">Client (Individual)</a><br>
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientcomp" class="sidemenu">Client (Company)</a>
                         </div>
@@ -204,6 +205,31 @@
                 {{--@endforeach--}}
                 {{--<center>{{ $tasks->links() }}</center>--}}
 
+                <div class="well selected-filters">
+<!--                    <form method="POST" action="/userListTaskminators=search">-->
+                    <div class="row">
+                        <div class="col-md-2">
+                            <select id="searchBy" name="searchBy" class="form-control">
+                                <option value="fullName" <?php if(@$searchBy == 'fullName'){ echo('selected'); } ?>>Name</option>
+                                <option value="username" <?php if(@$searchBy == 'username'){ echo('selected'); } ?>>Username</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select id="searchBy" name="searchBy" class="form-control">
+                                <option value="CLIENT" <?php if(@$searchBy == 'fullName'){ echo('selected'); } ?>>Client</option>
+                                <option value="WORKER" <?php if(@$searchBy == 'username'){ echo('selected'); } ?>>Worker</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input value="<?php if(@$searchWord){ echo($searchWord); } ?>" id="searchWord" type="text" name="searchWord" placeholder="search keyword" class="form-control"/>
+                        </div>
+                        <div class="col-md-3">
+                            <button id="searchBtn" type="submit" class="btn btn-block btn-primary" style="margin: 0">Search</button>
+                        </div>
+                    </div>
+<!--                    </form>-->
+                </div>
+
                 @if($pendingUsers->count() == 0)
                     <div class="well selected-filters" style="text-align: center">
                         <font style="color: red">No data available.</font>
@@ -229,6 +255,7 @@
             </div>
         </div>
 
+        <!--
         {{--<form method="POST" action="{{ $formUrl }}">--}}
             {{--Search by : <select name="searchBy" id="searchBy">--}}
                 {{--<option value="0">Display All</option>--}}
@@ -263,6 +290,7 @@
                 {{--Status : {{ $task->status }}--}}
             {{--</div>--}}
         {{--@endforeach--}}
+        -->
     </div>
 </section>
 @stop
