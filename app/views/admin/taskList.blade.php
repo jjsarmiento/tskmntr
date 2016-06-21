@@ -220,10 +220,10 @@
                                 <option value="WORKER" <?php if(@$searchBy == 'username'){ echo('selected'); } ?>>Worker</option>
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <input value="<?php if(@$searchWord){ echo($searchWord); } ?>" id="searchWord" type="text" name="searchWord" placeholder="search keyword" class="form-control"/>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <button id="searchBtn" type="submit" class="btn btn-block btn-primary" style="margin: 0">Search</button>
                         </div>
                     </div>
