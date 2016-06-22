@@ -204,10 +204,10 @@
 
                 <div class="well selected-filters">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             {{--<div class="form-group"></div>--}}
                             <div class="form-group">
-                                <input value="<?php if(@$search_keyword != 'NONE'){ echo($search_keyword); } ?>" class="form-control" type="text" id="search_keyword" name="search_keyword" placeholder="SEARCH KEYWORD FOR NAME/USERNAME" />
+                                <input value="<?php if(@$search_keyword != 'NONE'){ echo(@$search_keyword); } ?>" class="form-control" type="text" id="search_keyword" name="search_keyword" placeholder="SEARCH KEYWORD FOR NAME/USERNAME" />
                             </div>
                             <div class="form-group">
                                 <select id="search_acctType" name="search_acctType" class="form-control">
@@ -219,7 +219,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <select name="search_orderBy" id="search_orderBy" class="form-control">
                                     <option value="DESC" <?php if(@$search_orderBy == 'DESC'){ echo('selected'); } ?>>Newest First</option>
@@ -227,7 +227,7 @@
                                 </select>
                             </div>
                             <div class="pull-right">
-                                <button type="submit" class="btn btn-success" id="search_PENDINGUSERS">Search</button>
+                                <button type="submit" class="btn btn-primary" id="search_PENDINGUSERS">Search</button>
                             </div>
                         </div>
                         <!--
