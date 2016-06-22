@@ -329,7 +329,8 @@ class AdminController extends \BaseController {
             ->with('formUrl', '/pendingClientComp=search');
     }
 
-    public function categoryAndSkills(){
+//    public function categoryAndSkills(){
+    public function skills(){
         return View::make('admin.categoryAndSkills')->with('taskCategory', TaskCategory::orderBy('categoryCode', 'ASC')->get());
     }
 
@@ -660,17 +661,21 @@ class AdminController extends \BaseController {
 
     public function newSkill(){
         if(strlen(trim(Input::get('newSkillInput'))) == 0){
-            return Redirect::back()->with('errorMsg', 'New skill cannot be empty');
+            Session::flash('errorm', 'New skill cannot be empty');
+            return Redirect::back();
         }else if(Input::get('newSkillInput') == ''){
-            return Redirect::back()->with('errorMsg', 'New skill cannot be empty');
+            Session::flash('errorm', 'New skill cannot be empty');
+            return Redirect::back();
         }
 
         if(Input::get('category') == ''){
-            return Redirect::back()->with('errorMsg', 'Please select a category');
+            Session::flash('errorm', 'Please select a category');
+            return Redirect::back();
         }
 
         if(TaskCategory::where('categorycode', Input::get('category'))->count() == 0){
-            return Redirect::back()->with('errorMsg', 'Please select a valid category');
+            Session::flash('errorm', 'Please select a valid category');
+            return Redirect::back();
         }
         $maxSkillCode = str_replace(Input::get('category'), '', TaskItem::where('item_categorycode', Input::get('category'))->max('itemcode'));
         $maxSkillCode = ++$maxSkillCode;
@@ -682,7 +687,8 @@ class AdminController extends \BaseController {
             'itemcode'              =>  Input::get('category').''.$maxSkillCode
         ));
 
-        return Redirect::to('/categoryAndSkills')->with('successMsg', 'New skill is successfully added');
+        Session::flash('succmsg', 'Skill '.Input::get('newSkillInput').' has been successfully added.');
+        return Redirect::to('/skills');
     }
 
     public function newCategory(){
@@ -744,7 +750,7 @@ class AdminController extends \BaseController {
         $userList = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
             ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
             ->where('users.status', ['PRE_ACTIVATED']);
-        
+
         if($searchUserType != 'ALL'){
             $userList->where('user_has_role.role_id', $searchUserType);
         }

@@ -69,6 +69,9 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+    // SKILLS ROUTE
+    Route::get('/skills', 'AdminController@skills');
+
     // CMS ROUTE
     Route::get('/cms', 'AdminController@cms');
 
@@ -88,7 +91,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 //    Route::get('/pendingClientIndi=search={searchBy}={searchWord}', 'AdminController@pendingClientIndiSearch');
 //    Route::get('/pendingClientComp=search={searchBy}={searchWord}', 'AdminController@pendingClientCompSearch');
 
-    Route::get('/categoryAndSkills', 'AdminController@categoryAndSkills');
+//    Route::get('/categoryAndSkills', 'AdminController@categoryAndSkills');
     Route::get('/adminDeactivate/{id}', 'AdminController@adminDeactivate');
     Route::get('/AT_{role}', 'AdminController@auditTrail');
     Route::get('/userAuditTrail_{id}', 'AdminController@userAuditTrail');

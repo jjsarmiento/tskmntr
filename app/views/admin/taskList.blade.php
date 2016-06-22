@@ -125,6 +125,15 @@
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientindi" class="sidemenu">Client (Individual)</a><br>
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientcomp" class="sidemenu">Client (Company)</a>
                         </div>
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <a class="accordion-toggle">
+                                Category & Skills</a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/skills" class="sidemenu">Manage</a><br>
+                        </div>
                         {{--<div class="panel-heading">--}}
                             {{--<div class="panel-title">--}}
                                 {{--<a class="accordion-toggle" href="/categoryAndSkills">--}}
@@ -137,46 +146,46 @@
 
             <div class="col-md-9">
                 <!--
-                <div class="well selected-filters">
-                    <div class="row">
-                        <div class="col-md-2">
-                            Search By:
-                        </div>
-                        <div class="col-md-3">
-                            <select name="searchBy" id="searchBy" class="form-control">
-                                <option value="0" <?php if(@$searchBy == '0'){ echo('selected'); } ?>>Display all tasks</option>
-                                <option value="name" <?php if(@$searchBy == 'name'){ echo('selected'); } ?>>Task Name</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <select name="workTimeValue" id="workTimeValue" class="form-control">
-                                <option value="0" <?php if(@$workTimeValue == '0'){ echo('selected'); } ?>>Display all employment type</option>
-                                <option value="PTIME" <?php if(@$workTimeValue == 'PTIME'){ echo('selected'); } ?>>Part Time</option>
-                                <option value="FTIME" <?php if(@$workTimeValue == 'FTIME'){ echo('selected'); } ?>>Full Time</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <input type="text" value="<?php if(@$searchWord){ echo($searchWord); } ?>" name="searchWord" id="searchWord" placeholder="search keyword" class="form-control"/>
-                        </div>
-                    </div>
-                    <div class="row" style="padding-top:10px;">
-                        <div class="col-md-2">
-                            Status:
-                        </div>
-                        <div class="col-md-6">
-                            <select name="status" id="status" class="form-control">
-                                <option value="0" <?php if(@$status == '0'){ echo('selected'); } ?>>Display all status</option>
-                                <option value="OPEN" <?php if(@$status == 'OPEN'){ echo('selected'); } ?>>Open</option>
-                                <option value="ONGOING" <?php if(@$status == 'ONGOING'){ echo('selected'); } ?>>On Going</option>
-                                <option value="COMPLETE" <?php if(@$status == 'COMPLETED'){ echo('selected'); } ?>>Complete</option>
-                                <option value="CANCELLED" <?php if(@$status == 'CANCELLED'){ echo('selected'); } ?>>Cancelled</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <button type="submit" id="searchBtn" class="btn btn-block btn-primary">Search</button>
-                        </div>
-                    </div>
-                </div>
+                {{--<div class="well selected-filters">--}}
+                    {{--<div class="row">--}}
+                        {{--<div class="col-md-2">--}}
+                            {{--Search By:--}}
+                        {{--</div>--}}
+                        {{--<div class="col-md-3">--}}
+                            {{--<select name="searchBy" id="searchBy" class="form-control">--}}
+                                {{--<option value="0" <?php if(@$searchBy == '0'){ echo('selected'); } ?>>Display all tasks</option>--}}
+                                {{--<option value="name" <?php if(@$searchBy == 'name'){ echo('selected'); } ?>>Task Name</option>--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+                        {{--<div class="col-md-3">--}}
+                            {{--<select name="workTimeValue" id="workTimeValue" class="form-control">--}}
+                                {{--<option value="0" <?php if(@$workTimeValue == '0'){ echo('selected'); } ?>>Display all employment type</option>--}}
+                                {{--<option value="PTIME" <?php if(@$workTimeValue == 'PTIME'){ echo('selected'); } ?>>Part Time</option>--}}
+                                {{--<option value="FTIME" <?php if(@$workTimeValue == 'FTIME'){ echo('selected'); } ?>>Full Time</option>--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+                        {{--<div class="col-md-4">--}}
+                            {{--<input type="text" value="<?php if(@$searchWord){ echo($searchWord); } ?>" name="searchWord" id="searchWord" placeholder="search keyword" class="form-control"/>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="row" style="padding-top:10px;">--}}
+                        {{--<div class="col-md-2">--}}
+                            {{--Status:--}}
+                        {{--</div>--}}
+                        {{--<div class="col-md-6">--}}
+                            {{--<select name="status" id="status" class="form-control">--}}
+                                {{--<option value="0" <?php if(@$status == '0'){ echo('selected'); } ?>>Display all status</option>--}}
+                                {{--<option value="OPEN" <?php if(@$status == 'OPEN'){ echo('selected'); } ?>>Open</option>--}}
+                                {{--<option value="ONGOING" <?php if(@$status == 'ONGOING'){ echo('selected'); } ?>>On Going</option>--}}
+                                {{--<option value="COMPLETE" <?php if(@$status == 'COMPLETED'){ echo('selected'); } ?>>Complete</option>--}}
+                                {{--<option value="CANCELLED" <?php if(@$status == 'CANCELLED'){ echo('selected'); } ?>>Cancelled</option>--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+                        {{--<div class="col-md-4">--}}
+                            {{--<button type="submit" id="searchBtn" class="btn btn-block btn-primary">Search</button>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 -->
 
                 {{--@if($tasks->count() == 0)--}}
