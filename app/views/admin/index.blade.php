@@ -122,9 +122,9 @@
                                     <div class="panel-title">
                                         <a class="accordion-toggle">
                                         Job Ads&nbsp;&nbsp;
-                                        <span id="searchAdBtn" data-target="#adSearchModal" data-toggle="modal" style="font-size:0.8em; background-color: #2980b9; border-radius: 0.8em; padding: 0.2em; padding-left: 0.5em; padding-right: 0.5em; color: #ffffff; cursor: pointer">
-                                            <i class="fa fa-search"></i> Search
-                                        </span>
+                                        {{--<span id="searchAdBtn" data-target="#adSearchModal" data-toggle="modal" style="font-size:0.8em; background-color: #2980b9; border-radius: 0.8em; padding: 0.2em; padding-left: 0.5em; padding-right: 0.5em; color: #ffffff; cursor: pointer">--}}
+                                            {{--<i class="fa fa-search"></i> Search--}}
+                                        {{--</span>--}}
                                         </a>
                                     </div>
                                 </div>

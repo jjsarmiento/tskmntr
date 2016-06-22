@@ -396,6 +396,7 @@ class AdminController extends \BaseController {
 
     public function index(){
         return View::make('admin.taskList')
+            ->with('pendingCount', $this->countPendingUsers())
             ->with('pendingUsers', User::where('status', 'PRE_ACTIVATED')->orderBy('created_at', 'ASC')->paginate(10))
             ->with('pageName', 'Proveek Admin | Dashbooard')
             ->with('formUrl', '/pendingUserSearch');
@@ -784,5 +785,9 @@ class AdminController extends \BaseController {
 //            ->with('searchWord', $searchWord)
 //            ->with('pageTitle', 'Pending Taskminator Accounts')
 //            ->with('formUrl', '/pendingTskmntr=search');
+    }
+
+    public function countPendingUsers(){
+        return User::where('status', 'PRE_ACTIVATED')->count();
     }
 }

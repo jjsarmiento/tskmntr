@@ -85,6 +85,15 @@
                                 <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientindi" class="sidemenu">Client (Individual)</a><br>
                                 <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientcomp" class="sidemenu">Client (Company)</a>
                             </div>
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    <a class="accordion-toggle">
+                                    Category & Skills</a>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/skills" class="sidemenu">Manage</a><br>
+                            </div>
                         </div>
                         <!--
                         <div class="panel-heading">
