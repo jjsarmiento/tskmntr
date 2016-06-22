@@ -17,31 +17,44 @@
 @section('body-scripts')
     <script>
         $(document).ready(function(){
-            $('#searchBtn').click(function(){
-                var searchBy = 0,
-                    searchWord = 0;
-                if($('#searchBy').val() != ''){
-                    searchBy = $('#searchBy').val()
-                }
+            $('#search_btn').click(function(){
+                var acctStatus = $('#search_acctStatus').val(),
+                    rating = $('#search_rating').val(),
+                    hiring = $('#search_hiring').val(),
+                    orderBy = $('#search_orderBy').val(),
+                    keyword = $('#search_keyword').val();
 
-                if($('#searchWord').val() != ''){
-                    searchWord = $('#searchWord').val()
-                }
+                    if(keyword == ""){
+                        keyword = "NONE";
+                    }
 
-                location.href = '/userListTaskminators=search='+searchBy+'='+searchWord;
+                    location.href = "/searchWorker:"+acctStatus+":"+rating+":"+hiring+":"+orderBy+":"+keyword;
             });
-
-            $('#searchBy').change(function(){
-                if($(this).val() == '0'){
-                    $('#searchWord').prop('disabled', true);
-                }else{
-                    $('#searchWord').prop('disabled', false);
-                }
-            })
-
-            if($('#searchBy').val() == '0'){
-                $('#searchWord').prop('disabled', true);
-            }
+//            $('#searchBtn').click(function(){
+//                var searchBy = 0,
+//                    searchWord = 0;
+//                if($('#searchBy').val() != ''){
+//                    searchBy = $('#searchBy').val()
+//                }
+//
+//                if($('#searchWord').val() != ''){
+//                    searchWord = $('#searchWord').val()
+//                }
+//
+//                location.href = '/userListTaskminators=search='+searchBy+'='+searchWord;
+//            });
+//
+//            $('#searchBy').change(function(){
+//                if($(this).val() == '0'){
+//                    $('#searchWord').prop('disabled', true);
+//                }else{
+//                    $('#searchWord').prop('disabled', false);
+//                }
+//            })
+//
+//            if($('#searchBy').val() == '0'){
+//                $('#searchWord').prop('disabled', true);
+//            }
         });
     </script>
 @stop
@@ -145,6 +158,15 @@
                                     <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientindi" class="sidemenu">Client (Individual)</a><br>
                                     <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientcomp" class="sidemenu">Client (Company)</a>
                                 </div>
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        <a class="accordion-toggle">
+                                        Category & Skills</a>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/skills" class="sidemenu">Manage</a><br>
+                                </div>
                                 {{--<div class="panel-heading">--}}
                                     {{--<div class="panel-title">--}}
                                         {{--<a class="accordion-toggle">--}}
@@ -201,24 +223,73 @@
 
                     <div class="col-md-9">
                         <div class="well selected-filters">
-        <!--                    <form method="POST" action="/userListTaskminators=search">-->
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <select id="searchBy" name="searchBy" class="form-control">
-                                            <option value="0">Display All</option>
-                                            <option value="fullName" <?php if(@$searchBy == 'fullName'){ echo('selected'); } ?>>Name</option>
-                                            <option value="username" <?php if(@$searchBy == 'username'){ echo('selected'); } ?>>Username</option>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Account Status</label>
+                                        <select class="form-control" id="search_acctStatus" name="search_acctStatus">
+                                            <option value="LOWF">Lowest First</option>
+                                            <option value="HIGHF">Highest First</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
-                                        <input value="<?php if(@$searchWord){ echo($searchWord); } ?>" id="searchWord" type="text" name="searchWord" placeholder="search keyword" class="form-control"/>
+                                    <div class="form-group">
+                                        <label>Rating</label>
+                                        <select class="form-control" id="search_rating" name="search_rating">
+                                            <option value="RLOWF">Lowest First</option>
+                                            <option value="RHIGHF">Highest First</option>
+                                        </select>
                                     </div>
-                                    <div class="col-md-3">
-                                        <button id="searchBtn" type="submit" class="btn btn-block btn-primary" style="margin: 0">Search</button>
+                                    <div class="form-group">
+                                        <label>Hiring Status</label>
+                                        <select class="form-control" id="search_hiring" name="search_hiring">
+                                            <option value="H">Hired</option>
+                                            <option value="NH">Not Hired</option>
+                                        </select>
                                     </div>
                                 </div>
-        <!--                    </form>-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Order by</label>
+                                        <select class="form-control" id="search_orderBy" name="search_orderBy">
+                                            <option value="DESC">Newest first</option>
+                                            <option value="ASC">Oldest first</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Search Keywords (Name or Username)</label>
+                                        <input type="text" class="form-control" placeholder="KEYWORD FOR NAME/USERNAME" id="search_keyword" name="search_keyword" />
+                                    </div>
+                                    <div class="form-group pull-right">
+                                        <button type="submit" class="btn btn-primary" id="search_btn">Search</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <!--
+                        <div class="well selected-filters">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <select id="search_orderBy" name="search_orderBy" class="form-control">
+                                        <option value="DESC" <?php if(@$search_orderBy == 'DESC'){ echo('selected'); } ?>>Newest first</option>
+                                        <option value="ASC" <?php if(@$search_orderBy == 'ASC'){ echo('selected'); } ?>>Oldest first</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select id="searchBy" name="searchBy" class="form-control">
+                                        <option value="0">Display All</option>
+                                        <option value="fullName" <?php if(@$searchBy == 'fullName'){ echo('selected'); } ?>>Name</option>
+                                        <option value="username" <?php if(@$searchBy == 'username'){ echo('selected'); } ?>>Username</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <input value="<?php if(@$searchWord){ echo($searchWord); } ?>" id="searchWord" type="text" name="searchWord" placeholder="search keyword" class="form-control"/>
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="searchBtn" type="submit" class="btn btn-block btn-primary" style="margin: 0">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        -->
                         @if($users->count() == 0)
                             <div class="well selected-filters" style="text-align: center">
                                 <font style="color: red">No data available.</font>
@@ -228,7 +299,7 @@
                             <div class="widget-container lato-text" style="min-height: 150px; padding-bottom: 5px;">
                                 <div class="widget-content padded">
                                     <div>
-                                        <h3><a class="lato-text" href="/viewUserProfile/{{ $user->id }}">{{ $user->fullName }}</a></h3>
+                                        <h3><a class="lato-text" href="/viewUserProfile/{{ $user->id }}">{{ $user->fullName }} {{ '@'.$user->username }}</a></h3>
                                         <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
                                          : <span style="margin-left: 5px">{{ $user->username }}</span><br/>
                                         <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Status</span> :

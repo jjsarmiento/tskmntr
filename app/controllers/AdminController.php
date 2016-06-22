@@ -27,9 +27,8 @@ class AdminController extends \BaseController {
     public function userListTaskminators(){
         $userList = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
                     ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
-                    ->where('user_has_role.role_id', '2')
+                    ->where('user_has_role.role_id', '=', '2')
                     ->whereNotIn('users.status', ['PRE_ACTIVATED'])
-//                    ->where('users.status', 'ACTIVATED')
                     ->orderBy('users.created_at', 'DESC')
                     ->select([
                         'users.id',
@@ -501,30 +500,55 @@ class AdminController extends \BaseController {
             ->with('status', $status);
     }
 
-    public function adminTskmntrSearch(){
-        $query = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
-            ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
-            ->where('user_has_role.role_id', '2')
-            ->whereNotIn('users.status', ['PRE_ACTIVATED']);
 
-        if(Input::get('searchBy') != '0'){
-            if(Input::get('searchWord') != ''){
-                $query->where(Input::get('searchBy'), 'LIKE', '%'.Input::get('searchWord').'%');
-            }
+    public function searchWorker($acctStatus, $rating, $hiring, $orderBy, $keyword){
+        $query = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
+                    ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+                    ->where('user_has_role.role_id', '2');
+
+        if($keyword != 'NONE'){
+            $query->where('users.fullName', 'LIKE', '%'.$keyword.'%')
+                    ->orWhere('users.username', 'LIKE', '%'.$keyword.'%')
+                    ->where('user_has_role.role_id', '2');;
         }
 
-        $query = $query->orderBy('users.created_at', 'DESC')
-                    ->select([
-                        'users.id',
-                        'users.fullName',
-                        'users.status',
-                        'users.username',
-                    ]);
-        return View::make('admin.userlist_taskminators')
-                ->with('users', $query->get())
-                ->with('searchBy', Input::get('searchBy'))
-                ->with('searchWord', Input::get('searchWord'));
+        $query->whereNotIn('users.status', ['PRE_ACTIVATED'])
+            ->orderBy('users.created_at', 'DESC')
+            ->select([
+                'users.id',
+                'users.fullName',
+                'users.status',
+                'users.username',
+            ]);
+
+        return View::make('admin.index')
+        ->with('users', $query->paginate(10));
     }
+
+//    public function adminTskmntrSearch(){
+//        $query = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
+//            ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+//            ->where('user_has_role.role_id', '2')
+//            ->whereNotIn('users.status', ['PRE_ACTIVATED']);
+//
+//        if(Input::get('searchBy') != '0'){
+//            if(Input::get('searchWord') != ''){
+//                $query->where(Input::get('searchBy'), 'LIKE', '%'.Input::get('searchWord').'%');
+//            }
+//        }
+//
+//        $query = $query->orderBy('users.created_at', 'DESC')
+//                    ->select([
+//                        'users.id',
+//                        'users.fullName',
+//                        'users.status',
+//                        'users.username',
+//                    ]);
+//        return View::make('admin.userlist_taskminators')
+//                ->with('users', $query->get())
+//                ->with('searchBy', Input::get('searchBy'))
+//                ->with('searchWord', Input::get('searchWord'));
+//    }
 
     public function adminClientIndiSearch(){
         $query = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')

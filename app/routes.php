@@ -103,7 +103,10 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/taskListAuto=search={searchBy}={searchWord}={workTimeValue}={status}', 'AdminController@taskListAutoSearch');
     Route::get('/taskListDirect', 'AdminController@taskListDirect');
     Route::get('/taskListDirect=search={searchBy}={searchWord}={workTimeValue}={status}', 'AdminController@taskListDirectSearch');
-    Route::post('/userListTaskminators=search', 'AdminController@adminTskmntrSearch');
+
+//    Route::post('/userListTaskminators=search', 'AdminController@adminTskmntrSearch');
+    Route::get('/searchWorker:{acctStatus}:{rating}:{hiring}:{orderBy}:{keyword}', 'AdminController@searchWorker');
+
     Route::post('/userListClientIndi=search', 'AdminController@adminClientIndiSearch');
     Route::post('/userListClientComp=search', 'AdminController@adminClientCompSearch');
     Route::post('/pendingTskmntr=search', 'AdminController@pendingTskmntrsSearch');

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="569db30d-f259-4ca4-87ea-38c99fc586f7" name="Default" comment="" />
+    <list default="true" id="569db30d-f259-4ca4-87ea-38c99fc586f7" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/AdminController.php" afterPath="$PROJECT_DIR$/app/controllers/AdminController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/index.blade.php" afterPath="$PROJECT_DIR$/app/views/admin/index.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes.php" afterPath="$PROJECT_DIR$/app/routes.php" />
+    </list>
     <ignored path="taskminator.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,12 +23,105 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_TOOLBAR" value="true" />
+    <option name="FLATTEN" value="false" />
+    <option name="GROUP_BY_TYPE" value="true" />
+    <option name="SORT_CHILDREN" value="false" />
+    <option name="SHOW_TABLE_CONSTRAINTS" value="true" />
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" />
+        <option name="myItemType" value="com.intellij.database.view.DbRootNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="MySQL - taskminator@localhost" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="taskminator" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+    </PATH>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="taskminator" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/routes.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.56" vertical-offset="1264" max-vertical-offset="3504">
+              <caret line="83" column="49" selection-start-line="83" selection-start-column="49" selection-end-line="83" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdminController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/AdminController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.05919003" vertical-offset="5178" max-vertical-offset="10512">
+              <caret line="525" column="5" selection-start-line="525" selection-start-column="5" selection-end-line="550" selection-end-column="7" />
+              <folding>
+                <element signature="n#userList#0;n#AdminController#0;n#!!top" expanded="false" />
+                <element signature="n#adminActivate#0;n#AdminController#0;n#!!top" expanded="false" />
+                <element signature="n#adminDeactivate#0;n#AdminController#0;n#!!top" expanded="false" />
+                <element signature="n#viewUserProfile#0;n#AdminController#0;n#!!top" expanded="false" />
+                <element signature="n#pendingClientIndi#0;n#AdminController#0;n#!!top" expanded="false" />
+                <element signature="n#pendingClientComp#0;n#AdminController#0;n#!!top" expanded="false" />
+                <element signature="n#auditTrail#0;n#AdminController#0;n#!!top" expanded="false" />
+                <element signature="n#userAuditTrail#0;n#AdminController#0;n#!!top" expanded="false" />
+                <element signature="n#taskDetails#0;n#AdminController#0;n#!!top" expanded="false" />
+                <element signature="n#viewRatings#0;n#AdminController#0;n#!!top" expanded="false" />
+                <element signature="n#index#0;n#AdminController#0;n#!!top" expanded="false" />
+                <element signature="n#taskListAuto#0;n#AdminController#0;n#!!top" expanded="false" />
+                <element signature="n#taskListDirect#0;n#AdminController#0;n#!!top" expanded="false" />
+                <marker date="1466573816175" expanded="true" signature="3538:3553" placeholder="..." />
+                <marker date="1466573816175" expanded="true" signature="3999:4014" placeholder="..." />
+                <marker date="1466573816175" expanded="true" signature="4743:4758" placeholder="..." />
+                <marker date="1466573816175" expanded="true" signature="5206:5221" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/admin/index.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.72" vertical-offset="4673" max-vertical-offset="5520">
+              <caret line="301" column="132" selection-start-line="301" selection-start-column="132" selection-end-line="301" selection-end-column="132" />
+              <folding>
+                <element signature="e#17614#17640#0#HTML" expanded="true" />
+                <element signature="e#17680#17698#0#HTML" expanded="true" />
+                <element signature="e#17909#17956#0#HTML" expanded="true" />
+                <element signature="e#18276#18356#0#HTML" expanded="true" />
+                <element signature="e#18422#18446#0#HTML" expanded="true" />
+                <element signature="e#18527#18607#0#HTML" expanded="true" />
+                <element signature="e#18670#18694#0#HTML" expanded="true" />
+                <element signature="e#18855#18935#0#HTML" expanded="true" />
+                <element signature="e#19006#19030#0#HTML" expanded="true" />
+                <element signature="e#19282#19362#0#HTML" expanded="true" />
+                <element signature="e#19435#19459#0#HTML" expanded="true" />
+                <element signature="e#19753#19772#0#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="taskList.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/admin/taskList.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.68" vertical-offset="1632" max-vertical-offset="5232">
+              <caret line="114" column="30" selection-start-line="114" selection-start-column="30" selection-end-line="123" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -44,7 +142,6 @@
         <option value="$PROJECT_DIR$/app/database/migrations/2015_05_05_072728_create_taskminator_has_offer_table.php" />
         <option value="$PROJECT_DIR$/app/database/migrations/2015_05_08_031341_create_notifications_table.php" />
         <option value="$PROJECT_DIR$/app/database/migrations/2015_05_08_032102_create_threads_table.php" />
-        <option value="$PROJECT_DIR$/app/views/admin/index.blade.php" />
         <option value="$PROJECT_DIR$/app/models/Document.php" />
         <option value="$PROJECT_DIR$/app/views/admin/AT_taskminator.blade.php" />
         <option value="$PROJECT_DIR$/app/models/AuditTrail.php" />
@@ -78,8 +175,6 @@
         <option value="$PROJECT_DIR$/app/views/admin/ratings.blade.php" />
         <option value="$PROJECT_DIR$/app/views/admin/viewUserProfile_tskmntr.blade.php" />
         <option value="$PROJECT_DIR$/app/views/profile.blade.php" />
-        <option value="$PROJECT_DIR$/app/routes.php" />
-        <option value="$PROJECT_DIR$/app/controllers/AdminController.php" />
         <option value="$PROJECT_DIR$/app/config/database.php" />
         <option value="$PROJECT_DIR$/app/views/client/tskmntrSearch.blade.php" />
         <option value="$PROJECT_DIR$/app/views/reg-taskminator.blade.php" />
@@ -87,6 +182,9 @@
         <option value="$PROJECT_DIR$/app/controllers/HomeController.php" />
         <option value="$PROJECT_DIR$/app/controllers/ClientIndiController.php" />
         <option value="$PROJECT_DIR$/app/views/client/createTask.blade.php" />
+        <option value="$PROJECT_DIR$/app/routes.php" />
+        <option value="$PROJECT_DIR$/app/views/admin/index.blade.php" />
+        <option value="$PROJECT_DIR$/app/controllers/AdminController.php" />
       </list>
     </option>
   </component>
@@ -129,6 +227,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -279,7 +378,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -291,6 +389,8 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="database.results.filters.show" value="false" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -300,7 +400,20 @@
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
+    <configuration default="true" type="com.intellij.database.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
+      <method />
+    </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <method />
     </configuration>
     <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
@@ -337,29 +450,29 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="768" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294271" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32823366" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29648608" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20468278" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294271" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SonarQube" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -385,55 +498,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/models/TaskminatorHasSkill.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08938547" vertical-offset="0" max-vertical-offset="716">
-          <caret line="4" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/database/migrations/2015_05_08_031341_create_notifications_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8044693" vertical-offset="0" max-vertical-offset="716">
-          <caret line="37" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/taskminator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="960">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/database/migrations/2015_05_11_094156_create_taskminator_has_skills.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40223464" vertical-offset="0" max-vertical-offset="716">
-          <caret line="19" column="59" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/Rate.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08938547" vertical-offset="0" max-vertical-offset="716">
-          <caret line="4" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/Task.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17877094" vertical-offset="0" max-vertical-offset="716">
-          <caret line="8" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/client/taskList_complete.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7268848" vertical-offset="257" max-vertical-offset="1408">
-          <caret line="48" column="137" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/client/rateTaskminator.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5139665" vertical-offset="0" max-vertical-offset="716">
@@ -644,13 +708,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/taskList.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2905028" vertical-offset="0" max-vertical-offset="716">
-          <caret line="13" column="7" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Routing/RoutingServiceProvider.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1504">
@@ -680,38 +737,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/AdminController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4528" max-vertical-offset="7216">
-          <caret line="553" column="16" selection-start-line="553" selection-start-column="16" selection-end-line="553" selection-end-column="16" />
-          <folding>
-            <element signature="n#userList#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#userListTaskminators#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#userListClientIndi#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#userListClientComp#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#adminActivate#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#adminDeactivate#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#viewUserProfile#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#pendingTskmntr#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#pendingClientIndi#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#pendingClientComp#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#categoryAndSkills#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#auditTrail#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#userAuditTrail#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#taskDetails#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#viewRatings#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#index#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#taskListAuto#0;n#AdminController#0;n#!!top" expanded="false" />
-            <element signature="n#taskListDirect#0;n#AdminController#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/database.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7880597" vertical-offset="672" max-vertical-offset="2112">
           <caret line="75" column="10" selection-start-line="75" selection-start-column="10" selection-end-line="75" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -719,7 +748,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2608" max-vertical-offset="4128">
           <caret line="163" column="46" selection-start-line="163" selection-start-column="46" selection-end-line="163" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -727,7 +755,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.77462685" vertical-offset="169" max-vertical-offset="1200">
           <caret line="44" column="51" selection-start-line="44" selection-start-column="51" selection-end-line="44" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -735,39 +762,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="4176" max-vertical-offset="6512">
           <caret line="912" column="27" selection-start-line="912" selection-start-column="27" selection-end-line="912" selection-end-column="27" />
-          <folding>
-            <element signature="n#generateConfirmationCode#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#emailValidate#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#logout#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#register#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#doRegisterComp#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#doRegisterIndi#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#doRegisterTaskminator#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#login#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#index#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#doLogin#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#chainRegion#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#chainProvince#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#regClientComp#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#regClientIndi#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#changePassword#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#activateResetPass#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#activateChangePass#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#confirmReset#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#confirmChange#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#chainCategoryItems#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#profile#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#editProfile#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#uploadProfilePic#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#getNotification#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#showAllNotif#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#messages#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#getMessages#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#sendMsg#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#checkMsgThread#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#checkMsgs#0;n#HomeController#0;n#!!top" expanded="false" />
-            <element signature="n#checkMsgCount#0;n#HomeController#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -775,7 +769,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.050314464" vertical-offset="2016" max-vertical-offset="4400">
           <caret line="128" column="62" selection-start-line="128" selection-start-column="62" selection-end-line="128" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -783,15 +776,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3392" max-vertical-offset="6672">
           <caret line="212" column="34" selection-start-line="212" selection-start-column="34" selection-end-line="212" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1072" max-vertical-offset="3296">
-          <caret line="67" column="3" selection-start-line="67" selection-start-column="3" selection-end-line="67" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -799,45 +783,137 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="144" max-vertical-offset="3200">
           <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://db-console:/a7739d8c/41ded148-8e03-4d54-a7ce-529b623762c2/">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/taskList.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.68" vertical-offset="1632" max-vertical-offset="5232">
+          <caret line="114" column="30" selection-start-line="114" selection-start-column="30" selection-end-line="123" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://DATABASE/41ded148-8e03-4d54-a7ce-529b623762c2.table:taskminator.roles">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>41ded148-8e03-4d54-a7ce-529b623762c2.table:taskminator.roles</OriginalElement>
+          <nodes />
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="114.0" y="-39.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Key columns</Category>
+            <Category>Columns</Category>
+          </Categories>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/a7739d8c/41ded148-8e03-4d54-a7ce-529b623762c2/taskminator..contacts">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="96">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/a7739d8c/41ded148-8e03-4d54-a7ce-529b623762c2/taskminator..roles">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="96">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.56" vertical-offset="1264" max-vertical-offset="3504">
+          <caret line="83" column="49" selection-start-line="83" selection-start-column="49" selection-end-line="83" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.72" vertical-offset="4673" max-vertical-offset="5520">
+          <caret line="301" column="132" selection-start-line="301" selection-start-column="132" selection-end-line="301" selection-end-column="132" />
           <folding>
-            <element signature="n#emailValidate#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#generateUniqueId#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="e#353#530#0#PHP" expanded="false" />
-            <element signature="e#424#520#0#PHP" expanded="false" />
-            <element signature="n#createTask#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="e#772#1647#0#PHP" expanded="false" />
-            <element signature="e#806#1048#0#PHP" expanded="false" />
-            <element signature="e#1063#1647#0#PHP" expanded="false" />
-            <element signature="e#1099#1341#0#PHP" expanded="false" />
-            <element signature="e#1356#1647#0#PHP" expanded="false" />
-            <element signature="e#1393#1637#0#PHP" expanded="false" />
-            <element signature="n#messages#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#editTask#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#doEditTask#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#deleteTask#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#tasks#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#taskDetails#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#hireTskmntr#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#tskmntrSearch#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#doTskmntrSearch#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#viewTaskminator#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#directHire#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#doDirectHire#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#retractOffer#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#completeTask#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#rateTaskminator#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#accomplishedTasks#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#cancelledTasks#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#automaticSearch#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#automaticOffer#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#cltEditPersonalInfo#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#doCltEditPersonalInfo#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#cltEditContactInfo#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#doCltEditContactInfo#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#cltEditAcctInfo#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#doCltEditPass#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#doCltIndiEditPersonalInfo#0;n#ClientIndiController#0;n#!!top" expanded="false" />
-            <element signature="n#doCltEditIndiContactInfo#0;n#ClientIndiController#0;n#!!top" expanded="false" />
+            <element signature="e#17614#17640#0#HTML" expanded="true" />
+            <element signature="e#17680#17698#0#HTML" expanded="true" />
+            <element signature="e#17909#17956#0#HTML" expanded="true" />
+            <element signature="e#18276#18356#0#HTML" expanded="true" />
+            <element signature="e#18422#18446#0#HTML" expanded="true" />
+            <element signature="e#18527#18607#0#HTML" expanded="true" />
+            <element signature="e#18670#18694#0#HTML" expanded="true" />
+            <element signature="e#18855#18935#0#HTML" expanded="true" />
+            <element signature="e#19006#19030#0#HTML" expanded="true" />
+            <element signature="e#19282#19362#0#HTML" expanded="true" />
+            <element signature="e#19435#19459#0#HTML" expanded="true" />
+            <element signature="e#19753#19772#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/a7739d8c/41ded148-8e03-4d54-a7ce-529b623762c2/taskminator..user_has_role">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="96">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/a7739d8c/41ded148-8e03-4d54-a7ce-529b623762c2/taskminator..users">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="96">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/AdminController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.05919003" vertical-offset="5178" max-vertical-offset="10512">
+          <caret line="525" column="5" selection-start-line="525" selection-start-column="5" selection-end-line="550" selection-end-column="7" />
+          <folding>
+            <element signature="n#userList#0;n#AdminController#0;n#!!top" expanded="false" />
+            <element signature="n#adminActivate#0;n#AdminController#0;n#!!top" expanded="false" />
+            <element signature="n#adminDeactivate#0;n#AdminController#0;n#!!top" expanded="false" />
+            <element signature="n#viewUserProfile#0;n#AdminController#0;n#!!top" expanded="false" />
+            <element signature="n#pendingClientIndi#0;n#AdminController#0;n#!!top" expanded="false" />
+            <element signature="n#pendingClientComp#0;n#AdminController#0;n#!!top" expanded="false" />
+            <element signature="n#auditTrail#0;n#AdminController#0;n#!!top" expanded="false" />
+            <element signature="n#userAuditTrail#0;n#AdminController#0;n#!!top" expanded="false" />
+            <element signature="n#taskDetails#0;n#AdminController#0;n#!!top" expanded="false" />
+            <element signature="n#viewRatings#0;n#AdminController#0;n#!!top" expanded="false" />
+            <element signature="n#index#0;n#AdminController#0;n#!!top" expanded="false" />
+            <element signature="n#taskListAuto#0;n#AdminController#0;n#!!top" expanded="false" />
+            <element signature="n#taskListDirect#0;n#AdminController#0;n#!!top" expanded="false" />
+            <marker date="1466573816175" expanded="true" signature="3538:3553" placeholder="..." />
+            <marker date="1466573816175" expanded="true" signature="3999:4014" placeholder="..." />
+            <marker date="1466573816175" expanded="true" signature="4743:4758" placeholder="..." />
+            <marker date="1466573816175" expanded="true" signature="5206:5221" placeholder="..." />
           </folding>
         </state>
       </provider>
