@@ -22,28 +22,15 @@
 <!--     {{ HTML::script('js/jquery-1.11.0.min.js') }} -->
     <script>
         $(document).ready(function(){
-            $('#searchBtn').click(function(){
-                var searchWord = 0;
-                if($('#searchWord').val() != ''){
-                    searchWord = $('#searchWord').val();
-                }
-
-                location.href = '{{$formUrl}}='+$('#searchBy').val()+'='+$('#searchUserType').val()+'='+searchWord;
-            });
-
-            if($('#searchBy').val() != 'ALL'){
-                $('#searchWord').prop('disabled', false);
-            }else{
-                $('#searchWord').prop('disabled', true);
-            }
-
-            $('#searchBy').change(function(){
-                if($(this).val() != 'ALL'){
-                    $('#searchWord').prop('disabled', false);
+            $('#search_PENDINGUSERS').click(function(){
+                var keyword = "";
+                if($('#search_keyword').val() == ""){
+                    keyword = "NONE";
                 }else{
-                    $('#searchWord').prop('disabled', true);
+                    keyword = $('#search_keyword').val();
                 }
-            })
+                location.href="/search_PUSR="+keyword+"="+$('#search_acctType').val()+"="+$('#search_orderBy').val();
+            });
         });
     </script>
 @stop
@@ -216,31 +203,57 @@
                 {{--<center>{{ $tasks->links() }}</center>--}}
 
                 <div class="well selected-filters">
-<!--                    <form method="POST" action="/userListTaskminators=search">-->
                     <div class="row">
-                        <div class="col-md-2">
-                            <select id="searchBy" name="searchBy" class="form-control">
-                                <option value="ALL" <?php if(@$searchBy == 'ALL'){ echo('selected'); } ?>>Display all</option>
-                                <option value="fullName" <?php if(@$searchBy == 'fullName'){ echo('selected'); } ?>>Name</option>
-                                <option value="username" <?php if(@$searchBy == 'username'){ echo('selected'); } ?>>Username</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <select id="searchUserType" name="searchUserType" class="form-control">
-                                <option value="ALL" <?php if(@$searchUserType == 'ALL'){ echo('selected'); } ?>>Display All</option>
-                                <option value="3" <?php if(@$searchUserType == '3'){ echo('selected'); } ?>>Client</option>
-                                <option value="4" <?php if(@$searchUserType == '4'){ echo('selected'); } ?>>Company</option>
-                                <option value="2" <?php if(@$searchUserType == '2'){ echo('selected'); } ?>>Worker</option>
-                            </select>
+                        <div class="col-md-6">
+                            {{--<div class="form-group"></div>--}}
+                            <div class="form-group">
+                                <input value="<?php if(@$search_keyword != 'NONE'){ echo($search_keyword); } ?>" class="form-control" type="text" id="search_keyword" name="search_keyword" placeholder="SEARCH KEYWORD FOR NAME/USERNAME" />
+                            </div>
+                            <div class="form-group">
+                                <select id="search_acctType" name="search_acctType" class="form-control">
+                                    <option value="ALL" <?php if(@$search_acctType == 'ALL'){ echo('selected'); } ?>>Display All Account Type</option>
+                                    <option value="FREE" <?php if(@$search_acctType == 'FREE'){ echo('selected'); } ?>>Free</option>
+                                    <option value="BASIC" <?php if(@$search_acctType == 'BASIC'){ echo('selected'); } ?>>Basic</option>
+                                    <option value="PREMIUM" <?php if(@$search_acctType == 'CANCELLED'){ echo('PREMIUM'); } ?>>Premium</option>
+                                    <option value="MASS_HIRING" <?php if(@$search_acctType == 'MASS_HIRING'){ echo('selected'); } ?>>Mass Hiring</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <input value="<?php if(@$searchWord){ echo($searchWord); } ?>" id="searchWord" type="text" name="searchWord" placeholder="search keyword" class="form-control"/>
+                            <div class="form-group">
+                                <select name="search_orderBy" id="search_orderBy" class="form-control">
+                                    <option value="DESC" <?php if(@$search_orderBy == 'DESC'){ echo('selected'); } ?>>Newest First</option>
+                                    <option value="ASC" <?php if(@$search_orderBy == 'ASC'){ echo('selected'); } ?>>Oldest First</option>
+                                </select>
+                            </div>
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success" id="search_PENDINGUSERS">Search</button>
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <button id="searchBtn" type="submit" class="btn btn-block btn-primary" style="margin: 0">Search</button>
-                        </div>
+                        <!--
+                        {{--<div class="col-md-2">--}}
+                            {{--<select id="searchBy" name="searchBy" class="form-control">--}}
+                                {{--<option value="ALL" <?php if(@$searchBy == 'ALL'){ echo('selected'); } ?>>Display all</option>--}}
+                                {{--<option value="fullName" <?php if(@$searchBy == 'fullName'){ echo('selected'); } ?>>Name</option>--}}
+                                {{--<option value="username" <?php if(@$searchBy == 'username'){ echo('selected'); } ?>>Username</option>--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+                        {{--<div class="col-md-2">--}}
+                            {{--<select id="searchUserType" name="searchUserType" class="form-control">--}}
+                                {{--<option value="ALL" <?php if(@$searchUserType == 'ALL'){ echo('selected'); } ?>>Display All</option>--}}
+                                {{--<option value="3" <?php if(@$searchUserType == '3'){ echo('selected'); } ?>>Client</option>--}}
+                                {{--<option value="4" <?php if(@$searchUserType == '4'){ echo('selected'); } ?>>Company</option>--}}
+                                {{--<option value="2" <?php if(@$searchUserType == '2'){ echo('selected'); } ?>>Worker</option>--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+                        {{--<div class="col-md-6">--}}
+                            {{--<input value="<?php if(@$searchWord){ echo($searchWord); } ?>" id="searchWord" type="text" name="searchWord" placeholder="search keyword" class="form-control"/>--}}
+                        {{--</div>--}}
+                        {{--<div class="col-md-2">--}}
+                            {{--<button id="searchBtn" type="submit" class="btn btn-block btn-primary" style="margin: 0">Search</button>--}}
+                        {{--</div>--}}
+                        -->
                     </div>
-<!--                    </form>-->
                 </div>
 
                 @if($pendingUsers->count() == 0)
@@ -257,7 +270,7 @@
                         <div class="widget-container" style="min-height: 150px; padding-bottom: 5px;">
                             <div class="widget-content padded">
                                 <div>
-                                    <a style="font-weight: bold; font-size: 20px;" href="viewUserProfile/{{$user->id}}">{{$user->fullName}}</a><br/>
+                                    <a style="font-weight: bold; font-size: 20px;" href="viewUserProfile/{{$user->id}}">{{$user->fullName}} | {{ $user->username }}</a><br/>
                                     Registered at {{ date('D, M j, Y \a\t g:ia', strtotime($user->created_at)) }}
                                 </div>
                             </div>

@@ -123,7 +123,8 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/deleteSkill={skillcode}', 'AdminController@deleteSkill');
     Route::get('/adminDoSearch', 'searchTestController@doSearch');
     Route::get('/jobAds={adType}', 'AdminController@jobAds');
-    Route::get('/pendingUserSearch={searchBy}={searchUserType}={searchVal}', 'AdminController@pendingUserSearch');
+    Route::get('/search_PUSR={keyword}={acctType}={orderBy}', 'AdminController@search_PUSR');
+//    Route::get('/pendingUserSearch={searchBy}={searchUserType}={searchVal}', 'AdminController@pendingUserSearch');
 });
 
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){

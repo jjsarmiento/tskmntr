@@ -790,4 +790,37 @@ class AdminController extends \BaseController {
     public function countPendingUsers(){
         return User::where('status', 'PRE_ACTIVATED')->count();
     }
+
+    public function search_PUSR($keyword, $acctType, $orderBy){
+        $userList = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
+            ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+            ->where('users.status', ['PRE_ACTIVATED']);
+
+        if($keyword != "NONE"){
+            $userList = $userList
+                        ->where('users.fullName', 'LIKE', '%'.$keyword.'%')
+                        ->orWhere('users.username', 'LIKE', '%'.$keyword.'%');
+        }
+
+        if($acctType != "ALL"){
+            $userList = $userList->where('user_has_role.role_id', $acctType);
+        }
+
+        $userList = $userList->orderBy('users.created_at', $orderBy)
+            ->select([
+                'users.id',
+                'users.fullName',
+                'users.status',
+                'users.username',
+            ])
+            ->paginate(10);
+
+        return View::make('admin.taskList')
+            ->with('pendingUsers', $userList)
+            ->with('pendingCount', $this->countPendingUsers())
+            ->with('search_keyword', $keyword)
+            ->with('search_acctType', $acctType)
+            ->with('search_orderBy', $orderBy)
+            ->with('pageName', 'Proveek Admin | Dashbooard');
+    }
 }
