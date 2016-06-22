@@ -693,7 +693,7 @@ class AdminController extends \BaseController {
 
     public function newCategory(){
         if(Input::get('newCategoryInput') == ''){
-            return Redirect::back()->with('errorMsg', 'Please input a valid category name');
+            return Redirect::back()->with('errorm', 'Please input a valid category name');
         }
 
         $maxCatCode = TaskCategory::whereNotIn('categoryname', ['Others'])->max('categorycode');
@@ -705,7 +705,7 @@ class AdminController extends \BaseController {
             'categorycode'      =>  $maxCatCode
         ));
 
-        return Redirect::to('/categoryAndSkills')->with('successMsg', 'New category is successfully added');
+        return Redirect::to('/skills')->with('succmsg', 'New category is successfully added');
     }
 
     public function deleteCategory($categorycode){
