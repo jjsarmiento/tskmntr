@@ -1303,14 +1303,35 @@ class HomeController extends BaseController {
     }
 
     public function showAllNotif(){
-        Notification::where('status', 'NEW')
-            ->where('user_id', Auth::user()->id)
-            ->update(array(
-                'status' => 'OLD'
-            ));
-
-        return View::make('showAllNotif')
+        switch(
+            Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')
+                ->where('user_has_role.user_id', Auth::user()->id)
+                ->pluck('role')
+        ){
+            case 'ADMIN' :
+                return View::make('showAllNotif')
                 ->with('notifications', Notification::where('user_id', Auth::user()->id)->paginate(15));
+            case 'TASKMINATOR' :
+            case 'CLIENT_IND' :
+            case 'CLIENT_CMP' :
+            default :
+                return Redirect::to('/');
+                break;
+        }
+//        var_dump($this->getRole(Auth::user()->id));
+//        if(in_array('ADMIN', (array) $this->getRole(Auth::user()->id))){
+//            echo "ADMIN TO";
+//        }else{
+//
+//        }
+//        Notification::where('status', 'NEW')
+//            ->where('user_id', Auth::user()->id)
+//            ->update(array(
+//                'status' => 'OLD'
+//            ));
+//
+//        return View::make('showAllNotif')
+//                ->with('notifications', Notification::where('user_id', Auth::user()->id)->paginate(15));
     }
 
     public function messages(){

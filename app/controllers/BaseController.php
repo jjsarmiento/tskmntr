@@ -175,5 +175,16 @@ class BaseController extends Controller {
     public function getRatings($userId){
         return Rate::where('taskminator_id', $userId)->avg('stars');
     }
+
+    // returns ROLE of users
+    public function getRole($userId){
+        return User::where('users.id', $userId)
+                ->join('user_has_role', 'user_has_role.user_id', '=', 'users.id')
+                ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+                ->select('roles.role')
+                ->pluck('roles.role')
+                ->first();
+
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }
