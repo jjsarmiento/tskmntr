@@ -1,23 +1,6 @@
 <?php
 
 class AdminController extends \BaseController {
-//     public function index(){
-//         $userList = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
-//                     ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
-//                     ->where('user_has_role.role_id', '2')
-//                     ->whereNotIn('users.status', ['PRE_ACTIVATED'])
-// //                    ->where('users.status', 'ACTIVATED')
-//                     ->orderBy('users.created_at', 'DESC')
-//                     ->select([
-//                         'users.id',
-//                         'users.fullName',
-//                         'users.status',
-//                         'users.username',
-//                     ])
-//                     ->paginate(10);
-
-//         return View::make('admin.index')->with('users', $userList);
-//     }
 
     public function userList(){
         return View::make('admin.userlist')
@@ -26,7 +9,10 @@ class AdminController extends \BaseController {
 
     public function userListTaskminators(){
         $userList = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
+
+                    // join ROLES table
                     ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+
                     ->where('user_has_role.role_id', '=', '2')
                     ->whereNotIn('users.status', ['PRE_ACTIVATED'])
                     ->orderBy('users.created_at', 'DESC')

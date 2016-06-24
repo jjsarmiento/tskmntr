@@ -169,5 +169,11 @@ class BaseController extends Controller {
 
         return $total_prog;
     }
+
+    // used to get user RATINGS
+    // returns NULL of user has NO RATINGS
+    public function getRatings($userId){
+        return Rate::where('taskminator_id', $userId)->avg('stars');
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

@@ -30,31 +30,6 @@
 
                     location.href = "/searchWorker:"+acctStatus+":"+rating+":"+hiring+":"+orderBy+":"+keyword;
             });
-//            $('#searchBtn').click(function(){
-//                var searchBy = 0,
-//                    searchWord = 0;
-//                if($('#searchBy').val() != ''){
-//                    searchBy = $('#searchBy').val()
-//                }
-//
-//                if($('#searchWord').val() != ''){
-//                    searchWord = $('#searchWord').val()
-//                }
-//
-//                location.href = '/userListTaskminators=search='+searchBy+'='+searchWord;
-//            });
-//
-//            $('#searchBy').change(function(){
-//                if($(this).val() == '0'){
-//                    $('#searchWord').prop('disabled', true);
-//                }else{
-//                    $('#searchWord').prop('disabled', false);
-//                }
-//            })
-//
-//            if($('#searchBy').val() == '0'){
-//                $('#searchWord').prop('disabled', true);
-//            }
         });
     </script>
 @stop
@@ -64,39 +39,6 @@
 @stop -->
 
 @section('content')
-        <!--<h2>Admin Dashboard</h2>
-        <ul>
-            <li><a href="/userListTaskminators">Taskminators</a></li>
-            <li>
-                Client
-                <ul>
-                    <li><a href="/userListClientIndi">Individuals</a></li>
-                    <li><a href="/userListClientComp">Companies</a></li>
-                </ul>
-            </li>
-            <li>
-                Pending Users
-                <ul>
-                    <li><a href="/pendingTskmntr">Taskminators</a></li>
-                    <li><a href="/pendingClientIndi">Client (Individual)</a></li>
-                    <li><a href="/pendingClientComp">Client (Company)</a></li>
-                </ul>
-            </li>
-        </ul>
-        Tasks
-        <ul>
-            <li><a href="/taskListBidding">Bidding</a></li>
-            <li><a href="/taskListAuto">Automatic</a></li>
-            <li><a href="/taskListDirect">Direct</a></li>
-        </ul>
-        Audit Trail
-        <ul>
-            <li><a href="/AT_taskminator">Taskminator</a></li>
-            <li><a href="/AT_clientindi">Client (Individual)</a></li>
-            <li><a href="/AT_clientcomp">Client (Company)</a></li>
-        </ul>
-        <a href="/categoryAndSkills">Category & Skills</a><br/>
-        <a href="/logout">Logout</a>-->
         <section style="margin-top:0;">
             <div class="container lato-text" style="">
                 <div class="page-title">
@@ -167,56 +109,6 @@
                                 <div class="panel-body">
                                     <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/skills" class="sidemenu">Manage</a><br>
                                 </div>
-                                {{--<div class="panel-heading">--}}
-                                    {{--<div class="panel-title">--}}
-                                        {{--<a class="accordion-toggle">--}}
-                                        {{--User Account List</a>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="panel-body">--}}
-                                    {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/userListTaskminators" class="sidemenu">Taskminators</a><br>--}}
-                                    {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/userListClientIndi" class="sidemenu">Client - Individuals</a><br>--}}
-                                    {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/userListClientComp" class="sidemenu">Client - Companies</a><br>--}}
-                                {{--</div>--}}
-                                {{--<div class="panel-heading">--}}
-                                    {{--<div class="panel-title">--}}
-                                        {{--<a class="accordion-toggle">--}}
-                                        {{--Pending Users</a>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="panel-body">--}}
-                                    {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/pendingTskmntr" class="sidemenu">Taskminators</a><br>--}}
-                                    {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/pendingClientIndi" class="sidemenu">Client - Individual</a><br>--}}
-                                    {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/pendingClientComp" class="sidemenu">Client - Companies</a>--}}
-                                {{--</div>--}}
-                                {{--<div class="panel-heading">--}}
-                                    {{--<div class="panel-title">--}}
-                                        {{--<a class="accordion-toggle">--}}
-                                        {{--Tasks</a>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="panel-body">--}}
-                                    {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/" class="sidemenu">Bidding</a><br>--}}
-                                    {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/taskListAuto" class="sidemenu">Automatic</a><br>--}}
-                                    {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/taskListDirect" class="sidemenu">Direct</a>--}}
-                                {{--</div>--}}
-                                {{--<div class="panel-heading">--}}
-                                    {{--<div class="panel-title">--}}
-                                        {{--<a class="accordion-toggle">--}}
-                                        {{--Audit Trail</a>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="panel-body">--}}
-                                    {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_taskminator" class="sidemenu">Taskminators</a><br>--}}
-                                    {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientindi" class="sidemenu">Client (Individual)</a><br>--}}
-                                    {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientcomp" class="sidemenu">Client (Company)</a>--}}
-                                {{--</div>--}}
-                                {{--<div class="panel-heading">--}}
-                                    {{--<div class="panel-title">--}}
-                                        {{--<a class="accordion-toggle" href="/categoryAndSkills">--}}
-                                        {{--Category & Skills</a>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
                             </div>
                         </div>
                     </div>
@@ -265,31 +157,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!--
-                        <div class="well selected-filters">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <select id="search_orderBy" name="search_orderBy" class="form-control">
-                                        <option value="DESC" <?php if(@$search_orderBy == 'DESC'){ echo('selected'); } ?>>Newest first</option>
-                                        <option value="ASC" <?php if(@$search_orderBy == 'ASC'){ echo('selected'); } ?>>Oldest first</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2">
-                                    <select id="searchBy" name="searchBy" class="form-control">
-                                        <option value="0">Display All</option>
-                                        <option value="fullName" <?php if(@$searchBy == 'fullName'){ echo('selected'); } ?>>Name</option>
-                                        <option value="username" <?php if(@$searchBy == 'username'){ echo('selected'); } ?>>Username</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <input value="<?php if(@$searchWord){ echo($searchWord); } ?>" id="searchWord" type="text" name="searchWord" placeholder="search keyword" class="form-control"/>
-                                </div>
-                                <div class="col-md-2">
-                                    <button id="searchBtn" type="submit" class="btn btn-block btn-primary" style="margin: 0">Search</button>
-                                </div>
-                            </div>
-                        </div>
-                        -->
                         @if($users->count() == 0)
                             <div class="well selected-filters" style="text-align: center">
                                 <font style="color: red">No data available.</font>
@@ -312,6 +179,15 @@
                                         @else
                                             <span style="color: red;">Please check credentials of this user before fully activating their account.</span>
                                         @endif
+                                        <br/>
+                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Average Rating : </span>
+                                        <?php
+                                            if(Rate::where('taskminator_id', $user->id)->avg('stars')){
+                                                echo(Rate::where('taskminator_id', $user->id)->avg('stars').'<i class="fa fa-star"></i> stars');
+                                            }else{
+                                                echo "0 <i class='fa fa-star'></i>. This user has not recieved any ratings yet.";
+                                            }
+                                        ?>
                                         <br/><br/>
                         <!--                <hr style="margin: 0;"/>-->
                                         @if($user->status == 'PRE_ACTIVATED')
