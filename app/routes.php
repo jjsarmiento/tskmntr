@@ -128,6 +128,10 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/jobAds={adType}', 'AdminController@jobAds');
     Route::get('/search_PUSR={keyword}={acctType}={orderBy}', 'AdminController@search_PUSR');
 //    Route::get('/pendingUserSearch={searchBy}={searchUserType}={searchVal}', 'AdminController@pendingUserSearch');
+
+    Route::post('/adminSearchChatUser', 'AdminController@adminSearchChatUser');
+    Route::get('/getCHAT={with_userId}', 'AdminController@getCHAT');
+    Route::post('/ADMINSENDMESSAGE', 'AdminController@ADMINSENDMESSAGE');
 });
 
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){

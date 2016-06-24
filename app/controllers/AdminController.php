@@ -834,7 +834,7 @@ class AdminController extends \BaseController {
         }
 
         if($acctType != "ALL"){
-            $userList = $userList->where('user_has_role.role_id', $acctType);
+            $userList = $userList->where('users.accountType', $acctType);
         }
 
         $userList = $userList->orderBy('users.created_at', $orderBy)
@@ -853,5 +853,32 @@ class AdminController extends \BaseController {
             ->with('search_acctType', $acctType)
             ->with('search_orderBy', $orderBy)
             ->with('pageName', 'Proveek Admin | Dashbooard');
+    }
+
+    public function adminSearchChatUser(){
+        return User::where('fullName', 'LIKE', '%'.Input::get('chatSearch').'%')
+                ->orWhere('username', 'LIKE', '%'.Input::get('chatSearch').'%')
+                ->select([
+                    'fullName',
+                    'username',
+                    'id'
+                ])->get();
+    }
+
+    public function getCHAT($with_userId){
+        if(AdminMessage::where('user_id', $with_userId)->count() > 0){
+            return AdminMessage::where('user_id', $with_userId)->get();
+        }else{
+            return "NOCHATHISTORY";
+        }
+    }
+
+    public function ADMINSENDMESSAGE(){
+        AdminMessage::insert(array(
+            'user_id'   =>  Input::get('USERID'),
+            'sender_id' =>  Input::get('SENDERID'),
+            'content'   =>  Input::get('ADMIN_sendMsgContent'),
+            'created_at'=>  date("Y:m:d H:i:s")
+        ));
     }
 }
