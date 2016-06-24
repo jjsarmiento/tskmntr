@@ -159,6 +159,10 @@
                                     {{ Form::label('lbl_cPassword', 'Confirm Password', ['style' => 'color:#333; text-transform: uppercase']) }}
                                     {{ Form::password('cPass' , array('style' => 'border:none;', 'class' => 'form-control', 'placeholder' => '•••••••', 'required')) }}
                                 </div>
+                                <div class="col-lg-6">
+                                    {{ Form::label('lbl_mblNum', 'Mobile Number', ['style' => 'color:#333; text-transform: uppercase']) }}
+                                    <input type="text" placeholder="09xxxxxxxxx" name="mblNum" required="required" class="form-control" style="border:none;" />
+                                </div>
                                   <div class="col-lg-12 lato-text g-recaptcha" style="padding-top:10px;" data-sitekey="6LfpJyITAAAAAPxa-KWsJlqMNHL6qVK6nngZktlY"></div>
                                 <div class="col-lg-12 lato-text">
                                     <p style="padding:0;margin:0;font-size:10pt; color:#0f0f0f">By clicking Sign Up, you agree to our <a href="#">Terms</a> and that you have read our <a href="#">Privacy Policy</a>.</p>

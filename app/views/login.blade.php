@@ -104,21 +104,21 @@
                         <a class="btn btn-primary lato-text btnTheme" style="border:1px solid #2980b9;" data-toggle="modal" data-target="#forgotPassModal">Forgot Password</a>
                         
                     <!-- Additionals -->
-                              <div class="div_signUp lato-text" style="padding-top:20px;"> <!-- wow fadeIn data-wow-delay="2.6s"  -->
-                                  <!-- <p style="color:#222; font-style:oblique; margin:auto;">Don't have an account? <a href="#" style="text-decoration:underline;">Sign Up</a> now.</p>
-                                  <p style="color:#222; font-style:oblique;margin:auto;">Forgot your password? <a href="#" style="text-decoration:underline;">Click Here</a></p> -->
-                                  <p style="color:#222; font-size: 18pt; padding:0;">Create account</p>
-                                  <div class="col-lg-12">
-                                      <div class="col-lg-3"></div>
-                                      <div class="col-lg-3 text-center">
-                                              <button type="button" class="lato-text taskminator-btn btn btn-lg btn-warning btn-block" onclick="location.href='/regTaskminator'" style="border-radius:4px;"></span>Worker</button>
-                                      </div>
-                                      <div class="col-lg-3 text-center">
-                                              <button type="button" class="lato-text taskminator-btn btn btn-lg btn-warning btn-block" style="border-radius:4px;" onclick="location.href='/regClientComp'">Employer</button>
-                                      </div>
-                                      <div class="col-lg-3"></div>
-                                  </div>
-                              </div>
+                              {{--<div class="div_signUp lato-text" style="padding-top:20px;"> <!-- wow fadeIn data-wow-delay="2.6s"  -->--}}
+                                  {{--<!-- <p style="color:#222; font-style:oblique; margin:auto;">Don't have an account? <a href="#" style="text-decoration:underline;">Sign Up</a> now.</p>--}}
+                                  {{--<p style="color:#222; font-style:oblique;margin:auto;">Forgot your password? <a href="#" style="text-decoration:underline;">Click Here</a></p> -->--}}
+                                  {{--<p style="color:#222; font-size: 18pt; padding:0;">Create account</p>--}}
+                                  {{--<div class="col-lg-12">--}}
+                                      {{--<div class="col-lg-3"></div>--}}
+                                      {{--<div class="col-lg-3 text-center">--}}
+                                              {{--<button type="button" class="lato-text taskminator-btn btn btn-lg btn-warning btn-block" onclick="location.href='/regTaskminator'" style="border-radius:4px;"></span>Worker</button>--}}
+                                      {{--</div>--}}
+                                      {{--<div class="col-lg-3 text-center">--}}
+                                              {{--<button type="button" class="lato-text taskminator-btn btn btn-lg btn-warning btn-block" style="border-radius:4px;" onclick="location.href='/regClientComp'">Employer</button>--}}
+                                      {{--</div>--}}
+                                      {{--<div class="col-lg-3"></div>--}}
+                                  {{--</div>--}}
+                              {{--</div>--}}
                               
                     </div>
                     <div class="col-xs-1"><!-- Used to center Input Group --></div>

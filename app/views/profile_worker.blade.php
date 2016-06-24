@@ -108,7 +108,7 @@
                     <h2 class="section-heading">Contact Info</h2>
                     <hr class="hrLine">
                     <div class="list-group" style="text-align:left;">
-                        <p class="list-group-item"><i class="fa fa-phone fa-fw"></i>&nbsp; +(63) 949-554-8249</p>
+                        <p class="list-group-item"><i class="fa fa-phone fa-fw"></i>&nbsp; {{ $mobile  }}</p>
                         <a class="list-group-item" href="#"><i class="fa fa-facebook-square fa-fw"></i>&nbsp; Facebook</a>
                         <a class="list-group-item" href="#"><i class="fa fa-twitter-square fa-fw"></i>&nbsp; Twitter</a>
                         <a class="list-group-item" href="#"><i class="fa fa-instagram fa-fw"></i>&nbsp; Instagram</a>

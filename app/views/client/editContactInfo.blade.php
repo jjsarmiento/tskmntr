@@ -14,11 +14,11 @@
 <form method="POST" action="{{$formUrl}}" id="editContactInfo">
     @foreach($contacts as $contact)
         @if($contact->ctype == 'email')
-            Email : <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" /><br/>
+            Email : <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" required="required" /><br/>
         @elseif($contact->ctype == 'businessNum')
-            Business Number : <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" /><br/>
+            Business Number : <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" required="required" /><br/>
         @elseif($contact->ctype == 'mobileNum')
-            Mobile Number : <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" /><br/>
+            Mobile Number : <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" required="required" /><br/>
         @elseif($contact->ctype == 'facebook')
             Facebook : <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" /><br/>
         @elseif($contact->ctype == 'twitter')

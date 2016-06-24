@@ -57,9 +57,12 @@ class HomeController extends BaseController {
         $role = Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')
                 ->where('user_has_role.user_id', $temp->id)
                 ->pluck('role');
+        $QUERY_CONTACT = Contact::where('user_id', Auth::user()->id);
+        $mobile = $QUERY_CONTACT->where('ctype', 'mobileNum')->pluck('content');
         return View::make("profile_worker")
         ->with("users", User::where('username', '=', $username)->get()->first())
-        ->with('roles', $role);
+        ->with('roles', $role)
+        ->with('mobile', $mobile);
     }
 
     public function regEmployer()
@@ -107,6 +110,11 @@ class HomeController extends BaseController {
             array(
                 'user_id'       =>  $userId,
                 'ctype'         =>  'businessNum',
+                'content'       =>  NULL,
+            ),
+            array(
+                'user_id'       =>  $userId,
+                'ctype'         =>  'mobileNum',
                 'content'       =>  NULL,
             ),
             array(
@@ -399,7 +407,7 @@ class HomeController extends BaseController {
             array(
                 'user_id'       =>  $userId,
                 'ctype'         =>  'mobileNum',
-                'content'       =>  NULL,
+                'content'       =>  Input::get('mblNum'),
             ),
             array(
                 'user_id'       =>  $userId,

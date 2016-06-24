@@ -129,7 +129,8 @@
                                 City : 
                             </div>
                             <div class="col-md-9">
-                                <select name="city-task" id="city-task" class="form-control">
+                                <select name="city-task" id="city-task" class="form-control" required="required">
+                                    <option value="">Please Select your city</option>
                                     @foreach($cities as $city)
                                         <option value="{{$city->citycode}}" <?php if($city->citycode == $user->city){ echo('selected'); } ?> >{{ $city->cityname }}</option>
                                     @endforeach
@@ -139,7 +140,7 @@
                                 Barangay : 
                             </div>
                             <div class="col-md-9">
-                                <select name="barangay-task" id="barangay-task" class="form-control">
+                                <select name="barangay-task" id="barangay-task" class="form-control" disabled  required="required">
                                     @foreach($barangays as $bgy)
                                     <option value="{{$bgy->bgycode}}" <?php if($bgy->bgycode == $user->barangay){ echo('selected'); } ?> >{{ $bgy->bgyname }}</option>
                                     @endforeach
@@ -149,7 +150,8 @@
                                 Gender : 
                             </div>
                             <div class="col-md-9">
-                                <select name="gender" class="form-control">
+                                <select name="gender" class="form-control"  required="required">
+                                    <option value="">Please Select your gender</option>
                                     <option value="FEMALE" <?php if($user->gender == 'FEMALE'){ echo('selected'); } ?>>Female</option>
                                     <option value="MALE" <?php if($user->gender == 'MALE'){ echo('selected'); } ?>>Male</option>
                                 </select><br/>

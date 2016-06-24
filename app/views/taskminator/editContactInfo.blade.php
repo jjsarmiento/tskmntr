@@ -80,14 +80,14 @@
             @if(Session::has('errorMsg'))
                 <div class="col-sm-12">
                     <div class="alert alert-danger">
-                        {{ @Session::has('errorMsg') }}
+                        {{ @Session::get('errorMsg') }}
                     </div>
                 </div>
             @endif
             @if(Session::has('successMsg'))
                 <div class="col-sm-12">
                     <div class="alert alert-success">
-                        {{ @Session::has('successMsg') }}
+                        {{ @Session::get('successMsg') }}
                     </div>
                 </div>
             @endif
@@ -102,35 +102,35 @@
                                         Email : 
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" /><br/>
+                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" required="required" /><br/>
                                     </div>
                                 @elseif($contact->ctype == 'facebook')
                                     <div class="col-md-3">
                                         Facebook : 
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" /><br/>
+                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" required="required" /><br/>
                                     </div>
                                 @elseif($contact->ctype == 'linkedin')
                                     <div class="col-md-3">
                                         LinkedIn : 
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" /><br/>
+                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" required="required" /><br/>
                                     </div>
                                 @elseif($contact->ctype == 'mobileNum')
                                     <div class="col-md-3">
                                         Mobile Number : 
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" /><br/>
+                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" required="required" /><br/>
                                     </div>
                                 @elseif($contact->ctype == 'twitter')
                                     <div class="col-md-3">
                                         Twitter : 
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" /><br/>
+                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" required="required" /><br/>
                                     </div>
                                 @endif
                             @endforeach

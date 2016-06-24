@@ -167,7 +167,7 @@
                                 <div style="width:20%; text-align:right;">80%</div>
                                 <div style="width:20%; text-align:right;">100%</div>
                             </div>
-                            <span style="font-size:10pt;">Please complete your profile to be able to apply for jobs.</span>
+                            {{--<span style="font-size:10pt;">Please complete your profile to be able to apply for jobs.</span>--}}
                         </div>
                     </div>
                     <div class="widget-content padded">

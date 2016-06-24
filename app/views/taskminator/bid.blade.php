@@ -20,7 +20,7 @@ Bid for {{ $task->name }}
 @stop
 
 @section('body-scripts')
-    <script src="js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
             $('.init-datepicker').datepicker({
@@ -51,6 +51,8 @@ Bid for {{ $task->name }}
                     </li>
                 </ul>
             </div>
+            <span style="color: red; font-weight: bold">{{ @Session::get('errorMsg') }}</span>
+            <span style="color: green; font-weight: bold">{{ @Session::get('successMsg') }}</span>
             <div class="col-md-12" style="background-color: white; padding: 1em;">
                 Task title : {{ $task->name }}<br/>
                 Task Description : {{ $task->description }}<br/>
@@ -59,10 +61,11 @@ Bid for {{ $task->name }}
                 Mode of payment : {{ $task->modeOfPayment }}<br/>
                 Work Time : {{ $task->workTime }}<br/>
                 @foreach(User::where('id', $task->user_id)->get() as $user)
+
                     @if(UserHasRole::where('user_id', $user->id)->pluck('role_id') == 3)
-                        by <a target="_tab" href="/profile/{{ $user->id }}">{{ $user->firstName }} {{ $user->lastName }}</a>
+                        by <a target="_tab" href="/{{ $user->username }}">{{ $user->fullName }}</a>
                     @else
-                        by <a target="_tab" href="/profile/{{ $user->id }}">{{ $user->companyName }}</a>
+                        by <a target="_tab" href="/{{ $user->username }}">{{ $user->companyName }}</a>
                     @endif
                 @endforeach
                 <br/>

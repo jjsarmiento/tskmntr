@@ -716,12 +716,12 @@ class ClientIndiController extends \BaseController {
 
         // BARANGAY VALIDATION
         if(Input::get('barangay-comp') == null || Input::get('barangay-comp') == 0){
-            return Redirect::back()->with('errorMsg', 'City cannot be empty')->withInput(Input::except('password'));
+            return Redirect::back()->with('errorMsg', 'Barangay cannot be empty')->withInput(Input::except('password'));
         }
 
         // BUSINESS PERMIT VALIDATION
-        if(Input::get('businessPermit') == null || Input::get('businessPermit') == 0){
-            return Redirect::back()->with('errorMsg', 'City cannot be empty')->withInput(Input::except('password'));
+        if(Input::get('businessPermit') == "" || Input::get('businessPermit') == null){
+            return Redirect::back()->with('errorMsg', 'Business Permit cannot be empty')->withInput(Input::except('password'));
         }
 
         User::where('id', Auth::user()->id)
@@ -756,7 +756,7 @@ class ClientIndiController extends \BaseController {
             return Redirect::back()->with('errorMsg', 'Business number must be numbers only');
         }
 
-        // MOBILE NUMBER VALIDATION
+//         MOBILE NUMBER VALIDATION
         if(!ctype_digit(Input::get('mobileNum'))){
             return Redirect::back()->with('errorMsg', 'Mobile number must be numbers only')->withInput(Input::except('password'));
         }else if(strlen(Input::get('mobileNum')) == 0 || strlen(Input::get('mobileNum')) < 11){
@@ -771,6 +771,7 @@ class ClientIndiController extends \BaseController {
         }
 
         Contact::where('user_id', Auth::user()->id)->delete();
+
         Contact::insert(array(
             array(
                 'user_id'       =>  Auth::user()->id,
@@ -779,13 +780,28 @@ class ClientIndiController extends \BaseController {
             ),
             array(
                 'user_id'       =>  Auth::user()->id,
+                'ctype'       =>  'businessNum',
+                'content'       =>  Input::get('businessNum'),
+            ),
+            array(
+                'user_id'       =>  Auth::user()->id,
                 'ctype'       =>  'mobileNum',
                 'content'       =>  Input::get('mobileNum'),
             ),
             array(
                 'user_id'       =>  Auth::user()->id,
-                'ctype'       =>  'businessNum',
-                'content'       =>  Input::get('businessNum'),
+                'ctype'         =>  'facebook',
+                'content'       =>  Input::get('facebook'),
+            ),
+            array(
+                'user_id'       =>  Auth::user()->id,
+                'ctype'         =>  'twitter',
+                'content'       =>  Input::get('twitter'),
+            ),
+            array(
+                'user_id'       =>  Auth::user()->id,
+                'ctype'         =>  'linkedin',
+                'content'       =>  Input::get('linkedin'),
             )
         ));
 
