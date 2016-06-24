@@ -168,11 +168,11 @@ Welcome to your dashboard!
 @section('contents')
 <input type="hidden" name="currUserId" id="currUserId" value="{{Auth::user()->id}}"/>
 <div class="container-fluid main-content">
-    <div class="page-title">
-        <h1>
-            Chat
-        </h1>
-    </div>
+    {{--<div class="page-title">--}}
+        {{--<h1>--}}
+            {{--Chat--}}
+        {{--</h1>--}}
+    {{--</div>--}}
     <div class="row">
         <!-- Conversation -->
         <div class="col-lg-12">

@@ -1344,8 +1344,15 @@ class HomeController extends BaseController {
     }
 
     public function messages(){
-//        return View::make('msgPage');
-        return View::make('messages')->with('threads', Thread::where('user_id', Auth::user()->id)->where('status', 'OPEN')->orderBy('created_at', 'ASC')->get());
+        $role = Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')
+            ->where('user_has_role.user_id', Auth::user()->id)
+            ->pluck('role');
+
+        if($role != 'ADMIN'){
+            return View::make('messages')->with('threads', Thread::where('user_id', Auth::user()->id)->where('status', 'OPEN')->orderBy('created_at', 'ASC')->get());
+        }else{
+            return View::make('admin.adminmessage');
+        }
     }
 
     public function getMessages($threadCode){
