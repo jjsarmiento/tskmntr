@@ -1335,8 +1335,8 @@ class HomeController extends BaseController {
     }
 
     public function messages(){
-        return View::make('messages')
-            ->with('threads', Thread::where('user_id', Auth::user()->id)->where('status', 'OPEN')->orderBy('created_at', 'ASC')->get());
+        return View::make('msgPage');
+//        return View::make('messages')->with('threads', Thread::where('user_id', Auth::user()->id)->where('status', 'OPEN')->orderBy('created_at', 'ASC')->get());
     }
 
     public function getMessages($threadCode){

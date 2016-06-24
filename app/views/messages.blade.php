@@ -208,18 +208,6 @@ Welcome to your dashboard!
                                 </li>
                             @endforeach
                         @endforeach
-                        <!--                            <li>-->
-                        <!--                                <a href="#"><img width="30" height="30" src="images/avatar-female.png" />Gale Boetticher<i class="icon-circle text-warning"></i></a>-->
-                        <!--                            </li>-->
-                        <!--                            <li>-->
-                        <!--                                <a href="#"><img width="30" height="30" src="images/avatar-female2.png" />Huell<i class="icon-circle text-muted"></i></a>-->
-                        <!--                            </li>-->
-                        <!--                            <li>-->
-                        <!--                                <a href="#"><img width="30" height="30" src="images/avatar-male.jpg" />Ted Beneke<i class="icon-circle text-success"></i></a>-->
-                        <!--                            </li>-->
-                        <!--                            <li>-->
-                        <!--                                <a href="#"><img width="30" height="30" src="images/avatar-female.png" />Bogdan Wolynetz<i class="icon-circle text-warning"></i></a>-->
-                        <!--                            </li>-->
                     </ul>
                 </div>
                 <div class="heading" id="chatHeading">
