@@ -12,16 +12,20 @@ class AdminController extends \BaseController {
 
                     // join ROLES table
                     ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+                    // join RATINGS table
+                    ->leftJoin('ratings', 'ratings.taskminator_id', '=', 'users.id')
 
                     ->where('user_has_role.role_id', '=', '2')
                     ->whereNotIn('users.status', ['PRE_ACTIVATED'])
-                    ->orderBy('users.created_at', 'DESC')
                     ->select([
                         'users.id',
                         'users.fullName',
                         'users.status',
                         'users.username',
+                        DB::raw('AVG(ratings.stars) as avg_stars'),
                     ])
+                    ->orderBy('users.created_at', 'DESC')
+                    ->groupBy('users.id')
                     ->paginate(10);
 
         // return View::make('admin.userlist_taskminators')
@@ -488,27 +492,44 @@ class AdminController extends \BaseController {
 
 
     public function searchWorker($acctStatus, $rating, $hiring, $orderBy, $keyword){
+//        NOTE : whereNotIn clause inserted multiple times.
+//        bugs occur because of conditional additions of queries
+//        to adapt to  multiple search parameters
+//        - Jan Sarmiento
+        
         $query = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
                     ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
-                    ->where('user_has_role.role_id', '2');
+                    ->leftJoin('ratings', 'ratings.taskminator_id', '=', 'users.id')
+                    ->where('user_has_role.role_id', '2')
+                    ->whereNotIn('users.status', ['PRE_ACTIVATED']);
 
         if($keyword != 'NONE'){
             $query->where('users.fullName', 'LIKE', '%'.$keyword.'%')
-                    ->orWhere('users.username', 'LIKE', '%'.$keyword.'%')
-                    ->where('user_has_role.role_id', '2');;
+                ->orWhere('users.username', 'LIKE', '%'.$keyword.'%')
+                ->where('user_has_role.role_id', '2')
+                ->whereNotIn('users.status', ['PRE_ACTIVATED']);
+        }else{
+            $keyword = null;
         }
 
+
         $query->whereNotIn('users.status', ['PRE_ACTIVATED'])
-            ->orderBy('users.created_at', 'DESC')
+            ->orderBy('avg_stars', $rating)
+            ->orderBy('users.created_at', $orderBy)
             ->select([
                 'users.id',
                 'users.fullName',
                 'users.status',
                 'users.username',
-            ]);
+                DB::raw('AVG(ratings.stars) as avg_stars')
+            ])
+            ->groupBy('users.id');
 
         return View::make('admin.index')
-        ->with('users', $query->paginate(10));
+                ->with('users', $query->paginate(10))
+                ->with('rating', $rating)
+                ->with('orderBy', $orderBy)
+                ->with('keyword', $keyword);
     }
 
 //    public function adminTskmntrSearch(){

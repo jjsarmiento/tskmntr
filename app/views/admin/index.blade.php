@@ -120,15 +120,15 @@
                                     <div class="form-group">
                                         <label>Account Status</label>
                                         <select class="form-control" id="search_acctStatus" name="search_acctStatus">
-                                            <option value="LOWF">Lowest First</option>
-                                            <option value="HIGHF">Highest First</option>
+                                            <option value="ASC">Lowest First</option>
+                                            <option value="DESC">Highest First</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Rating</label>
                                         <select class="form-control" id="search_rating" name="search_rating">
-                                            <option value="RLOWF">Lowest First</option>
-                                            <option value="RHIGHF">Highest First</option>
+                                            <option value="ASC" <?php if(@$rating == "ASC"){ echo('selected'); } ?>>Lowest First</option>
+                                            <option value="DESC" <?php if(@$rating == "DESC"){ echo('selected'); } ?>>Highest First</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -143,13 +143,13 @@
                                     <div class="form-group">
                                         <label>Order by</label>
                                         <select class="form-control" id="search_orderBy" name="search_orderBy">
-                                            <option value="DESC">Newest first</option>
-                                            <option value="ASC">Oldest first</option>
+                                            <option value="DESC" <?php if(@$orderBy == "DESC"){ echo('selected'); } ?>>Newest first</option>
+                                            <option value="ASC" <?php if(@$orderBy == "ASC"){ echo('selected'); } ?>>Oldest first</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Search Keywords (Name or Username)</label>
-                                        <input type="text" class="form-control" placeholder="KEYWORD FOR NAME/USERNAME" id="search_keyword" name="search_keyword" />
+                                        <input type="text" class="form-control" value="{{@$keyword}}" placeholder="KEYWORD FOR NAME/USERNAME" id="search_keyword" name="search_keyword" />
                                     </div>
                                     <div class="form-group pull-right">
                                         <button type="submit" class="btn btn-primary" id="search_btn">Search</button>
@@ -181,13 +181,12 @@
                                         @endif
                                         <br/>
                                         <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Average Rating : </span>
-                                        <?php
-                                            if(Rate::where('taskminator_id', $user->id)->avg('stars')){
-                                                echo(Rate::where('taskminator_id', $user->id)->avg('stars').'<i class="fa fa-star"></i> stars');
-                                            }else{
-                                                echo "0 <i class='fa fa-star'></i>. This user has not recieved any ratings yet.";
-                                            }
-                                        ?>
+                                        @if($user->avg_stars)
+                                            {{ $user->avg_stars  }} <i class="fa fa-star" style="color: yellow"></i>
+                                        @else
+                                            0 <i class="fa fa-star" style="color: yellow"></i> This user has not received any ratings yet.
+                                        @endif
+                                        <br/>
                                         <br/><br/>
                         <!--                <hr style="margin: 0;"/>-->
                                         @if($user->status == 'PRE_ACTIVATED')
