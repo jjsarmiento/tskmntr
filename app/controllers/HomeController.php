@@ -115,7 +115,7 @@ class HomeController extends BaseController {
             array(
                 'user_id'       =>  $userId,
                 'ctype'         =>  'mobileNum',
-                'content'       =>  NULL,
+                'content'       =>  Input::get('mobileNum'),
             ),
             array(
                 'user_id'       =>  $userId,
@@ -143,7 +143,8 @@ class HomeController extends BaseController {
         ));
 
         Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')));
-        return Redirect::to('/')->with('successMsg', 'Registration Success. You may now login.');
+        return Redirect::to('/');
+//        return Redirect::to('/')->with('successMsg', 'Registration Success. You may now login.');
     }
 
     public function doRegisterComp(){
@@ -1343,8 +1344,8 @@ class HomeController extends BaseController {
     }
 
     public function messages(){
-        return View::make('msgPage');
-//        return View::make('messages')->with('threads', Thread::where('user_id', Auth::user()->id)->where('status', 'OPEN')->orderBy('created_at', 'ASC')->get());
+//        return View::make('msgPage');
+        return View::make('messages')->with('threads', Thread::where('user_id', Auth::user()->id)->where('status', 'OPEN')->orderBy('created_at', 'ASC')->get());
     }
 
     public function getMessages($threadCode){

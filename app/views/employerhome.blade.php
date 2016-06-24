@@ -160,6 +160,10 @@
                                     {{ Form::label('lbl_cPassword', 'Confirm Password', ['style' => 'color:#333; text-transform: uppercase']) }}
                                     {{ Form::password('cPass' , array('style' => 'border:none;', 'class' => 'form-control', 'placeholder' => '•••••••', 'required' => 'True')) }}
                                 </div>
+                                <div class="col-lg-6">
+                                    {{ Form::label('lbl_mobileNum', 'Mobile Number', ['style' => 'color:#333; text-transform: uppercase']) }}
+                                    <input type="text" class="form-control" placeholder="09xxxxxxxxx" name="mobileNum" style="border: none;" required="required" />
+                                </div>
                                 <div class="col-lg-12 lato-text">
                                     <p style="padding:0;margin:0;font-size:10pt; color:#0f0f0f">By clicking Sign Up, you agree to our <a href="#">Terms</a> and that you have read our <a href="#">Privacy Policy</a>.</p>
                                 </div>
