@@ -244,6 +244,23 @@ class HomeController extends BaseController {
 //                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
         ));
 
+        // send email verification for registration - jan sarmiento
+
+        $msg = 'Your registration has been successful!<br/>You may now login to your account!';
+        $url =  URL::to('/').'/login';
+        $email = Input::get('email');
+
+        $data = [
+            'url'   => $url,
+            'msg'   => $msg
+        ];
+
+        Mail::send('emails.changepass_Template', $data, function($message) use($email)
+        {
+            $message->from('taskminator.mail@gmail.com', 'Proveek');
+            $message->to($email)->subject('Proveek Beta Password Management');
+        });
+
         Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')));
         return Redirect::to('/')->with('successMsg', 'Registration Success. You may now login.');
     }

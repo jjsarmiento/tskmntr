@@ -273,6 +273,38 @@
 
     {{--MODAL -- START--}}
 
+    {{--MODAL FOR CHANGE PASS--}}
+    <form method="POST" action="/CHNGPSS">
+        <div class="modal modal-vcenter fade lato-text" id="CHNGPSS-MODAL" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 style="margin: 0; padding: 0; text-align: center;">Change password</h3>
+                    </div>
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <label>Input Old Password</label>
+                                <input type="password" name="OLD_PASS" class="form-control" placeholder="********" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label>Input New Password</label>
+                                <input type="password" name="NEW_PASS" class="form-control" placeholder="********" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm new Password</label>
+                                <input type="password" name="CNEW_PASS" class="form-control" placeholder="********" required="required">
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary">Submit</button>
+                        <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
     {{--MODAL FOR USER SEARCH--}}
     <div class="modal modal-vcenter fade lato-text" id="userSearchModal" role="dialog">
         <div class="modal-dialog">

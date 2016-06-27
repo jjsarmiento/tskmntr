@@ -126,44 +126,67 @@
                             @endif
                         </div>
                         <div class="col-lg-9">
-                            <div class="heading" style="font-size:14pt; color:#2980b9">
-                                <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Personal Information <button onclick="location.href='/editPersonalInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="heading" style="font-size:14pt; color:#2980b9">
+                                        <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Personal Information <button onclick="location.href='/editPersonalInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                                    </div>
+                                    <div style="padding-left: 30px;" style="display:table">
+                                        <div style="display:table-row;">
+                                            <span style="display:table-cell;text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">First Name</span>
+                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                            <span style="display:table-cell;">{{ $user->firstName }}</span>
+                                        </div>
+                                        <div style="display:table-row;">
+                                            <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Middle Name</span>
+                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                            <span style="display:table-cell">{{ $user->midName }}</span>
+                                        </div>
+                                        <div style="display:table-row;">
+                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Last Name</span>
+                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                            <span style="display:table-cell">{{ $user->lastName }}</span>
+                                        </div>
+
+                                        <div style="display:table-row;">
+                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">City</span>
+                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                            <span style="display:table-cell">{{ City::where('citycode', $user->city)->pluck('cityname') }}</span>
+                                        </div>
+
+                                        <div style="display:table-row;">
+                                            <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Barangay</span>
+                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                            <span style="display:table-cell">{{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }}</span>
+                                        </div>
+
+                                        <div style="display:table-row;">
+                                            <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Gender</span>
+                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                            <span style="display:table-cell">{{ Auth::user()->gender }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 well" style="font-weight: bolder;">
+                                    <div class="heading" style="font-size:14pt; color:#2980b9">
+                                        <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Account Information
+                                    </div>
+                                    <div style="display:table-row;">
+                                        <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
+                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                        <span style="display:table-cell">{{ Auth::user()->username }}</span>
+                                    </div>
+                                    <div style="display:table-row;">
+                                        <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Password</span>
+                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                        <span style="display:table-cell">******</span>
+                                    </div>
+                                    <br/>
+                                    <a href="#" data-target="#CHNGPSS-MODAL" data-toggle="modal">Change password</a>
+                                </div>
                             </div>
-                            <div style="padding-left: 30px;" style="display:table">
-                                <div style="display:table-row;">
-                                    <span style="display:table-cell;text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">First Name</span>
-                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
-                                    <span style="display:table-cell;">{{ $user->firstName }}</span>
-                                </div>
-                                <div style="display:table-row;">
-                                    <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Middle Name</span>
-                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
-                                    <span style="display:table-cell">{{ $user->midName }}</span>
-                                </div>
-                                <div style="display:table-row;">
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Last Name</span>
-                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
-                                    <span style="display:table-cell">{{ $user->lastName }}</span>
-                                </div>
 
-                                <div style="display:table-row;">
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">City</span>
-                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
-                                    <span style="display:table-cell">{{ City::where('citycode', $user->city)->pluck('cityname') }}</span>
-                                </div>
-
-                                <div style="display:table-row;">
-                                    <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Barangay</span>
-                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
-                                    <span style="display:table-cell">{{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }}</span>
-                                </div>
-
-                                <div style="display:table-row;">
-                                    <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Gender</span>
-                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
-                                    <span style="display:table-cell">{{ Auth::user()->gender }}</span>
-                                </div>
-                            </div>
                             <hr/>
                             <div class="heading" style="font-size:14pt; color:#2980b9">
                                 <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>&nbsp Contact Information <button class="btn btn-xs btn-default pull-right" onclick="location.href='/editContactInfo'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
