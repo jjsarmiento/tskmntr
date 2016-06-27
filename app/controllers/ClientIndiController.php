@@ -943,4 +943,32 @@ class ClientIndiController extends \BaseController {
 
         return Redirect::back()->with('successMsg', 'Successfully edited contact information');
     }
+
+    public function CISRCH($prog, $keyword){
+        $users = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
+            ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+            ->where('user_has_role.role_id', '2')
+            ->whereNotIn('users.status', ['PRE_ACTIVATED'])
+
+
+            ->orderBy('users.created_at', 'DESC')
+            ->select([
+                'users.id',
+                'users.fullName',
+                'users.username',
+                'users.status',
+            ])
+            ->where('users.fullName', 'LIKE', '%'.$keyword.'%')
+            ->paginate(10);
+
+        $tasks = Task::where('name', 'LIKE', '%'.$keyword.'%')
+            ->paginate(10);
+
+        return View::make('client.general_search')
+            ->with('total_prog', $prog)
+            ->with('keyword', $keyword)
+            ->with('users', $users)
+            ->with('tasks', $tasks)
+            ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id));
+    }
 }

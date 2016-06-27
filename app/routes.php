@@ -207,6 +207,7 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
     Route::post('/doCltIndiEditPersonalInfo', 'ClientIndiController@doCltIndiEditPersonalInfo');
 
     Route::get('/compDoSearch', 'searchTestController@compDoSearch');
+    Route::get('/CISRCH/{prog}={keyword}', 'ClientIndiController@CISRCH');
 });
 
     Route::get('/{username}', 'HomeController@toProfile'); // new profile page viewer

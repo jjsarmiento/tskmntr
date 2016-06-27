@@ -165,9 +165,18 @@ class BaseController extends Controller {
             $optMeter++;
         }
 
-        $total_prog = number_format(($intProgress + $reqProgress) + (($optMeter / 7) * 30));
+        $role = Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')
+            ->where('user_has_role.user_id', $user->id)
+            ->pluck('role');
 
-        return $total_prog;
+        if($role == 'CLIENT_CMP' || $role == 'CLIENT_IND'){;
+            return $total_prog = number_format(($intProgress + $reqProgress) + (($optMeter / 3) * 20));
+        }else{
+            return $total_prog = number_format(($intProgress + $reqProgress) + (($optMeter / 7) * 30));
+        }
+
+
+//        return $total_prog;
     }
 
     // used to get user RATINGS
