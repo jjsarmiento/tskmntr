@@ -769,7 +769,8 @@ class HomeController extends BaseController {
                             ->with('tasks', $taskList)
                             ->with('intProgress', $intProgress)
                             ->with('reqProgress', $reqProgress)
-                            ->with('optProgress', $optProgress);
+                            ->with('optProgress', $optProgress)
+                            ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id));
                     break;
                 case 'CLIENT_IND' :
                 case 'CLIENT_CMP' :
@@ -881,7 +882,8 @@ class HomeController extends BaseController {
                     ->with('intProgress', $intProgress)
                     ->with('reqProgress', $reqProgress)
                     ->with('optProgress', $optProgress)
-                    ->with('freeDuration', $freeDuration);
+                    ->with('freeDuration', $freeDuration)
+                    ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id));
                     break;
                 default :
                     return Redirect::to('/');

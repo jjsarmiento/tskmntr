@@ -132,30 +132,34 @@
 
         <!-- TASKMINATOR / WORKERS -->
             @elseif($role == 'TASKMINATOR')
-            <div class="col-sm-3 col-md-3 pull-left">
-                {{ Form::open(array('method' => 'GET', 'url' => 'workerDoSearch', 'class' => 'navbar-form')) }}
-                    <div class="input-group">
-                        <input type="text" class="form-control input-trans srchAnim" placeholder="Search for companies" required name="search">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default btn-trans" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                        </div>
+                @if($TOTALPROG >= 50)
+                    <div class="col-sm-3 col-md-3 pull-left">
+                        {{ Form::open(array('method' => 'GET', 'url' => 'workerDoSearch', 'class' => 'navbar-form')) }}
+                            <div class="input-group">
+                                <input type="text" class="form-control input-trans srchAnim" placeholder="Search for companies" required name="search">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default btn-trans" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                            </div>
+                        {{ Form::close() }}
                     </div>
-                {{ Form::close() }}
-            </div>
+                @endif
         <!-- END OF TASKMINATOR / WORKER -->
 
         <!-- EMPLOYERS / COMPANIES -->
             @elseif($role == 'CLIENT_IND' || $role == 'CLIENT_CMP')
-            <div class="col-sm-3 col-md-3 pull-left">
-                {{ Form::open(array('method' => 'GET', 'url' => 'compDoSearch', 'class' => 'navbar-form')) }}
-                    <div class="input-group">
-                        <input type="text" class="form-control input-trans srchAnim" placeholder="Search for workers / preffered skills" required name="search">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default btn-trans" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                        </div>
+                @if($TOTALPROG >= 50)
+                    <div class="col-sm-3 col-md-3 pull-left">
+                        {{ Form::open(array('method' => 'GET', 'url' => 'compDoSearch', 'class' => 'navbar-form')) }}
+                            <div class="input-group">
+                                <input type="text" class="form-control input-trans srchAnim" placeholder="Search for workers / preffered skills" required name="search">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default btn-trans" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                            </div>
+                        {{ Form::close() }}
                     </div>
-                {{ Form::close() }}
-            </div>
+                @endif
             @endif
         <!-- END OF EMPLOYER / COMPANIES -->
     <!-- END OF SEARCH FOR NAV BAR -->

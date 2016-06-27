@@ -56,6 +56,8 @@ return array(
 	|
 	*/
 
+    // u: service.proveek@gmail.com.
+    // p: blessed2bless
 //	'from' => array('address' => null, 'name' => null),
     'from' => array('address' => "taskminator.mail@gmail.com", 'name' => "Proveek Dev Team"),
 
