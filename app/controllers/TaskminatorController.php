@@ -824,7 +824,9 @@ class TaskminatorController extends \BaseController {
             ->paginate(10);
 
         return View::make('taskminator.general_search')
+                ->with('keyword', $keyword)
                 ->with('users', $users)
-                ->with('tasks', $tasks);
+                ->with('tasks', $tasks)
+                ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id));
     }
 }

@@ -95,7 +95,7 @@
 <section class="lato-text">
     <div class="container">
         <div class="page-title">
-            <h3 style="color: #2980b9">Results for <u>fuck you</u></h3>
+            <h3 style="color: #2980b9">Results for <u>{{ $keyword }}</u></h3>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -117,7 +117,7 @@
                 @if($users->count() == 0)
                     <center><i>No data available</i></center>
                 @else
-                    <h4>Companies</h4>
+                    <h4>{{ $users->count() }} company/companies</h4>
                     @foreach($users as $user)
                         <div class="widget-container fluid-height padded">
                             {{ $user->fullName }}
@@ -129,7 +129,7 @@
                 @if($tasks->count() == 0)
                     <center><i>No data available</i></center>
                 @else
-                    <h4>Job Ads</h4>
+                    <h4>{{ $users->count() }} job ad/ads found</h4>
                     @foreach($tasks as $tasks)
                         <div class="widget-container fluid-height padded">
                             {{ $tasks->name }}
