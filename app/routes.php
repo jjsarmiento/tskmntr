@@ -172,6 +172,7 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::post('/verifyPin', 'TaskminatorController@verifyPin');
     Route::get('/sendVerificationCode', 'TaskminatorController@sendVerificationCode');
     Route::get('/workerDoSearch', 'searchTestController@workerDoSearch');
+    Route::get('/WSRCH={keyword}', 'TaskminatorController@WSRCH');
 });
 
 Route::group(array('before' => 'CLIENT-ONLY'), function(){

@@ -65,6 +65,8 @@
     {{ HTML::style('stylesheets/summernote.css') }}
     {{ HTML::style('stylesheets/pygments.css') }}
 
+    {{ HTML::script('frontend/js/jquery.js') }}
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -72,6 +74,15 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link rel="shortcut icon" type="image/x-icon" href="frontend/img/favicon.ico">
+    <script>
+        $(document).ready(function(){
+            $('.srchAnim').keyup(function(e){
+                if(e.keyCode == 13){
+                    location.href = $(this).data('url')+''+$(this).val()
+                }
+            });
+        });
+    </script>
     <style type="text/css">
         .lato-text { font-family: 'Lato', sans-serif}
         /*section{padding:0px 0px;}*/
@@ -129,26 +140,22 @@
                 {{ Form::close() }}
             </div>
         <!-- END OF ADMIN -->
-
         <!-- TASKMINATOR / WORKERS -->
             @elseif($role == 'TASKMINATOR')
-                @if($TOTALPROG >= 50)
-                    <div class="col-sm-3 col-md-3 pull-left">
-                        {{ Form::open(array('method' => 'GET', 'url' => 'workerDoSearch', 'class' => 'navbar-form')) }}
-                            <div class="input-group">
-                                <input type="text" class="form-control input-trans srchAnim" placeholder="Search for companies" required name="search">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default btn-trans" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                                </div>
+                @if(@$TOTALPROG >= 50)
+                    <div class="col-sm-3 col-md-3 pull-left navbar-form">
+                        <div class="input-group">
+                            <input type="text" data-url="/WSRCH=" class="form-control input-trans srchAnim" placeholder="Search for companies" required name="search">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default btn-trans" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                             </div>
-                        {{ Form::close() }}
+                        </div>
                     </div>
                 @endif
         <!-- END OF TASKMINATOR / WORKER -->
-
         <!-- EMPLOYERS / COMPANIES -->
             @elseif($role == 'CLIENT_IND' || $role == 'CLIENT_CMP')
-                @if($TOTALPROG >= 50)
+                @if(@$TOTALPROG >= 50)
                     <div class="col-sm-3 col-md-3 pull-left">
                         {{ Form::open(array('method' => 'GET', 'url' => 'compDoSearch', 'class' => 'navbar-form')) }}
                             <div class="input-group">
@@ -419,7 +426,6 @@
 
 <!-- All scripts and plugin should be placed here so the page can load -->
 <!-- jQuery -->
-    {{ HTML::script('frontend/js/jquery.js') }}
     <!-- <script src="frontend/js/jquery.js"></script> -->
 
 <!-- Bootstrap Core JavaScript -->
