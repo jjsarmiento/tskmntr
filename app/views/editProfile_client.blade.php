@@ -114,46 +114,67 @@
                             @endif
                         </div>
                         <div class="col-sm-9">
-                            <div class="heading">
-                                <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Personal Information <button onclick="location.href='/cltEditPersonalInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
-                            </div>
-                            <div style="padding: 0 12px;">
-                                @if(UserHasRole::where('user_id', $user->id)->pluck('role_id') == 3)
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">First Name</span>
-                                     :
-                                    <span style="margin-left: 5px">{{ $user->firstName }}</span><br/>
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Middle Name</span>
-                                     :
-                                    <span style="margin-left: 5px">{{ $user->midName }}</span><br/>
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Last Name</span>
-                                     :
-                                    <span style="margin-left: 5px">{{ $user->lastName }}</span><br/>
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Gender</span>
-                                     :
-                                    <span style="margin-left: 5px">{{ Auth::user()->gender }}</span><br/>
-                                @else
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Company Name</span>
-                                     :
-                                    <span style="margin-left: 5px">{{ $user->companyName }}</span><br/>
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Business Description</span>
-                                     :
-                                    <span style="margin-left: 5px">{{ $user->businessDescription }}</span><br/>
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Business Nature</span>
-                                     :
-                                    <span style="margin-left: 5px">{{ $user->businessNature }}</span><br/>
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Business Permit</span>
-                                     :
-                                    <span style="margin-left: 5px">{{ $user->businessPermit }}</span><br/>
-                                @endif
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Address</span>
-                                 :
-                                <span style="margin-left: 5px">{{ $user->address }}</span><br/>
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">City</span>
-                                 :
-                                <span style="margin-left: 5px">{{ City::where('citycode', $user->city)->pluck('cityname') }}</span><br/>
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Barangay</span>
-                                 :
-                                <span style="margin-left: 5px">{{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }}</span><br/>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-sm-6">
+                                    <div class="heading">
+                                        <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Personal Information <button onclick="location.href='/cltEditPersonalInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                                    </div>
+                                    <div style="padding: 0 12px;">
+                                        @if(UserHasRole::where('user_id', $user->id)->pluck('role_id') == 3)
+                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">First Name</span>
+                                             :
+                                            <span style="margin-left: 5px">{{ $user->firstName }}</span><br/>
+                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Middle Name</span>
+                                             :
+                                            <span style="margin-left: 5px">{{ $user->midName }}</span><br/>
+                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Last Name</span>
+                                             :
+                                            <span style="margin-left: 5px">{{ $user->lastName }}</span><br/>
+                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Gender</span>
+                                             :
+                                            <span style="margin-left: 5px">{{ Auth::user()->gender }}</span><br/>
+                                        @else
+                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Company Name</span>
+                                             :
+                                            <span style="margin-left: 5px">{{ $user->companyName }}</span><br/>
+                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Business Description</span>
+                                             :
+                                            <span style="margin-left: 5px">{{ $user->businessDescription }}</span><br/>
+                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Business Nature</span>
+                                             :
+                                            <span style="margin-left: 5px">{{ $user->businessNature }}</span><br/>
+                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Business Permit</span>
+                                             :
+                                            <span style="margin-left: 5px">{{ $user->businessPermit }}</span><br/>
+                                        @endif
+                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Address</span>
+                                         :
+                                        <span style="margin-left: 5px">{{ $user->address }}</span><br/>
+                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">City</span>
+                                         :
+                                        <span style="margin-left: 5px">{{ City::where('citycode', $user->city)->pluck('cityname') }}</span><br/>
+                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Barangay</span>
+                                         :
+                                        <span style="margin-left: 5px">{{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }}</span><br/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 well">
+                                    {{--<div class="heading" style="font-size:14pt; color:#2980b9">--}}
+                                        {{--<i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Account Information--}}
+                                    {{--</div>--}}
+                                    <div style="display:table-row;">
+                                        <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
+                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                        <span style="display:table-cell">{{ Auth::user()->username }}</span>
+                                    </div>
+                                    <div style="display:table-row;">
+                                        <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Password</span>
+                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                        <span style="display:table-cell">******</span>
+                                    </div>
+                                    <br/>
+                                    <a href="#" data-target="#CHNGPSS-MODAL" data-toggle="modal">Change password</a>
+                                </div>
                             </div>
                             <hr/>
                             <div class="heading">

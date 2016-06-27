@@ -801,30 +801,4 @@ class TaskminatorController extends \BaseController {
             return Redirect::back()->with('errorMsg', 'Wrong Pin Code')->withInput(Input::except('inputpin'));
         }
     }
-
-    public function CHNGPSS(){
-        $NEWPASS = Input::get('NEW_PASS');
-        $OLDPASS = Input::get('OLD_PASS');
-        $CNEW_PASS = Input::get('CNEW_PASS');
-
-        // check if password is alphanumeric
-        if(!ctype_alnum($NEWPASS)){
-            return Redirect::back()->with('errorMsg', 'Password must be alphanumeric only');
-        }
-
-        // check if new pass and confirm pass are same
-        if(!strcmp ($NEWPASS, $CNEW_PASS) == 0){
-            return Redirect::back()->with('errorMsg', 'New passwords does not match');
-        }
-
-        // check if old pass is valid
-        if(!strcmp (md5($OLDPASS), Auth::user()->password)){
-            return Redirect::back()->with('errorMsg', 'Old password is incorrect');
-        }
-
-        User::where('id', Auth::user()->id)->update([
-            'password'  =>  md5($NEWPASS)
-        ]);
-        return Redirect::back()->with('successMsg', 'Your password has been successfully changed');
-    }
 }
