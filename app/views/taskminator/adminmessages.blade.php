@@ -52,6 +52,7 @@
         });
 
         $('.ADMINLIST').click(function(){
+            $('#USERID').val($(this).data('adminid'));
             $.ajax({
                 type    :   'GET',
                 url     :   '/WGTCHT='+$(this).data('adminid'),

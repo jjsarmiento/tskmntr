@@ -866,13 +866,17 @@ class AdminController extends \BaseController {
     }
 
     public function getCHAT($with_userId){
-        if(AdminMessage::where('user_id', $with_userId)->count() > 0){
-            $ALLMSG = AdminMessage::where('user_id', $with_userId)
-                        ->orWhere('sender_id', $with_userId);
-            $ALLMSG->update([
-                'status'    =>  'OLD'
-                ]);
-            return $ALLMSG->get();
+
+        $QUERY = AdminMessage::whereIn('user_id', array(Auth::user()->id, $with_userId))
+                    ->whereIn('sender_id', array(Auth::user()->id, $with_userId));
+        if($QUERY->count() > 0){
+            return $QUERY->get();
+//            $ALLMSG = AdminMessage::where('user_id', $with_userId)
+//                        ->orWhere('sender_id', $with_userId);
+//            $ALLMSG->update([
+//                'status'    =>  'OLD'
+//                ]);
+//            return $ALLMSG->get();
         }else{
             return "NOCHATHISTORY";
         }
