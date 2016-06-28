@@ -193,9 +193,17 @@
                             </div>
                         </div>
                     </li> -->
+                    <li>
+                        @if($role != 'ADMIN')
+                            <a href="/admessages" style="font-size: 14pt; color: #e74c3c;">
+                                <i class="fa fa-comment"></i>
+                            </a>
+                        @endif
+                    </li>
                     <li class="dropdown messages hidden-xs">
+
                         <a id="notificationLink" class="dropdown-toggle" data-toggle="dropdown" href="#" style="background:transparent; font-size: 14pt;">
-                        <i class="fa fa-bell fa-fw"></i><span class="visible-xs-inline hidden-sm hidden-md" style="text-transform:none; font-size:11pt;">Notification</span>
+                            <i class="fa fa-bell fa-fw"></i><span class="visible-xs-inline hidden-sm hidden-md" style="text-transform:none; font-size:11pt;">Notification</span>
                         </a>
                         <div class="sr-only">
                             Notifications

@@ -136,6 +136,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::post('/ADMINSENDMESSAGE', 'AdminController@ADMINSENDMESSAGE');
 
     Route::get('/ADMINGETNEWMSG={userid}={senderid}', 'AdminController@ADMINGETNEWMSG');
+    Route::get('/adminMessages', 'TaskminatorController@adminMessages');
 });
 
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
@@ -175,6 +176,11 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::get('/sendVerificationCode', 'TaskminatorController@sendVerificationCode');
     Route::get('/workerDoSearch', 'searchTestController@workerDoSearch');
     Route::get('/WSRCH={keyword}', 'TaskminatorController@WSRCH');
+
+    Route::get('/admessages', 'TaskminatorController@adminMessages');
+
+    Route::post('/SENDMSGTOADMIN', 'TaskminatorController@SENDMSGTOADMIN');
+    Route::get('/WGTCHT={adminId}', 'TaskminatorController@WGTCHT');
 });
 
 Route::group(array('before' => 'CLIENT-ONLY'), function(){

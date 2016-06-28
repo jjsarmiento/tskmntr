@@ -829,4 +829,52 @@ class TaskminatorController extends \BaseController {
                 ->with('tasks', $tasks)
                 ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id));
     }
+
+    public function adminMessages(){
+        $admins = User::join('admin_messages', 'users.id', '=', 'admin_messages.sender_id')
+                    ->where('admin_messages.user_id', '=', Auth::user()->id)
+                    ->select([
+                        'users.firstName',
+                        'users.id'
+                    ])
+                    ->groupBy('users.id')
+                    ->get();
+        return View::make('taskminator.adminmessages')
+                ->with('admins', $admins);
+//        $adminmessages = AdminMessage::where('user_id', Auth::user()->id)
+//                            ->orWhere('sender_id', Auth::user()->id)
+//                            ->orderBy('id', 'ASC')
+//                            ->get();
+//        return View::make('taskminator.adminmessages')
+//                ->with('adminmessages', $adminmessages);
+    }
+
+    public function SENDMSGTOADMIN(){
+        $msg_timestamp = date("Y:m:d H:i:s");
+        AdminMessage::insert(array(
+            'user_id'   =>  Input::get('USERID'),
+            'sender_id' =>  Auth::user()->id,
+            'content'   =>  Input::get('ADMIN_sendMsgContent'),
+            'created_at'=>  $msg_timestamp,
+//            'status'    =>  'OLD'
+        ));
+
+//        date('D, M j, Y \a\t g:ia')
+        return array(
+            'msg'       =>  Input::get('ADMIN_sendMsgContent'),
+            'tstamp'    =>  $msg_timestamp
+        );
+    }
+
+    public function WGTCHT($adminId){
+        $QUERY = AdminMessage::where('user_id', Auth::user()->id)
+                    ->orWhere('sender_id', Auth::user()->id);
+        
+        if($QUERY->count() > 0){
+            return $QUERY->get();
+        }else{
+            return "NOCHATHISTORY";
+        }
+
+    }
 }
