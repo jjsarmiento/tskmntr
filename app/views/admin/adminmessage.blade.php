@@ -140,7 +140,7 @@
                             }
                         }
                     })
-                }, 5000);
+                }, 500);
             }
 
             $('#chatSearchBTN').click(function(){triggerSearch()})

@@ -76,7 +76,25 @@
                 }
             });
             $('#PANELBODY').scrollTop($('#PANELBODY').height());
+            GETMSG($('#USERID').val());
         });
+
+        function GETMSG(userid){
+            setInterval(function(){
+                $.ajax({
+                    type    :   'GET',
+                    url     :   '/WGTMSG='+userid,
+                    success :   function(data){
+                        if(data){
+                            $.each(data, function(key, value){
+                                var msg = '<div class="bubble">'+value['content']+'<br/><span class="timestamp">'+value['created_at']+'</span></div>';
+                                $('#PANELBODY').append(msg).scrollTop($('#PANELBODY').height());
+                            });
+                        }
+                    }
+                })
+            }, 5000);
+        }
     })
 </script>
 @stop

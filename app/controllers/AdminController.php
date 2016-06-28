@@ -884,7 +884,6 @@ class AdminController extends \BaseController {
             'sender_id' =>  Input::get('SENDERID'),
             'content'   =>  Input::get('ADMIN_sendMsgContent'),
             'created_at'=>  $msg_timestamp,
-            'status'    =>  'OLD'
         ));
 
 //        date('D, M j, Y \a\t g:ia')
@@ -896,7 +895,8 @@ class AdminController extends \BaseController {
 
     public function ADMINGETNEWMSG($userid, $senderid){
         $NEWMSG = AdminMessage::where('user_id', Auth::user()->id)
-                    ->where('status', 'NEW');
+                    ->where('status', 'NEW')
+                    ->where('sender_id', $userid);
 
         $ALL_NEW_MESSAGES = $NEWMSG->get();
 

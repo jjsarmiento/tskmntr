@@ -181,6 +181,7 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
 
     Route::post('/SENDMSGTOADMIN', 'TaskminatorController@SENDMSGTOADMIN');
     Route::get('/WGTCHT={adminId}', 'TaskminatorController@WGTCHT');
+    Route::get('/WGTMSG={userid}', 'TaskminatorController@WGTMSG');
 });
 
 Route::group(array('before' => 'CLIENT-ONLY'), function(){

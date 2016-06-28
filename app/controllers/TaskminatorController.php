@@ -870,13 +870,22 @@ class TaskminatorController extends \BaseController {
         $UPDATEQUERY = $QUERY = AdminMessage::whereIn('user_id', array(Auth::user()->id, $adminId))
             ->whereIn('sender_id', array(Auth::user()->id, $adminId));
 
-//        $UPDATEQUERY->update(['status', 'OLD']);
-
         if($QUERY->count() > 0){
             return $QUERY->get();
         }else{
             return "NOCHATHISTORY";
         }
+    }
 
+    public function WGTMSG($userid){
+        $NEWMSG = AdminMessage::where('user_id', Auth::user()->id)
+                    ->where('status', 'NEW')
+                    ->where('sender_id', $userid);
+
+        $ALL_NEW_MESSAGES = $NEWMSG->get();
+
+        $NEWMSG->update(['status' => 'OLD']);
+
+        return $ALL_NEW_MESSAGES;
     }
 }
