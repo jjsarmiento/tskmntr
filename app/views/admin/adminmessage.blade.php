@@ -131,10 +131,16 @@
                         type    :   'GET',
                         url     :   '/ADMINGETNEWMSG='+userid+'='+senderid,
                         success :   function(data){
-                            console.log(data);
+                            if(data){
+                                $.each(data, function(key, value){
+                                    var msg = '<div class="bubble">'+value['content']+'<br/><span class="timestamp">'+value['created_at']+'</span></div>';
+                                    $('#PANELBODY').append(msg).scrollTop($('#PANELBODY').height());
+                                });
+
+                            }
                         }
                     })
-                }, 500);
+                }, 5000);
             }
 
             $('#chatSearchBTN').click(function(){triggerSearch()})

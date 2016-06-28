@@ -870,13 +870,8 @@ class AdminController extends \BaseController {
         $QUERY = AdminMessage::whereIn('user_id', array(Auth::user()->id, $with_userId))
                     ->whereIn('sender_id', array(Auth::user()->id, $with_userId));
         if($QUERY->count() > 0){
+            $QUERY->update(['status'    =>  'OLD']);
             return $QUERY->get();
-//            $ALLMSG = AdminMessage::where('user_id', $with_userId)
-//                        ->orWhere('sender_id', $with_userId);
-//            $ALLMSG->update([
-//                'status'    =>  'OLD'
-//                ]);
-//            return $ALLMSG->get();
         }else{
             return "NOCHATHISTORY";
         }
@@ -900,6 +895,13 @@ class AdminController extends \BaseController {
     }
 
     public function ADMINGETNEWMSG($userid, $senderid){
+        $NEWMSG = AdminMessage::where('user_id', Auth::user()->id)
+                    ->where('status', 'NEW');
 
+        $ALL_NEW_MESSAGES = $NEWMSG->get();
+
+        $NEWMSG->update(['status' => 'OLD']);
+
+        return $ALL_NEW_MESSAGES;
     }
 }

@@ -867,8 +867,10 @@ class TaskminatorController extends \BaseController {
     }
 
     public function WGTCHT($adminId){
-        $QUERY = AdminMessage::whereIn('user_id', array(Auth::user()->id, $adminId))
+        $UPDATEQUERY = $QUERY = AdminMessage::whereIn('user_id', array(Auth::user()->id, $adminId))
             ->whereIn('sender_id', array(Auth::user()->id, $adminId));
+
+//        $UPDATEQUERY->update(['status', 'OLD']);
 
         if($QUERY->count() > 0){
             return $QUERY->get();
