@@ -52,6 +52,7 @@
         });
 
         $('.ADMINLIST').click(function(){
+            $('#PANELBODY').empty();
             $('#USERID').val($(this).data('adminid'));
             $.ajax({
                 type    :   'GET',

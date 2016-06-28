@@ -64,6 +64,7 @@
         
             function REFRESHEVENTHANDLER(){
                 $('.DIVCHAT').click(function(){
+                    $('#PANELBODY').empty();
                     var username = $(this).find('.USERNAME').text(),
                         fullname = $(this).find('.FULLNAME').text(),
                         userid = $(this).data('userid');
