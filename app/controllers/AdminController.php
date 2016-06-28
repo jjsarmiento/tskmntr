@@ -867,18 +867,34 @@ class AdminController extends \BaseController {
 
     public function getCHAT($with_userId){
         if(AdminMessage::where('user_id', $with_userId)->count() > 0){
-            return AdminMessage::where('user_id', $with_userId)->get();
+            $ALLMSG = AdminMessage::where('user_id', $with_userId);
+            $ALLMSG->update([
+                'status'    =>  'OLD'
+                ]);
+            return $ALLMSG->get();
         }else{
             return "NOCHATHISTORY";
         }
     }
 
     public function ADMINSENDMESSAGE(){
+        $msg_timestamp = date("Y:m:d H:i:s");
         AdminMessage::insert(array(
             'user_id'   =>  Input::get('USERID'),
             'sender_id' =>  Input::get('SENDERID'),
             'content'   =>  Input::get('ADMIN_sendMsgContent'),
-            'created_at'=>  date("Y:m:d H:i:s")
+            'created_at'=>  $msg_timestamp,
+            'status'    =>  'OLD'
         ));
+
+//        date('D, M j, Y \a\t g:ia')
+        return array(
+            'msg'       =>  Input::get('ADMIN_sendMsgContent'),
+            'tstamp'    =>  $msg_timestamp
+        );
+    }
+
+    public function ADMINGETNEWMSG($userid, $senderid){
+
     }
 }

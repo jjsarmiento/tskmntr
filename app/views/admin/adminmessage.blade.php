@@ -28,7 +28,7 @@
         }
 
         .timestamp {
-            font-size: 0.8em;
+            font-size: 0.7em;
             color: #2980b9;
             font-weight: bold;
         }
@@ -47,16 +47,19 @@
             });
 
             $('#ADMIN_sendMsgBtn').click(function(){
+                $('#ADMIN_sendMsgContent').attr('readonly', true);
                 $.ajax({
                     type    :   'POST',
                     url     :   $('#ADMINCHATFORM').attr('action'),
                     data    :   $('#ADMINCHATFORM').serialize(),
                     success :   function(data){
-//                        $.each(data, function(key, value){
-//                            console.log(value['content']);
-//                        })
+                        var msg = '<div class="bubble-user">'+data['msg']+'<br/><span class="timestamp">'+data['tstamp']+'</span></div>';
+                        $('#PANELBODY').append(msg);
+                        $('#PANELBODY').scrollTop($('#PANELBODY').height());
                     }
                 })
+                $('#ADMIN_sendMsgContent').val('').attr('readonly', false);
+                $('#ADMIN_sendMsgBtn').attr('disabled', true);
             });
         
             function REFRESHEVENTHANDLER(){
@@ -80,13 +83,15 @@
 
                                 $.each(data, function(key, value){
                                     var msg = "";
-                                    if(value['id'] == $('#SENDERID').val()){
+                                    if(value['sender_id'] == $('#SENDERID').val()){
                                         msg = '<div class="bubble-user">'+value['content']+'<br/><span class="timestamp">'+value['created_at']+'</span></div>';
                                     }else{
                                         msg = '<div class="bubble">'+value['content']+'<br/><span class="timestamp">'+value['created_at']+'</span></div>';
                                     }
-                                    $('#PANELBODY').append(msg);
+                                    $('#PANELBODY').append(msg).scrollTop($('#PANELBODY').height());
                                 });
+
+                                GETMSG(userid, $('#SENDERID').val());
                             }
                         }
                     });
@@ -117,6 +122,18 @@
 
                 $('#chatSearch').removeAttr('readonly');
                 $('#LOADICON').hide();
+            }
+
+            function GETMSG(userid, senderid){
+                setInterval(function(){
+                    $.ajax({
+                        type    :   'GET',
+                        url     :   '/ADMINGETNEWMSG='+userid+'='+senderid,
+                        success :   function(data){
+                            console.log(data);
+                        }
+                    })
+                }, 500);
             }
 
             $('#chatSearchBTN').click(function(){triggerSearch()})

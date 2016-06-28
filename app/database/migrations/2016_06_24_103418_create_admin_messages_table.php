@@ -18,6 +18,8 @@ class CreateAdminMessagesTable extends Migration {
             $table->integer('user_id');
             $table->integer('sender_id');
             $table->longText('content');
+            $table->string('sender_status');
+            $table->string('receiver_status');
 			$table->timestamps();
 		});
 	}

@@ -134,6 +134,8 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::post('/adminSearchChatUser', 'AdminController@adminSearchChatUser');
     Route::get('/getCHAT={with_userId}', 'AdminController@getCHAT');
     Route::post('/ADMINSENDMESSAGE', 'AdminController@ADMINSENDMESSAGE');
+
+    Route::get('/ADMINGETNEWMSG={userid}={senderid}', 'AdminController@ADMINGETNEWMSG');
 });
 
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
