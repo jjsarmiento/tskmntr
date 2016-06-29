@@ -54,7 +54,7 @@ return [
 
         'mysql' => [
             'driver'    => 'mysql',
-//            'host'      => '127.0.0.1',
+            'host'      => '127.0.0.1',
             'database'  => 'taskminator',
             'username'  => 'root',
             'password'  => '',
