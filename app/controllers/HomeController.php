@@ -1326,7 +1326,11 @@ class HomeController extends BaseController {
         $pic = Input::file('profilePic');
         $newFileName = md5(uniqid(rand(), true));
 
-        $destinationPath = 'public/upload/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
+////        FOR LOCALHOST
+//        $destinationPath = 'public/upload/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
+
+//        FOR LIVE SITE
+        $destinationPath = 'upload/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
 
         if(!isset($pic)){
             return Redirect::back()->with('errorMsg', 'Please attach an image file before submitting');
