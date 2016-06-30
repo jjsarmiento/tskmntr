@@ -831,14 +831,24 @@ class TaskminatorController extends \BaseController {
     }
 
     public function adminMessages(){
-        $admins = User::join('admin_messages', 'users.id', '=', 'admin_messages.sender_id')
-                    ->where('admin_messages.user_id', '=', Auth::user()->id)
+//        $admins = User::join('admin_messages', 'users.id', '=', 'admin_messages.sender_id')
+//                    ->where('admin_messages.user_id', '=', Auth::user()->id)
+//                    ->select([
+//                        'users.firstName',
+//                        'users.id'
+//                    ])
+//                    ->groupBy('users.id')
+//                    ->get();
+
+        $admins = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
+                    ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+                    ->where('roles.role', 'ADMIN')
                     ->select([
-                        'users.firstName',
-                        'users.id'
+                        'users.id as id',
+                        'users.firstName'
                     ])
-                    ->groupBy('users.id')
                     ->get();
+
         return View::make('taskminator.adminmessages')
                 ->with('admins', $admins);
 //        $adminmessages = AdminMessage::where('user_id', Auth::user()->id)

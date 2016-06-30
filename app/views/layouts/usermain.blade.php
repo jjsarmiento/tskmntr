@@ -193,13 +193,6 @@
                             </div>
                         </div>
                     </li> -->
-                    <li>
-                        @if($role != 'ADMIN')
-                            <a href="/admessages" style="font-size: 14pt; color: #e74c3c;">
-                                <i class="fa fa-comment"></i>
-                            </a>
-                        @endif
-                    </li>
                     <li class="dropdown messages hidden-xs">
 
                         <a id="notificationLink" class="dropdown-toggle" data-toggle="dropdown" href="#" style="background:transparent; font-size: 14pt;">
@@ -278,6 +271,13 @@
                                 <li><a href="/cms"><i class="fa fa-edit fa-fw"></i> CMS</a></li>
                             @endif
                             <li><a href="#"><i class="fa fa-cog fa-fw"></i> Settings</a></li>
+                            @if($role != 'ADMIN')
+                                <li>
+                                    <a href="/admessages" style="color: #e74c3c;">
+                                        <i class="fa fa-comment fa-fw"></i> Message Admin
+                                    </a>
+                                </li>
+                            @endif
                             <li class="divider"></li>
                             <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Log out</a></li>
                         </ul>
