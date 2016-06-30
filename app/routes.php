@@ -68,6 +68,13 @@ Route::group(array('before' => 'auth'), function(){
     Route::get('/checkMsgCount', 'HomeController@checkMsgCount');
 
     Route::post('/CHNGPSS', 'HomeController@CHNGPSS');
+
+    // ADMIN MESSAGING FUNCTION -- START
+    Route::get('/admessages', 'HomeController@adminMessages');
+    Route::post('/SENDMSGTOADMIN', 'HomeController@SENDMSGTOADMIN');
+    Route::get('/WGTCHT={adminId}', 'HomeController@WGTCHT');
+    Route::get('/WGTMSG={userid}', 'HomeController@WGTMSG');
+    // ADMIN MESSAGING FUNCTION -- END
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
@@ -177,11 +184,9 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::get('/workerDoSearch', 'searchTestController@workerDoSearch');
     Route::get('/WSRCH={keyword}', 'TaskminatorController@WSRCH');
 
-    Route::get('/admessages', 'TaskminatorController@adminMessages');
-
-    Route::post('/SENDMSGTOADMIN', 'TaskminatorController@SENDMSGTOADMIN');
-    Route::get('/WGTCHT={adminId}', 'TaskminatorController@WGTCHT');
-    Route::get('/WGTMSG={userid}', 'TaskminatorController@WGTMSG');
+//    Route::post('/SENDMSGTOADMIN', 'TaskminatorController@SENDMSGTOADMIN');
+//    Route::get('/WGTCHT={adminId}', 'TaskminatorController@WGTCHT');
+//    Route::get('/WGTMSG={userid}', 'TaskminatorController@WGTMSG');
 });
 
 Route::group(array('before' => 'CLIENT-ONLY'), function(){

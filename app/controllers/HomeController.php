@@ -1474,5 +1474,59 @@ class HomeController extends BaseController {
 
         return Redirect::back()->with('successMsg', 'Your password has been successfully changed');
     }
+
+    public function adminMessages(){
+        $admins = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
+            ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+            ->where('roles.role', 'ADMIN')
+            ->select([
+                'users.id as id',
+                'users.firstName'
+            ])
+            ->get();
+
+        return View::make('adminmessages')
+            ->with('admins', $admins);
+    }
+
+    public function SENDMSGTOADMIN(){
+        $msg_timestamp = date("Y:m:d H:i:s");
+        AdminMessage::insert(array(
+            'user_id'   =>  Input::get('USERID'),
+            'sender_id' =>  Auth::user()->id,
+            'content'   =>  Input::get('ADMIN_sendMsgContent'),
+            'created_at'=>  $msg_timestamp,
+//            'status'    =>  'OLD'
+        ));
+
+//        date('D, M j, Y \a\t g:ia')
+        return array(
+            'msg'       =>  Input::get('ADMIN_sendMsgContent'),
+            'tstamp'    =>  $msg_timestamp
+        );
+    }
+
+    public function WGTCHT($adminId){
+        $UPDATEQUERY = $QUERY = AdminMessage::whereIn('user_id', array(Auth::user()->id, $adminId))
+            ->whereIn('sender_id', array(Auth::user()->id, $adminId));
+
+        if($QUERY->count() > 0){
+            return $QUERY->get();
+        }else{
+            return "NOCHATHISTORY";
+        }
+    }
+
+    public function WGTMSG($userid){
+        $NEWMSG = AdminMessage::where('user_id', Auth::user()->id)
+            ->where('status', 'NEW')
+            ->where('sender_id', $userid);
+
+        $ALL_NEW_MESSAGES = $NEWMSG->get();
+
+        $NEWMSG->update(['status' => 'OLD']);
+
+        return $ALL_NEW_MESSAGES;
+    }
 }
 
