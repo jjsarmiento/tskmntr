@@ -65,8 +65,7 @@ class HomeController extends BaseController {
         ->with('mobile', $mobile);
     }
 
-    public function regEmployer()
-    {
+    public function regEmployer(){
         Input::merge(array_map('trim', Input::all()));
 
         $points = 300;
@@ -141,6 +140,20 @@ class HomeController extends BaseController {
             'at_url'        =>  '/viewUserProfile/'.$userId
 //                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
         ));
+
+        // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- START
+        $data = array(
+            'msg'   =>  'You have successfully registered in Proveek BETA',
+            'url'   =>  URL::to('/').'/login'
+        );
+
+        $email = Input::get('txtEmail');
+
+        Mail::send('emails.REGISTRATION_SUCCESS', $data, function($message) use($email){
+            $message->from('hello@proveek.com', 'Proveek');
+            $message->to($email)->subject('Proveek BETA - Registration Successful!');
+        });
+        // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- END
 
         Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')));
         return Redirect::to('/');
@@ -447,7 +460,6 @@ class HomeController extends BaseController {
                 ));
 
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- START
-
                 $data = array(
                     'msg'   =>  'You have successfully registered in Proveek BETA',
                     'url'   =>  URL::to('/').'/login'
