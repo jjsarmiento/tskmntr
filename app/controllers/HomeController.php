@@ -66,98 +66,111 @@ class HomeController extends BaseController {
     }
 
     public function regEmployer(){
-        Input::merge(array_map('trim', Input::all()));
+        $captcha=$_POST['g-recaptcha-response'];
+        $privatekey = "6LfpJyITAAAAAHn92bsWJxBb4TFCggUdSndYmZPo";
 
-        $points = 300;
+        if(!$captcha){
+            echo 'captch not checked!';
+        }else{
+            $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$privatekey."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
+            $data = json_decode($response);
+            if(isset($data->success) AND $data->success==false){
+                echo "Hey! Spammer I'm Using Google reCAPTCHA! Get Out";
+            }else{
+                Input::merge(array_map('trim', Input::all()));
 
-        date_default_timezone_set("Asia/Manila");
-        $userId = User::insertGetId(array(
-            'companyName'           =>  Input::get('compName'),
-            'fullName'              =>  Input::get('compName'),
-            'username'              =>  Input::get('uName'),
-            'password'              =>  Hash::make(Input::get('primary_pass')),
-            'confirmationCode'      =>  $this->generateConfirmationCode(),
-            'status'                =>  'PRE_ACTIVATED',
-            'country'               =>  'PHILIPPINES',
-            'created_at'            =>  date("Y:m:d H:i:s"),
-            'updated_at'            =>  date("Y:m:d H:i:s"),
-            'points'                =>  $points,
-            'accountType'           =>  'BASIC',
-        ));
+                $points = 300;
 
-        UserHasRole::insert(array(
-            'user_id'   =>  $userId,
-            'role_id'   =>  '4'
-        ));
+                date_default_timezone_set("Asia/Manila");
+                $userId = User::insertGetId(array(
+                    'companyName'           =>  Input::get('compName'),
+                    'fullName'              =>  Input::get('compName'),
+                    'username'              =>  Input::get('uName'),
+                    'password'              =>  Hash::make(Input::get('primary_pass')),
+                    'confirmationCode'      =>  $this->generateConfirmationCode(),
+                    'status'                =>  'PRE_ACTIVATED',
+                    'country'               =>  'PHILIPPINES',
+                    'created_at'            =>  date("Y:m:d H:i:s"),
+                    'updated_at'            =>  date("Y:m:d H:i:s"),
+                    'points'                =>  $points,
+                    'accountType'           =>  'BASIC',
+                ));
 
-        ContactPerson::insert(array(
-            'user_id'       => $userId,
-            'firstName'     => Input::get('fName'),
-            'midName'       => NULL,
-            'lastName'      => Input::get('lName'),
-            'contactNum'    => NULL,
-            'position'      => NULL,
-            'country'       => 'PHILIPPINES'
-        ));
+                UserHasRole::insert(array(
+                    'user_id'   =>  $userId,
+                    'role_id'   =>  '4'
+                ));
 
-        Contact::insert(array(
-            array(
-                'user_id'       =>  $userId,
-                'ctype'         =>  'email',
-                'content'       =>  Input::get('txtEmail'),
-            ),
-            array(
-                'user_id'       =>  $userId,
-                'ctype'         =>  'businessNum',
-                'content'       =>  NULL,
-            ),
-            array(
-                'user_id'       =>  $userId,
-                'ctype'         =>  'mobileNum',
-                'content'       =>  Input::get('mobileNum'),
-            ),
-            array(
-                'user_id'       =>  $userId,
-                'ctype'         =>  'facebook',
-                'content'       =>  NULL,
-            ),
-            array(
-                'user_id'       =>  $userId,
-                'ctype'         =>  'twitter',
-                'content'       =>  NULL,
-            ),
-            array(
-                'user_id'       =>  $userId,
-                'ctype'         =>  'linkedin',
-                'content'       =>  NULL,
-            )
-        ));
+                ContactPerson::insert(array(
+                    'user_id'       => $userId,
+                    'firstName'     => Input::get('fName'),
+                    'midName'       => NULL,
+                    'lastName'      => Input::get('lName'),
+                    'contactNum'    => NULL,
+                    'position'      => NULL,
+                    'country'       => 'PHILIPPINES'
+                ));
 
-        AuditTrail::insert(array(
-            'user_id'   =>  $userId,
-            'content'   =>  'Created a Client Company account at '.date('D, M j, Y \a\t g:ia'),
-            'created_at'    =>  date("Y:m:d H:i:s"),
-            'at_url'        =>  '/viewUserProfile/'.$userId
+                Contact::insert(array(
+                    array(
+                        'user_id'       =>  $userId,
+                        'ctype'         =>  'email',
+                        'content'       =>  Input::get('txtEmail'),
+                    ),
+                    array(
+                        'user_id'       =>  $userId,
+                        'ctype'         =>  'businessNum',
+                        'content'       =>  NULL,
+                    ),
+                    array(
+                        'user_id'       =>  $userId,
+                        'ctype'         =>  'mobileNum',
+                        'content'       =>  Input::get('mobileNum'),
+                    ),
+                    array(
+                        'user_id'       =>  $userId,
+                        'ctype'         =>  'facebook',
+                        'content'       =>  NULL,
+                    ),
+                    array(
+                        'user_id'       =>  $userId,
+                        'ctype'         =>  'twitter',
+                        'content'       =>  NULL,
+                    ),
+                    array(
+                        'user_id'       =>  $userId,
+                        'ctype'         =>  'linkedin',
+                        'content'       =>  NULL,
+                    )
+                ));
+
+                AuditTrail::insert(array(
+                    'user_id'   =>  $userId,
+                    'content'   =>  'Created a Client Company account at '.date('D, M j, Y \a\t g:ia'),
+                    'created_at'    =>  date("Y:m:d H:i:s"),
+                    'at_url'        =>  '/viewUserProfile/'.$userId
 //                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
-        ));
+                ));
 
-        // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- START
-        $data = array(
-            'msg'   =>  'You have successfully registered in Proveek BETA',
-            'url'   =>  URL::to('/').'/login'
-        );
+                // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- START
+                $data = array(
+                    'msg'   =>  'You have successfully registered in Proveek BETA',
+                    'url'   =>  URL::to('/').'/login'
+                );
 
-        $email = Input::get('txtEmail');
+                $email = Input::get('txtEmail');
 
-        Mail::send('emails.REGISTRATION_SUCCESS', $data, function($message) use($email){
-            $message->from('hello@proveek.com', 'Proveek');
-            $message->to($email)->subject('Proveek BETA - Registration Successful!');
-        });
-        // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- END
+                Mail::send('emails.REGISTRATION_SUCCESS', $data, function($message) use($email){
+                    $message->from('hello@proveek.com', 'Proveek');
+                    $message->to($email)->subject('Proveek BETA - Registration Successful!');
+                });
+                // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- END
 
-        Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')));
-        return Redirect::to('/');
-//        return Redirect::to('/')->with('successMsg', 'Registration Success. You may now login.');
+                Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')));
+                return Redirect::to('/');
+//            return Redirect::to('/')->with('successMsg', 'Registration Success. You may now login.');
+            }
+        }
     }
 
     public function doRegisterComp(){
