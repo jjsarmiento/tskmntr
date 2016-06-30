@@ -69,6 +69,8 @@ Route::group(array('before' => 'auth'), function(){
 
     Route::post('/CHNGPSS', 'HomeController@CHNGPSS');
 
+    Route::post('/DEACACCT', 'HomeController@DEACACCT');
+
     // ADMIN MESSAGING FUNCTION -- START
     Route::get('/admessages', 'HomeController@adminMessages');
     Route::post('/SENDMSGTOADMIN', 'HomeController@SENDMSGTOADMIN');
@@ -183,10 +185,6 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::get('/sendVerificationCode', 'TaskminatorController@sendVerificationCode');
     Route::get('/workerDoSearch', 'searchTestController@workerDoSearch');
     Route::get('/WSRCH={keyword}', 'TaskminatorController@WSRCH');
-
-//    Route::post('/SENDMSGTOADMIN', 'TaskminatorController@SENDMSGTOADMIN');
-//    Route::get('/WGTCHT={adminId}', 'TaskminatorController@WGTCHT');
-//    Route::get('/WGTMSG={userid}', 'TaskminatorController@WGTMSG');
 });
 
 Route::group(array('before' => 'CLIENT-ONLY'), function(){

@@ -1566,5 +1566,18 @@ class HomeController extends BaseController {
 
         return $ALL_NEW_MESSAGES;
     }
+
+    public function DEACACCT(){
+        if(Hash::check(Input::get('DEAC_PASS'), Auth::user()->password)){
+            User::where('id', Auth::user()->id)
+                ->update([
+                    'status'    =>  'SELF_DEACTIVATED'
+                ]);
+            Auth::logout();
+            return Redirect::to('/login');
+        }else{
+            return Redirect::back()->with('errorMsg', 'Password is incorrect');
+        }
+    }
 }
 

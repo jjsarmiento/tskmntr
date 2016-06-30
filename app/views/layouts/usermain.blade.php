@@ -321,6 +321,36 @@
         </div>
     </form>
 
+    {{--MODAL FOR DEACTIVATION (USER)--}}
+
+    <form method="POST" action="/DEACACCT">
+        <div class="modal modal-vcenter fade lato-text" id="DEACTIVATE-MODAL" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 style="margin: 0; padding: 0; text-align: center;"><i class="fa fa-warning" style="color: red;"></i> Deactivate Account</h3>
+                    </div>
+                    <div class="modal-body" style="text-align: center;">
+                        <p style="font-weight: bolder;">Input your password to proceed with deactivation.</p>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="INPUT PASSWORD" name="DEAC_PASS" required="required"/>
+                            <input type="text" style="display: none;" name="xx"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="btn btn-lg btn-danger btn-block">DEACTIVATE</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-lg btn-primary btn-block" data-dismiss="modal">CANCEL</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
     {{--MODAL FOR USER SEARCH--}}
     <div class="modal modal-vcenter fade lato-text" id="userSearchModal" role="dialog">

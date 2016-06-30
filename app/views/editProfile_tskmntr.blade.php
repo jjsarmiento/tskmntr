@@ -183,7 +183,8 @@
                                         <span style="display:table-cell">******</span>
                                     </div>
                                     <br/>
-                                    <a href="#" data-target="#CHNGPSS-MODAL" data-toggle="modal">Change password</a>
+                                    <a href="#" data-target="#CHNGPSS-MODAL" data-toggle="modal">Change password</a><br/><br/>
+                                    <a href="#" data-target="#DEACTIVATE-MODAL" data-toggle="modal" class="btn btn-danger btn-xs">Deactivate Account</a>
                                 </div>
                             </div>
 
