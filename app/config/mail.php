@@ -56,10 +56,17 @@ return array(
 	|
 	*/
 
-    // u: service.proveek@gmail.com.
+    // GMAIL
+    // u: service.proveek@gmail.com
     // p: blessed2bless
+
+    // MAIL SERVICE
+    // u: hello@proveek.com
+    // p: Blessed2bless
+
 //	'from' => array('address' => null, 'name' => null),
-    'from' => array('address' => "taskminator.mail@gmail.com", 'name' => "Proveek Dev Team"),
+//    'from' => array('address' => "hello@proveek.com", 'name' => "Proveek BETA"), // MAIL SERVICE
+    'from' => array('address' => "service.proveek@gmail.com", 'name' => "Proveek BETA"), // GMAIL
 
 	/*
 	|--------------------------------------------------------------------------
@@ -86,8 +93,8 @@ return array(
 	*/
 
 //	'username' => null,
-    'username' => "taskminator.mail@gmail.com",
-//    'username' => "AKIAJ7VMUBPQAAYEAJEQ",
+//    'username' => "hello@proveek.com", // MAIL SERVICE
+    'username' => "service.proveek@gmail.com", // GMAIL
 
 	/*
 	|--------------------------------------------------------------------------
@@ -101,8 +108,8 @@ return array(
 	*/
 
 //	'password' => null,
-	'password' => 'taskminatormail',
-//	'password' => 'AkrVy9RvJai5mqXzqz1PrPOq8iK9Cbd3GqX7RGcHRc7M',
+//	'password' => 'Blessed2bless', // MAIL SERVICE
+	'password' => 'blessed2bless', // GMAIL
 
 	/*
 	|--------------------------------------------------------------------------

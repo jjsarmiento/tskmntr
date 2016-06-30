@@ -389,74 +389,83 @@ class HomeController extends BaseController {
         }else{
             $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$privatekey."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
             $data = json_decode($response);
+            if(isset($data->success) AND $data->success==false){
+              echo "Hey! Spammer I'm Using Google reCAPTCHA! Get Out";
+            }else{
+                Input::merge(array_map('trim', Input::all()));
 
-                 if(isset($data->success) AND $data->success==false)
-                {
-                  echo "Hey! Spammer I'm Using Google reCAPTCHA! Get Out";
-                }
-                else
-                {
-                  
+                $userId = User::insertGetId(array(
+                    'username'              =>  Input::get('uName'),
+                    'password'              =>  Hash::make(Input::get('pass')),
+                    'firstName'             =>  Input::get('fName'),
+                    'lastName'              =>  Input::get('lName'),
+                    'fullName'              =>  Input::get('fName').' '.Input::get('lName'),
+                    'created_at'            =>  date("Y:m:d H:i:s"),
+                    'updated_at'            =>  date("Y:m:d H:i:s"),
+                    'status'                =>  'PRE_ACTIVATED',
+                    'confirmationCode'      =>  $this->generateConfirmationCode()
+                ));
 
-        Input::merge(array_map('trim', Input::all()));
+                UserHasRole::insert(array(
+                    'user_id'   =>  $userId,
+                    'role_id'   =>  '2'
+                ));
 
-        $userId = User::insertGetId(array(
-            'username'              =>  Input::get('uName'),
-            'password'              =>  Hash::make(Input::get('pass')),
-            'firstName'             =>  Input::get('fName'),
-            'lastName'              =>  Input::get('lName'),
-            'fullName'              =>  Input::get('fName').' '.Input::get('lName'),
-            'created_at'            =>  date("Y:m:d H:i:s"),
-            'updated_at'            =>  date("Y:m:d H:i:s"),
-            'status'                =>  'PRE_ACTIVATED',
-            'confirmationCode'      =>  $this->generateConfirmationCode()
-        ));
+                Contact::insert(array(
+                    array(
+                        'user_id'       =>  $userId,
+                        'ctype'         =>  'email',
+                        'content'       =>  Input::get('txtEmail'),
+                    ),
+                    array(
+                        'user_id'       =>  $userId,
+                        'ctype'         =>  'mobileNum',
+                        'content'       =>  Input::get('mblNum'),
+                    ),
+                    array(
+                        'user_id'       =>  $userId,
+                        'ctype'         =>  'facebook',
+                        'content'       =>  NULL,
+                    ),
+                    array(
+                        'user_id'       =>  $userId,
+                        'ctype'         =>  'twitter',
+                        'content'       =>  NULL,
+                    ),
+                    array(
+                        'user_id'       =>  $userId,
+                        'ctype'         =>  'linkedin',
+                        'content'       =>  NULL,
+                    )
+                ));
 
-        UserHasRole::insert(array(
-            'user_id'   =>  $userId,
-            'role_id'   =>  '2'
-        ));
+                AuditTrail::insert(array(
+                    'user_id'   =>  $userId,
+                    'content'   =>  'Created a Worker account at '.date('D, M j, Y \a\t g:ia'),
+                    'created_at'    =>  date("Y:m:d H:i:s"),
+                    'at_url'        =>  '/viewUserProfile/'.$userId
+                ));
 
-        Contact::insert(array(
-            array(
-                'user_id'       =>  $userId,
-                'ctype'         =>  'email',
-                'content'       =>  Input::get('txtEmail'),
-            ),
-            array(
-                'user_id'       =>  $userId,
-                'ctype'         =>  'mobileNum',
-                'content'       =>  Input::get('mblNum'),
-            ),
-            array(
-                'user_id'       =>  $userId,
-                'ctype'         =>  'facebook',
-                'content'       =>  NULL,
-            ),
-            array(
-                'user_id'       =>  $userId,
-                'ctype'         =>  'twitter',
-                'content'       =>  NULL,
-            ),
-            array(
-                'user_id'       =>  $userId,
-                'ctype'         =>  'linkedin',
-                'content'       =>  NULL,
-            )
-        ));
+                // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- START
 
-        AuditTrail::insert(array(
-            'user_id'   =>  $userId,
-            'content'   =>  'Created a Worker account at '.date('D, M j, Y \a\t g:ia'),
-            'created_at'    =>  date("Y:m:d H:i:s"),
-            'at_url'        =>  '/viewUserProfile/'.$userId
-        ));
+                $data = array(
+                    'msg'   =>  'You have successfully registered in Proveek BETA',
+                    'url'   =>  URL::to('/').'/login'
+                );
 
-        Auth::attempt(array('username' => Input::get('uName'), 'password' => Input::get('pass')));
+                $email = Input::get('txtEmail');
 
-        // return Redirect::to('/doVerifyMobileNumber');
-        return Redirect::to('/');
-                }//end of inner if else
+                Mail::send('emails.REGISTRATION_SUCCESS', $data, function($message) use($email){
+                    $message->from('hello@proveek.com', 'Proveek');
+                    $message->to($email)->subject('Proveek BETA - Registration Successful!');
+                });
+                // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- END
+
+                Auth::attempt(array('username' => Input::get('uName'), 'password' => Input::get('pass')));
+
+                // return Redirect::to('/doVerifyMobileNumber');
+                return Redirect::to('/');
+            }//end of inner if else
         }//end of outer if else
 
     }//end regWorker
