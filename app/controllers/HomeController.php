@@ -930,7 +930,8 @@ class HomeController extends BaseController {
                     ->with('reqProgress', $reqProgress)
                     ->with('optProgress', $optProgress)
                     ->with('freeDuration', $freeDuration)
-                    ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id));
+                    ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id))
+                    ->with('tasks', Task::where('user_id', Auth::user()->id)->whereNotIn('status', ['CANCELLED', 'COMPLETE'])->orderBy('created_at', 'DESC')->paginate(10));
                     break;
                 default :
                     return Redirect::to('/');

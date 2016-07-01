@@ -328,7 +328,8 @@ class ClientIndiController extends \BaseController {
     }
 
     public function tasks(){
-        return View::make('client.taskList')->with('tasks', Task::where('user_id', Auth::user()->id)->whereNotIn('status', ['CANCELLED', 'COMPLETE'])->orderBy('created_at', 'DESC')->paginate(10));
+        return View::make('client.taskList')
+            ->with('tasks', Task::where('user_id', Auth::user()->id)->whereNotIn('status', ['CANCELLED', 'COMPLETE'])->orderBy('created_at', 'DESC')->paginate(10));
     }
 
     public function taskDetails($id){

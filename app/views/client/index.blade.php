@@ -135,8 +135,27 @@
                             <a href="/editProfile" style="font-size:14pt;">{{ Auth::user()->companyName }}</a><br>
                         </div>
                     </div>
-                    <div class="col-lg-12" style="padding-left:24px;">
-                        <a href="/editProfile">Edit Profile</a>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if(Auth::user()->status == 'PRE_ACTIVATED')
+                                <div class="heading">
+                                    <i class="icon-signal"></i>Your Profile
+                                </div>
+                                <div style="margin: 0 15px;">
+                                    Your profile is being reviewed by our staff.<br/>
+                                    After your profile has been activated, you can start looking for tasks!<br/>
+                                    This could take 24 hours or less.
+                                </div>
+                            @else
+                                <div class="widget-content clearfix" style="padding: 0px 30px;">
+                                    <h4>Points left : {{ Auth::user()->points }}</h4>
+                                    <h4>Account Type : {{ Auth::user()->accountType }}</h4>
+                                    <a href="/createTask" class="btn btn-primary">Create Task</a>
+                                    <a href="/tasks" class="btn btn-primary">Tasks</a>
+                                    <a href="/tskmntrSearch" class="btn btn-primary">Search for Taskminators</a>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -171,60 +190,21 @@
                         </div>
                     </div>
                     <div class="widget-content padded">
-                        @if(Auth::user()->status == 'PRE_ACTIVATED')
-                            <div class="heading">
-                                <i class="icon-signal"></i>Your Profile
-                            </div>
-                            <div style="margin: 0 15px;">
-                                Your profile is being reviewed by our staff.<br/>
-                                After your profile has been activated, you can start looking for tasks!<br/>
-                                This could take 24 hours or less.
-                            </div>
-                        @else
-                            <div class="heading">
-                                <i class="glyphicon glyphicon-info-sign"></i>Your info
-                            </div>
-                            <div class="widget-content clearfix" style="padding: 0px 30px;">
-                                <h4>Points left : {{ Auth::user()->points }}</h4>
-                                <h4>Account Type : {{ Auth::user()->accountType }}</h4>
-                                <span style="color: red">
-                                    {{ @Session::get('errorMsg') }}
-                                </span>
-                                <br/>
-                                <div class="row">
-                                    <a href="/createTask" class="btn btn-primary" style="border-radius:4px">Create Task</a>
-                                    <a href="/tasks" class="btn btn-primary" style="border-radius:4px">Tasks</a>
-                                    <a href="/tskmntrSearch" class="btn btn-primary" style="border-radius:4px">Search for Taskminators</a>
-                                </div>
-                            </div>
-                        @endif
+
                     </div>
                 </div>
+                <br/>
+                {{--<div class="col-md-2 col-md-offset-5"><p>My Jobs</p></div>--}}
+
+                @if($tasks->count() != 0)
+                    @foreach($tasks as $task)
+                        <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".2s" data-wow-offset="0" data-wow-delay="0" style="padding-left:10px; padding-right:10px; min-height: 50px; margin-bottom: 1em;">
+                              <a href="/taskDetails/{{$task->id}}"><h3>{{ $task->name }}</h3></a>
+                        </div>
+                    @endforeach
+                @else
+                @endif
             </div>
-            <!-- <div class="col-md-4">
-                <div class="widget-container small">
-                    @if(Auth::user()->profilePic == '')
-                        <div class="heading">
-                            <i class="icon-signal"></i>Please upload a profile picture<i class="icon-list pull-right"></i><i class="icon-refresh pull-right"></i>
-                        </div>
-                        <div class="widget-content padded">
-                            {{ Form::open(array('url' => '/uploadProfilePic', 'id' => 'uploadProfilePicForm', 'files' => 'true')) }}
-                                <input type="file" name="profilePic" accept="image/*" required="required"/><br/>
-                                <button type="submit" class="btn btn-success" id="uploadBtn">Upload</button>
-                            {{ Form::close() }}
-                        </div>
-                    @else
-                        <div class="widget-content padded">
-                            <div class="heading">
-                                <i class="glyphicon glyphicon-user"></i>{{ Auth::user()->companyName }}
-                            </div>
-                            <div class="thumbnail">
-                                <a href="/editProfile"><img src="{{ Auth::user()->profilePic }}" class="portrait"/></a>
-                            </div>
-                        </div>
-                    @endif
-                </div>
-            </div> -->
         </div>
     </div>
 </section>
