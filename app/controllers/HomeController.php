@@ -177,8 +177,9 @@ class HomeController extends BaseController {
                 });
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- END
 
-                Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')));
-                return Redirect::to('/');
+//                Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')));
+                Session::flash('successMsg', 'We have sent a validation link to your email! <br/> Please validate your account to start using Proveek');
+                return Redirect::to('/login');
 //            return Redirect::to('/')->with('successMsg', 'Registration Success. You may now login.');
             }
         }
