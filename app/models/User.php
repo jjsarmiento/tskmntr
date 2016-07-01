@@ -35,6 +35,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
                 ->get();
     }
 
+    static function getSkillsCODE($id){
+        return TaskminatorHasSkill::join('taskitems', 'taskitems.itemcode', '=', 'taskminator_has_skills.taskitem_code')
+            ->where('taskminator_has_skills.user_id', $id)
+            ->orderBy('taskitems.itemname', 'ASC')
+            ->select('taskitems.itemcode')
+            ->get();
+    }
+
     static function getMessages(){
         $thread = [];
 

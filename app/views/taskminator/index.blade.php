@@ -370,7 +370,7 @@
                                 <?php $counter = 0; ?>
                                 @foreach(array_chunk($tasks->getCollection()->all(), 1) as $task)
                                     @foreach($task as $item)
-                                        <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".5s" data-wow-offset="0" data-wow-delay="0" style="padding-left:10px; padding-right:10px; min-height: 50px;">
+                                        <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".5s" data-wow-offset="0" data-wow-delay="0" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">
                                             <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
                                                 <span style="padding:0;margin:0; flex:1">
                                                     @foreach(User::where('id', $item->user_id)->get() as $user)

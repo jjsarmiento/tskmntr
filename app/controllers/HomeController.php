@@ -699,9 +699,11 @@ class HomeController extends BaseController {
                         ->where('task_has_taskminator.taskminator_id', Auth::user()->id)
                         ->where('tasks.status', 'COMPLETE')->count();
 
-                    $taskList = new Task;
-                    $taskList = $taskList->where('hiringType', 'BIDDING')
+                    $skillCodeArray = $this->GETTASKCODES(Auth::user()->id);
+
+                    $taskList = Task::where('hiringType', 'BIDDING')
                     ->where('status', 'OPEN')
+                    ->whereIn('taskType', $skillCodeArray)
                     ->orderBy('created_at','DESC')->paginate(10);
 
                     $reqMeter = 0;
@@ -1662,6 +1664,16 @@ class HomeController extends BaseController {
 
         return Redirect::to('/login')
                 ->with('successMsg', 'A new validation link has been sent to your '.$email);
+    }
+
+    public function GETTASKCODES($userId){
+        $skills = User::getSkillsCODE($userId);
+        $myArr = array();
+        foreach($skills as $s){
+            array_push($myArr, $s->itemcode);
+        }
+
+        return $myArr;
     }
 }
 
