@@ -88,7 +88,7 @@ class HomeController extends BaseController {
                     'username'              =>  Input::get('uName'),
                     'password'              =>  Hash::make(Input::get('primary_pass')),
                     'confirmationCode'      =>  $this->generateConfirmationCode(),
-                    'status'                =>  'PRE_ACTIVATED',
+                    'status'                =>  'VERIFY_EMAIL_REGISTRATION',
                     'country'               =>  'PHILIPPINES',
                     'created_at'            =>  date("Y:m:d H:i:s"),
                     'updated_at'            =>  date("Y:m:d H:i:s"),
@@ -153,16 +153,27 @@ class HomeController extends BaseController {
                 ));
 
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- START
+                // insert activation code
+                $activationCode = uniqid().'_'.time();
+                $codecreated_at = time(); //date("Y:m:d H:i:s");
+                $duration = $codecreated_at+86400;
+                ActivationCode::insert([
+                    'user_id'       =>  $userId,
+                    'code'          =>  $activationCode,
+                    'created_at'    =>  date("Y:m:d H:i:s", $codecreated_at),
+                    'duration'      =>  date("Y:m:d H:i:s", $duration)
+                ]);
+
                 $data = array(
-                    'msg'   =>  'You have successfully registered in Proveek BETA',
-                    'url'   =>  URL::to('/').'/login'
+                    'msg'   =>  'PLEASE VALIDATE YOUR EMAIL',
+                    'url'   =>  URL::to('/').'/VRFYACCT='.$activationCode
                 );
 
                 $email = Input::get('txtEmail');
 
                 Mail::send('emails.REGISTRATION_SUCCESS', $data, function($message) use($email){
                     $message->from('admin@proveek.com', 'Proveek');
-                    $message->to($email)->subject('Proveek BETA - Registration Successful!');
+                    $message->to($email)->subject('Proveek BETA - Validate Account');
                 });
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- END
 
@@ -949,6 +960,10 @@ class HomeController extends BaseController {
             ));
 
             switch(Auth::user()->status){
+                case 'VERIFY_EMAIL_REGISTRATION':
+                    $userId = Auth::user()->id;
+                    Auth::logout();
+                    return Redirect::back()->with('errorMsg', 'You must validate your account first.<br/>Validation link has been sent to your email upon registration.<br/> <a href="/RESENDVALIDATION='.$userId.'">Resend validation email</a>')->withInput();
                 case 'DEACTIVATED'          :
                 case 'ADMIN_DEACTIVATED'    :
                     Auth::logout();
@@ -1596,6 +1611,55 @@ class HomeController extends BaseController {
         ]);
 
         return Redirect::to('/login');
+    }
+
+    public function VRFYACCT($code){
+        $CODE_DETAILS = ActivationCode::where('code', $code)->first();
+
+        if(time() > strtotime($CODE_DETAILS->duration)){
+            $msg = 'Activation code has expired. Click <a href="/RESENDVALIDATION='.$CODE_DETAILS->user_id.'">here</a> to request for another activation code';
+            return $msg;
+        }else{
+            User::where('id', $CODE_DETAILS->user_id)->update([
+                'status'    =>  'PRE_ACTIVATED'
+            ]);
+
+            return Redirect::to('/login')
+                ->with('successMsg', 'You may now login your account!');
+        }
+    }
+
+    public function RESENDVALIDATION($userid){
+
+        $activationCode = uniqid().'_'.time();
+        $codecreated_at = time();
+        $duration = $codecreated_at + 86400;
+
+        ActivationCode::insert([
+            'user_id'       =>  $userid,
+            'code'          =>  $activationCode,
+            'created_at'    =>  date("Y:m:d H:i:s", $codecreated_at),
+            'duration'      =>  date("Y:m:d H:i:s", $duration)
+        ]);
+
+        $data = array(
+            'msg'   =>  'PLEASE VALIDATE YOUR EMAIL - REQUEST',
+            'url'   =>  URL::to('/').'/VRFYACCT='.$activationCode
+        );
+
+
+        $email = User::join('contacts', 'users.id', '=', 'contacts.user_id')
+            ->where('users.id', $userid)
+            ->where('contacts.ctype', 'email')
+            ->pluck('content');
+
+        Mail::send('emails.REGISTRATION_SUCCESS', $data, function($message) use($email){
+            $message->from('admin@proveek.com', 'Proveek');
+            $message->to($email)->subject('Proveek BETA - Resend Validation Link');
+        });
+
+        return Redirect::to('/login')
+                ->with('successMsg', 'A new validation link has been sent to your '.$email);
     }
 }
 

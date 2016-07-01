@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'ActivationCode' => $baseDir . '/app/models/ActivationCode.php',
     'AdminController' => $baseDir . '/app/controllers/AdminController.php',
     'AdminMessage' => $baseDir . '/app/models/AdminMessage.php',
     'AuditTrail' => $baseDir . '/app/models/AuditTrail.php',
@@ -18,6 +19,7 @@ return array(
     'ClientIndiController' => $baseDir . '/app/controllers/ClientIndiController.php',
     'Contact' => $baseDir . '/app/models/Contact.php',
     'ContactPerson' => $baseDir . '/app/models/ContactPerson.php',
+    'CreateActivationCodesTable' => $baseDir . '/app/database/migrations/2016_07_01_023845_create_activation_codes_table.php',
     'CreateAdminMessagesTable' => $baseDir . '/app/database/migrations/2016_06_24_103418_create_admin_messages_table.php',
     'CreateAuditTrailTable' => $baseDir . '/app/database/migrations/2015_05_08_031408_create_audit_trail_table.php',
     'CreateBarangaysTable' => $baseDir . '/app/database/migrations/2015_04_24_051245_create_barangays_table.php',

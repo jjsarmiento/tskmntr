@@ -25,6 +25,8 @@ Route::post('/regClientComp', 'HomeController@regClientComp');
 Route::get('/getProfilePercentage/{id}', 'HomeController@getProfilePercentage');
 Route::get('/SLFACTVT={time}={userid}', 'HomeController@SLFACTVT');
 Route::get('/ACTVTACCT={userid}', 'HomeController@ACTVTACCT');
+Route::get('/VRFYACCT={code}', 'HomeController@VRFYACCT');
+Route::get('/RESENDVALIDATION={userid}', 'HomeController@RESENDVALIDATION');
 
 
 Route::post('/regWorker', 'HomeController@regWorker');

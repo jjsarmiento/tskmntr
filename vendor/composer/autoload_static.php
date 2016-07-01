@@ -201,6 +201,7 @@ class ComposerStaticInit953d5428e89260dd4741ae6cbf12205e
     );
 
     public static $classMap = array (
+        'ActivationCode' => __DIR__ . '/../..' . '/app/models/ActivationCode.php',
         'AdminController' => __DIR__ . '/../..' . '/app/controllers/AdminController.php',
         'AdminMessage' => __DIR__ . '/../..' . '/app/models/AdminMessage.php',
         'AuditTrail' => __DIR__ . '/../..' . '/app/models/AuditTrail.php',
@@ -213,6 +214,7 @@ class ComposerStaticInit953d5428e89260dd4741ae6cbf12205e
         'ClientIndiController' => __DIR__ . '/../..' . '/app/controllers/ClientIndiController.php',
         'Contact' => __DIR__ . '/../..' . '/app/models/Contact.php',
         'ContactPerson' => __DIR__ . '/../..' . '/app/models/ContactPerson.php',
+        'CreateActivationCodesTable' => __DIR__ . '/../..' . '/app/database/migrations/2016_07_01_023845_create_activation_codes_table.php',
         'CreateAdminMessagesTable' => __DIR__ . '/../..' . '/app/database/migrations/2016_06_24_103418_create_admin_messages_table.php',
         'CreateAuditTrailTable' => __DIR__ . '/../..' . '/app/database/migrations/2015_05_08_031408_create_audit_trail_table.php',
         'CreateBarangaysTable' => __DIR__ . '/../..' . '/app/database/migrations/2015_04_24_051245_create_barangays_table.php',
