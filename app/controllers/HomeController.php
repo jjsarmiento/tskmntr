@@ -951,10 +951,13 @@ class HomeController extends BaseController {
             switch(Auth::user()->status){
                 case 'DEACTIVATED'          :
                 case 'ADMIN_DEACTIVATED'    :
-                case 'SELF_DEACTIVATED'     :
                     Auth::logout();
                     return Redirect::back()->with('errorMsg', 'This account has been deactivated. Please email us at service.proveek@gmail.com for account management.')->withInput();
                     break;
+                case 'SELF_DEACTIVATED'     :
+                    $user = Auth::user()->id;
+                    Auth::logout();
+                    return Redirect::to('/SLFACTVT='.time().'='.$user);
             }
 
             return Redirect::to('/');
@@ -1578,6 +1581,21 @@ class HomeController extends BaseController {
         }else{
             return Redirect::back()->with('errorMsg', 'Password is incorrect');
         }
+    }
+
+    public function SLFACTVT($time, $userid){
+        return View::make('SELFACTIVATE')
+                ->with('user', User::where('id', $userid)->first());
+    }
+
+    public function ACTVTACCT($userid){
+        $QUERY = User::where('id', $userid);
+        $user = $QUERY->first();
+        $QUERY->update([
+            'status'    =>  'ACTIVATED'
+        ]);
+
+        return Redirect::to('/login');
     }
 }
 

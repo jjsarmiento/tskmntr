@@ -23,6 +23,8 @@ Route::get('/regClientIndi', 'HomeController@regClientIndi');
 Route::get('/regClientComp', 'HomeController@regClientComp');
 Route::post('/regClientComp', 'HomeController@regClientComp');
 Route::get('/getProfilePercentage/{id}', 'HomeController@getProfilePercentage');
+Route::get('/SLFACTVT={time}={userid}', 'HomeController@SLFACTVT');
+Route::get('/ACTVTACCT={userid}', 'HomeController@ACTVTACCT');
 
 
 Route::post('/regWorker', 'HomeController@regWorker');
