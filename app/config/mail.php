@@ -28,9 +28,8 @@ return array(
 	|
 	*/
 
-//	'host' => 'smtp.mailgun.org',
-    'host' => 'smtp.gmail.com',
-//    'host' => 'email-smtp.us-west-2.amazonaws.com',
+//    'host' => 'smtp.gmail.com',
+    'host' => 'smtp.office365.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -66,7 +65,8 @@ return array(
 
 //	'from' => array('address' => null, 'name' => null),
 //    'from' => array('address' => "hello@proveek.com", 'name' => "Proveek BETA"), // MAIL SERVICE
-    'from' => array('address' => "service.proveek@gmail.com", 'name' => "Proveek BETA"), // GMAIL
+    'from' => array('address' => "admin@proveek.com", 'name' => "Proveek BETA"), // MAIL SERVICE
+//    'from' => array('address' => "service.proveek@gmail.com", 'name' => "Proveek BETA"), // GMAIL
 
 	/*
 	|--------------------------------------------------------------------------
@@ -94,7 +94,8 @@ return array(
 
 //	'username' => null,
 //    'username' => "hello@proveek.com", // MAIL SERVICE
-    'username' => "service.proveek@gmail.com", // GMAIL
+    'username' => "admin@proveek.com", // MAIL SERVICE
+//    'username' => "service.proveek@gmail.com", // GMAIL
 
 	/*
 	|--------------------------------------------------------------------------
@@ -108,8 +109,8 @@ return array(
 	*/
 
 //	'password' => null,
-//	'password' => 'Blessed2bless', // MAIL SERVICE
-	'password' => 'blessed2bless', // GMAIL
+	'password' => 'Blessed2bless', // MAIL SERVICE
+//	'password' => 'blessed2bless', // GMAIL
 
 	/*
 	|--------------------------------------------------------------------------

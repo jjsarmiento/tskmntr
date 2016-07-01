@@ -153,17 +153,17 @@ class HomeController extends BaseController {
                 ));
 
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- START
-//                $data = array(
-//                    'msg'   =>  'You have successfully registered in Proveek BETA',
-//                    'url'   =>  URL::to('/').'/login'
-//                );
-//
-//                $email = Input::get('txtEmail');
-//
-//                Mail::send('emails.REGISTRATION_SUCCESS', $data, function($message) use($email){
-//                    $message->from('hello@proveek.com', 'Proveek');
-//                    $message->to($email)->subject('Proveek BETA - Registration Successful!');
-//                });
+                $data = array(
+                    'msg'   =>  'You have successfully registered in Proveek BETA',
+                    'url'   =>  URL::to('/').'/login'
+                );
+
+                $email = Input::get('txtEmail');
+
+                Mail::send('emails.REGISTRATION_SUCCESS', $data, function($message) use($email){
+                    $message->from('admin@proveek.com', 'Proveek');
+                    $message->to($email)->subject('Proveek BETA - Registration Successful!');
+                });
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- END
 
                 Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')));
@@ -473,17 +473,17 @@ class HomeController extends BaseController {
                 ));
 
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- START
-//                $data = array(
-//                    'msg'   =>  'You have successfully registered in Proveek BETA',
-//                    'url'   =>  URL::to('/').'/login'
-//                );
-//
-//                $email = Input::get('txtEmail');
-//
-//                Mail::send('emails.REGISTRATION_SUCCESS', $data, function($message) use($email){
-//                    $message->from('hello@proveek.com', 'Proveek');
-//                    $message->to($email)->subject('Proveek BETA - Registration Successful!');
-//                });
+                $data = array(
+                    'msg'   =>  'You have successfully registered in Proveek BETA',
+                    'url'   =>  URL::to('/').'/login'
+                );
+
+                $email = Input::get('txtEmail');
+
+                Mail::send('emails.REGISTRATION_SUCCESS', $data, function($message) use($email){
+                    $message->from('admin@proveek.com', 'Proveek');
+                    $message->to($email)->subject('Proveek BETA - Registration Successful!');
+                });
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- END
 
                 Auth::attempt(array('username' => Input::get('uName'), 'password' => Input::get('pass')));
