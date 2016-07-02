@@ -1680,6 +1680,13 @@ class HomeController extends BaseController {
 
     public function CHKRGWRKR(){
         $registrationErrors = array();
+        // CHECK COMPANY NAME IF IT EXISTS
+        if(Input::has('compName')){
+            if(strlen(trim(Input::get('compName'))) < 5){
+                array_push($registrationErrors, 'Company name must be more than 5 characters.');
+            }
+        }
+
         // CHECK USERNAME
         if(!ctype_alnum(Input::get('uName')) || strlen(Input::get('uName')) < 5){
             array_push($registrationErrors, 'Username is alphanumeric only and must contain at least 5 characters');
@@ -1698,8 +1705,10 @@ class HomeController extends BaseController {
         }
 
         // CHECK PASSWORDS
-        if(strcmp(Input::get('cPass'), Input::get('pass')) == 0){
-            if(!ctype_alnum(Input::get('pass')) || strlen(Input::get('pass')) < 5){
+        $pass = (Input::has('primary_pass') ? Input::get('primary_pass') : Input::get('pass'));
+
+        if(strcmp(Input::get('cPass'), $pass) == 0){
+            if(!ctype_alnum($pass) || strlen($pass) < 5){
                 array_push($registrationErrors, 'Password is alphanumeric only and must contain at least 5 characters');
             }
         }else{
@@ -1712,7 +1721,9 @@ class HomeController extends BaseController {
         }
 
         // CHECK MOBILE NUMBER
-        if(!preg_match("/^09[0-9]{9}$/", Input::get('mblNum'), $output_array)){
+
+        $mobileNum = (Input::has('mobileNum') ? Input::get('mobileNum') : Input::get('mblNum'));
+        if(!preg_match("/^09[0-9]{9}$/", $mobileNum, $output_array)){
             array_push($registrationErrors, 'Please enter a valid mobile number : 09xx-xxx-xxxx');
         }
 
