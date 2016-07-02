@@ -807,8 +807,7 @@ class TaskminatorController extends \BaseController {
     public function WSRCH($keyword){
         $users = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
             ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
-            ->where('user_has_role.role_id', '3')
-            ->orWhere('user_has_role.role_id', '4')
+            ->whereIn('user_has_role.role_id', [3,4])
             ->whereNotIn('users.status', ['PRE_ACTIVATED'])
 
 
