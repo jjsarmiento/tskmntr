@@ -227,7 +227,7 @@
 <!-- END OF PROFILE  COMPLETENESS METER -->
                 <div class="col-lg-12">
                     <div class="widget-container stats-container" style="display:block !important;">
-                        <div class="col-lg-3 lato-text">
+                        <div class="col-lg-6 lato-text">
                             <a href="/tskmntr_taskBids" style="text-decoration:none;">
                                 <div class="number" style="color:#2980b9;">
                                     <i class="fa fa-gavel"></i>
@@ -238,7 +238,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-3 lato-text">
+                        <div class="col-lg-6 lato-text">
                             <a href="/tskmntr_taskOffers" style="text-decoration:none;">
                                 <div class="number" style="color:#2980b9;">
                                     <i class="fa fa-globe"></i>
@@ -247,28 +247,6 @@
                                 <div class="text" style="color:#2980b9;">
                                     Offers
                                 </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 lato-text">
-                            <a href="/tskmntr_onGoing" style="text-decoration:none;">
-                                <div class="number" style="color:#2980b9;">
-                                    <i class="fa fa-refresh"></i>
-                                    {{ $ongoingCount }}
-                                </div>
-                                <div class="text" style="color:#2980b9;">
-                                    On going
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 lato-text">
-                            <a href="/tskmntr_completed" style="text-decoration:none;">
-                            <div class="number" style="color:#2980b9;">
-                                <i class="fa fa-check"></i>
-                                {{ $completedCount }}
-                            </div>
-                            <div class="text" style="color:#2980b9;">
-                                Completed
-                            </div>
                             </a>
                         </div>
                     </div>
