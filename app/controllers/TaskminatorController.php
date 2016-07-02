@@ -471,6 +471,7 @@ class TaskminatorController extends \BaseController {
 
     public function editPersonalInfo(){
         return View::make('taskminator.editPersonalInfo')
+                ->with('regions', Region::orderBy('regname', 'ASC')->get())
                 ->with('user', Auth::user())
                 ->with('cities', City::orderBy('cityname', 'ASC')->get())
                 ->with('barangays', Barangay::orderBy('bgyname', 'ASC')->where('citycode', Auth::user()->city)->get());

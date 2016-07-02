@@ -28,6 +28,7 @@ Route::get('/ACTVTACCT={userid}', 'HomeController@ACTVTACCT');
 Route::get('/VRFYACCT={code}', 'HomeController@VRFYACCT');
 Route::get('/RESENDVALIDATION={userid}', 'HomeController@RESENDVALIDATION');
 Route::post('/CHKRGWRKR', 'HomeController@CHKRGWRKR');
+Route::get('/CHAINREG', 'HomeController@CHAINREG');
 
 
 Route::post('/regWorker', 'HomeController@regWorker');

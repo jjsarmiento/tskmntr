@@ -1729,5 +1729,9 @@ class HomeController extends BaseController {
 
         return $registrationErrors;
     }
+
+    public function CHAINREG(){
+
+    }
 }
 
