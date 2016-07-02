@@ -74,7 +74,8 @@ class HomeController extends BaseController {
         }else{
             $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$privatekey."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
             $data = json_decode($response);
-            if(isset($data->success) AND $data->success==false){
+//            if(isset($data->success) AND $data->success==false){
+            if(false){
                 echo "Hey! Spammer I'm Using Google reCAPTCHA! Get Out";
             }else{
                 Input::merge(array_map('trim', Input::all()));
@@ -421,10 +422,11 @@ class HomeController extends BaseController {
         $privatekey = "6LfpJyITAAAAAHn92bsWJxBb4TFCggUdSndYmZPo";
         $captcha=$_POST['g-recaptcha-response'];
 
-
-         if(!$captcha){
-            echo 'captch not checked!';
+        if(!$captcha){
+//            echo 'captch not checked!';
+            return Redirect::to('/');
         }else{
+
             $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$privatekey."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
             $data = json_decode($response);
             if(isset($data->success) AND $data->success==false){
@@ -1674,6 +1676,47 @@ class HomeController extends BaseController {
         }
 
         return $myArr;
+    }
+
+    public function CHKRGWRKR(){
+        $registrationErrors = array();
+        // CHECK USERNAME
+        if(!ctype_alnum(Input::get('uName')) || strlen(Input::get('uName')) < 5){
+            array_push($registrationErrors, 'Username is alphanumeric only and must contain at least 5 characters');
+        }elseif(User::where('username', Input::get('uName'))->count() > 0){
+            array_push($registrationErrors, 'Username already exists');
+        }
+
+        // CHECK FIRSTNAME
+        if(!ctype_alnum(Input::get('fName'))){
+            array_push($registrationErrors, 'First name can only contain letters');
+        }
+
+        // CHECK LASTNAME
+        if(!ctype_alnum(Input::get('lName'))){
+            array_push($registrationErrors, 'Last name can only contain letters');
+        }
+
+        // CHECK PASSWORDS
+        if(strcmp(Input::get('cPass'), Input::get('pass')) == 0){
+            if(!ctype_alnum(Input::get('pass')) || strlen(Input::get('pass')) < 5){
+                array_push($registrationErrors, 'Password is alphanumeric only and must contain at least 5 characters');
+            }
+        }else{
+            array_push($registrationErrors, 'Passwords does not match');
+        }
+
+        // CHECK EMAIL
+        if(!$this->emailValidate(Input::get('txtEmail'))){
+            array_push($registrationErrors, 'Please enter a valid email');
+        }
+
+        // CHECK MOBILE NUMBER
+        if(!preg_match("/^09[0-9]{9}$/", Input::get('mblNum'), $output_array)){
+            array_push($registrationErrors, 'Please enter a valid mobile number : 09xx-xxx-xxxx');
+        }
+
+        return $registrationErrors;
     }
 }
 

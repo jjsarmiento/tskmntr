@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="frontend/css/vegas.css">
     <link rel="stylesheet" href="frontend/css/lightslider.css" type="text/css">
     <link rel="stylesheet" href="frontend/css/custom.css" type="text/css">
+    <script src="js/jquery-1.11.0.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -49,6 +50,30 @@
 
         <!--reCaptcha-->
     <script src='https://www.google.com/recaptcha/api.js?hl=en?fallback=true'></script>
+    <script>
+        $(document).ready(function(){
+            $('#minimalRegForm_Worker').submit(function(e){
+                if(grecaptcha.getResponse().length == 0){
+                    alert("Please check the ReCaptcha First!");
+                    e.preventDefault();
+                }else{
+                    e.preventDefault();
+                    $.ajax({
+                        type    :   'POST',
+                        url     :   '/CHKRGWRKR',
+                        data    :   $(this).serialize(),
+                        success :   function(data){
+                            if(data.length == 0){
+                                $('#minimalRegForm_Worker').unbind().submit();
+                            }else{
+                                alert(data.join("\n"));
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </head>
 
 <body id="page-top">

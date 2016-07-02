@@ -27,6 +27,7 @@ Route::get('/SLFACTVT={time}={userid}', 'HomeController@SLFACTVT');
 Route::get('/ACTVTACCT={userid}', 'HomeController@ACTVTACCT');
 Route::get('/VRFYACCT={code}', 'HomeController@VRFYACCT');
 Route::get('/RESENDVALIDATION={userid}', 'HomeController@RESENDVALIDATION');
+Route::post('/CHKRGWRKR', 'HomeController@CHKRGWRKR');
 
 
 Route::post('/regWorker', 'HomeController@regWorker');
