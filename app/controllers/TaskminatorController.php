@@ -485,11 +485,12 @@ class TaskminatorController extends \BaseController {
         }
 
         // MIDDLE NAME VALIDATION
-        if(!ctype_alpha(str_replace(' ', '', trim(Input::get('midName'))))){
-            return Redirect::back()->with('errorMsg', 'Middle name must be letters only')->withInput(Input::except('password'));
-        }else if(strlen(trim(Input::get('midName'))) == 0){
-            return Redirect::back()->with('errorMsg', 'Middle name cannot be empty')->withInput(Input::except('password'));
-        }
+//        if(!ctype_alpha(str_replace(' ', '', trim(Input::get('midName'))))){
+//            return Redirect::back()->with('errorMsg', 'Middle name must be letters only')->withInput(Input::except('password'));
+//        }else if(strlen(trim(Input::get('midName'))) == 0){
+//            return Redirect::back()->with('errorMsg', 'Middle name cannot be empty')->withInput(Input::except('password'));
+//        }
+        $middleName = (Input::has('midName') ? Input::get('midName') : null);
 
         // LAST NAME VALIDATION
         if(!ctype_alpha(str_replace(' ', '', trim(Input::get('lastName'))))){
@@ -517,7 +518,7 @@ class TaskminatorController extends \BaseController {
 
         User::where('id', Auth::user()->id)->update(array(
             'firstName'         =>  Input::get('firstName'),
-            'midName'           =>  Input::get('midName'),
+            'midName'           =>  $middleName,
             'lastName'          =>  Input::get('lastName'),
             'fullName'          =>  Input::get('firstName').' '.Input::get('midName').' '.Input::get('lastName'),
             'gender'            =>  Input::get('gender'),

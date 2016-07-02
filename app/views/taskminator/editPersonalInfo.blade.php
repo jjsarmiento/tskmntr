@@ -111,7 +111,7 @@
                                 Middle Name : 
                             </div>
                             <div class="col-md-9">
-                                <input type="text"  class="form-control"value="{{ $user->midName }}" name="midName" required="required"/><br/>
+                                <input type="text"  class="form-control"value="{{ $user->midName }}" name="midName"/><br/>
                             </div>
                             <div class="col-md-3">
                                 Last Name : 

@@ -81,31 +81,31 @@
             @endif
 
 
-            @if($user->status == 'PRE_ACTIVATED')
-            <div class="col-sm-12">
-                <div class="alert alert-warning">
-                    @if(Document::where('user_id', $user->id)->count() == 0 || Photo::where('user_id', $user->id)->count() == 0)
-                        <div>
-                            {{ Form::open(array('url' => '/doUploadDocuments', 'id' => 'registrationForm-task', 'files' => 'true')) }}
-                            <h3>Activate Your Account</h3>
-                            upload 1 old document with complete name and address (i.e Transcript of record, birth certificate, etc. Accepted files are .doc, .pdf)
-                            <input required="required" type="file" name="document" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"/><br/>
-                            2 (Two) Key Skills Certification (All image files are accepted)
-                            <input type="file" name="keySkills[]" accept='image/*' multiple required="required"/><br/>
-                            <button type="submit">Upload</button>
-                            {{ Form::close() }}
-                        </div>
+            {{--@if($user->status == 'PRE_ACTIVATED')--}}
+            {{--<div class="col-sm-12">--}}
+                {{--<div class="alert alert-warning">--}}
+                    {{--@if(Document::where('user_id', $user->id)->count() == 0 || Photo::where('user_id', $user->id)->count() == 0)--}}
+                        {{--<div>--}}
+                            {{--{{ Form::open(array('url' => '/doUploadDocuments', 'id' => 'registrationForm-task', 'files' => 'true')) }}--}}
+                            {{--<h3>Activate Your Account</h3>--}}
+                            {{--upload 1 old document with complete name and address (i.e Transcript of record, birth certificate, etc. Accepted files are .doc, .pdf)--}}
+                            {{--<input required="required" type="file" name="document" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"/><br/>--}}
+                            {{--2 (Two) Key Skills Certification (All image files are accepted)--}}
+                            {{--<input type="file" name="keySkills[]" accept='image/*' multiple required="required"/><br/>--}}
+                            {{--<button type="submit">Upload</button>--}}
+                            {{--{{ Form::close() }}--}}
+                        {{--</div>--}}
 
-                    @else
-                        <div>
-                            Your profile is being reviewed by our staff.<br/>
-                            After your profile has been activated, you can start looking for tasks!<br/>
-                            This could take 24 hours or less.
-                        </div>
-                    @endif
-                </div>
-            </div>
-            @endif
+                    {{--@else--}}
+                        {{--<div>--}}
+                            {{--Your profile is being reviewed by our staff.<br/>--}}
+                            {{--After your profile has been activated, you can start looking for tasks!<br/>--}}
+                            {{--This could take 24 hours or less.--}}
+                        {{--</div>--}}
+                    {{--@endif--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--@endif--}}
 
             <div class="col-lg-12 padded" style="background-color:white; border-radius:8px;" >
                         <div class="col-lg-3" style="align-items: center; align-content: center; text-align: center;">
@@ -203,9 +203,9 @@
                                     <span style="margin-left: 5px">{{ $con->content }}</span>
                                     @if($con->ctype == "mobileNum")
                                         @if(Contact::where('user_id',  Auth::user()->id)->pluck('pincode')!='verified')
-                                            <button class="btn btn-xs btn-primary" onclick="location.href='/doVerifyMobileNumber'" style="padding: 2px 10px 2px 10px; margin: 5px; text-transform: none;">Verify</button>
+                                            {{--<button class="btn btn-xs btn-primary" onclick="location.href='/doVerifyMobileNumber'" style="padding: 2px 10px 2px 10px; margin: 5px; text-transform: none;">Verify</button>--}}
                                         @else
-                                            <span class="btn btn-xs btn-default" style=" margin: 5px;">Verified</span>
+                                            {{--<span class="btn btn-xs btn-default" style=" margin: 5px;">Verified</span>--}}
                                         @endif
                                     @endif
                                     <br/>
