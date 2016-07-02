@@ -1669,16 +1669,6 @@ class HomeController extends BaseController {
                 ->with('successMsg', 'A new validation link has been sent to your '.$email);
     }
 
-    public function GETTASKCODES($userId){
-        $skills = User::getSkillsCODE($userId);
-        $myArr = array();
-        foreach($skills as $s){
-            array_push($myArr, $s->itemcode);
-        }
-
-        return $myArr;
-    }
-
     public function CHKRGWRKR(){
         $registrationErrors = array();
         // CHECK COMPANY NAME IF IT EXISTS

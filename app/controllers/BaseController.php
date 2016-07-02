@@ -195,5 +195,16 @@ class BaseController extends Controller {
                 ->first();
 
     }
+
+    // GET SKILLS OF USER - Returns array
+    public function GETTASKCODES($userId){
+        $skills = User::getSkillsCODE($userId);
+        $myArr = array();
+        foreach($skills as $s){
+            array_push($myArr, $s->itemcode);
+        }
+
+        return $myArr;
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

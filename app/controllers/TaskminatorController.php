@@ -821,8 +821,15 @@ class TaskminatorController extends \BaseController {
             ->where('users.fullName', 'LIKE', '%'.$keyword.'%')
             ->paginate(10);
 
+
+        $skillCodeArray = $this->GETTASKCODES(Auth::user()->id);
         $tasks = Task::where('name', 'LIKE', '%'.$keyword.'%')
-            ->paginate(10);
+            ->where('status', 'OPEN')
+            ->whereIn('taskType', $skillCodeArray)
+            ->orderBy('created_at','DESC')->paginate(10);
+
+//        $tasks = Task::where('name', 'LIKE', '%'.$keyword.'%')
+//            ->paginate(10);
 
         return View::make('taskminator.general_search')
                 ->with('keyword', $keyword)

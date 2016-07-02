@@ -129,7 +129,7 @@
                 @if($tasks->count() == 0)
                     <center><i>No data available</i></center>
                 @else
-                    <h4>{{ $users->count() }} job ad/ads found</h4>
+                    <h4>{{ $tasks->count() }} job ad/ads found</h4>
                     @foreach($tasks as $tasks)
                         <div class="widget-container fluid-height padded">
                             {{ $tasks->name }}
