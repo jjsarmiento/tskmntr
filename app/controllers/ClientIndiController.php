@@ -972,4 +972,17 @@ class ClientIndiController extends \BaseController {
             ->with('tasks', $tasks)
             ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id));
     }
+
+    public function SRCHWRKRSKLL($categoryId, $skillId){
+        $users = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
+                    ->where('taskminator_has_skills.taskitem_code', $skillId)
+                    ->get();
+
+        return View::make('client.searchWorker_SKILL')
+                ->with('users', $users);
+    }
+
+    public function SKILLCATCHAIN($categoryId){
+        return TaskItem::where('item_categorycode', $categoryId)->get();
+    }
 }

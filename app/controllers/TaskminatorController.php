@@ -823,7 +823,8 @@ class TaskminatorController extends \BaseController {
 
 
         $skillCodeArray = $this->GETTASKCODES(Auth::user()->id);
-        $tasks = Task::where('name', 'LIKE', '%'.$keyword.'%')
+        $tasks = Task::where('hiringType', 'BIDDING')
+            ->where('name', 'LIKE', '%'.$keyword.'%')
             ->where('status', 'OPEN')
             ->whereIn('taskType', $skillCodeArray)
             ->orderBy('created_at','DESC')->paginate(10);

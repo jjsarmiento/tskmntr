@@ -226,10 +226,13 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
 
     Route::get('/compDoSearch', 'searchTestController@compDoSearch');
     Route::get('/CISRCH/{prog}={keyword}', 'ClientIndiController@CISRCH');
+
+    Route::get('/SRCHWRKRSKLL={categoryId}={skillId}', 'ClientIndiController@SRCHWRKRSKLL');
+    Route::get('/SKILLCATCHAIN={categoryId}', 'ClientIndiController@SKILLCATCHAIN');
 });
 
     Route::get('/{username}', 'HomeController@toProfile'); // new profile page viewer
-// THIS FUNCTION IS FOR ROUTE PROTECTION - IT REDIRECTS THE SYSTEM WHEN THE ROUTE/METHOD IS NOT FOUND AND/OR DOESN'T EXIST - Jan Sarmiento
+// THIS FUNCTION IS FOR ROUTE PROTECTION - IT REDIRECTS THE SYSTEM WHEN cTHE ROUTE/METHOD IS NOT FOUND AND/OR DOESN'T EXIST - Jan Sarmiento
 //App::missing(function(){
 //    return Redirect::to('/');
 //});

@@ -107,7 +107,47 @@
             max-height:1px;
         }
         </style>
+    <script>
+        $(document).ready(function() {
+            $('#SRCHBTN_SKILL').click(function(){
+                var CTGRY = "N",
+                    SKLL = "N";
 
+                if($('#taskitems').val() != ''){
+                    SKLL = $('#taskitems').val()
+                }
+
+                if($('#taskcategory').val() != ''){
+                    CTGRY = $('#taskcategory').val()
+                }
+
+                location.href="/SRCHWRKRSKLL="+CTGRY+'='+SKLL;
+            })
+
+
+            $('#taskcategory').change(function(){
+                $('#taskitems').empty();
+                $.ajax({
+                    type    :   'GET',
+                    url     :   '/SKILLCATCHAIN='+$('#taskcategory').val(),
+//                    data    :   $('#doEditSkillInfo').serialize(),
+                    success :   function(data){
+                        $.each(data, function(key, value){
+                            $('#taskitems').append('<option value="'+ value['itemcode'] +'">'+value['itemname']+'</option>');
+                        });
+                    },error :   function(){
+                        alert('ERR500 : Please check network connectivity');
+                    }
+                })
+            });
+
+            $('.remove-skill').click(function(){
+                if(confirm('Do you really want to remove this skill?')){
+                    location.href = $(this).attr('data-href');
+                }
+            });
+        })
+    </script>
 @stop
 
 @section('user-name')
@@ -135,28 +175,43 @@
                             <a href="/editProfile" style="font-size:14pt;">{{ Auth::user()->companyName }}</a><br>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            @if(Auth::user()->status == 'PRE_ACTIVATED')
-                                <div class="heading">
-                                    <i class="icon-signal"></i>Your Profile
-                                </div>
-                                <div style="margin: 0 15px;">
-                                    Your profile is being reviewed by our staff.<br/>
-                                    After your profile has been activated, you can start looking for tasks!<br/>
-                                    This could take 24 hours or less.
-                                </div>
-                            @else
-                                <div class="widget-content clearfix" style="padding: 0px 30px;">
-                                    <h4>Points left : {{ Auth::user()->points }}</h4>
-                                    <h4>Account Type : {{ Auth::user()->accountType }}</h4>
-                                    <a href="/createTask" class="btn btn-primary">Create Task</a>
-                                    <a href="/tasks" class="btn btn-primary">Tasks</a>
-                                    <a href="/tskmntrSearch" class="btn btn-primary">Search for Taskminators</a>
-                                </div>
-                            @endif
-                        </div>
+                </div>
+
+                <div style="background-color: white; padding: 1em; margin-top: 2em;">
+                        @if(Auth::user()->status == 'PRE_ACTIVATED')
+                            {{--<div class="heading">--}}
+                                {{--<i class="icon-signal"></i>Your Profile--}}
+                            {{--</div>--}}
+                            {{--<div style="margin: 0 15px;">--}}
+                                {{--Your profile is being reviewed by our staff.<br/>--}}
+                                {{--After your profile has been activated, you can start looking for tasks!<br/>--}}
+                                {{--This could take 24 hours or less.--}}
+                            {{--</div>--}}
+                        @else
+                            <h4>Points left : {{ Auth::user()->points }}</h4>
+                            <h4>Account Type : {{ Auth::user()->accountType }}</h4>
+                            <a href="/createTask" class="btn btn-primary">Create Task</a>
+                            <a href="/tasks" class="btn btn-primary">Tasks</a>
+                            <a href="/tskmntrSearch" class="btn btn-primary">Search for Taskminators</a>
+                        @endif
+                </div>
+
+                <div style="background-color: white; padding: 1em; margin-top: 2em;">
+                    <div class="form-group">
+                        <select name="taskcategory" id="taskcategory" class="form-control">
+                            @foreach($categories as $category)
+                                <option value="{{ $category->categorycode }}">{{ $category->categoryname }}</option>
+                            @endforeach
+                        </select>
                     </div>
+                    <div class="form-group">
+                        <select name="taskitems" id="taskitems" class="form-control">
+                            @foreach($categorySkills as $skill)
+                                <option value="{{ $skill->itemcode }}">{{ $skill->itemname }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button class="btn btn-primary btn-block" id="SRCHBTN_SKILL"><i class="fa fa-search"></i> Search for workers</button>
                 </div>
             </div>
 <!-- ENF PROFILE PIC / INFO -->

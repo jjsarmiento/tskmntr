@@ -826,7 +826,6 @@ class HomeController extends BaseController {
                     break;
                 case 'CLIENT_IND' :
                 case 'CLIENT_CMP' :
-
                     // CHECKER FOR the first 3 FREE MONTHS SUBSCRIPTION
                     $tempDate = Auth::user()->created_at->addMonths(3);
                     $freeDuration = null;
@@ -935,6 +934,8 @@ class HomeController extends BaseController {
                     ->with('reqProgress', $reqProgress)
                     ->with('optProgress', $optProgress)
                     ->with('freeDuration', $freeDuration)
+                    ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
+                    ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get())
                     ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id))
                     ->with('tasks', Task::where('user_id', Auth::user()->id)->whereNotIn('status', ['CANCELLED', 'COMPLETE'])->orderBy('created_at', 'DESC')->paginate(10));
                     break;
