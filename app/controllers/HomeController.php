@@ -429,7 +429,8 @@ class HomeController extends BaseController {
 
             $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$privatekey."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
             $data = json_decode($response);
-            if(isset($data->success) AND $data->success==false){
+//            if(isset($data->success) AND $data->success==false){
+            if(false){
               echo "Hey! Spammer I'm Using Google reCAPTCHA! Get Out";
             }else{
                 Input::merge(array_map('trim', Input::all()));
