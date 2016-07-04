@@ -191,15 +191,15 @@
                                     <span style="margin-left: 5px">{{ $contact->content }}</span><br/>
                                 @endforeach
                             </div>
-                            <hr/>
-                            <div class="heading">
-                                <i class="glyphicon glyphicon-info-sign" style="font-size:14pt; color:#2980b9"></i>&nbsp Account Information <button onclick="location.href='/cltEditContactInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
-                            </div>
-                            <div style="padding: 0 12px;">
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
-                                 :
-                                <span style="margin-left: 5px">{{ $user->username }}</span><br/>
-                            </div>
+                            {{--<hr/>--}}
+                            {{--<div class="heading">--}}
+                                {{--<i class="glyphicon glyphicon-info-sign" style="font-size:14pt; color:#2980b9"></i>&nbsp Account Information <button onclick="location.href='/cltEditContactInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>--}}
+                            {{--</div>--}}
+                            {{--<div style="padding: 0 12px;">--}}
+                                {{--<span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>--}}
+                                 {{--:--}}
+                                {{--<span style="margin-left: 5px">{{ $user->username }}</span><br/>--}}
+                            {{--</div>--}}
                         </div>
                     </div>
                 </div>

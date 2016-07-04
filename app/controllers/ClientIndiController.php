@@ -680,6 +680,7 @@ class ClientIndiController extends \BaseController {
 
         return View::make('client.editPersonalInfo')
             ->with('user', Auth::user())
+            ->with('regions', Region::orderBy('regname', 'ASC')->get())
             ->with('cities', City::orderBy('cityname', 'ASC')->get())
             ->with('barangays', Barangay::orderBy('bgyname', 'ASC')->where('citycode', Auth::user()->city)->get())
             ->with('formUrl', $formUrl);
@@ -732,6 +733,7 @@ class ClientIndiController extends \BaseController {
                 'businessNature'        =>  Input::get('businessNature'),
                 'businessDescription'   =>  Input::get('businessDescription'),
                 'address'               =>  Input::get('address'),
+                'region'                =>  Input::get('reg-task'),
                 'city'                  =>  Input::get('city-comp'),
                 'barangay'              =>  Input::get('barangay-comp'),
                 'businessPermit'        =>  Input::get('businessPermit'),
@@ -846,11 +848,12 @@ class ClientIndiController extends \BaseController {
         }
 
         // MIDDLE NAME VALIDATION
-        if(!ctype_alpha(str_replace(' ', '',trim(Input::get('midName'))))){
-            return Redirect::back()->with('errorMsg', 'Middle name must be letters only')->withInput(Input::except('password'));
-        }else if(strlen(trim(Input::get('midName'))) == 0){
-            return Redirect::back()->with('errorMsg', 'Middle name cannot be empty')->withInput(Input::except('password'));
-        }
+        $middleName = (Input::get('midName') ? Input::get('midName') : NULL);
+//        if(!ctype_alpha(str_replace(' ', '',trim(Input::get('midName'))))){
+//            return Redirect::back()->with('errorMsg', 'Middle name must be letters only')->withInput(Input::except('password'));
+//        }else if(strlen(trim(Input::get('midName'))) == 0){
+//            return Redirect::back()->with('errorMsg', 'Middle name cannot be empty')->withInput(Input::except('password'));
+//        }
 
         // LAST NAME VALIDATION
         if(!ctype_alpha(str_replace(' ', '',trim(Input::get('lastName'))))){
@@ -880,7 +883,7 @@ class ClientIndiController extends \BaseController {
             ->update(array(
 //                'companyName'           =>  Input::get('companyName'),
                 'firstName'             =>  Input::get('firstName'),
-                'midName'               =>  Input::get('midName'),
+                'midName'               =>  $middleName,
                 'lastName'              =>  Input::get('lastName'),
                 'fullName'              =>  Input::get('firstName').' '.Input::get('midName').' '.Input::get('lastName'),
                 'address'               =>  Input::get('address'),
