@@ -101,8 +101,9 @@
                                       {{ Form::submit('LOGIN', array('class' => 'btn btn-md btn-primary lato-text btnTheme', 'style' => 'border:1px solid #2990b9;')) }}                     
                                 </div>
                         {{ Form::close() }}
+                        <a href="/" class="btn btn-success lato-text btnTheme btn-lg" data-toggle="modal">Register</a><br/><br/>
                         <a class="btn btn-primary lato-text btnTheme" style="border:1px solid #2980b9;" data-toggle="modal" data-target="#forgotPassModal">Forgot Password</a>
-                        
+
                     <!-- Additionals -->
                               {{--<div class="div_signUp lato-text" style="padding-top:20px;"> <!-- wow fadeIn data-wow-delay="2.6s"  -->--}}
                                   {{--<!-- <p style="color:#222; font-style:oblique; margin:auto;">Don't have an account? <a href="#" style="text-decoration:underline;">Sign Up</a> now.</p>--}}
