@@ -805,6 +805,10 @@ class TaskminatorController extends \BaseController {
     }
 
     public function WSRCH($keyword){
+        if($keyword == "NONE"){
+            $keyword = "";
+        }
+
         $users = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
             ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
             ->whereIn('user_has_role.role_id', [3,4])

@@ -78,7 +78,8 @@
         $(document).ready(function(){
             $('.srchAnim').keyup(function(e){
                 if(e.keyCode == 13){
-                    location.href = $(this).data('url')+''+$(this).val()
+                    var searchParam = ($(this).val() ? $(this).val() : "NONE");
+                    location.href = $(this).data('url')+''+searchParam;
                 }
             });
         });
