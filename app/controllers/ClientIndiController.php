@@ -978,6 +978,9 @@ class ClientIndiController extends \BaseController {
 
     public function SRCHWRKRSKLL($categoryId, $skillId){
         $users = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
+                    ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+                    ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+                    ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
                     ->where('taskminator_has_skills.taskitem_code', $skillId)
                     ->get();
 
