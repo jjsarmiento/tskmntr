@@ -183,9 +183,10 @@
                                 {{--<i class="icon-signal"></i>Your Profile--}}
                             {{--</div>--}}
                             {{--<div style="margin: 0 15px;">--}}
-                                {{--Your profile is being reviewed by our staff.<br/>--}}
-                                {{--After your profile has been activated, you can start looking for tasks!<br/>--}}
-                                {{--This could take 24 hours or less.--}}
+                                <b><i class="fa fa-warning" style="color: red;"></i>
+                                Your profile is being reviewed by our staff.<br/>
+                                After your profile has been activated, you can start looking for tasks!<br/>
+                                This could take 24 hours or less.</b>
                             {{--</div>--}}
                         @else
                             <h4>Points left : {{ Auth::user()->points }}</h4>

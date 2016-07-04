@@ -53,9 +53,14 @@
     <script>
         $(document).ready(function(){
             $('#minimalRegForm_Worker').submit(function(e){
+                $('#SUBMITBUTTON').prop('disabled', true).hide();
+                $('#FAUXSUBMITBUTTON').show();
+
                 if(grecaptcha.getResponse().length == 0){
                     alert("Please check the ReCaptcha First!");
                     e.preventDefault();
+                    $('#FAUXSUBMITBUTTON').hide();
+                    $('#SUBMITBUTTON').prop('disabled', false).show();
                 }else{
                     e.preventDefault();
                     $.ajax({
@@ -67,6 +72,8 @@
                                 $('#minimalRegForm_Worker').unbind().submit();
                             }else{
                                 alert(data.join("\n"));
+                                $('#FAUXSUBMITBUTTON').hide();
+                                $('#SUBMITBUTTON').prop('disabled', false).show();
                             }
                         }
                     });
@@ -193,7 +200,8 @@
                                     <p style="padding:0;margin:0;font-size:10pt; color:#0f0f0f">By clicking Sign Up, you agree to our <a href="#">Terms</a> and that you have read our <a href="#">Privacy Policy</a>.</p>
                                 </div>
                                 <div class="col-lg-12 text-center" style="padding-top:5px;">
-                                    {{ Form::submit('Sign up for free', array('class' => 'btn btn-primary', 'style' =>'border-radius:4px; width:100%;')) }}
+                                    {{ Form::submit('Sign up for free', array('class' => 'btn btn-primary btn-block', 'style' => 'border-radius : 0.3em;','id' => 'SUBMITBUTTON')) }}
+                                    <button id="FAUXSUBMITBUTTON" class="btn btn-primary btn-block" style="display: none; border-radius: 0.3em;" disabled><i class="fa fa-circle-o-notch fa-spin"></i> LOADING DATA</button>
                                 </div>
                             </div>
                         {{ Form::close() }}
