@@ -979,7 +979,12 @@ class ClientIndiController extends \BaseController {
                     ->get();
 
         return View::make('client.searchWorker_SKILL')
-                ->with('users', $users);
+                ->with('categoryId', $categoryId)
+                ->with('skillId', $skillId)
+                ->with('users', $users)
+                ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
+//                ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get());
+                ->with('categorySkills', TaskItem::where('item_categorycode', $categoryId)->orderBy('itemname', 'ASC')->get());
     }
 
     public function SKILLCATCHAIN($categoryId){
