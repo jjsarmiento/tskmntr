@@ -189,11 +189,19 @@
                                 This could take 24 hours or less.</b>
                             {{--</div>--}}
                         @else
-                            <h4>Points left : {{ Auth::user()->points }}</h4>
-                            <h4>Account Type : {{ Auth::user()->accountType }}</h4>
-                            <a href="/createTask" class="btn btn-primary">Create Task</a>
-                            <a href="/tasks" class="btn btn-primary">Tasks</a>
-                            <a href="/tskmntrSearch" class="btn btn-primary">Search for Taskminators</a>
+                            <a style="border-radius: 0.3em;" href="/createTask" class="btn btn-success btn-block btn-lg">Create Task</a>
+                            <a style="border-radius: 0.3em;" href="/tasks" class="btn btn-primary btn-block">Tasks</a>
+                            <a style="border-radius: 0.3em;" href="/tskmntrSearch" class="btn btn-primary btn-block">Search for Taskminators</a>
+                            <div class="row" style="font-size: 1.2em; font-weight: bolder; text-align: center;">
+                                <div class="col-md-6 padded">
+                                    <i class="fa fa-diamond" style="color: #2980B9;"></i>&nbsp;
+                                    {{ Auth::user()->points }}
+                                </div>
+                                <div class="col-md-6 padded">
+                                    <i class="fa fa-user" style="color: #2980B9;"></i>&nbsp;
+                                    {{ Auth::user()->accountType }}
+                                </div>
+                            </div>
                         @endif
                 </div>
 
