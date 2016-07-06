@@ -996,4 +996,116 @@ class ClientIndiController extends \BaseController {
     public function SKILLCATCHAIN($categoryId){
         return TaskItem::where('item_categorycode', $categoryId)->get();
     }
+
+    public function createJob(){
+        return View::make('client.createJob')
+            ->with('regions', Region::all())
+            ->with('barangays', Barangay::where('citycode', '012801')->orderBy('bgyname', 'ASC')->get())
+            ->with('cities', City::where('regcode', '01')->orderBy('cityname', 'ASC')->get())
+            ->with('taskcategories',TaskCategory::orderBy('categoryname', 'ASC')->get())
+            ->with('intiTaskitems', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get());
+    }
+
+    public function doCreateJob(){
+        $jobId = Job::insertGetId(array(
+            'user_id'               =>  Auth::user()->id,
+            'title'                 =>  Input::get('title'),
+            'description'           =>  Input::get('description'),
+            'skill_category_code'   =>  Input::get('taskcategory'),
+            'skill_code'            =>  Input::get('taskitems'),
+            'regcode'               =>  Input::get('region'),
+            'bgycode'               =>  Input::get('barangay'),
+            'citycode'              =>  Input::get('city'),
+            'hiring_type'           =>  Input::get('hireType'),
+            'salary'                =>  Input::get('salaryRange'),
+            'created_at'            =>  date("Y:m:d H:i:s")
+        ));
+
+        return Redirect::to('/jobDetails='.$jobId);
+    }
+
+    public function jobDetails($jobId){
+        $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
+                ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+                ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
+                ->join('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+                ->join('cities', 'cities.citycode', '=', 'jobs.citycode')
+                ->where('jobs.id', $jobId)
+                ->select([
+                    'jobs.id',
+                    'jobs.title',
+                    'jobs.created_at',
+                    'jobs.description',
+                    'regions.regname',
+                    'barangays.bgyname',
+                    'cities.cityname',
+                    'taskcategory.categoryname',
+                    'taskitems.itemname',
+                    'jobs.salary',
+                    'jobs.hiring_type'
+                ])
+                ->first();
+        return View::make('client.jobDetails')
+                ->with('job', $job);
+    }
+
+    public function jobs(){
+        return View::make('client.jobs')
+                ->with('jobs', Job::where('user_id', Auth::user()->id)->get());
+    }
+
+    public function editJob($jobId){
+        $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
+            ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+            ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->join('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->join('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->where('jobs.id', $jobId)
+            ->select([
+                'jobs.id',
+                'jobs.title',
+                'jobs.created_at',
+                'jobs.description',
+                'regions.regname',
+                'regions.regcode',
+                'barangays.bgyname',
+                'barangays.bgycode',
+                'cities.cityname',
+                'cities.citycode',
+                'taskcategory.categoryname',
+                'taskcategory.categorycode',
+                'taskitems.itemname',
+                'taskitems.itemcode',
+                'jobs.salary',
+                'jobs.hiring_type'
+            ])
+            ->first();
+
+        $skills = TaskItem::where('item_categorycode', $job->categorycode)->orderBy('itemname', 'ASC')->get();
+
+        return View::make('client.editJob')
+                ->with('categories',TaskCategory::orderBy('categoryname', 'ASC')->get())
+                ->with('skills', $skills)
+                ->with('regions', Region::all())
+                ->with('barangays', Barangay::where('citycode', $job->citycode)->orderBy('bgyname', 'ASC')->get())
+                ->with('cities', City::where('regcode', $job->regcode)->orderBy('cityname', 'ASC')->get())
+                ->with('job',$job);
+    }
+
+    public function doEditJob(){
+        Job::where('id', Input::get('JOB_ID'))->update([
+            'title'                 =>  Input::get('title'),
+            'description'           =>  Input::get('description'),
+            'skill_category_code'   =>  Input::get('taskcategory'),
+            'skill_code'            =>  Input::get('taskitems'),
+            'regcode'               =>  Input::get('region'),
+            'bgycode'               =>  Input::get('barangay'),
+            'citycode'              =>  Input::get('city'),
+            'hiring_type'           =>  Input::get('hiring_type'),
+            'salary'                =>  Input::get('salary'),
+            'updated_at'            =>  date("Y:m:d H:i:s")
+        ]);
+
+        return Redirect::to('/jobDetails='.Input::get('JOB_ID'));
+    }
 }

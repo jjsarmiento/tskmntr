@@ -215,19 +215,21 @@
             </div>
         </div>
     </section>
-                   <form method="POST" action="{{$formUrl}}" id="editPersonalInfo">
-                       Address : <input type="text" value="{{ $user->address }}" name="address" required="required"/><br/>
-                       City : <select name="city-comp" id="city">
-                           @foreach($cities as $city)
-                           <option value="{{$city->citycode}}" <?php if($city->citycode == $user->city){ echo('selected'); } ?> >{{ $city->cityname }}</option>
-                           @endforeach
-                       </select><br/>
-                       Barangay : <select name="barangay-comp" id="barangay">
-                           @foreach($barangays as $bgy)
-                           <option value="{{$bgy->bgycode}}" <?php if($bgy->bgycode == $user->barangay){ echo('selected'); } ?> >{{ $bgy->bgyname }}</option>
-                           @endforeach
-                       </select><br/>
-                       <button type="submit">Edit</button>
-                   </form>
+    <!--
+       <form method="POST" action="{{$formUrl}}" id="editPersonalInfo">
+           Address : <input type="text" value="{{ $user->address }}" name="address" required="required"/><br/>
+           City : <select name="city-comp" id="city">
+               @foreach($cities as $city)
+               <option value="{{$city->citycode}}" <?php if($city->citycode == $user->city){ echo('selected'); } ?> >{{ $city->cityname }}</option>
+               @endforeach
+           </select><br/>
+           Barangay : <select name="barangay-comp" id="barangay">
+               @foreach($barangays as $bgy)
+               <option value="{{$bgy->bgycode}}" <?php if($bgy->bgycode == $user->barangay){ echo('selected'); } ?> >{{ $bgy->bgyname }}</option>
+               @endforeach
+           </select><br/>
+           <button type="submit">Edit</button>
+       </form>
+    -->
 @stop
 

@@ -51,18 +51,25 @@ class HomeController extends BaseController {
         return View::make('register')->with('regions', Region::all());
     }
 
-    public function toProfile($username)
-    {
-        $temp = User::where('username', '=', $username)->get()->first();
-        $role = Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')
+    public function toProfile($username){
+        if(User::where('username', $username)->count()!= 0){
+            $temp = User::where('username', '=', $username)->first();
+
+            $role = Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')
                 ->where('user_has_role.user_id', $temp->id)
                 ->pluck('role');
-        $QUERY_CONTACT = Contact::where('user_id', Auth::user()->id);
-        $mobile = $QUERY_CONTACT->where('ctype', 'mobileNum')->pluck('content');
-        return View::make("profile_worker")
-        ->with("users", User::where('username', '=', $username)->get()->first())
-        ->with('roles', $role)
-        ->with('mobile', $mobile);
+
+//        $QUERY_CONTACT = Contact::where('user_id', Auth::user()->id);
+            $QUERY_CONTACT = Contact::where('user_id', $temp->id);
+            $mobile = $QUERY_CONTACT->where('ctype', 'mobileNum')->pluck('content');
+            return View::make("profile_worker")
+                ->with("users", User::where('username', '=', $username)->get()->first())
+                ->with('roles', $role)
+                ->with('mobile', $mobile);
+        }else{
+//            return "ROUTE DOESN'T EXIST";
+            return View::make('ERRORPAGE');
+        }
     }
 
     public function regEmployer(){

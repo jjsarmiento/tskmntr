@@ -194,6 +194,15 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
 });
 
 Route::group(array('before' => 'CLIENT-ONLY'), function(){
+    // NEW PROVEEK MODEL ROUTES FOR JOBS -- START
+    Route::get('/createJob', 'ClientIndiController@createJob');
+    Route::post('/doCreateJob', 'ClientIndiController@doCreateJob');
+    Route::get('/jobDetails={jobId}', 'ClientIndiController@jobDetails');
+    Route::get('/jobs', 'ClientIndiController@jobs');
+    Route::get('/editJob={jobId}', 'ClientIndiController@editJob');
+    Route::post('/doEditJob', 'ClientIndiController@doEditJob');
+    // NEW PROVEEK MODEL ROUTES FOR JOBS -- END
+
     // THE ROLE BASED ROUTES FOR CLIENT GOES HERE
     Route::get('/createTask', 'ClientIndiController@createTask');
     Route::post('/createTask', 'ClientIndiController@doCreateTask');
@@ -231,13 +240,14 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
     Route::get('/SKILLCATCHAIN={categoryId}', 'ClientIndiController@SKILLCATCHAIN');
 });
 
-    Route::get('/{username}', 'HomeController@toProfile'); // new profile page viewer
+Route::get('/{username}', 'HomeController@toProfile'); // new profile page viewer
 // THIS FUNCTION IS FOR ROUTE PROTECTION - IT REDIRECTS THE SYSTEM WHEN cTHE ROUTE/METHOD IS NOT FOUND AND/OR DOESN'T EXIST - Jan Sarmiento
 //App::missing(function(){
-//    return Redirect::to('/');
+//    return View::make('ERRORPAGE');
 //});
 
 // THIS FUNCTION REDIRECTS USER TO INDEX or '/' IF THE PAGE MAKES AN ERROR - Jan Sarmiento
 //App::error(function(){
-//    return Redirect::to('/');
+////    return Redirect::to('/');
+//    return View::make('ERRORPAGE');
 //});

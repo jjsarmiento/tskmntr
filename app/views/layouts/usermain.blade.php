@@ -491,30 +491,30 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        setInterval(function(){
-                    $.ajax({
-                        type        :   'GET',
-                        url         :   '/checkMsgCount',
-                        success     :   function(data){
-                            if(data > 0){
-                                $('#msg_count').empty().append(data).show();
-                            }else{
-                                $('#msg_count').empty().hide();
-                            }
-                        }
-                    })
-                }, 3000);
-
-                setInterval(function(){
-                    $.ajax({
-                        type        :   'POST',
-                        url         :   '/taskminator/notify',
-                        success     :   function(data){
-                            console.log(data);
-                        }
-                    })
-                }, 10000);
-            });
+//        setInterval(function(){
+//                    $.ajax({
+//                        type        :   'GET',
+//                        url         :   '/checkMsgCount',
+//                        success     :   function(data){
+//                            if(data > 0){
+//                                $('#msg_count').empty().append(data).show();
+//                            }else{
+//                                $('#msg_count').empty().hide();
+//                            }
+//                        }
+//                    })
+//                }, 3000);
+//
+//        setInterval(function(){
+//            $.ajax({
+//                type        :   'POST',
+//                url         :   '/taskminator/notify',
+//                success     :   function(data){
+//                    console.log(data);
+//                }
+//            })
+//        }, 10000);
+    });
 
           $(function(){
             var thetitle = $('title').text();
