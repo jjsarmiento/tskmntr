@@ -33,7 +33,7 @@
         <div class="col-md-8">
             @if($jobs->count() != 0)
                 @foreach($jobs as $job)
-                    <div class="widget-container padded" style="display: flex; min-height:5em; display:block !important;">
+                    <div class="widget-container padded" style="display: flex; min-height:5em; display:block !important; border-bottom: #ECF0F1 solid 1px;">
                         <div class="row">
                             <div class="col-md-6">
                                 <h3 style="margin: 0"><a target="_tab" href="/jobDetails={{$job->id}}">{{ $job->title }}</a></h3>
