@@ -113,8 +113,6 @@
     .music-card {
       background-color: green;
     }
-
-
 </style>
 @stop
 
