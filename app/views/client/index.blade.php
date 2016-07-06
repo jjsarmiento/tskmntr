@@ -189,14 +189,14 @@
                                 This could take 24 hours or less.</b>
                             {{--</div>--}}
                         @else
-                            <!--
-                            OLD TASKMINATOR LINK
-                            <a style="border-radius: 0.3em;" href="/createTask" class="btn btn-success btn-block btn-lg">Create Task</a>
-                            <a style="border-radius: 0.3em;" href="/tasks" class="btn btn-primary btn-block">Tasks</a>
-                            <a style="border-radius: 0.3em;" href="/tskmntrSearch" class="btn btn-primary btn-block">Search for Taskminators</a>
-                            -->
-
                             @if($total_prog >= 50)
+                                <!--
+                                OLD TASK/JOB MODULE LINKS
+                                <a style="border-radius: 0.3em;" href="/createTask" class="btn btn-success btn-block btn-lg">Create Task</a>
+                                <a style="border-radius: 0.3em;" href="/tasks" class="btn btn-primary btn-block">Tasks</a>
+                                <a style="border-radius: 0.3em;" href="/tskmntrSearch" class="btn btn-primary btn-block">Search for Taskminators</a>
+                                -->
+
                                 <a style="border-radius: 0.3em;" href="/createJob" class="btn btn-success btn-block btn-lg">Create Job</a>
                                 <a style="border-radius: 0.3em;" href="/jobs" class="btn btn-primary btn-block">Job</a>
                             @endif
