@@ -201,6 +201,7 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
     Route::get('/jobs', 'ClientIndiController@jobs');
     Route::get('/editJob={jobId}', 'ClientIndiController@editJob');
     Route::post('/doEditJob', 'ClientIndiController@doEditJob');
+    Route::get('/WRKRSRCH:{jobId}:{categoryCode}:{skillCode}:{regcode}:{citycode}:{bgycode}', 'ClientIndiController@WRKRSRCH');
     // NEW PROVEEK MODEL ROUTES FOR JOBS -- END
 
     // THE ROLE BASED ROUTES FOR CLIENT GOES HERE

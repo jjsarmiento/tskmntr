@@ -1037,10 +1037,15 @@ class ClientIndiController extends \BaseController {
                     'jobs.created_at',
                     'jobs.description',
                     'regions.regname',
+                    'regions.regcode',
                     'barangays.bgyname',
+                    'barangays.bgycode',
                     'cities.cityname',
+                    'cities.citycode',
                     'taskcategory.categoryname',
+                    'taskcategory.categorycode',
                     'taskitems.itemname',
+                    'taskitems.itemcode',
                     'jobs.salary',
                     'jobs.hiring_type'
                 ])
@@ -1107,5 +1112,40 @@ class ClientIndiController extends \BaseController {
         ]);
 
         return Redirect::to('/jobDetails='.Input::get('JOB_ID'));
+    }
+
+    public function WRKRSRCH($jobId, $categoryCode, $skillCode, $regcode, $citycode, $bgycode){
+        $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
+            ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+            ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->join('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->join('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->where('jobs.id', $jobId)
+            ->select([
+                'jobs.id',
+                'jobs.title',
+                'jobs.created_at',
+                'jobs.description',
+                'regions.regname',
+                'regions.regcode',
+                'barangays.bgyname',
+                'barangays.bgycode',
+                'cities.cityname',
+                'cities.citycode',
+                'taskcategory.categoryname',
+                'taskcategory.categorycode',
+                'taskitems.itemname',
+                'taskitems.itemcode',
+                'jobs.salary',
+                'jobs.hiring_type'
+            ])
+            ->first();
+        return View::make('client.WRKRSRCH')
+                ->with('regions', Region::all())
+                ->with('barangays', Barangay::where('citycode', '012801')->orderBy('bgyname', 'ASC')->get())
+                ->with('cities', City::where('regcode', '01')->orderBy('cityname', 'ASC')->get())
+                ->with('categories',TaskCategory::orderBy('categoryname', 'ASC')->get())
+                ->with('skills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get())
+                ->with('job', $job);
     }
 }

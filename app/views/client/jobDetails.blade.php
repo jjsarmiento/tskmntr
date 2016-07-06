@@ -12,14 +12,14 @@
             text-decoration: none !important;
         }
 
-        .hrLine
-        {
-            background:none;
-            border:0;
-            border-bottom:1px solid #2980b9;
-            min-width: 100%;
-            height:1px;
-        }
+        /*.hrLine*/
+        /*{*/
+            /*background:none;*/
+            /*border:0;*/
+            /*border-bottom:1px solid #2980b9;*/
+            /*min-width: 100%;*/
+            /*height:1px;*/
+        /*}*/
 
         .applicant-container {
             min-height: 1em;
@@ -189,6 +189,77 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-12 padded" style=" margin-bottom: 0; padding-bottom: 0;">
+                <div class="col-lg-4"><hr class="hrLine"></div>
+                <div class="col-lg-4" style="padding-top: 10px; text-align: center"><p style="font-size:10pt;">Recommended Workers</p></div>
+                <div class="col-lg-4"><hr class="hrLine"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 padded" style="">
+                    <div class="media block-update-card">
+                        <a class="pull-left" href="#">
+                            <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                        </a>
+                        <div class="media-body update-card-body">
+                            <a href="#" style="font-weight: bolder;">
+                                    Jan Sarmiento
+                            </a>
+                            <p>Dasmarinas City, Cavite.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 padded">
+                    <div class="media block-update-card">
+                        <a class="pull-left" href="#">
+                            <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                        </a>
+                        <div class="media-body update-card-body">
+                            <a href="#" style="font-weight: bolder;">Juan Nacho</a>
+                            <p>Dasmarinas City, Cavite.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 padded">
+                    <div class="media block-update-card">
+                        <a class="pull-left" href="#">
+                            <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                        </a>
+                        <div class="media-body update-card-body">
+                            <a href="#" style="font-weight: bolder;">Manuel Che</a>
+                            <p>Dasmarinas City, Cavite.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 padded">
+                    <div class="media block-update-card">
+                        <a class="pull-left" href="#">
+                            <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                        </a>
+                        <div class="media-body update-card-body">
+                            <a href="#" style="font-weight: bolder;">Leoncio Telmo</a>
+                            <p>Dasmarinas City, Cavite.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 padded">
+                    <div class="media block-update-card">
+                        <a class="pull-left" href="#">
+                            <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                        </a>
+                        <div class="media-body update-card-body">
+                            <a href="#" style="font-weight: bolder;">Blas Celestino</a>
+                            <p>Dasmarinas City, Cavite.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 padded text-center"><br/>
+                    <a href="/WRKRSRCH:{{$job->id}}:{{$job->categorycode}}:{{$job->itemcode}}:{{$job->regcode}}:{{$job->citycode}}:{{$job->bgycode}}">
+                        <i class="fa fa-search" style="font-size: 3em;"></i><br/>
+                        Look for more workers..
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
             <div class="widget-container stats-container" style="display:block !important;">
@@ -220,7 +291,7 @@
                 {{--<div class="widget-container padded applicant-container" style="">--}}
                     {{--<h4 style="margin: 0;">J** S********</h4>--}}
                 {{--</div>--}}
-
+                <div class="padded text-center">Applicants</div>
                 <div class="media block-update-card">
                     <a class="pull-left" href="#">
                         <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
