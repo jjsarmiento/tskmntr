@@ -337,6 +337,7 @@
 <!-- END TEMPLATE -->
 
 <!-- LOOP HERE -->
+                            <!--
                             @if($total_prog >= 50)
                                 <div class="col-lg-12 padded" style="padding-top: 25px;">
                                     <div class="col-lg-5"><hr class="hrLine"></div>
@@ -381,7 +382,49 @@
                                 @endforeach
                                 {{ $tasks->links() }}
                             @endif
+                            -->
 <!-- END LOOP -->
+
+                        <!-- NEW JOBS MODULE LOOP -- START by Jan Sarmiento -->
+                        @if($total_prog >= 50)
+                            @if($jobs->count() != 0)
+                                <div class="col-lg-12 padded" style="padding-top: 25px;">
+                                    <div class="col-lg-5"><hr class="hrLine"></div>
+                                    <div class="col-lg-2" style="margin-top:10px;"><p style="font-size:10pt;">Available Jobs</p></div>
+                                    <div class="col-lg-5"><hr class="hrLine"></div>
+                                </div>
+                                <br><br><br><br>
+                                @foreach($jobs as $job)
+                                    <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".3s" data-wow-offset="0" data-wow-delay="0" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">
+                                        <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
+                                            <span style="padding:0;margin:0; flex:1">
+                                                <img src="{{ $job->profilePic }}" class="thumbnail" style="margin:0; width:64px; height:64px;" >
+                                            </span>
+                                            <div style="flex:11; padding-left: 5px;">
+                                            <a href="/jbdtls={{$job->job_id}}" style="text-decoration:none;">
+                                                <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
+                                                    {{ $job->title}}
+                                                </h3>
+                                                <span style="padding:0;margin:0; color:#ccc;">
+                                                    {{ $job->fullName }}
+                                                </span><br>
+                                                <span class="text-right" style="padding:0;margin:0; color:#ccc;">
+                                                    {{ date('m/d/y', strtotime($job->created_at)) }}
+                                                </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <p class="lato-text no-padding">
+                                            {{ $job->description }}
+                                        </p>
+                                    </div>
+                                    <br>
+                                @endforeach
+                            @else
+                                <center><i>No jobs available.</i></center>
+                            @endif
+                        @endif
+                        <!-- NEW JOBS MODULE LOOP -- END by Jan Sarmiento -->
                         </div>
                     </div>
                 </div>

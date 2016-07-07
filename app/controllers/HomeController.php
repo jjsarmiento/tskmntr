@@ -701,13 +701,13 @@ class HomeController extends BaseController {
                         ->where('taskminator_has_offer.taskminator_id', Auth::user()->id)
                         ->where('tasks.status', 'OPEN')->count();
 
-                    $ongoingCount = Task::join('task_has_taskminator', 'task_has_taskminator.task_id', '=', 'tasks.id')
-                        ->where('task_has_taskminator.taskminator_id', Auth::user()->id)
-                        ->where('tasks.status', 'ONGOING')->count();
-
-                    $completedCount = Task::join('task_has_taskminator', 'task_has_taskminator.task_id', '=', 'tasks.id')
-                        ->where('task_has_taskminator.taskminator_id', Auth::user()->id)
-                        ->where('tasks.status', 'COMPLETE')->count();
+//                    $ongoingCount = Task::join('task_has_taskminator', 'task_has_taskminator.task_id', '=', 'tasks.id')
+//                        ->where('task_has_taskminator.taskminator_id', Auth::user()->id)
+//                        ->where('tasks.status', 'ONGOING')->count();
+//
+//                    $completedCount = Task::join('task_has_taskminator', 'task_has_taskminator.task_id', '=', 'tasks.id')
+//                        ->where('task_has_taskminator.taskminator_id', Auth::user()->id)
+//                        ->where('tasks.status', 'COMPLETE')->count();
 
                     $skillCodeArray = $this->GETTASKCODES(Auth::user()->id);
 
@@ -715,6 +715,24 @@ class HomeController extends BaseController {
                     ->where('status', 'OPEN')
                     ->whereIn('taskType', $skillCodeArray)
                     ->orderBy('created_at','DESC')->paginate(10);
+
+                    // NEW JOB MODULE -- START by JAN SARMIENTO
+                    $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
+                            ->whereIn('jobs.skill_code', $skillCodeArray)
+                            ->orderBy('jobs.created_at', 'DESC')
+                            ->select([
+                                'users.id as user_id',
+                                'users.fullName',
+                                'users.profilePic',
+                                'jobs.title',
+                                'jobs.id as job_id',
+                                'jobs.created_at',
+                                'jobs.description',
+                            ])
+                            ->take('5')
+                            ->get();
+
+                    // NEW JOB MODULE -- END by JAN SARMIENTO
 
                     $reqMeter = 0;
                     $optMeter = 0;
@@ -822,13 +840,14 @@ class HomeController extends BaseController {
                     return View::make('taskminator.index')
                             ->with('bidCount', $bidCount)
                             ->with('offerCount', $offerCount)
-                            ->with('ongoingCount', $ongoingCount)
-                            ->with('completedCount', $completedCount)
+//                            ->with('ongoingCount', $ongoingCount)
+//                            ->with('completedCount', $completedCount)
                             ->with('accountRole', $role)
                             ->with('tasks', $taskList)
                             ->with('intProgress', $intProgress)
                             ->with('reqProgress', $reqProgress)
                             ->with('optProgress', $optProgress)
+                            ->with('jobs', $jobs)
                             ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id));
                     break;
                 case 'CLIENT_IND' :

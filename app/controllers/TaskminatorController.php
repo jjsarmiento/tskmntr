@@ -835,12 +835,62 @@ class TaskminatorController extends \BaseController {
             ->orderBy('created_at','DESC')->paginate(10);
 
 //        $tasks = Task::where('name', 'LIKE', '%'.$keyword.'%')
-//            ->paginate(10);
+//            ->paginate(10);s
 
         return View::make('taskminator.general_search')
                 ->with('keyword', $keyword)
                 ->with('users', $users)
                 ->with('tasks', $tasks)
                 ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id));
+    }
+
+    public function jbdtls($jobId){
+        $application = JobApplication::where('job_id', $jobId)
+                        ->where('applicant_id', Auth::user()->id)
+                        ->first();
+
+        $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
+            ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+            ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->join('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->join('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->join('users', 'users.id', '=', 'jobs.user_id')
+            ->where('jobs.id', $jobId)
+            ->select([
+                'jobs.id as jobId',
+                'jobs.title',
+                'jobs.created_at',
+                'jobs.description',
+                'regions.regname',
+                'regions.regcode',
+                'barangays.bgyname',
+                'barangays.bgycode',
+                'cities.cityname',
+                'cities.citycode',
+                'taskcategory.categoryname',
+                'taskcategory.categorycode',
+                'taskitems.itemname',
+                'taskitems.itemcode',
+                'jobs.salary',
+                'jobs.hiring_type',
+                'users.fullName',
+                'users.username'
+            ])
+            ->first();
+        return View::make('taskminator.jbdtls')
+                ->with('job', $job)
+                ->with('application', $application);
+    }
+
+    public function APPLYFRJB($jobId){
+        if(JobApplication::where('job_id', $jobId)->where('applicant_id', Auth::user()->id)->count() == 0){
+            JobApplication::insert([
+                'applicant_id'  =>  Auth::user()->id,
+                'job_id'        =>  $jobId,
+                'created_at'    =>  date("Y:m:d H:i:s")
+            ]);
+        }
+
+        return Redirect::back();
     }
 }
