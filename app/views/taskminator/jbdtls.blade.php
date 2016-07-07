@@ -139,7 +139,7 @@
     <div class="container lato-text">
         <div class="col-md-3">
             <div class="widget-container padded" style="min-height: 10px; display:block !important;">
-                @if($application->count() > 0)
+                @if($application)
                     <i class="fa fa-warning" style="color: red;"></i>&nbsp;You have already applied for this job.
                 @else
                     <a href="/APPLYFRJB:{{$job->jobId}}" class="btn btn-primary btn-block">Apply</a>
