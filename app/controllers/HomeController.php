@@ -729,6 +729,7 @@ class HomeController extends BaseController {
                                 'jobs.created_at',
                                 'jobs.description',
                             ])
+                            ->groupBy('jobs.id')
                             ->take('5')
                             ->get();
 
