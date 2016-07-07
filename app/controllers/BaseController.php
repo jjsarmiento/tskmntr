@@ -206,5 +206,21 @@ class BaseController extends Controller {
 
         return $myArr;
     }
+
+    public function GETAPPLICANTS($jobId){
+        $APPLICANTS = User::join('job_applications', 'job_applications.applicant_id', '=', 'users.id')
+            ->where('job_applications.job_id', $jobId)
+            ->select([
+                'users.id'
+            ])
+            ->get();
+
+        $myArr = array();
+        foreach($APPLICANTS as $o){
+            array_push($myArr, $o->id);
+        }
+
+        return $myArr;
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

@@ -1051,29 +1051,6 @@ class ClientIndiController extends \BaseController {
                 ])
                 ->first();
 
-        $workers = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
-            ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
-            ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
-            ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
-            ->leftJoin('job_invites', 'job_invites.invited_id', '=', 'users.id')
-            ->where('taskminator_has_skills.taskcategory_code', $job->categorycode)
-            ->where('taskminator_has_skills.taskitem_code', $job->itemcode)
-            ->select([
-                'users.fullName',
-                'users.id',
-                'users.address',
-                'users.profilePic',
-                'regions.regname',
-                'regions.regcode',
-                'cities.citycode',
-                'cities.cityname',
-                'barangays.bgycode',
-                'barangays.bgyname',
-                'job_invites.id as inviteID'
-            ])
-            ->take(5)
-            ->get();
-
 //        $applications = JobApplication::where('job_id', $jobId)->get();
         $applications = User::join('job_applications', 'job_applications.applicant_id', '=', 'users.id')
                             ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
@@ -1090,6 +1067,33 @@ class ClientIndiController extends \BaseController {
                                 'users.profilePic'
                             ])
                             ->get();
+
+        $APPLICANTS = $this->GETAPPLICANTS($jobId);
+
+        $workers = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
+            ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+            ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+            ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+            ->leftJoin('job_invites', 'job_invites.invited_id', '=', 'users.id')
+            ->where('taskminator_has_skills.taskcategory_code', $job->categorycode)
+            ->where('taskminator_has_skills.taskitem_code', $job->itemcode)
+            ->whereNotIn('users.id', $APPLICANTS)
+            ->select([
+                'users.fullName',
+                'users.id',
+                'users.address',
+                'users.profilePic',
+                'regions.regname',
+                'regions.regcode',
+                'cities.citycode',
+                'cities.cityname',
+                'barangays.bgycode',
+                'barangays.bgyname'
+            ])
+            ->take(5)
+            ->get();
+
+
 
         return View::make('client.jobDetails')
                 ->with('job', $job)
