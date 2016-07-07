@@ -1074,9 +1074,9 @@ class ClientIndiController extends \BaseController {
 
 //        $applications = JobApplication::where('job_id', $jobId)->get();
         $applications = User::join('job_applications', 'job_applications.applicant_id', '=', 'users.id')
-                            ->join('cities', 'cities.citycode', '=', 'users.city')
-                            ->join('barangays', 'barangays.bgycode', '=', 'users.barangay')
-                            ->join('regions', 'regions.regcode', '=', 'users.region')
+                            ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+                            ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+                            ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
                             ->where('job_applications.job_id', $jobId)
                             ->select([
                                 'users.fullName',
