@@ -201,7 +201,11 @@
                         <div class="col-md-4 padded" style="">
                             <div class="media block-update-card">
                                 <a class="pull-left" href="#">
-                                    <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                                    @if($w->profilePic != "")
+                                        <img class="media-object update-card-MDimentions" src="{{$w->profilePic}}">
+                                    @else
+                                        <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                                    @endif
                                 </a>
                                 <div class="media-body update-card-body">
                                     <a href="#" style="font-weight: bolder;">

@@ -1061,6 +1061,7 @@ class ClientIndiController extends \BaseController {
                 'users.fullName',
                 'users.id',
                 'users.address',
+                'users.profilePic',
                 'regions.regname',
                 'regions.regcode',
                 'cities.citycode',
