@@ -132,30 +132,20 @@
               margin-left: 10px;
             }
     </style>
-    <script>
-        $(document).ready(function(){
-            $('#SHOWDETAILS').click(function(){
-                $('#DETAILPANEL').slideToggle('fast');
-            });
-        });
-    </script>
 @stop
 
 
 @section('content')
 <section>
     <div class="container lato-text">
-        <div class="col-md-8">
-            <div class="widget-container padded" style="display: flex; min-height:1em; display:block !important;">
-                <button type="button" class="close" style="opacity: 100;" id="SHOWDETAILS">
-                    <i class="fa fa-chevron-down" style=""></i>
-                </button>
+        <div class="col-md-6">
+            <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
                 <h3 style="margin: 0;">{{$job->title}}</h3>
                 <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>
                 <br/>
                 <br/>
-                <div class="row" style="text-align: left; display: none;" id="DETAILPANEL">
-                    <div class="col-md-7">
+                <div class="row" style="text-align: left">
+                    <div class="col-md-6">
                         <div class="col-md-4">Duration</div>
                         <div class="col-md-8">
                             @if($job->hiring_type == 'LT6MOS')
@@ -191,73 +181,43 @@
                         <div class="col-md-8">P{{ $job->salary }}</div>
                         <br/><br/><br/>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         {{ $job->description }}
                     </div>
                 </div>
             </div>
-            <div class="row">
-                @if($workers->count() != 0)
-                    @foreach($workers as $w)
-                        <div class="col-md-4 padded" style="">
-                            <div class="media block-update-card">
-                                <a class="pull-left" href="#">
-                                    <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
-                                </a>
-                                <div class="media-body update-card-body">
-                                    <a href="#" style="font-weight: bolder;">
-                                        {{ $w->fullName }}
-                                    </a>
-                                    <p>{{ $w->regname }}, {{ $w->cityname }}</p>
-                                </div>
-                                <br/>
-                                @if($w->inviteID)
-                                    <a href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-success" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Invite Sent</a>
-                                @else
-                                    <a href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-primary" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Send Invite</a>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <div class="padded" style="font-size: 1.5em;">
-                    <center><i class="fa fa-info"></i> <i>No Workers match the skills required.</i></center>
-                    </div>
-                @endif
-            </div>
         </div>
-        <div class="col-md-4">
-            <div class="widget-container padded" style="display: flex; min-height:1em; display:block !important;">
-                <div class="form-group">
-                    <select class="form-control" required="required" name="taskcategory" id="taskcategory">
-                        @foreach($categories as $c)
-                            <option <?php if($categoryCode == $c->categorycode){echo "selected";} ?> value="{{$c->categorycode}}">{{ $c->categoryname }}</option>
-                        @endforeach
-                    </select>
+        <div class="col-md-6">
+            @if($worker->inviteID)
+                <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
+                    <h3 style="margin: 0;">{{$worker->fullName}}</h3>
+                    <span style="color: #7F8C8D;">{{$worker->regname}} {{$worker->cityname}}</span>
+                    <br/><br/>
+                    <span style="color: #2980B9; font-weight: bold;">Invite sent at {{$worker->inviteTIME}}</span>
+                    <div>{{$worker->inviteMSG}}</div>
+                    <br/>
+                    <div class="form-group">
+                        <a href="/cancelInvite:{{$job->id}}:{{$worker->userid}}" class="btn btn-danger">Cancel Invite</a>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <select class="form-control" required="required" name="taskitems" id="taskitems">
-                        @foreach($skills as $s)
-                            <option <?php if($skillCode == $s->itemcode){echo "selected";} ?> value="{{$s->itemcode}}">{{$s->itemname}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select class="form-control" required="required" name="region" id="region">
-                        @foreach($regions as $region)
-                            <option data-regcode="{{ $region->regcode }}" value="{{ $region->regcode }}" <?php if($regcode == $region->regcode){ echo('selected'); } ?>> {{ $region->regname }} </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select class="form-control" required="required" name="city" id="city">
-                        @foreach($cities as $city)
-                            <option value="{{ $city->citycode }}" <?php if($citycode == $city->citycode){ echo('selected'); } ?>>{{ $city->cityname }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <button class="btn btn-success btn-block">Search</button>
-            </div>
+            @else
+                <form method="POST" action="/DOSNDINVT">
+                    <input type="hidden" name="JBID" value="{{$job->id}}" />
+                    <input type="hidden" name="USRID" value="{{$worker->userid}}" />
+                    <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
+                        <h3 style="margin: 0;">{{$worker->fullName}}</h3>
+                        <span style="color: #7F8C8D;">{{$worker->regname}} {{$worker->cityname}}</span>
+                        <br/><br/>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea name="txtarea_message" id="txtarea_message" rows="8" class="form-control" placeholder="Attach a message to your invite for {{$worker->fullName}}"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Send Invite</button>
+                        </div>
+                    </div>
+                </form>
+            @endif
         </div>
     </div>
 </section>

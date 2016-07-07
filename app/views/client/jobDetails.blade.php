@@ -213,6 +213,12 @@
                                     </a>
                                     <p>{{ $w->regname }}, {{ $w->cityname }}</p>
                                 </div>
+                                <br/>
+                                @if($w->inviteID)
+                                    <a href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-success" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Invite Sent</a>
+                                @else
+                                    <a href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-primary" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Send Invite</a>
+                                @endif
                             </div>
                         </div>
                     @endforeach
@@ -291,30 +297,13 @@
                             </a>
                             <div class="media-body update-card-body">
                                 <a href="#">
-                                    <h4 class="media-heading">
-                                        {{ $a->fullName }}
-                                    </h4>
+                                    <h4 class="media-heading">{{ $a->fullName }}</h4>
                                 </a>
                                 <p>{{ $a->regname }}, {{ $a->cityname }}</p>
                             </div>
                         </div>
                     @endforeach
                 @endif
-                <!--
-                <div class="media block-update-card">
-                    <a class="pull-left" href="#">
-                        <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
-                    </a>
-                    <div class="media-body update-card-body">
-                        <a href="#">
-                            <h4 class="media-heading">
-                                Jan Sarmiento
-                            </h4>
-                        </a>
-                        <p>Dasmarinas City, Cavite.</p>
-                    </div>
-                </div>
-                -->
             </div>
         </div>
     </div>

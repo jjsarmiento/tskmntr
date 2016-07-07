@@ -1055,6 +1055,7 @@ class ClientIndiController extends \BaseController {
             ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
             ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
             ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+            ->leftJoin('job_invites', 'job_invites.invited_id', '=', 'users.id')
             ->where('taskminator_has_skills.taskcategory_code', $job->categorycode)
             ->where('taskminator_has_skills.taskitem_code', $job->itemcode)
             ->select([
@@ -1068,6 +1069,7 @@ class ClientIndiController extends \BaseController {
                 'cities.cityname',
                 'barangays.bgycode',
                 'barangays.bgyname',
+                'job_invites.id as inviteID'
             ])
             ->take(5)
             ->get();
@@ -1186,6 +1188,7 @@ class ClientIndiController extends \BaseController {
             ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
             ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
             ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+            ->leftJoin('job_invites', 'job_invites.invited_id', '=', 'users.id')
             ->where('taskminator_has_skills.taskcategory_code', $categoryCode)
             ->where('taskminator_has_skills.taskitem_code', $skillCode)
             ->select([
@@ -1198,6 +1201,7 @@ class ClientIndiController extends \BaseController {
                 'cities.cityname',
                 'barangays.bgycode',
                 'barangays.bgyname',
+                'job_invites.id as inviteID'
             ])
             ->get();
 
@@ -1215,5 +1219,72 @@ class ClientIndiController extends \BaseController {
                 ->with('citycode', $citycode)
                 ->with('bgycode', $bgycode)
                 ->with('workers', $workers);
+    }
+
+    public function SNDINVT($invitedId, $jobId){
+        $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
+            ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+            ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->join('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->join('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->where('jobs.id', $jobId)
+            ->select([
+                'jobs.id',
+                'jobs.title',
+                'jobs.created_at',
+                'jobs.description',
+                'regions.regname',
+                'regions.regcode',
+                'barangays.bgyname',
+                'barangays.bgycode',
+                'cities.cityname',
+                'cities.citycode',
+                'taskcategory.categoryname',
+                'taskcategory.categorycode',
+                'taskitems.itemname',
+                'taskitems.itemcode',
+                'jobs.salary',
+                'jobs.hiring_type'
+            ])
+            ->first();
+
+        $worker = User::leftJoin('regions', 'regions.regcode', '=', 'users.region')
+                    ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+                    ->leftJoin('job_invites', 'job_invites.invited_id', '=', 'users.id')
+                    ->where('users.id', $invitedId)
+                    ->select([
+                        'users.id as userid',
+                        'users.fullName',
+                        'regions.regname',
+                        'cities.cityname',
+                        'job_invites.id as inviteID',
+                        'job_invites.message as inviteMSG',
+                        'job_invites.created_at as inviteTIME',
+                    ])
+                    ->first();
+
+        return View::make('client.SNDINVT')
+                ->with('worker', $worker)
+                ->with('job', $job);
+    }
+
+    public function DOSNDINVT(){
+        if(JobInvite::where('invited_id', Input::get('USRID'))->where('job_id', Input::get('JBID'))->count() == 0){
+            JobInvite::insert([
+                'invited_id'    =>  Input::get('USRID'),
+                'job_id'        =>  Input::get('JBID'),
+                'message'       =>  Input::get('txtarea_message'),
+                'created_at'    =>  date("Y:m:d H:i:s")
+            ]);
+        }
+
+        return Redirect::back();
+    }
+
+    public function cancelInvite($jobID, $workerID){
+        JobInvite::where('job_id', $jobID)
+            ->where('invited_id', $workerID)
+            ->delete();
+        return Redirect::back();
     }
 }
