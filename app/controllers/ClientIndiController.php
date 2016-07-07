@@ -1071,9 +1071,27 @@ class ClientIndiController extends \BaseController {
             ->take(5)
             ->get();
 
+//        $applications = JobApplication::where('job_id', $jobId)->get();
+        $applications = User::join('job_applications', 'job_applications.applicant_id', '=', 'users.id')
+                            ->join('cities', 'cities.citycode', '=', 'users.city')
+                            ->join('barangays', 'barangays.bgycode', '=', 'users.barangay')
+                            ->join('regions', 'regions.regcode', '=', 'users.region')
+                            ->where('job_applications.job_id', $jobId)
+                            ->select([
+                                'users.fullName',
+                                'users.id',
+                                'job_applications.created_at as applied_at',
+                                'cities.cityname',
+                                'regions.regname',
+                                'barangays.bgyname',
+                                'users.profilePic'
+                            ])
+                            ->get();
+
         return View::make('client.jobDetails')
                 ->with('job', $job)
-                ->with('workers', $workers);
+                ->with('workers', $workers)
+                ->with('applications', $applications);
     }
 
     public function jobs(){

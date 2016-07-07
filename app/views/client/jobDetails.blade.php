@@ -250,7 +250,7 @@
                     <a id="APPLICANTSLINK" href="#" style="text-decoration:none;">
                         <div class="number" style="color:#2980b9;">
                             <i class="fa fa-users"></i>
-                            12
+                            {{ $applications->count() }}
                         </div>
                         <div class="text" style="color:#2980b9;">
                             Applicants
@@ -275,6 +275,28 @@
                     {{--<h4 style="margin: 0;">J** S********</h4>--}}
                 {{--</div>--}}
                 <div class="padded text-center">Applicants</div>
+                @if($applications->count() != 0)
+                    @foreach($applications as $a)
+                        <div class="media block-update-card">
+                            <a class="pull-left" href="#">
+                                @if($a->profilePic != "")
+                                    <img class="media-object update-card-MDimentions" src="{{$a->profilePic}}">
+                                @else
+                                    <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                                @endif
+                            </a>
+                            <div class="media-body update-card-body">
+                                <a href="#">
+                                    <h4 class="media-heading">
+                                        {{ $a->fullName }}
+                                    </h4>
+                                </a>
+                                <p>{{ $a->regname }}, {{ $a->cityname }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+                <!--
                 <div class="media block-update-card">
                     <a class="pull-left" href="#">
                         <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
@@ -288,34 +310,7 @@
                         <p>Dasmarinas City, Cavite.</p>
                     </div>
                 </div>
-
-                <div class="media block-update-card">
-                    <a class="pull-left" href="#">
-                        <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
-                    </a>
-                    <div class="media-body update-card-body">
-                        <a href="#">
-                            <h4 class="media-heading">
-                                Ivan Smith
-                            </h4>
-                        </a>
-                        <p>Dasmarinas City, Cavite.</p>
-                    </div>
-                </div>
-
-                <div class="media block-update-card">
-                    <a class="pull-left" href="#">
-                        <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
-                    </a>
-                    <div class="media-body update-card-body">
-                        <a href="#">
-                            <h4 class="media-heading">
-                                Jamie Curtis
-                            </h4>
-                        </a>
-                        <p>Dasmarinas City, Cavite.</p>
-                    </div>
-                </div>
+                -->
             </div>
         </div>
     </div>
