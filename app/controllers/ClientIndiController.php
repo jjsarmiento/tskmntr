@@ -1140,12 +1140,39 @@ class ClientIndiController extends \BaseController {
                 'jobs.hiring_type'
             ])
             ->first();
+
+        $workers = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
+            ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+            ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+            ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+            ->where('taskminator_has_skills.taskcategory_code', $categoryCode)
+            ->where('taskminator_has_skills.taskitem_code', $skillCode)
+            ->select([
+                'users.fullName',
+                'users.id',
+                'users.address',
+                'regions.regname',
+                'regions.regcode',
+                'cities.citycode',
+                'cities.cityname',
+                'barangays.bgycode',
+                'barangays.bgyname',
+            ])
+            ->get();
+
         return View::make('client.WRKRSRCH')
                 ->with('regions', Region::all())
                 ->with('barangays', Barangay::where('citycode', '012801')->orderBy('bgyname', 'ASC')->get())
-                ->with('cities', City::where('regcode', '01')->orderBy('cityname', 'ASC')->get())
-                ->with('categories',TaskCategory::orderBy('categoryname', 'ASC')->get())
-                ->with('skills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get())
-                ->with('job', $job);
+                ->with('cities', City::where('regcode', $regcode)->orderBy('cityname', 'ASC')->get())
+                ->with('categories',TaskCategory::where('categorycode', $categoryCode)->orderBy('categoryname', 'ASC')->get())
+                ->with('skills', TaskItem::where('item_categorycode', $categoryCode)->orderBy('itemname', 'ASC')->get())
+                ->with('job', $job)
+                ->with('jobId', $job)
+                ->with('categoryCode', $categoryCode)
+                ->with('skillCode', $skillCode)
+                ->with('regcode', $regcode)
+                ->with('citycode', $citycode)
+                ->with('bgycode', $bgycode)
+                ->with('workers', $workers);
     }
 }

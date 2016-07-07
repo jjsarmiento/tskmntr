@@ -524,6 +524,7 @@ class TaskminatorController extends \BaseController {
             'fullName'          =>  Input::get('firstName').' '.Input::get('midName').' '.Input::get('lastName'),
             'gender'            =>  Input::get('gender'),
             'address'           =>  strip_tags(Input::get('address')),
+            'region'              =>  Input::get('reg-task'),
             'city'              =>  Input::get('city-task'),
             'barangay'          =>  Input::get('barangay-task'),
         ));
