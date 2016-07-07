@@ -196,52 +196,34 @@
                 <div class="col-lg-4"><hr class="hrLine"></div>
             </div>
             <div class="row">
-                <div class="col-md-4 padded" style="">
-                    <div class="media block-update-card">
-                        <a class="pull-left" href="#">
-                            <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
-                        </a>
-                        <div class="media-body update-card-body">
-                            <a href="#" style="font-weight: bolder;">
-                                    Jan Sarmiento
-                            </a>
-                            <p>Dasmarinas City, Cavite.</p>
+                @if($workers->count() != 0)
+                    @foreach($workers as $w)
+                        <div class="col-md-4 padded" style="">
+                            <div class="media block-update-card">
+                                <a class="pull-left" href="#">
+                                    <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                                </a>
+                                <div class="media-body update-card-body">
+                                    <a href="#" style="font-weight: bolder;">
+                                        {{ $w->fullName }}
+                                    </a>
+                                    <p>{{ $w->regname }}, {{ $w->cityname }}</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4 padded">
-                    <div class="media block-update-card">
-                        <a class="pull-left" href="#">
-                            <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                    @endforeach
+                    <div class="col-md-4 padded text-center"><br/>
+                        <a href="/WRKRSRCH:{{$job->id}}:{{$job->categorycode}}:{{$job->itemcode}}:{{$job->regcode}}:{{$job->citycode}}:{{$job->bgycode}}">
+                            <i class="fa fa-search" style="font-size: 3em;"></i><br/>
+                            Look for more workers..
                         </a>
-                        <div class="media-body update-card-body">
-                            <a href="#" style="font-weight: bolder;">Juan Nacho</a>
-                            <p>Dasmarinas City, Cavite.</p>
-                        </div>
                     </div>
-                </div>
-                <div class="col-md-4 padded">
-                    <div class="media block-update-card">
-                        <a class="pull-left" href="#">
-                            <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
-                        </a>
-                        <div class="media-body update-card-body">
-                            <a href="#" style="font-weight: bolder;">Manuel Che</a>
-                            <p>Dasmarinas City, Cavite.</p>
-                        </div>
+                @else
+                    <div class="padded" style="font-size: 1.5em;">
+                    <center><i class="fa fa-info"></i> <i>No Workers match the skills required.</i></center>
                     </div>
-                </div>
-                <div class="col-md-4 padded">
-                    <div class="media block-update-card">
-                        <a class="pull-left" href="#">
-                            <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
-                        </a>
-                        <div class="media-body update-card-body">
-                            <a href="#" style="font-weight: bolder;">Leoncio Telmo</a>
-                            <p>Dasmarinas City, Cavite.</p>
-                        </div>
-                    </div>
-                </div>
+                @endif
+                <!--
                 <div class="col-md-4 padded">
                     <div class="media block-update-card">
                         <a class="pull-left" href="#">
@@ -259,6 +241,7 @@
                         Look for more workers..
                     </a>
                 </div>
+                -->
             </div>
         </div>
         <div class="col-md-4">

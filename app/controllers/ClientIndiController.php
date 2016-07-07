@@ -1050,8 +1050,30 @@ class ClientIndiController extends \BaseController {
                     'jobs.hiring_type'
                 ])
                 ->first();
+
+        $workers = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
+            ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+            ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+            ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+            ->where('taskminator_has_skills.taskcategory_code', $job->categorycode)
+            ->where('taskminator_has_skills.taskitem_code', $job->itemcode)
+            ->select([
+                'users.fullName',
+                'users.id',
+                'users.address',
+                'regions.regname',
+                'regions.regcode',
+                'cities.citycode',
+                'cities.cityname',
+                'barangays.bgycode',
+                'barangays.bgyname',
+            ])
+            ->take(5)
+            ->get();
+
         return View::make('client.jobDetails')
-                ->with('job', $job);
+                ->with('job', $job)
+                ->with('workers', $workers);
     }
 
     public function jobs(){
