@@ -902,7 +902,9 @@ class TaskminatorController extends \BaseController {
     public function WRKR_APPLCTNS(){
         $skillCodeArray = $this->GETTASKCODES(Auth::user()->id);
         $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
+            ->leftJoin('job_applications', 'jobs.id', '=', 'job_applications.job_id')
             ->whereIn('jobs.skill_code', $skillCodeArray)
+//            ->whereNotIn('job_applications.applicant_id', [Auth::user()->id])
             ->orderBy('jobs.created_at', 'DESC')
             ->select([
                 'users.id as user_id',
@@ -912,8 +914,8 @@ class TaskminatorController extends \BaseController {
                 'jobs.id as job_id',
                 'jobs.created_at',
                 'jobs.description',
+                'job_applications.applicant_id'
             ])
-            ->groupBy('jobs.id')
             ->paginate(10);
 
         $applications = JobApplication::join('jobs', 'jobs.id', '=', 'job_applications.job_id')

@@ -152,34 +152,36 @@
         <div class="col-md-6">
             <center>Available Jobs</center><Br/>
             @foreach($jobs as $job)
-                <div class="widget-container fluid-height padded" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">
-                    <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
-                        <span style="padding:0;margin:0; flex:1">
-                            @if($job->profilePic)
-                                <img src="{{ $job->profilePic }}" class="thumbnail" style="margin:0; width:64px; height:64px;" >
-                            @else
-                                <img src="/images/default_profile_pic.png" class="thumbnail" style="margin:0; width:64px; height:64px;" >
-                            @endif
-                        </span>
-                        <div style="flex:11; padding-left: 5px;">
-                        <a href="/jbdtls={{$job->job_id}}" style="text-decoration:none;">
-                            <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
-                                {{ $job->title}}
-                            </h3>
-                            <span style="padding:0;margin:0; color:#ccc;">
-                                {{ $job->fullName }}
-                            </span><br>
-                            <span class="text-right" style="padding:0;margin:0; color:#ccc;">
-                                {{ date('m/d/y', strtotime($job->created_at)) }}
+                @if($job->applicant_id != Auth::user()->id)
+                    <div class="widget-container fluid-height padded" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">
+                        <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
+                            <span style="padding:0;margin:0; flex:1">
+                                @if($job->profilePic)
+                                    <img src="{{ $job->profilePic }}" class="thumbnail" style="margin:0; width:64px; height:64px;" >
+                                @else
+                                    <img src="/images/default_profile_pic.png" class="thumbnail" style="margin:0; width:64px; height:64px;" >
+                                @endif
                             </span>
-                            </a>
+                            <div style="flex:11; padding-left: 5px;">
+                            <a href="/jbdtls={{$job->job_id}}" style="text-decoration:none;">
+                                <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
+                                    {{ $job->title}}
+                                </h3>
+                                <span style="padding:0;margin:0; color:#ccc;">
+                                    {{ $job->fullName }}
+                                </span><br>
+                                <span class="text-right" style="padding:0;margin:0; color:#ccc;">
+                                    {{ date('m/d/y', strtotime($job->created_at)) }}
+                                </span>
+                                </a>
+                            </div>
                         </div>
+                        <p class="lato-text no-padding">
+                            {{ $job->description }}
+                        </p>
                     </div>
-                    <p class="lato-text no-padding">
-                        {{ $job->description }}
-                    </p>
-                </div>
-                <br>
+                    <br>
+                @endif
             @endforeach
             <center>{{$jobs->links()}}</center>
         </div>
