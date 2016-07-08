@@ -139,7 +139,7 @@
     <div class="container lato-text">
         <div class="col-md-6">
             <div class="widget-container padded" style="min-height: 10px; display:block !important;">
-                @if($hasInvite->count() != 0)
+                @if($hasInvite)
                     <span style="color: #2980B9; font-weight: bold;">
                         Invitation sent at {{$hasInvite->created_at}}
                     </span><br/><br/>
