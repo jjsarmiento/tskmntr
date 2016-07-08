@@ -284,8 +284,8 @@
                 {{--<div class="widget-container padded applicant-container" style="">--}}
                     {{--<h4 style="margin: 0;">J** S********</h4>--}}
                 {{--</div>--}}
-                <div class="padded text-center">Applicants</div>
                 @if($applications->count() != 0)
+                    <div class="padded text-center">Applicants</div>
                     @foreach($applications as $a)
                         <div class="media block-update-card">
                             <a class="pull-left" href="#">
@@ -303,6 +303,8 @@
                             </div>
                         </div>
                     @endforeach
+                @else
+                    <div class="padded text-center"><i>No applicants yet.</i></div>
                 @endif
             </div>
         </div>

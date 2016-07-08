@@ -131,7 +131,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="title">Hiring Type</label>
+                                                        <label for="title">Job Duration</label>
                                                         <select name="hireType" id="hireType" required="required" class="form-control">
                                                             <option value="LT6MOS" <?php if(Input::old('hireType') == 'LT6MOS'){ echo('selected'); } ?>>Less than 6 months</option>
                                                             <option value="GT6MOS" <?php if(Input::old('hireType') == 'GT6MOS'){ echo('selected'); } ?>>Greater than 6 months</option>
@@ -140,7 +140,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="salaryRange">Salary Range</label>
+                                                        <label for="salaryRange">Salary</label>
                                                         {{ Form::text('salaryRange', Input::old('salaryRange'), array('class' => 'form-control', 'placeholder' => 'salaryRange', 'required' => 'true')) }}
                                                     </div>
                                                 </div>

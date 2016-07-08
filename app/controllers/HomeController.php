@@ -856,13 +856,11 @@ class HomeController extends BaseController {
                     // CHECKER FOR the first 3 FREE MONTHS SUBSCRIPTION
                     $tempDate = Auth::user()->created_at->addMonths(3);
                     $freeDuration = null;
-                    if($tempDate->lte(Carbon::today()))
-                    {
+                    if($tempDate->lte(Carbon::today())){
                         $freeDuration = Carbon::now()->diffInDays($tempDate, false); // CALCULATION OF DAYS
                         $freeDuration = "Your first free 3-Month Subscription is over";
                     }
-                    else
-                    {
+                    else{
                         $freeDuration = Carbon::now()->diffInDays($tempDate, false). " days until 3-Month Subscription expires";
                     }
 
@@ -877,28 +875,22 @@ class HomeController extends BaseController {
                     $optProgress = 0;
                     
                     // INITIAL REQUIRED
-                    if(Auth::user()->firstName != "")
-                    {
+                    if(Auth::user()->firstName != ""){
                         $reqMeter++;
                     }
-                    if(Auth::user()->lastName != "")
-                    {
+                    if(Auth::user()->lastName != ""){
                         $reqMeter++;
                     }
-                    if(Auth::user()->companyName != "")
-                    {
+                    if(Auth::user()->companyName != ""){
                         $reqMeter++;
                     }
-                    if(Auth::user()->username != "")
-                    {
+                    if(Auth::user()->username != ""){
                         $reqMeter++;
                     }
-                    if(Auth::user()->password != "")
-                    {
+                    if(Auth::user()->password != ""){
                         $reqMeter++;
                     }
-                    if(Contact::where('user_id', Auth::user()->id)->get() != "")
-                    {
+                    if(Contact::where('user_id', Auth::user()->id)->get() != ""){
                         $reqMeter++;
                     }
                     // END OF INITIAL REQUIRED
@@ -907,32 +899,25 @@ class HomeController extends BaseController {
                     $reqMeter = 0; // to reset the value;
 
                     // REQUIRED
-                    if(Auth::user()->profilePic != "")
-                    {
+                    if(Auth::user()->profilePic != ""){
                         $reqMeter++;
                     }
-                    if(Contact::where('user_id', Auth::user()->id)->get() != "")
-                    {
+                    if(Contact::where('user_id', Auth::user()->id)->get() != ""){
                         $reqMeter++;
                     }
-                    if(Auth::user()->city != "")
-                    {
+                    if(Auth::user()->city != ""){
                         $reqMeter++;
                     }
-                    if(Auth::user()->address != "")
-                    {
+                    if(Auth::user()->address != ""){
                         $reqMeter++;
                     }
-                    if(Auth::user()->businessPermit != "")
-                    {
+                    if(Auth::user()->businessPermit != ""){
                         $reqMeter++;
                     }
-                    if(Auth::user()->businessDescription != "")
-                    {
+                    if(Auth::user()->businessDescription != ""){
                         $reqMeter++;
                     }
-                    if(Auth::user()->businessNature != "")
-                    {
+                    if(Auth::user()->businessNature != ""){
                         $reqMeter++;
                     }
 
@@ -941,16 +926,13 @@ class HomeController extends BaseController {
                     $reqProgress = ($reqMeter/7) * 50;
 
                     // OPTIONAL PROGRESS
-                    if(Auth::user()->midName != "")
-                    {
+                    if(Auth::user()->midName != ""){
                         $optMeter++;
                     }
-                    if(Auth::user()->yearsOfExperience != "")
-                    {
+                    if(Auth::user()->yearsOfExperience != ""){
                         $optMeter++;
                     }
-                    if(Auth::user()->barangay != "")
-                    {
+                    if(Auth::user()->barangay != ""){
                         $optMeter++;
                     }
 
@@ -964,7 +946,8 @@ class HomeController extends BaseController {
                     ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
                     ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get())
                     ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id))
-                    ->with('tasks', Task::where('user_id', Auth::user()->id)->whereNotIn('status', ['CANCELLED', 'COMPLETE'])->orderBy('created_at', 'DESC')->paginate(10));
+                    ->with('tasks', Task::where('user_id', Auth::user()->id)->whereNotIn('status', ['CANCELLED', 'COMPLETE'])->orderBy('created_at', 'DESC')->paginate(10))
+                    ->with('jobs', Job::where('user_id', Auth::user()->id)->get());
                     break;
                 default :
                     return Redirect::to('/');

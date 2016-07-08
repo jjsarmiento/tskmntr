@@ -268,14 +268,38 @@
                 <br/>
                 {{--<div class="col-md-2 col-md-offset-5"><p>My Jobs</p></div>--}}
 
+                <!--
                 @if($tasks->count() != 0)
                     @foreach($tasks as $task)
                         <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".2s" data-wow-offset="0" data-wow-delay="0" style="padding-left:10px; padding-right:10px; min-height: 50px; margin-bottom: 1em;">
                               <a href="/taskDetails/{{$task->id}}"><h3>{{ $task->name }}</h3></a>
                         </div>
                     @endforeach
-                @else
                 @endif
+                -->
+
+                <!-- NEW JOBS MODULE -- START : Authored by Jan Sarmiento -->
+                @foreach($jobs as $job)
+                    <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".3s" data-wow-offset="0" data-wow-delay="0" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">
+                        <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
+                            <div style="flex:11;">
+                            <a href="/jobDetails={{$job->id}}" style="text-decoration:none;">
+                                <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
+                                    {{ $job->title}}
+                                </h3>
+                                <span class="text-right" style="padding:0;margin:0; color:#ccc;">
+                                    {{ date('m/d/y', strtotime($job->created_at)) }}
+                                </span>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="lato-text no-padding">
+                            {{ $job->description }}
+                        </p>
+                    </div>
+                    <br>
+                @endforeach
+                <!-- NEW JOBS MODULE -- END : Authored by Jan Sarmiento -->
             </div>
         </div>
     </div>
