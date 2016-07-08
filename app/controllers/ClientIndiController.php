@@ -1328,6 +1328,7 @@ class ClientIndiController extends \BaseController {
         $invitedWorkers = User::leftJoin('regions', 'regions.regcode', '=', 'users.region')
             ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
             ->join('job_invites', 'job_invites.invited_id', '=', 'users.id')
+            ->where('job_invites.job_id', $jobId)
             ->select([
                 'users.id as userid',
                 'users.profilePic',
