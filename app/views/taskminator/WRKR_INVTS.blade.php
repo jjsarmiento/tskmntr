@@ -1,7 +1,6 @@
 @extends('layouts.usermain')
 
 @section('title')
-    {{$job->title}}
 @stop
 
 @section('head-content')
@@ -137,74 +136,30 @@
 @section('content')
 <section>
     <div class="container lato-text">
-        <div class="col-md-6">
-            <div class="widget-container padded" style="min-height: 10px; display:block !important;">
-                @if($hasInvite->count() != 0)
-                    <span style="color: #2980B9; font-weight: bold;">
-                        Invitation sent at {{$hasInvite->created_at}}
-                    </span><br/><br/>
-                    {{$hasInvite->message}}
-                @else
-                    @if($application)
-                        <i class="fa fa-warning" style="color: red;"></i>&nbsp;You have already applied for this job.
-                        <br/>
-                        <br/>
-                        <a class="btn btn-danger btn-block" href="/CNCLAPPLCTN:{{$job->jobId}}">Cancel Application</a>
-                    @else
-                        <a href="/APPLYFRJB:{{$job->jobId}}" class="btn btn-primary btn-block">Apply</a>
-                    @endif
-                @endif
-            </div><br/>
-        </div>
-        <div class="col-md-6">
-            <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
-                <h3 style="margin: 0;">{{$job->title}}</h3>
-                <span style="color: #7F8C8D; font-size: 1em;">by <a target="_tab" href="/{{$job->username}}">{{$job->fullName}}</a></span><Br/>
-                <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>
-                <br/>
-                <br/>
-                <div class="row" style="text-align: left">
-                    <div class="col-md-6">
-                        <div class="col-md-4">Duration</div>
-                        <div class="col-md-8">
-                            @if($job->hiring_type == 'LT6MOS')
-                                Less than 6 months
-                            @else
-                                Greater than 6 months
-                            @endif
-                        </div>
-                        <br/><br/>
-                        <div class="col-md-4">
-                            Skill Category
-                        </div>
-                        <div class="col-md-8">
-                            {{ $job->categoryname }}
-                        </div>
-                        <br/><br/>
-                        <div class="col-md-4">
-                            Skill
-                        </div>
-                        <div class="col-md-8">
-                            {{ $job->itemname }}
-                        </div>
-                        <br/><br/><br/>
-                        <div class="col-md-4">
-                            Location
-                        </div>
-                        <div class="col-md-8">
-                            {{ $job->cityname }}, {{ $job->bgyname }}<br/>
-                            {{ $job->regname }}
-                        </div>
-                        <br/><br/><br/>
-                        <div class="col-md-4">Salary</div>
-                        <div class="col-md-8">P{{ $job->salary }}</div>
-                        <br/><br/><br/>
+        <div class="col-md-4">
+            <div class="widget-container stats-container" style="display:block !important;">
+                <div class="col-lg-12 lato-text">
+                    <div class="number" style="color:#2980b9;">
+                        <i class="fa fa-globe"></i>
+                        {{ $invites->count() }}
                     </div>
-                    <div class="col-md-6">
-                        {{ $job->description }}
+                    <div class="text" style="color:#2980b9;">
+                        Invites
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-md-8">
+            @foreach($invites as $i)
+                <div class="widget-container fluid-height padded" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">
+                    <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
+                        <a href="/jbdtls={{$i->jobID}}">{{ $i->title}}</a>
+                    </h3>
+                    <span style="padding:0;margin:0; color:#ccc;">
+                        Invited at {{$i->invited_at}}
+                    </span>
+                </div>
+            @endforeach
         </div>
     </div>
 </section>

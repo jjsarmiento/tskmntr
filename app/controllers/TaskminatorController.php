@@ -849,6 +849,9 @@ class TaskminatorController extends \BaseController {
                         ->where('applicant_id', Auth::user()->id)
                         ->first();
 
+        $hasInvite = JobInvite::where('job_id', $jobId)
+                        ->where('invited_id', Auth::user()->id)->first();
+
         $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
             ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
@@ -879,7 +882,8 @@ class TaskminatorController extends \BaseController {
             ->first();
         return View::make('taskminator.jbdtls')
                 ->with('job', $job)
-                ->with('application', $application);
+                ->with('application', $application)
+                ->with('hasInvite', $hasInvite);
     }
 
     public function APPLYFRJB($jobId){
@@ -931,5 +935,19 @@ class TaskminatorController extends \BaseController {
         return View::make('taskminator.WRKR_APPLCTNS')
                 ->with('jobs', $jobs)
                 ->with('applications', $applications);
+    }
+
+    public function WRKR_INVTS(){
+        $invites = JobInvite::join('jobs', 'job_invites.job_id', '=', 'jobs.id')
+                    ->where('invited_id', Auth::user()->id)
+                    ->select([
+                        'jobs.title',
+                        'jobs.id as jobID',
+                        'job_invites.created_at as invited_at',
+                    ])
+                    ->get();
+
+        return View::make('taskminator.WRKR_INVTS')
+                ->with('invites', $invites);
     }
 }
