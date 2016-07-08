@@ -1088,17 +1088,20 @@ class ClientIndiController extends \BaseController {
                 'cities.citycode',
                 'cities.cityname',
                 'barangays.bgycode',
-                'barangays.bgyname'
+                'barangays.bgyname',
+                'job_invites.invited_id'
             ])
+            ->orderBy('users.id', 'ASC')
             ->take(5)
             ->get();
 
-
+        $invited = JobInvite::where('job_id', $jobId)->get();
 
         return View::make('client.jobDetails')
                 ->with('job', $job)
                 ->with('workers', $workers)
-                ->with('applications', $applications);
+                ->with('applications', $applications)
+                ->with('invited', $invited);
     }
 
     public function jobs(){
@@ -1290,5 +1293,11 @@ class ClientIndiController extends \BaseController {
             ->where('invited_id', $workerID)
             ->delete();
         return Redirect::back();
+    }
+
+    public function ShowInvited($jobId){
+        $job = Job::where('id', $jobId)->first();
+        return View::make('client.ShowInvited')
+                ->with('job', $job);
     }
 }

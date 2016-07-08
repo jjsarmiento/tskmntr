@@ -214,10 +214,10 @@
                                     <p>{{ $w->regname }}, {{ $w->cityname }}</p>
                                 </div>
                                 <br/>
-                                @if($w->inviteID)
-                                    <a href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-success" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Invite Sent</a>
+                                @if($w->invited_id)
+                                    <a data-sample="{{$w->inviteID}}" href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-success" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Invite Sent</a>
                                 @else
-                                    <a href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-primary" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Send Invite</a>
+                                    <a data-sample="{{$w->inviteID}}" href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-primary" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Send Invite</a>
                                 @endif
                             </div>
                         </div>
@@ -268,10 +268,10 @@
                     </a>
                 </div>
                 <div class="col-lg-6 lato-text">
-                    <a id="INVITEDSLINK" href="#" style="text-decoration:none;">
+                    <a id="INVITEDSLINK" href="/ShowInvited:{{$job->id}}" style="text-decoration:none;">
                         <div class="number" style="color:#2980b9;">
                             <i class="fa fa-envelope-square"></i>
-                            3
+                            {{$invited->count()}}
                         </div>
                         <div class="text" style="color:#2980b9;">
                             Invited
