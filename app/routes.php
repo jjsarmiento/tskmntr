@@ -157,7 +157,8 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     // JOBS MODULE ROUTES -- START by JAN SARMIENTO
     Route::get('/jbdtls={jobId}', 'TaskminatorController@jbdtls');
-    ROute::get('/APPLYFRJB:{jobId}', 'TaskminatorController@APPLYFRJB');
+    Route::get('/APPLYFRJB:{jobId}', 'TaskminatorController@APPLYFRJB');
+    Route::get('/CNCLAPPLCTN:{jobId}', 'TaskminatorController@CNCLAPPLCTN');
     // JOBS MODULE ROUTES -- END by JAN SARMIENTO
 
     // THE ROLE BASED ROUTES FOR TASKMINATORS GOES HERE

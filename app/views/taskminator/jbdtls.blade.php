@@ -141,6 +141,9 @@
             <div class="widget-container padded" style="min-height: 10px; display:block !important;">
                 @if($application)
                     <i class="fa fa-warning" style="color: red;"></i>&nbsp;You have already applied for this job.
+                    <br/>
+                    <br/>
+                    <a class="btn btn-danger btn-block" href="/CNCLAPPLCTN:{{$job->jobId}}">Cancel Application</a>
                 @else
                     <a href="/APPLYFRJB:{{$job->jobId}}" class="btn btn-primary btn-block">Apply</a>
                 @endif

@@ -893,4 +893,9 @@ class TaskminatorController extends \BaseController {
 
         return Redirect::back();
     }
+
+    public function CNCLAPPLCTN($jobId){
+        JobApplication::where('job_id', $jobId)->delete();
+        return Redirect::back();
+    }
 }
