@@ -1069,12 +1069,13 @@ class ClientIndiController extends \BaseController {
                             ->get();
 
         $APPLICANTS = $this->GETAPPLICANTS($jobId);
+        $INVITEDS = $this->GETINVITEDS($jobId);
 
         $workers = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
             ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
             ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
             ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
-            ->leftJoin('job_invites', 'job_invites.invited_id', '=', 'users.id')
+//            ->leftJoin('job_invites', 'job_invites.job_id', '=', $jobId)
             ->where('taskminator_has_skills.taskcategory_code', $job->categorycode)
             ->where('taskminator_has_skills.taskitem_code', $job->itemcode)
             ->whereNotIn('users.id', $APPLICANTS)
@@ -1089,7 +1090,7 @@ class ClientIndiController extends \BaseController {
                 'cities.cityname',
                 'barangays.bgycode',
                 'barangays.bgyname',
-                'job_invites.invited_id'
+//                'job_invites.invited_id'
             ])
             ->orderBy('users.id', 'ASC')
             ->take(5)
@@ -1101,7 +1102,8 @@ class ClientIndiController extends \BaseController {
                 ->with('job', $job)
                 ->with('workers', $workers)
                 ->with('applications', $applications)
-                ->with('invited', $invited);
+                ->with('invited', $invited)
+                ->with('INVITEDS', $INVITEDS);
     }
 
     public function jobs(){
@@ -1256,23 +1258,24 @@ class ClientIndiController extends \BaseController {
             ->first();
 
         $worker = User::leftJoin('regions', 'regions.regcode', '=', 'users.region')
-                    ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
-                    ->leftJoin('job_invites', 'job_invites.invited_id', '=', 'users.id')
-                    ->where('users.id', $invitedId)
-                    ->select([
-                        'users.id as userid',
-                        'users.fullName',
-                        'regions.regname',
-                        'cities.cityname',
-                        'job_invites.id as inviteID',
-                        'job_invites.message as inviteMSG',
-                        'job_invites.created_at as inviteTIME',
-                    ])
-                    ->first();
+                ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+                ->where('users.id', $invitedId)
+                ->select([
+                    'users.id as userid',
+                    'users.fullName',
+                    'regions.regname',
+                    'cities.cityname',
+                ])
+                ->first();
+
+        $invitation = JobInvite::where('invited_id', $invitedId)
+                        ->where('job_id', $jobId)
+                        ->first();
 
         return View::make('client.SNDINVT')
                 ->with('worker', $worker)
-                ->with('job', $job);
+                ->with('job', $job)
+                ->with('invitation', $invitation);
     }
 
     public function DOSNDINVT(){

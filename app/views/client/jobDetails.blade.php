@@ -214,7 +214,7 @@
                                     <p>{{ $w->regname }}, {{ $w->cityname }}</p>
                                 </div>
                                 <br/>
-                                @if($w->invited_id)
+                                @if(in_array($w->id, $INVITEDS))
                                     <a data-sample="{{$w->inviteID}}" href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-success" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Invite Sent</a>
                                 @else
                                     <a data-sample="{{$w->inviteID}}" href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-primary" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Send Invite</a>
@@ -233,25 +233,6 @@
                     <center><i class="fa fa-info"></i> <i>No Workers match the skills required.</i></center>
                     </div>
                 @endif
-                <!--
-                <div class="col-md-4 padded">
-                    <div class="media block-update-card">
-                        <a class="pull-left" href="#">
-                            <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
-                        </a>
-                        <div class="media-body update-card-body">
-                            <a href="#" style="font-weight: bolder;">Blas Celestino</a>
-                            <p>Dasmarinas City, Cavite.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 padded text-center"><br/>
-                    <a href="/WRKRSRCH:{{$job->id}}:{{$job->categorycode}}:{{$job->itemcode}}:{{$job->regcode}}:{{$job->citycode}}:{{$job->bgycode}}">
-                        <i class="fa fa-search" style="font-size: 3em;"></i><br/>
-                        Look for more workers..
-                    </a>
-                </div>
-                -->
             </div>
         </div>
         <div class="col-md-4">

@@ -222,5 +222,21 @@ class BaseController extends Controller {
 
         return $myArr;
     }
+
+    public function GETINVITEDS($jobId){
+        $INVITEDS = User::join('job_invites', 'job_invites.invited_id', '=', 'users.id')
+            ->where('job_invites.job_id', $jobId)
+            ->select([
+                'users.id'
+            ])
+            ->get();
+
+        $myArr = array();
+        foreach($INVITEDS as $o){
+            array_push($myArr, $o->id);
+        }
+
+        return $myArr;
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

@@ -188,13 +188,13 @@
             </div>
         </div>
         <div class="col-md-6">
-            @if($worker->inviteID)
+            @if($invitation)
                 <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
                     <h3 style="margin: 0;">{{$worker->fullName}}</h3>
                     <span style="color: #7F8C8D;">{{$worker->regname}} {{$worker->cityname}}</span>
                     <br/><br/>
-                    <span style="color: #2980B9; font-weight: bold;">Invite sent at {{$worker->inviteTIME}}</span>
-                    <div>{{$worker->inviteMSG}}</div>
+                    <span style="color: #2980B9; font-weight: bold;">Invite sent at {{$invitation->created_at}}</span>
+                    <div>{{$invitation->message}}</div>
                     <br/>
                     <div class="form-group">
                         <a href="/cancelInvite:{{$job->id}}:{{$worker->userid}}" class="btn btn-danger">Cancel Invite</a>
