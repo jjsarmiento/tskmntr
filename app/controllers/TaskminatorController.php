@@ -898,4 +898,36 @@ class TaskminatorController extends \BaseController {
         JobApplication::where('job_id', $jobId)->delete();
         return Redirect::back();
     }
+
+    public function WRKR_APPLCTNS(){
+        $skillCodeArray = $this->GETTASKCODES(Auth::user()->id);
+        $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
+            ->whereIn('jobs.skill_code', $skillCodeArray)
+            ->orderBy('jobs.created_at', 'DESC')
+            ->select([
+                'users.id as user_id',
+                'users.fullName',
+                'users.profilePic',
+                'jobs.title',
+                'jobs.id as job_id',
+                'jobs.created_at',
+                'jobs.description',
+            ])
+            ->groupBy('jobs.id')
+            ->paginate(10);
+
+        $applications = JobApplication::join('jobs', 'jobs.id', '=', 'job_applications.job_id')
+                        ->where('job_applications.applicant_id', Auth::user()->id)
+                        ->select([
+                            'jobs.title',
+                            'jobs.id as jobID',
+                            'job_applications.id as jobAppID',
+                            'job_applications.created_at'
+                        ])
+                        ->get();
+
+        return View::make('taskminator.WRKR_APPLCTNS')
+                ->with('jobs', $jobs)
+                ->with('applications', $applications);
+    }
 }

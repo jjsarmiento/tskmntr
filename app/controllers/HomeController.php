@@ -733,6 +733,9 @@ class HomeController extends BaseController {
                             ->take('5')
                             ->get();
 
+                    $applicationCount = JobApplication::where('applicant_id', Auth::user()->id)->count();
+                    $invitesCount = JobInvite::where('invited_id', Auth::user()->id)->count();
+
                     // NEW JOB MODULE -- END by JAN SARMIENTO
 
                     $reqMeter = 0;
@@ -849,7 +852,9 @@ class HomeController extends BaseController {
                             ->with('reqProgress', $reqProgress)
                             ->with('optProgress', $optProgress)
                             ->with('jobs', $jobs)
-                            ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id));
+                            ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id))
+                            ->with('applicationsCount', $applicationCount)
+                            ->with('invitesCount', $invitesCount);
                     break;
                 case 'CLIENT_IND' :
                 case 'CLIENT_CMP' :

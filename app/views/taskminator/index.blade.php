@@ -185,9 +185,9 @@
                     </div>
                 </div>
             </div>
-<!-- ENF PROFILE PIC / INFO -->
+            <!-- ENF PROFILE PIC / INFO -->
 
-<!-- MAIN CONTENT STATISTICS / AVAILABLE JOBS -->
+            <!-- MAIN CONTENT STATISTICS / AVAILABLE JOBS -->
             <div class="col-lg-8">
                 <div class="col-lg-12">
                     <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
@@ -203,7 +203,7 @@
                         </div>
                     </div>
                 </div>
-<!-- PROFILE OOMPLETENESS METER -->
+                <!-- PROFILE OOMPLETENESS METER -->
                 <div class="col-lg-12">
                     <div class="widget-container" style="min-height:30px; border-bottom:1px solid #e6e6e6">
                         <div class="widget-content">
@@ -224,28 +224,30 @@
                         </div>
                     </div>
                 </div>
-<!-- END OF PROFILE  COMPLETENESS METER -->
+                <!-- END OF PROFILE  COMPLETENESS METER -->
                 <div class="col-lg-12">
                     <div class="widget-container stats-container" style="display:block !important;">
                         <div class="col-lg-6 lato-text">
-                            <a href="/tskmntr_taskBids" style="text-decoration:none;">
+                            {{--<a href="/tskmntr_taskBids" style="text-decoration:none;">--}}
+                            <a href="/WRKR_APPLCTNS" style="text-decoration:none;">
                                 <div class="number" style="color:#2980b9;">
                                     <i class="fa fa-gavel"></i>
-                                    {{ $bidCount }}
+                                    {{ $applicationsCount }}
                                 </div>
                                 <div class="text" style="color:#2980b9;">
-                                    Bids
+                                    Applications
                                 </div>
                             </a>
                         </div>
                         <div class="col-lg-6 lato-text">
-                            <a href="/tskmntr_taskOffers" style="text-decoration:none;">
+                            {{--<a href="/tskmntr_taskOffers" style="text-decoration:none;">--}}
+                            <a href="/WRKR_INVTS" style="text-decoration:none;">
                                 <div class="number" style="color:#2980b9;">
                                     <i class="fa fa-globe"></i>
-                                    {{ $offerCount }}
+                                    {{ $invitesCount }}
                                 </div>
                                 <div class="text" style="color:#2980b9;">
-                                    Offers
+                                    Invites
                                 </div>
                             </a>
                         </div>
@@ -255,88 +257,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="col-lg-12">
-                            <!-- <div class="widget-container fluid-height" style="border-top:1px solid #e6e6e6">
-                                <div class="widget-content padded">
-                                    @if(Auth::user()->status == 'PRE_ACTIVATED')
-                                        @if(Document::where('user_id', Auth::user()->id)->count() != 0 && Photo::where('user_id', Auth::user()->id)->count() != 0)
-                                            <div class="heading">
-                                                <i class="icon-bar-chart"></i>Your profile is being reviewed by our staff.
-                                            </div>
-                                            <div class="widget-content clearfix" style="padding: 0px 30px;">
-                                                After your profile has been activated, you can start looking for tasks!<br/>
-                                                This could take 24 hours or less.
-                                            </div>
-                                        @else
-                                            <div class="heading">
-                                                <i class="icon-bar-chart"></i>You're one step closer to taking jobs!
-                                            </div>
-                                            <div class="widget-content clearfix" style="padding: 0px 30px;">
-                                                You just need to upload:
-                                                <ul>
-                                                <li>1 old document with complete name and address (i.e Transcript of record, birth certificate, etc. Accepted files are .doc, .pdf and .docx); and, </li>
-                                                <li>at least 2 (Two) Key Skills Certification (Accepts .jpg, .png and .jpeg file extensions only)</li>
-                                                </ul>
-                                                Just click <a href="/editProfile">here!</a>
-                                            </div>
-                                        @endif
-                                    @else
-                                        <div class="heading">
-                                            <i class="icon-bar-chart"></i>You can now search for tasks!
-                                        </div>
-                                        <div class="widget-content clearfix" style="padding: 0px 30px;">
-                                            <a href="/tskmntr/taskSearch" class="btn link-btn">Search for a task</a><br/>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div> -->
-
-<!-- TEMPLATE -->
-                            <!-- <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".5s" data-wow-offset="0" data-wow-delay="0" style="padding-left:10px; padding-right:10px; min-height: 50px;">
-                                <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
-                                    <span style="padding:0;margin:0; flex:1">
-                                        <img src="frontend/img/team/00.jpg" class="thumbnail" style="margin:0; width:64px; height:64px;" >
-                                    </span>
-                                    <div style="flex:11; padding-left: 5px;">
-                                        <h3 class="lato-text" style="margin:0 !important; color:#2980b9">[Task Name Here]</h3>
-                                        <span style="padding:0;margin:0; color:#ccc;">
-                                            [Company Name]
-                                        </span><br>
-                                        <span class="text-right" style="padding:0;margin:0; color:#ccc;">
-                                            [Time]
-                                        </span>
-                                    </div>
-                                </div>
-                                <p class="lato-text no-padding">
-                                    [Description]
-                                </p>           
-                            </div>
-                            <br> -->
-
-                            <!-- <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".5s" data-wow-offset="0" data-wow-delay="0" style="padding-left:10px; padding-right:10px; min-height: 50px;">
-                                <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
-                                    <span style="padding:0;margin:0; flex:1">
-                                        <img src="frontend/img/team/00.jpg" class="thumbnail" style="margin:0; width:64px; height:64px;" >
-                                    </span>
-                                    <div style="flex:11; padding-left: 5px;">
-                                        <h3 class="lato-text" style="margin:0 !important; color:#2980b9">
-                                            Nature Photographer
-                                        </h3>
-                                        <span style="padding:0;margin:0; color:#ccc;">
-                                            Proveek Dev Team
-                                        </span><br>
-                                        <span class="text-right" style="padding:0;margin:0; color:#ccc;">
-                                            1 hr
-                                        </span>
-                                    </div>
-                                </div>
-                                <p class="lato-text no-padding">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi perspiciatis totam amet maxime aliquam, natus, neque, dolore quisquam similique a minima enim quia blanditiis doloremque eaque! A ab suscipit provident! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, autem cupiditate quos officiis ab tempore consequuntur, ex laborum odio recusandae libero inventore repellat aliquam, optio fugit, vero molestiae iusto illo.
-                                </p>           
-                            </div>
-                            <br> -->
-<!-- END TEMPLATE -->
-
-<!-- LOOP HERE -->
+                        <!-- LOOP HERE -->
                             <!--
                             @if($total_prog >= 50)
                                 <div class="col-lg-12 padded" style="padding-top: 25px;">
