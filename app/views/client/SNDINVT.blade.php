@@ -140,7 +140,7 @@
     <div class="container lato-text">
         <div class="col-md-6">
             <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
-                <h3 style="margin: 0;">{{$job->title}}</h3>
+                <h3 style="margin: 0;"><a href="/jobDetails={{$job->id}}">{{$job->title}}</a></h3>
                 <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>
                 <br/>
                 <br/>

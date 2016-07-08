@@ -1296,8 +1296,47 @@ class ClientIndiController extends \BaseController {
     }
 
     public function ShowInvited($jobId){
-        $job = Job::where('id', $jobId)->first();
+        $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
+            ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+            ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->join('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->join('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->where('jobs.id', $jobId)
+            ->select([
+                'jobs.id',
+                'jobs.title',
+                'jobs.created_at',
+                'jobs.description',
+                'regions.regname',
+                'regions.regcode',
+                'barangays.bgyname',
+                'barangays.bgycode',
+                'cities.cityname',
+                'cities.citycode',
+                'taskcategory.categoryname',
+                'taskcategory.categorycode',
+                'taskitems.itemname',
+                'taskitems.itemcode',
+                'jobs.salary',
+                'jobs.hiring_type'
+            ])
+            ->first();
+
+        $invitedWorkers = User::leftJoin('regions', 'regions.regcode', '=', 'users.region')
+            ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+            ->join('job_invites', 'job_invites.invited_id', '=', 'users.id')
+            ->select([
+                'users.id as userid',
+                'users.profilePic',
+                'users.fullName',
+                'users.username',
+                'regions.regname',
+                'cities.cityname',
+            ])
+            ->get();
+
         return View::make('client.ShowInvited')
-                ->with('job', $job);
+                ->with('job', $job)
+                ->with('invitedWorkers', $invitedWorkers);
     }
 }

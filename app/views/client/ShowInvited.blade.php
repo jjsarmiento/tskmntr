@@ -132,62 +132,114 @@
               margin-left: 10px;
             }
     </style>
+    <script>
+        $(document).ready(function(){
+            $('#SHOWDETAILS').click(function(){
+                $('#DETAILPANEL').slideToggle('fast');
+            });
+        });
+    </script>
 @stop
 
 
 @section('content')
 <section>
     <div class="container lato-text">
-        <div class="col-md-6">
-            <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
-                <h3 style="margin: 0;">{{$job->title}}</h3>
-                <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>
-                <br/>
-                <br/>
-                <div class="row" style="text-align: left">
-                    <div class="col-md-6">
-                        <div class="col-md-4">Duration</div>
-                        <div class="col-md-8">
-                            @if($job->hiring_type == 'LT6MOS')
-                                Less than 6 months
+        <div class="col-md-8">
+            <div class="row">
+                @foreach($invitedWorkers as $w)
+                <div class="col-md-6" style=" padding-bottom: 1.5em;">
+                    <div class="media block-update-card">
+                        <a class="pull-left" href="#">
+                            @if($w->profilePic != "")
+                                <img class="media-object update-card-MDimentions" src="{{$w->profilePic}}">
                             @else
-                                Greater than 6 months
+                                <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
                             @endif
+                        </a>
+                        <div class="media-body update-card-body">
+                            <a href="/{{$w->username}}" style="font-weight: bolder;">
+                                {{$w->fullName }}
+                            </a>
+                            <p>{{$w->regname.', ' }}{{ $w->cityname }}</p>
+                            <a href="/SNDINVT:{{$w->userid}}:{{$job->id}}"><i class="fa fa-envelope"></i> View Invitation</a>
                         </div>
-                        <br/><br/>
-                        <div class="col-md-4">
-                            Skill Category
-                        </div>
-                        <div class="col-md-8">
-                            {{ $job->categoryname }}
-                        </div>
-                        <br/><br/>
-                        <div class="col-md-4">
-                            Skill
-                        </div>
-                        <div class="col-md-8">
-                            {{ $job->itemname }}
-                        </div>
-                        <br/><br/><br/>
-                        <div class="col-md-4">
-                            Location
-                        </div>
-                        <div class="col-md-8">
-                            {{ $job->cityname }}, {{ $job->bgyname }}<br/>
-                            {{ $job->regname }}
-                        </div>
-                        <br/><br/><br/>
-                        <div class="col-md-4">Salary</div>
-                        <div class="col-md-8">P{{ $job->salary }}</div>
-                        <br/><br/><br/>
-                    </div>
-                    <div class="col-md-6">
-                        {{ $job->description }}
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <div class="widget-container stats-container" style="display:block !important;">
+                <div class="col-lg-12 lato-text">
+                    <a id="INVITEDSLINK" href="/ShowInvited:{{$job->id}}" style="text-decoration:none;">
+                        <div class="number" style="color:#2980b9;">
+                            <i class="fa fa-envelope-square"></i>
+                            {{$invitedWorkers->count()}}
+                        </div>
+                        <div class="text" style="color:#2980b9;">
+                            Invited
+                        </div>
+                    </a>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <div class="widget-container padded" style="display: flex; min-height:1em; display:block !important;">
+                    <button type="button" class="close" style="opacity: 100;" id="SHOWDETAILS">
+                        <i class="fa fa-chevron-down" style=""></i>
+                    </button>
+                    <h3 style="margin: 0;"><a href="/jobDetails={{$job->id}}">{{$job->title}}</a></h3>
+                    <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>
+                    <br/>
+                    <br/>
+                    <div class="row" style="text-align: left; display: none;" id="DETAILPANEL">
+                        <div class="col-md-12">
+                            <div class="col-md-4">Duration</div>
+                            <div class="col-md-8">
+                                @if($job->hiring_type == 'LT6MOS')
+                                    Less than 6 months
+                                @else
+                                    Greater than 6 months
+                                @endif
+                            </div>
+                            <br/><br/>
+                            <div class="col-md-4">
+                                Skill Category
+                            </div>
+                            <div class="col-md-8">
+                                {{ $job->categoryname }}
+                            </div>
+                            <br/><br/>
+                            <div class="col-md-4">
+                                Skill
+                            </div>
+                            <div class="col-md-8">
+                                {{ $job->itemname }}
+                            </div>
+                            <br/><br/><br/>
+                            <div class="col-md-4">
+                                Location
+                            </div>
+                            <div class="col-md-8">
+                                {{ $job->cityname }}, {{ $job->bgyname }}<br/>
+                                {{ $job->regname }}
+                            </div>
+                            <br/><br/><br/>
+                            <div class="col-md-4">Salary</div>
+                            <div class="col-md-8">P{{ $job->salary }}</div>
+                            <br/><br/><br/>
+                        </div>
+                        <div class="col-md-12">
+                            {{ $job->description }}
+                        </div>
+                    </div>
+                </div>
+            </div><br/>
         </div>
     </div>
 </section>
