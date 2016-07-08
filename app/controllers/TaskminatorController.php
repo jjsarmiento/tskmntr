@@ -899,7 +899,9 @@ class TaskminatorController extends \BaseController {
     }
 
     public function CNCLAPPLCTN($jobId){
-        JobApplication::where('job_id', $jobId)->delete();
+        JobApplication::where('job_id', $jobId)
+            ->where('applicant_id', Auth::user()->id)
+            ->delete();
         return Redirect::back();
     }
 
