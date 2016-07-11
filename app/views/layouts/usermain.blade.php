@@ -82,7 +82,53 @@
                     location.href = $(this).data('url')+''+searchParam;
                 }
             });
+
+            $('.SHWCRT').click(function(){
+                $('#MAINCARTBODY').hide();
+                $('#CARTLOADING').show();
+                $('#CARTCONTENTS').empty();
+                $.ajax({
+                    type    :   'GET',
+                    url     :   '/GET_CART_CONTENTS',
+                    success :   function(data) {
+                        var totalPrice = 20 * (data.length);
+                        var pointsLeft = parseFloat($('#CRT_PTSLEFT').data('ptsleft')) - totalPrice;
+
+                        $('#CRT_QTY').empty().append(data.length);
+                        $('#CRT_TOTAL').empty().append()
+                        $.each(data, function(key,value){
+                            $('#CARTCONTENTS').append('<a class="CART-ITEMS" href="/'+value['username']+'" target="_tab">'+value['fullName']+'</a>&nbsp;&nbsp;<a href="/removeCartItem:'+value['cartID']+'"><i class="fa fa-close"></i></a><br/>');
+                            $('#CHECKOUTFORM').append('<input type="hidden" name="WORKERID[]" value="'+value['workerID']+'" />')
+                        });
+                        $('#CRT_TOTAL').empty().append(totalPrice);
+                        $('#CRT_PTSLEFT').empty().append(pointsLeft);
+                        $('#CARTLOADING').hide();
+                        $('#MAINCARTBODY').show();
+
+                        if(data.length == 0){
+                            $('#CHECKOUTBTN').prop('disabled', true);
+                                $('#CART-WARNING').hide();
+                        }else{
+                            if(totalPrice > pointsLeft){
+                                $('#CHECKOUTBTN').prop('disabled', true);
+                                $('#CART-WARNING').show();
+                            }else{
+                                $('#CHECKOUTBTN').prop('disabled', false);
+                                $('#CART-WARNING').hide();
+                            }
+                        }
+
+                        INITLISTENER();
+                    }
+                })
+            });
         });
+
+        function INITLISTENER(){
+            $('.CART-ITEMS').click(function(){
+                alert('FUCK');
+            });
+        }
     </script>
     <style type="text/css">
         .lato-text { font-family: 'Lato', sans-serif}
@@ -238,6 +284,21 @@
                             <i class="fa fa-comment fa-fw"></i><span class="visible-xs-inline hidden-sm hidden-md" style="text-transform:none; font-size:11pt;">Message</span>
                         </a>
                     </li>
+                    @if(User::GETROLE(Auth::user()->id) == 'CLIENT_CMP' || User::GETROLE(Auth::user()->id) == 'CLIENT_IND')
+                        <li>
+                            <a href="#" style="background:transparent; font-size: 14pt;" class="SHWCRT" data-target="#CARTMODAL" data-toggle="modal">
+                                <i class="fa fa-shopping-cart fa-fw"></i>
+                                <span class="visible-xs-inline hidden-sm hidden-md" style="text-transform:none; font-size:11pt;">{{User::GETROLE(Auth::user()->id)}}</span>
+                            </a>
+                            @if(Cart::where('company_id', Auth::user()->id)->count() != 0)
+                                <div class="fb-bar">
+                                    <div id="notif-icon" class="notif-icon">
+                                        <id id="notification_count">{{Cart::where('company_id', Auth::user()->id)->count()}}</id>
+                                    </div>
+                                </div>
+                            @endif
+                        </li>
+                    @endif
                     <li>
                         <a href="{{ url('/')."/".Auth::user()->username }}" class="user lato-text" style="display:inline-block; padding-right:0;">
                             @if(Auth::user()->profilePic)
@@ -288,6 +349,56 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+
+    {{--MODAL FOR CART -- START--}}
+    <div class="modal modal-vcenter fade lato-text" id="CARTMODAL" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body" style="padding-top: 2em;">
+                    <div id="CARTLOADING">
+                        <center><i class="fa fa-circle-o-notch fa-spin" style="font-size: 4em; opacity: 0.4"></i></center>
+                    </div>
+                    <div class="row" style="display: none;" id="MAINCARTBODY">
+                        <div class="col-md-6" id="CARTCONTENTS" style="text-align: center;">
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">Number of items</div>
+                                <div class="col-md-6">
+                                    <span id="CRT_QTY"></span>
+                                </div>
+                                <div class="col-md-6">Price per item</div>
+                                <div class="col-md-6">
+                                    <span id="CRT_PRICEPERITEM">20 Points</span>
+                                </div>
+                                <div class="col-md-6" style="font-weight: bold;">TOTAL PRICE</div>
+                                <div class="col-md-6" style="font-weight: bold;">
+                                    <span id="CRT_TOTAL"></span>
+                                </div>
+                                <div class="col-md-6" style="font-weight: bold;">Your points</div>
+                                <div class="col-md-6" style="font-weight: bold;">
+                                    <span>{{Auth::user()->points}}</span>
+                                </div>
+                                <div class="col-md-6" style="font-weight: bold;">Total points after purchase</div>
+                                <div class="col-md-6" style="font-weight: bold;">
+                                    <span id="CRT_PTSLEFT" data-ptsleft="{{Auth::user()->points}}">{{Auth::user()->points}}</span>
+                                </div>
+                                <div class="col-md-12" id="CART-WARNING" style="color: red;">You don't have enough points to make this purchase</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <form method="POST" action="/doCheckout" id="CHECKOUTFORM">
+                    </form>
+                    <button disabled type="button" onclick="$('#CHECKOUTFORM').submit()" id="CHECKOUTBTN" class="btn btn-primary">Checkout</button>
+                    <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--MODAL FOR CART -- END--}}
 
     {{--MODAL -- START--}}
 

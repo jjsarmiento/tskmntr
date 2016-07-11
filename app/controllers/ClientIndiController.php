@@ -1059,6 +1059,8 @@ class ClientIndiController extends \BaseController {
                             ->where('job_applications.job_id', $jobId)
                             ->select([
                                 'users.fullName',
+                                'users.firstName',
+                                'users.lastName',
                                 'users.id',
                                 'job_applications.created_at as applied_at',
                                 'cities.cityname',
@@ -1075,12 +1077,17 @@ class ClientIndiController extends \BaseController {
             ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
             ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
             ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+            ->leftJoin('carts', 'carts.worker_id', '=', 'users.id')
+            ->leftJoin('purchases', 'purchases.worker_id', '=', 'users.id')
 //            ->leftJoin('job_invites', 'job_invites.job_id', '=', $jobId)
             ->where('taskminator_has_skills.taskcategory_code', $job->categorycode)
             ->where('taskminator_has_skills.taskitem_code', $job->itemcode)
             ->whereNotIn('users.id', $APPLICANTS)
             ->select([
+                'users.username',
                 'users.fullName',
+                'users.firstName',
+                'users.lastName',
                 'users.id',
                 'users.address',
                 'users.profilePic',
@@ -1090,6 +1097,8 @@ class ClientIndiController extends \BaseController {
                 'cities.cityname',
                 'barangays.bgycode',
                 'barangays.bgyname',
+                'carts.id as cartID',
+                'purchases.id as purchaseID'
 //                'job_invites.invited_id'
             ])
             ->orderBy('users.id', 'ASC')
@@ -1342,5 +1351,47 @@ class ClientIndiController extends \BaseController {
         return View::make('client.ShowInvited')
                 ->with('job', $job)
                 ->with('invitedWorkers', $invitedWorkers);
+    }
+
+    public function addToCart($worker_id){
+        Cart::insert([
+            'company_id'    =>  Auth::user()->id,
+            'worker_id'     =>  $worker_id,
+            'created_at'    =>  date('Y:m:d H:i:s')
+        ]);
+
+        return Redirect::back();
+    }
+
+    public function GET_CART_CONTENTS(){
+        $cartdetails = Cart::join('users', 'carts.worker_id', '=', 'users.id')
+                        ->where('carts.company_id', Auth::user()->id)
+                        ->select([
+                            'users.id as workerID',
+                            'users.fullName',
+                            'users.username',
+                            'carts.id as cartID',
+                            'carts.created_at'
+                        ])
+                        ->get();
+
+        return $cartdetails;
+    }
+
+    public function doCheckout(){
+        foreach(Input::get('WORKERID') as $w){
+            Purchase::insert([
+                'company_id'    =>  Auth::user()->id,
+                'worker_id'     =>  $w,
+                'purchased_at'  =>  date('Y:m:d H:i:s'),
+                'created_at'    =>  date('Y:m:d H:i:s')
+            ]);
+
+            Cart::where('worker_id', $w)
+                ->where('company_id', Auth::user()->id)
+                ->delete();
+        }
+
+        return Redirect::back();
     }
 }

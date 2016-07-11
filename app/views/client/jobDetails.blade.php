@@ -199,7 +199,7 @@
                 @if($workers->count() != 0)
                     @foreach($workers as $w)
                         <div class="col-md-4 padded" style="">
-                            <div class="media block-update-card">
+                            <div class="media block-update-card" style="height: 15em;">
                                 <a class="pull-left" href="#">
                                     @if($w->profilePic != "")
                                         <img class="media-object update-card-MDimentions" src="{{$w->profilePic}}">
@@ -209,16 +209,26 @@
                                 </a>
                                 <div class="media-body update-card-body">
                                     <a href="#" style="font-weight: bolder;">
-                                        {{ $w->fullName }}
+                                        {{substr_replace($w->firstName, str_repeat('*', strlen($w->firstName)-1), 1)}}
+                                        &nbsp;
+                                        {{substr_replace($w->lastName, str_repeat('*', strlen($w->lastName)-1), 1)}}
                                     </a>
                                     <p>{{ $w->regname }}, {{ $w->cityname }}</p>
                                 </div>
                                 <br/>
-                                @if(in_array($w->id, $INVITEDS))
-                                    <a data-sample="{{$w->inviteID}}" href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-success" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Invite Sent</a>
+                                @if($w->cartID)
+                                    <a href="#" data-target="#CARTMODAL" data-toggle="modal" class="SHWCRT btn btn-xs btn-danger btn-block" style="border-radius: 0.3em;">Added to Cart</a>
+                                @elseif($w->purchaseID)
+                                    <a href="/{{$w->username}}" class="btn btn-default btn-xs btn-block">Purchased</a>
                                 @else
-                                    <a data-sample="{{$w->inviteID}}" href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-primary" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Send Invite</a>
+                                    <a href="/addToCart={{$w->id}}" class="btn btn-warning btn-xs btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
                                 @endif
+                                {{--<a href="/addToCart={{$w->id}}" class="btn btn-warning btn-xs btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>--}}
+                                {{--@if(in_array($w->id, $INVITEDS))--}}
+                                    {{--<a data-sample="{{$w->inviteID}}" href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-success" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Invite Sent</a>--}}
+                                {{--@else--}}
+                                    {{--<a data-sample="{{$w->inviteID}}" href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-primary" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Send Invite</a>--}}
+                                {{--@endif--}}
                             </div>
                         </div>
                     @endforeach

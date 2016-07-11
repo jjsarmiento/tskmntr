@@ -24,6 +24,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
+    static function GETROLE($id){
+        return Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')
+            ->where('user_has_role.user_id', Auth::user()->id)
+            ->pluck('role');
+    }
+
     static function getNotif(){
         return Notification::where('user_id', Auth::user()->id)->where('status', 'NEW')->take(5)->orderBy('created_at', 'DESC')->get();
     }
