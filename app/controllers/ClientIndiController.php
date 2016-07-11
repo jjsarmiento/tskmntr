@@ -1391,6 +1391,11 @@ class ClientIndiController extends \BaseController {
                 ->where('company_id', Auth::user()->id)
                 ->delete();
         }
+        $TOTAL_PTS = Auth::user()->points - (count(Input::get('WORKERID')) * 20);
+
+        User::where('id', Auth::user()->id)->update([
+            'points'    =>  $TOTAL_PTS,
+        ]);
 
         return Redirect::back();
     }
