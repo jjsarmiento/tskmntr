@@ -200,7 +200,7 @@
                     @foreach($workers as $w)
                         <div class="col-md-4 padded" style="">
                             <div class="media block-update-card" style="height: 15em;">
-                                <a class="pull-left" href="#">
+                                <a class="pull-left" href="/{{$w->username}}">
                                     @if($w->profilePic != "")
                                         <img class="media-object update-card-MDimentions" src="{{$w->profilePic}}">
                                     @else
@@ -208,11 +208,17 @@
                                     @endif
                                 </a>
                                 <div class="media-body update-card-body">
-                                    <a href="#" style="font-weight: bolder;">
-                                        {{substr_replace($w->firstName, str_repeat('*', strlen($w->firstName)-1), 1)}}
-                                        &nbsp;
-                                        {{substr_replace($w->lastName, str_repeat('*', strlen($w->lastName)-1), 1)}}
-                                    </a>
+                                    @if($w->purchaseID)
+                                        <a href="/{{$w->username}}" style="font-weight: bolder;">
+                                            {{ $w->fullName }}
+                                        </a>
+                                    @else
+                                        <a href="/{{$w->username}}" style="font-weight: bolder;">
+                                            {{substr_replace($w->firstName, str_repeat('*', strlen($w->firstName)-1), 1)}}
+                                            &nbsp;
+                                            {{substr_replace($w->lastName, str_repeat('*', strlen($w->lastName)-1), 1)}}
+                                        </a>
+                                    @endif
                                     <p>{{ $w->regname }}, {{ $w->cityname }}</p>
                                 </div>
                                 <br/>
