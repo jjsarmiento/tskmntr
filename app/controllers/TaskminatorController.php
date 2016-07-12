@@ -637,10 +637,15 @@ class TaskminatorController extends \BaseController {
                 ])
                 ->get();
 
+        $custom_skills = CustomSkill::get();
+        $worker_cust_skills = CustomSkill::where('created_by', Auth::user()->id)->get();
+
         return View::make('taskminator.editSkillInfo')
                 ->with('skills', $query)
                 ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
-                ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get());
+                ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get())
+                ->with('custom_skills', $custom_skills)
+                ->with('worker_cust_skills', $worker_cust_skills);
     }
 
     public function doEditSkillInfo(){
@@ -951,5 +956,24 @@ class TaskminatorController extends \BaseController {
 
         return View::make('taskminator.WRKR_INVTS')
                 ->with('invites', $invites);
+    }
+
+    public function ADDOWNSKILL(){
+        $other_skills = array_map('trim', explode(',', Input::get('customskills')));
+        foreach($other_skills as $os){
+            if(strip_tags($os) != ""){
+                CustomSkill::insert([
+                    'created_by'        =>  Auth::user()->id,
+                    'skill'             =>  strip_tags($os),
+                    'created_at'        =>  date("Y:m:d H:i:s")
+                ]);
+            }
+        }
+        return Redirect::back();
+    }
+
+    public function RMVCSTMSKLL($custom_skill_id){
+        CustomSkill::where('id', $custom_skill_id)->delete();
+        return Redirect::back();
     }
 }

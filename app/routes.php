@@ -161,6 +161,8 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::get('/CNCLAPPLCTN:{jobId}', 'TaskminatorController@CNCLAPPLCTN');
     Route::get('/WRKR_APPLCTNS', 'TaskminatorController@WRKR_APPLCTNS');
     Route::get('/WRKR_INVTS', 'TaskminatorController@WRKR_INVTS');
+    Route::post('/ADDOWNSKILL', 'TaskminatorController@ADDOWNSKILL');
+    Route::get('/RMVCSTMSKLL={custom_skill_id}', 'TaskminatorController@RMVCSTMSKLL');
     // JOBS MODULE ROUTES -- END by JAN SARMIENTO
 
     // THE ROLE BASED ROUTES FOR TASKMINATORS GOES HERE

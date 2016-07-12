@@ -113,7 +113,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="widget-container" style="min-height: 150px; padding-bottom: 5px;">
                     <div class="heading">
                         <i class="fa fa-signal"></i>&nbsp&nbsp Current Skills
@@ -124,26 +124,21 @@
                         @endforeach
                         <hr/>
                         <form method="POST" action="/doEditSkillInfo" id="doEditSkillInfo">
-                            <h4>Add a skill</h4>
-                            <div class="col-md-2">
-                                Category : 
-                            </div>
-                            <div class="col-md-10">
+                            <div class="form-group">
+                                <label>Category</label>
                                 <select name="taskcategory" id="taskcategory" class="form-control">
                                     @foreach($categories as $category)
                                         <option value="{{ $category->categorycode }}">{{ $category->categoryname }}</option>
                                     @endforeach
-                                </select><br/>
+                                </select>
                             </div>
-                            <div class="col-md-2">
-                                Skill : 
-                            </div>
-                            <div class="col-md-10">
+                            <div class="form-group">
+                                <label>Skill</label>
                                 <select name="taskitems" id="taskitems" class="form-control">
                                     @foreach($categorySkills as $skill)
                                         <option value="{{ $skill->itemcode }}">{{ $skill->itemname }}</option>
                                     @endforeach
-                                </select><br/>
+                                </select>
                             </div>
                             <div class="text-right padded">
                                 <button type="submit" class="btn btn-success">Add Skill</button>
@@ -152,52 +147,30 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="col-md-4">
-                <div class="widget-container small">
-                    @if(Auth::user()->profilePic == null)
-                        <div class="heading">
-                            <i class="icon-signal"></i>Please upload a profile picture
-                        </div>
-                        <div class="widget-content padded">
-                            {{ Form::open(array('url' => '/uploadProfilePic', 'id' => 'uploadProfilePicForm', 'files' => 'true')) }}
-                                <input type="file" name="profilePic" accept="image/*" class="form-control" /><br/>
-                                <button type="submit" class="btn btn-success">Upload</button>
-                            {{ Form::close() }}
-                        </div>
-                    @else
-                        <div class="widget-content padded">
-                            <div class="heading">
-                                <i class="glyphicon glyphicon-user"></i>{{ Auth::user()->fullName }}
+
+            <div class="col-md-6">
+                <div class="widget-container">
+                    <div class="heading">
+                        <i class="fa fa-signal"></i>&nbsp&nbsp Own Custom Skills
+                    </div>
+                     <div class="widget-content padded">
+                        @foreach($worker_cust_skills as $cs)
+                            <span class="btn btn-xs btn-primary" style="font-size: 13px;">{{ $cs->skill}} &nbsp;&nbsp;<a class="remove-skill" href="#" data-href="/RMVCSTMSKLL={{$cs->id}}" title="Remove this skill" style="color:red;">x</a></span>
+                        @endforeach
+                        <hr/>
+                        <form method="POST" action="/ADDOWNSKILL" id="doEditSkillInfo">
+                            <div class="form-group">
+                                <label>Input your own skill</label>
+                                <textarea required="required" name="customskills" rows="7" placeholder="Example : Baby Sitting, English Proficiency, Household Chores, ..." class="form-control"></textarea>
                             </div>
-                            <div class="thumbnail">
-                                <a href="/editProfile"><img src="{{ Auth::user()->profilePic }}" class="portrait"/></a>
+                            <div class="text-right padded">
+                                <button type="submit" class="btn btn-success">Add Own Custom Skill</button>
                             </div>
-                        </div>
-                    @endif
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <!--Current Skills : <br/>
-        @foreach($skills as $skill)
-            {{ $skill->itemname }} <a class="remove-skill" href="#" data-href="/removeSkill={{$skill->taskitem_code}}" title="Remove this skill">x</a><br/>
-        @endforeach
-        <hr/>
-        <form method="POST" action="/doEditSkillInfo" id="doEditSkillInfo">
-            <h4>Add a skill</h4>
-            Category : <select name="taskcategory" id="taskcategory">
-                @foreach($categories as $category)
-                    <option value="{{ $category->categorycode }}">{{ $category->categoryname }}</option>
-                @endforeach
-            </select><br/>
-            Skill : <select name="taskitems" id="taskitems">
-                @foreach($categorySkills as $skill)
-                    <option value="{{ $skill->itemcode }}">{{ $skill->itemname }}</option>
-                @endforeach
-            </select><br/>
-            <button type="submit">Add Skill</button>
-        </form>-->
     </div>
 </section>
 @stop
