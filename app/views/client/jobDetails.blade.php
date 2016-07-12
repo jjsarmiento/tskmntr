@@ -188,6 +188,22 @@
                         {{ $job->description }}
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-12 well">
+                            <label>Requirements</label><br/>
+                            {{$job->requirements}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <label>Other Skills</label><br/>
+                            @foreach($custom_skills as $cs)
+                                <span class="badge">{{$cs->skill}}</span>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-lg-12 padded" style=" margin-bottom: 0; padding-bottom: 0;">

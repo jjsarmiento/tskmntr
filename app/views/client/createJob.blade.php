@@ -122,28 +122,31 @@
                                                     @endif
                                                 </select>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="title">Job Duration</label>
+                                                <select name="hireType" id="hireType" required="required" class="form-control">
+                                                    <option value="LT6MOS" <?php if(Input::old('hireType') == 'LT6MOS'){ echo('selected'); } ?>>Less than 6 months</option>
+                                                    <option value="GT6MOS" <?php if(Input::old('hireType') == 'GT6MOS'){ echo('selected'); } ?>>Greater than 6 months</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="salaryRange">Salary</label>
+                                                {{ Form::text('salaryRange', Input::old('salaryRange'), array('class' => 'form-control', 'placeholder' => 'salaryRange', 'required' => 'true')) }}
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="title">Job Description</label>
-                                                <textarea name="description" class="form-control" style="height: 108px" required="required">{{ Input::old('description') }}</textarea>
+                                                <textarea name="description" placeholder="Provide a short description of what the job is about" class="form-control" style="height: 108px" required="required">{{ Input::old('description') }}</textarea>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="title">Job Duration</label>
-                                                        <select name="hireType" id="hireType" required="required" class="form-control">
-                                                            <option value="LT6MOS" <?php if(Input::old('hireType') == 'LT6MOS'){ echo('selected'); } ?>>Less than 6 months</option>
-                                                            <option value="GT6MOS" <?php if(Input::old('hireType') == 'GT6MOS'){ echo('selected'); } ?>>Greater than 6 months</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="salaryRange">Salary</label>
-                                                        {{ Form::text('salaryRange', Input::old('salaryRange'), array('class' => 'form-control', 'placeholder' => 'salaryRange', 'required' => 'true')) }}
-                                                    </div>
-                                                </div>
+                                            <div class="form-group">
+                                                <label for="title">Other Qualifications (Other skills and competencies Required)</label>
+                                                <textarea name="otherskills" class="form-control" style="height: 108px" required="required" placeholder="Example : Baby Sitting, English Proficiency, Household Chores, ..."></textarea>
+                                                <span style="color: #E74C3C; font-weight: bold;">*Please seperate skills with comma</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="title">Requirements (What to bring)</label>
+                                                <textarea name="requirements" class="form-control" style="height: 108px" required="required"></textarea>
                                             </div>
                                         </div>
                                     </div>

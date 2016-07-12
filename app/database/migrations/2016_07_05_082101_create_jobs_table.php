@@ -18,6 +18,7 @@ class CreateJobsTable extends Migration {
             $table->string('user_id');
             $table->string('title');
             $table->longText('description');
+            $table->longText('requirements');
             $table->string('skill_category_code');
             $table->string('skill_code');
             $table->string('regcode');

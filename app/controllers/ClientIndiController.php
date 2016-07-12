@@ -1007,10 +1007,12 @@ class ClientIndiController extends \BaseController {
     }
 
     public function doCreateJob(){
+
         $jobId = Job::insertGetId(array(
             'user_id'               =>  Auth::user()->id,
             'title'                 =>  Input::get('title'),
             'description'           =>  Input::get('description'),
+            'requirements'          =>  Input::get('requirements'),
             'skill_category_code'   =>  Input::get('taskcategory'),
             'skill_code'            =>  Input::get('taskitems'),
             'regcode'               =>  Input::get('region'),
@@ -1020,6 +1022,18 @@ class ClientIndiController extends \BaseController {
             'salary'                =>  Input::get('salaryRange'),
             'created_at'            =>  date("Y:m:d H:i:s")
         ));
+
+        $other_skills = array_map('trim', explode(',', Input::get('otherskills')));
+        foreach($other_skills as $os){
+            if(strip_tags($os) != ""){
+                CustomSkill::insert([
+                    'created_by'        =>  Auth::user()->id,
+                    'company_job_id'    =>  $jobId,
+                    'skill'             =>  strip_tags($os),
+                    'created_at'        =>  date("Y:m:d H:i:s")
+                ]);
+            }
+        }
 
         return Redirect::to('/jobDetails='.$jobId);
     }
@@ -1036,6 +1050,9 @@ class ClientIndiController extends \BaseController {
                     'jobs.title',
                     'jobs.created_at',
                     'jobs.description',
+                    'jobs.requirements',
+                    'jobs.salary',
+                    'jobs.hiring_type',
                     'regions.regname',
                     'regions.regcode',
                     'barangays.bgyname',
@@ -1045,11 +1062,11 @@ class ClientIndiController extends \BaseController {
                     'taskcategory.categoryname',
                     'taskcategory.categorycode',
                     'taskitems.itemname',
-                    'taskitems.itemcode',
-                    'jobs.salary',
-                    'jobs.hiring_type'
+                    'taskitems.itemcode'
                 ])
                 ->first();
+
+        $custom_skills = CustomSkill::where('company_job_id', $jobId)->get();
 
 //        $applications = JobApplication::where('job_id', $jobId)->get();
         $applications = User::join('job_applications', 'job_applications.applicant_id', '=', 'users.id')
@@ -1118,7 +1135,8 @@ class ClientIndiController extends \BaseController {
                 ->with('workers', $workers)
                 ->with('applications', $applications)
                 ->with('invited', $invited)
-                ->with('INVITEDS', $INVITEDS);
+                ->with('INVITEDS', $INVITEDS)
+                ->with('custom_skills', $custom_skills);
     }
 
     public function jobs(){
