@@ -95,7 +95,8 @@
                         var pointsLeft = parseFloat($('#CRT_PTSLEFT').data('ptsleft')) - totalPrice;
 
                         $('#CRT_QTY').empty().append(data.length);
-                        $('#CRT_TOTAL').empty().append()
+                        $('#CRT_TOTAL').empty();
+                        $('#CHECKOUTFORM').empty();
                         $.each(data, function(key,value){
                             $('#CARTCONTENTS').append('<a class="CART-ITEMS" href="/'+value['username']+'" target="_tab">'+value['fullName']+'</a>&nbsp;&nbsp;<a href="/removeCartItem:'+value['cartID']+'"><i class="fa fa-close"></i></a><br/>');
                             $('#CHECKOUTFORM').append('<input type="hidden" name="WORKERID[]" value="'+value['workerID']+'" />')

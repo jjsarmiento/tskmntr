@@ -1073,6 +1073,7 @@ class ClientIndiController extends \BaseController {
                                 'carts.id as cartID',
                                 'purchases.id as purchaseID'
                             ])
+                            ->groupBy('users.id')
                             ->get();
 
         $APPLICANTS = $this->GETAPPLICANTS($jobId);
