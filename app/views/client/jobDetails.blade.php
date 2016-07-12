@@ -277,7 +277,7 @@
                     <div class="padded text-center">Applicants</div>
                     @foreach($applications as $a)
                         <div class="media block-update-card">
-                            <a class="pull-left" href="#">
+                            <a class="pull-left" href="/{{$a->username}}" target="_tab">
                                 @if($a->profilePic != "")
                                     <img class="media-object update-card-MDimentions" src="{{$a->profilePic}}">
                                 @else
@@ -285,11 +285,28 @@
                                 @endif
                             </a>
                             <div class="media-body update-card-body">
-                                <a href="#">
-                                    <h4 class="media-heading">{{ $a->fullName }}</h4>
+                                <a href="/{{$a->username}}" target="_tab">
+                                    @if($a->purchaseID)
+                                        <h4 class="media-heading">{{ $a->fullName }}</h4>
+                                    @else
+                                        <h4 class="media-heading">
+                                            {{substr_replace($a->firstName, str_repeat('*', strlen($a->firstName)-1), 1)}}
+                                            &nbsp;
+                                            {{substr_replace($a->lastName, str_repeat('*', strlen($a->lastName)-1), 1)}}
+                                        </h4>
+                                    @endif
                                 </a>
                                 <p>{{ $a->regname }}, {{ $a->cityname }}</p>
                             </div>
+                            <br/>
+                            <br/>
+                            @if(!$a->purchaseID)
+                                @if($a->cartID)
+                                    <a href="#" data-target="#CARTMODAL" data-toggle="modal" class="SHWCRT btn btn-xs btn-danger btn-block" style="border-radius: 0.3em;">Added to Cart</a>
+                                @else
+                                    <a href="/addToCart={{$a->id}}" class="btn btn-warning btn-xs btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
+                                @endif
+                            @endif
                         </div>
                     @endforeach
                 @else

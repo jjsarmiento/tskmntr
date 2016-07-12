@@ -1056,8 +1056,11 @@ class ClientIndiController extends \BaseController {
                             ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
                             ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
                             ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+                            ->leftJoin('carts', 'carts.worker_id', '=', 'users.id')
+                            ->leftJoin('purchases', 'purchases.worker_id', '=', 'users.id')
                             ->where('job_applications.job_id', $jobId)
                             ->select([
+                                'users.username',
                                 'users.fullName',
                                 'users.firstName',
                                 'users.lastName',
@@ -1066,7 +1069,9 @@ class ClientIndiController extends \BaseController {
                                 'cities.cityname',
                                 'regions.regname',
                                 'barangays.bgyname',
-                                'users.profilePic'
+                                'users.profilePic',
+                                'carts.id as cartID',
+                                'purchases.id as purchaseID'
                             ])
                             ->get();
 
