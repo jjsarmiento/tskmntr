@@ -20,6 +20,15 @@
             min-width: 100%;
             height:1px;
         }
+
+        .badge:hover{
+            background-color: #F1C40F;
+            color : #000000;
+        }
+        
+        .DELETE_CUSTOM_SKILL{
+            cursor:pointer;
+        }
     </style>
     {{ HTML::script('js/taskminator.js') }}
     <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
@@ -41,7 +50,13 @@
                         });
                     }
                 })
-            })
+            });
+
+            $('.DELETE_CUSTOM_SKILL').click(function(){
+                if(confirm('Do you want to delete this skill?')){
+                    location.href="/JOB_DELETECUSTSKILL="+$(this).data('custskillid');
+                }
+            });
         });
     </script>
 @stop
@@ -49,9 +64,9 @@
 
 @section('content')
 <section>
-    <div class="container lato-text">
-        <div class="col-md-8">
-            <form method="POST" action="/doEditJob" id="JOBEDITFORM">
+    <form method="POST" action="/doEditJob" id="JOBEDITFORM">
+        <div class="container lato-text">
+            <div class="col-md-8">
                 <input type="hidden" id="JOB_ID" name="JOB_ID" value="{{$job->id}}"/>
                 <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
                     <div class="form-group">
@@ -134,6 +149,7 @@
                             <br/><br/><br/>
                         </div>
                         <div class="col-md-5">
+                            <label>Description</label>
                             <textarea name="description" id="description" required="required" class="form-control" style="height: auto; text-align: justify;" rows="15">{{ $job->description }}</textarea>
                         </div>
                     </div>
@@ -141,13 +157,26 @@
                 <div class="panel-footer">
                     <button class="btn btn-primary" type="submit">Save Edit</button>
                 </div>
-            </form>
-        </div>
-        <div class="col-md-4">
-            <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
-
+            </div>
+            <div class="col-md-4 padded" style="background-color: #ffffff;">
+                {{--<div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">--}}
+                    <div class="form-group">
+                        <label>Other Requirements (What to bring)</label>
+                        <textarea rows="7" name="requirements" class="form-control">{{$job->requirements}}</textarea>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label>Other Qualifications (Other skills and competencies Required)</label>
+                        <textarea placeholder="Example : Baby Sitting, English Proficiency, Household Chores, ..." rows="7" name="otherskills" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        @foreach($custom_skills as $cs)
+                            <span style="font-size: 1em; margin: 0.3em;" class="badge">{{$cs->skill}} <i class="DELETE_CUSTOM_SKILL fa fa-trash" data-custskillid="{{$cs->id}}"></i></span>
+                        @endforeach
+                    </div>
+                {{--</div>--}}
             </div>
         </div>
-    </div>
+    </form>
 </section>
 @stop

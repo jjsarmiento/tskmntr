@@ -1156,6 +1156,7 @@ class ClientIndiController extends \BaseController {
                 'jobs.title',
                 'jobs.created_at',
                 'jobs.description',
+                'jobs.requirements',
                 'regions.regname',
                 'regions.regcode',
                 'barangays.bgyname',
@@ -1172,6 +1173,7 @@ class ClientIndiController extends \BaseController {
             ->first();
 
         $skills = TaskItem::where('item_categorycode', $job->categorycode)->orderBy('itemname', 'ASC')->get();
+        $custom_skills = CustomSkill::where('company_job_id', $jobId)->get();
 
         return View::make('client.editJob')
                 ->with('categories',TaskCategory::orderBy('categoryname', 'ASC')->get())
@@ -1179,13 +1181,16 @@ class ClientIndiController extends \BaseController {
                 ->with('regions', Region::all())
                 ->with('barangays', Barangay::where('citycode', $job->citycode)->orderBy('bgyname', 'ASC')->get())
                 ->with('cities', City::where('regcode', $job->regcode)->orderBy('cityname', 'ASC')->get())
-                ->with('job',$job);
+                ->with('job',$job)
+                ->with('custom_skills',$custom_skills);
     }
 
     public function doEditJob(){
+
         Job::where('id', Input::get('JOB_ID'))->update([
             'title'                 =>  Input::get('title'),
             'description'           =>  Input::get('description'),
+            'requirements'          =>  Input::get('requirements'),
             'skill_category_code'   =>  Input::get('taskcategory'),
             'skill_code'            =>  Input::get('taskitems'),
             'regcode'               =>  Input::get('region'),
@@ -1196,6 +1201,17 @@ class ClientIndiController extends \BaseController {
             'updated_at'            =>  date("Y:m:d H:i:s")
         ]);
 
+        $other_skills = array_map('trim', explode(',', Input::get('otherskills')));
+        foreach($other_skills as $os){
+            if(strip_tags($os) != ""){
+                CustomSkill::insert([
+                    'created_by'        =>  Auth::user()->id,
+                    'company_job_id'    =>  Input::get('JOB_ID'),
+                    'skill'             =>  strip_tags($os),
+                    'created_at'        =>  date("Y:m:d H:i:s")
+                ]);
+            }
+        }
         return Redirect::to('/jobDetails='.Input::get('JOB_ID'));
     }
 
@@ -1421,6 +1437,11 @@ class ClientIndiController extends \BaseController {
             'points'    =>  $TOTAL_PTS,
         ]);
 
+        return Redirect::back();
+    }
+
+    public function JOB_DELETECUSTSKILL($custom_skill_id){
+        CustomSkill::where('id', $custom_skill_id)->delete();
         return Redirect::back();
     }
 }
