@@ -53,19 +53,41 @@ class HomeController extends BaseController {
 
     public function toProfile($username){
         if(User::where('username', $username)->count()!= 0){
+            // OWNER OF THE PROFILE'S DETAILS
             $temp = User::where('username', '=', $username)->first();
 
+            // PROFILE OWNER'S ROLE
             $role = Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')
                 ->where('user_has_role.user_id', $temp->id)
                 ->pluck('role');
 
-//        $QUERY_CONTACT = Contact::where('user_id', Auth::user()->id);
+            // DETERMINE IF USER HAS CHECKEDOUT WORKER -- START by Jan Sarmiento
+            $USERINCART = false;
+            $PURCHASED = false;
+            $CLIENTFLAG = false;
+            if(User::GETROLE(Auth::user()->id) == 'CLIENT_IND' || User::GETROLE(Auth::user()->id) == 'CLIENT_CMP'){
+                $CLIENTFLAG = true;
+            }
+
+            if($role == 'TASKMINATOR' && $CLIENTFLAG){
+                $USERINCART =  Cart::where('worker_id', $temp->id)
+                                ->where('company_id', Auth::user()->id)
+                                ->count();
+
+                $PURCHASED = Purchase::where('worker_id', $temp->id)
+                                ->where('company_id', Auth::user()->id)
+                                ->count();
+            }
+            // DETERMINE IF USER HAS CHECKEDOUT WORKER -- END by Jan Sarmiento
             $QUERY_CONTACT = Contact::where('user_id', $temp->id);
             $mobile = $QUERY_CONTACT->where('ctype', 'mobileNum')->pluck('content');
             return View::make("profile_worker")
                 ->with("users", User::where('username', '=', $username)->get()->first())
                 ->with('roles', $role)
-                ->with('mobile', $mobile);
+                ->with('mobile', $mobile)
+                ->with('USERINCART', $USERINCART)
+                ->with('PURCHASED', $PURCHASED);
+
         }else{
 //            return "ROUTE DOESN'T EXIST";
             return View::make('ERRORPAGE');
