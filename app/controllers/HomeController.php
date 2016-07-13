@@ -1771,5 +1771,9 @@ class HomeController extends BaseController {
                 break;
         }
     }
+
+    public function CHAINCATEGORYANDSKILL($categoryID){
+        return TaskItem::where('item_categorycode', '=', $categoryID)->orderBy('itemname', 'ASC')->get();
+    }
 }
 

@@ -960,4 +960,62 @@ class AdminController extends \BaseController {
                 ->with('job', $job)
                 ->with('custom_skills', $custom_skills);
     }
+
+    public function ADMINJbSrch($keyword, $regcode, $citycode, $hiringType, $orderBy, $categoryID, $skillID){
+        if($keyword == 'NONE'){ $keyword = ''; }
+
+
+        $QUERY = Job::join('users', 'users.id', '=', 'jobs.user_id')
+            ->join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
+            ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+            ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->where('jobs.title', 'LIKE', '%'.$keyword.'%');
+
+        if($regcode != 'ALL'){
+            $QUERY = $QUERY->where('regions.regcode', $regcode);
+        }
+//
+        if($citycode != 'ALL'){
+            $QUERY = $QUERY->where('cities.citycode', $citycode);
+        }
+
+        if($hiringType != 'ALL'){
+            $QUERY = $QUERY->where('jobs.hiring_type', $hiringType);
+        }
+
+        if($categoryID != 'ALL'){
+            $QUERY = $QUERY->where('taskcategory.categorycode', $categoryID);
+        }
+
+        if($skillID != 'ALL'){
+            $QUERY = $QUERY->where('taskitems.itemcode', $skillID);
+        }
+
+        $QUERY = $QUERY->orderBy('jobs.created_at', $orderBy)
+            ->select([
+                'users.username',
+                'users.id as USERID',
+                'users.fullName',
+                'jobs.id as JOBID',
+                'jobs.title',
+                'jobs.created_at',
+                'jobs.description',
+                'jobs.requirements',
+                'jobs.salary',
+                'jobs.hiring_type',
+                'regions.regname',
+                'regions.regcode',
+                'cities.cityname',
+                'cities.citycode',
+                'taskcategory.categoryname',
+                'taskcategory.categorycode',
+                'taskitems.itemname',
+                'taskitems.itemcode'
+            ])
+            ->paginate(10);
+
+        return View::make('admin.showJobAds')
+                ->with('jobs', $QUERY);
+    }
 }

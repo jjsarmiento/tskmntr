@@ -50,9 +50,54 @@ function locationChain(dropdown, chainee, form, route){
                 }
                 chainee.prop('disabled', false);
             },error :   function(){
-                alert('Please check network connectivity.');
+                console.log('Please check network connectivity. - TASKMINATOR.JS');
                 chainee.prop('disabled', false);
             }
         });
     });
+}
+
+function CHAINLOCATION(SENDER, RECEIVER){
+    SENDER.change(function(){
+        SENDER.prop('disabled', true);
+        RECEIVER.prop('disabled', true).empty();
+
+        var ROUTE = '/LOCCHAIN:'+SENDER.data('loctype')+':'+SENDER.val();
+
+        $.ajax({
+            type    :   'GET',
+            url     :   ROUTE,
+            success :   function(data){
+                RECEIVER.append('<option value="ALL">Display all cities from region</option>');
+                $.each(data, function(key,value){
+                    RECEIVER.append('<option value="'+value['citycode']+'">'+value['cityname']+'</option>');
+                });
+
+                SENDER.prop('disabled', false);
+                RECEIVER.val('ALL').prop('disabled', false);
+            }
+        });
+    })
+}
+
+function CHAINCATEGORYANDSKILL(CATEGORY, SKILL){
+    CATEGORY.change(function () {
+        CATEGORY.prop('disabled', true);
+        SKILL.prop('disabled', true).empty();
+
+        var ROUTE = '/CHAINCATEGORYANDSKILL:'+CATEGORY.val();
+        $.ajax({
+            type    :   'GET',
+            url     :   ROUTE,
+            success :   function(data){
+                SKILL.append('<option value="ALL">Display everything from category</option>');
+                $.each(data, function(key,value){
+                    SKILL.append('<option value="'+value['itemcode']+'">'+value['itemname']+'</option>');
+                });
+
+                CATEGORY.prop('disabled', false);
+                SKILL.prop('disabled', false);
+            }
+        })
+    })
 }

@@ -31,6 +31,7 @@ Route::post('/CHKRGWRKR', 'HomeController@CHKRGWRKR');
 Route::get('/CHAINREG', 'HomeController@CHAINREG');
 
 Route::get('/LOCCHAIN:{chainType}:{locationID}', 'HomeController@LOCCHAIN');
+Route::get('/CHAINCATEGORYANDSKILL:{categoryID}', 'HomeController@CHAINCATEGORYANDSKILL');
 
 
 Route::post('/regWorker', 'HomeController@regWorker');
@@ -91,6 +92,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     // JOB ADS ROUTES
     Route::get('/showJobAds', 'AdminController@showJobAds');
     Route::get('/ADMIN_jobDetails={job_id}', 'AdminController@ADMIN_jobDetails');
+    Route::get('/ADMINJbSrch:{keyword}:{regcode}:{citycode}:{hiringType}:{orderBy}:{category}:{skill}', 'AdminController@ADMINJbSrch');
 
     // SKILLS ROUTE
     Route::get('/skills', 'AdminController@skills');
