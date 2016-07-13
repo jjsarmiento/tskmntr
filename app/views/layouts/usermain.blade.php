@@ -88,9 +88,10 @@
                     duration = $('#adSearch_DUR').val(),
                     orderBy = $('#orderBy').val(),
                     category = $('#adSearch_CATEGORY').val(),
-                    skill = $('#adSearch_SKILL').val();
+                    skill = $('#adSearch_SKILL').val(),
+                    customSkill = ($('#adSearch_CUSTSKILL').val() ? $('#adSearch_CUSTSKILL').val() : "NONE");
 
-                location.href = "/ADMINJbSrch:"+keyword+":"+region+":"+city+":"+duration+":"+orderBy+":"+category+":"+skill;
+                location.href = "/ADMINJbSrch:"+keyword+":"+region+":"+city+":"+duration+":"+orderBy+":"+category+":"+skill+":"+customSkill;
             });
 
             $('.srchAnim').keyup(function(e){
@@ -585,6 +586,10 @@
                                                 <option value="{{$skill->itemcode}}">{{$skill->itemname}}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Search by custom skill</label>
+                                        <input type="text" placeholder="Enter keyword for custom skill search" class="form-control" name="adSearch_CUSTSKILL" id="adSearch_CUSTSKILL"/>
                                     </div>
                                 </div>
                             </div>

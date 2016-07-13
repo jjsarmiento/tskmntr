@@ -961,16 +961,19 @@ class AdminController extends \BaseController {
                 ->with('custom_skills', $custom_skills);
     }
 
-    public function ADMINJbSrch($keyword, $regcode, $citycode, $hiringType, $orderBy, $categoryID, $skillID){
+    public function ADMINJbSrch($keyword, $regcode, $citycode, $hiringType, $orderBy, $categoryID, $skillID, $customSkill){
         if($keyword == 'NONE'){ $keyword = ''; }
+        if($customSkill == 'NONE'){ $customSkill = ''; }
 
 
         $QUERY = Job::join('users', 'users.id', '=', 'jobs.user_id')
             ->join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
             ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('custom_skills', 'custom_skills.company_job_id', '=', 'jobs.id')
             ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
-            ->where('jobs.title', 'LIKE', '%'.$keyword.'%');
+            ->where('jobs.title', 'LIKE', '%'.$keyword.'%')
+            ->where('custom_skills.skill', 'LIKE', '%'.$customSkill.'%');
 
         if($regcode != 'ALL'){
             $QUERY = $QUERY->where('regions.regcode', $regcode);
@@ -1013,6 +1016,7 @@ class AdminController extends \BaseController {
                 'taskitems.itemname',
                 'taskitems.itemcode'
             ])
+            ->groupBy('jobs.id')
             ->paginate(10);
 
         return View::make('admin.showJobAds')
