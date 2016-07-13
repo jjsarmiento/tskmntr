@@ -253,7 +253,7 @@
                         </div>
                     @endforeach
                     <div class="col-md-4 padded text-center"><br/>
-                        <a href="/WRKRSRCH:{{$job->id}}:{{$job->categorycode}}:{{$job->itemcode}}:{{$job->regcode}}:{{$job->citycode}}:{{$job->bgycode}}:NONE">
+                        <a href="/WRKRSRCH:{{$job->id}}:{{$job->categorycode}}:{{$job->itemcode}}:NONE">
                             <i class="fa fa-search" style="font-size: 3em;"></i><br/>
                             Look for more workers..
                         </a>

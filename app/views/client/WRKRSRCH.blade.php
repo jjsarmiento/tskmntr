@@ -140,14 +140,11 @@
             
             $('#SRCH_SubmitBtn').click(function() {
                 var jobId = {{ $job->id }},
-                    categoryCode = $('#taskcategory').val(),
-                    skillCode = $('#taskitems').val(),
-                    regcode = $('#region').val(),
-                    citycode = $('#city').val(),
-                    bgycode = 'ALL',
+                    categoryCode = $('#SRCH_CATEGORY').data('val'),
+                    skillCode = $('#SRCH_SKILLS').data('val'),
                     customSkill = ($('#SRCH_CustomSkill').val() ? $('#SRCH_CustomSkill').val() : 'NONE');
 
-                location.href = '/WRKRSRCH:'+jobId+':'+categoryCode+':'+skillCode+':'+regcode+':'+citycode+':'+bgycode+':'+customSkill;
+                location.href = '/WRKRSRCH:'+jobId+':'+categoryCode+':'+skillCode+':'+customSkill;
             })
         });
     </script>
@@ -257,13 +254,14 @@
         <div class="col-md-4">
             <div class="widget-container padded" style="display: flex; min-height:1em; display:block !important;">
                 <div class="form-group">
-                    <span data-val="{{$categoryCode}}">{{$categoryName}}</span><br/>
-                    <span data-val="{{$skillCode}}">{{$skillName}}</span><br/>
+                    <span id="SRCH_CATEGORY" data-val="{{$categoryCode}}">{{$categoryName}}</span><br/>
+                    <span id="SRCH_SKILLS" data-val="{{$skillCode}}">{{$skillName}}</span><br/>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label>Search for workers custom skill</label>
-                    <input type="text" class="form-control" placeholder="Search for a specific skill" name="SRCH_CustomSkill" id="SRCH_CustomSkill" />
+                    {{--<textarea class="form-control" id="SRCH_CustomSkill" name="SRCH_CustomSkill" rows="5" placeholder="Search for a skill or multiple skills : Baby Sitting, Laundry, Household Chores, ...">{{$customSkill}}</textarea>--}}
+                    <input type="text" class="form-control" value="{{@$customSkill}}" placeholder="Search for a specific skill" name="SRCH_CustomSkill" id="SRCH_CustomSkill" />
                 </div>
                 <button class="btn btn-success btn-block" id="SRCH_SubmitBtn">Search</button>
             </div>

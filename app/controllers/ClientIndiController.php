@@ -1215,7 +1215,11 @@ class ClientIndiController extends \BaseController {
         return Redirect::to('/jobDetails='.Input::get('JOB_ID'));
     }
 
-    public function WRKRSRCH($jobId, $categoryCode, $skillCode, $regcode, $citycode, $bgycode, $customSkill){
+    public function WRKRSRCH($jobId, $categoryCode, $skillCode, $customSkill){
+        if($customSkill == 'NONE'){
+            $customSkill = '';
+        }
+
         $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
             ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
@@ -1248,8 +1252,16 @@ class ClientIndiController extends \BaseController {
             ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
             ->leftJoin('carts', 'carts.worker_id', '=', 'users.id')
             ->leftJoin('job_invites', 'job_invites.invited_id', '=', 'users.id')
-            ->leftJoin('purchases', 'purchases.worker_id', '=', 'users.id')
-            ->where('taskminator_has_skills.taskcategory_code', $categoryCode)
+            ->leftJoin('purchases', 'purchases.worker_id', '=', 'users.id');
+
+        if($customSkill != ''){
+            $workers = $workers->join('custom_skills', function($join) use ($customSkill){
+                $join->on('custom_skills.created_by', '=' , 'users.id')
+                    ->where('custom_skills.skill', 'LIKE', '%'.$customSkill.'%');
+            });
+        }
+
+        $workers = $workers->where('taskminator_has_skills.taskcategory_code', $categoryCode)
             ->where('taskminator_has_skills.taskitem_code', $skillCode)
             ->select([
                 'users.firstName',
@@ -1280,7 +1292,8 @@ class ClientIndiController extends \BaseController {
                 ->with('skillName', TaskItem::where('item_categorycode', $categoryCode)->pluck('itemname'))
                 ->with('workers', $workers)
                 ->with('INVITEDS', $this->GETINVITEDS($jobId))
-                ->with('APPLICANTS', $this->GETAPPLICANTS($jobId));
+                ->with('APPLICANTS', $this->GETAPPLICANTS($jobId))
+                ->with('customSkill', $customSkill);
     }
 
     public function SNDINVT($invitedId, $jobId){
