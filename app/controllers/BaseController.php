@@ -238,5 +238,38 @@ class BaseController extends Controller {
 
         return $myArr;
     }
+
+    public function GETINCART($companyID){
+        $INCART = User::join('carts', 'carts.worker_id', '=', 'users.id')
+                    ->where('carts.company_id', $companyID)
+                    ->select([
+                        'users.id'
+                    ])
+                    ->get();
+
+        $myArr = array();
+        foreach($INCART as $o){
+            array_push($myArr, $o->id);
+        }
+
+        return $myArr;
+    }
+
+    public function GETCHECKEDOUTUSERS($companyID){
+        $P = User::join('purchases', 'purchases.worker_id', '=', 'users.id')
+                ->where('purchases.company_id', $companyID)
+            ->select([
+                'users.id'
+            ])
+            ->get();
+
+
+        $myArr = array();
+        foreach($P as $o){
+            array_push($myArr, $o->id);
+        }
+
+        return $myArr;
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

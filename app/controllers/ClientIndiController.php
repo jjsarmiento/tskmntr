@@ -1095,16 +1095,19 @@ class ClientIndiController extends \BaseController {
 
         $APPLICANTS = $this->GETAPPLICANTS($jobId);
         $INVITEDS = $this->GETINVITEDS($jobId);
+        $INCART = $this->GETINCART(Auth::user()->id);
+        $CHECKED_OUT_USERS = $this->GETCHECKEDOUTUSERS(Auth::user()->id);
 
         $workers = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
             ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
             ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
             ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
-            ->leftJoin('carts', 'carts.worker_id', '=', 'users.id')
+//            ->leftJoin('carts', 'carts.worker_id', '=', 'users.id')
             ->leftJoin('purchases', 'purchases.worker_id', '=', 'users.id')
 //            ->leftJoin('job_invites', 'job_invites.job_id', '=', $jobId)
             ->where('taskminator_has_skills.taskcategory_code', $job->categorycode)
             ->where('taskminator_has_skills.taskitem_code', $job->itemcode)
+//            ->where('purchases.company_id', Auth::user()->id)
             ->whereNotIn('users.id', $APPLICANTS)
             ->select([
                 'users.username',
@@ -1120,11 +1123,12 @@ class ClientIndiController extends \BaseController {
                 'cities.cityname',
                 'barangays.bgycode',
                 'barangays.bgyname',
-                'carts.id as cartID',
+//                'carts.id as cartID',
                 'purchases.id as purchaseID'
 //                'job_invites.invited_id'
             ])
             ->orderBy('users.id', 'ASC')
+            ->groupBy('users.id')
             ->take(5)
             ->get();
 
@@ -1136,6 +1140,8 @@ class ClientIndiController extends \BaseController {
                 ->with('applications', $applications)
                 ->with('invited', $invited)
                 ->with('INVITEDS', $INVITEDS)
+                ->with('INCART', $INCART)
+                ->with('CHECKED_OUT_USERS', $CHECKED_OUT_USERS)
                 ->with('custom_skills', $custom_skills);
     }
 
@@ -1459,6 +1465,21 @@ class ClientIndiController extends \BaseController {
 
     public function JOB_DELETECUSTSKILL($custom_skill_id){
         CustomSkill::where('id', $custom_skill_id)->delete();
+        return Redirect::back();
+    }
+
+    public function checkouts(){
+        $workers = User::join('purchases', 'purchases.worker_id', '=', 'users.id')
+                        ->where('purchases.company_id', Auth::user()->id)
+                        ->paginate(10);
+
+        return View::make('client.checkouts')
+                ->with('workers', $workers);
+    }
+
+    public function removeCartItem($cartID){
+        Cart::where('id', $cartID)->delete();
+
         return Redirect::back();
     }
 }
