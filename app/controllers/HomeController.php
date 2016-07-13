@@ -984,10 +984,13 @@ class HomeController extends BaseController {
             }
         }else{
 
+            $task = Job::orderBy('created_at', 'DESC')->paginate(3);
+            /*
             $task = new Task;
             $task = $task->where('hiringType', 'BIDDING')
             ->where('status', 'OPEN')
             ->orderBy('created_at','DESC')->paginate(3);
+            */
             // $task = DB::table('tasks')->where('hiringType', '=', 'BIDDING')
             // ->where('status', '=', 'OPEN')->orderBy('created_at', 'DESC')
             // ->get();

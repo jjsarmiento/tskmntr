@@ -214,7 +214,8 @@
                             @foreach($tasks as $task)
                                 <a href="#GlobalModal" data-toggle="modal" style="text-decoration:none; ">
                                     <div class="widget-container fluid-height padded wow fadeInUp" data-wow-offset="-300" data-wow-delay="0.{{ $counter}}s" style="background-color:rgba(255,255,255,1); padding-left:10px; padding-right:10px;color:#f9f9f9; border-radius:4px; min-height: 50px; border:1px solid #ccc;">
-                                        <h3 class="lato-text" style="color:#2980b9; margin:0 !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $task->name }}</h3>
+                                        <h3 class="lato-text" style="color:#2980b9; margin:0 !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $task->title }}</h3>
+                                        {{--<h3 class="lato-text" style="color:#2980b9; margin:0 !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $task->name }}</h3>--}}
                                         <span style="padding:0;margin:0;color:#060606; ">
                                             @foreach(User::where('id', $task->user_id)->get() as $user)
                                                 by {{ $user->companyName }}
