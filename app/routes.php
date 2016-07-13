@@ -86,6 +86,10 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+    // JOB ADS ROUTES
+    Route::get('/showJobAds', 'AdminController@showJobAds');
+    Route::get('/ADMIN_jobDetails={job_id}', 'AdminController@ADMIN_jobDetails');
+
     // SKILLS ROUTE
     Route::get('/skills', 'AdminController@skills');
 
@@ -142,7 +146,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/deleteCategory={categorycode}', 'AdminController@deleteCategory');
     Route::get('/deleteSkill={skillcode}', 'AdminController@deleteSkill');
     Route::get('/adminDoSearch', 'searchTestController@doSearch');
-    Route::get('/jobAds={adType}', 'AdminController@jobAds');
+//    Route::get('/jobAds={adType}', 'AdminController@jobAds');
     Route::get('/search_PUSR={keyword}={acctType}={orderBy}', 'AdminController@search_PUSR');
 //    Route::get('/pendingUserSearch={searchBy}={searchUserType}={searchVal}', 'AdminController@pendingUserSearch');
 

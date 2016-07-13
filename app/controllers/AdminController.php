@@ -904,4 +904,60 @@ class AdminController extends \BaseController {
 
         return $ALL_NEW_MESSAGES;
     }
+
+    public function showJobAds(){
+        $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
+                ->orderBy('created_at', 'ASC')
+                ->select([
+                    'users.id as USERID',
+                    'users.username',
+                    'users.fullName',
+                    'jobs.id as JOBID',
+                    'jobs.title',
+                    'jobs.description',
+                    'jobs.created_at',
+                ])
+                ->paginate(10);
+
+        return View::make('admin.showJobAds')
+                ->with('jobs', $jobs);
+    }
+
+    public function ADMIN_jobDetails($job_id){
+        $custom_skills = CustomSkill::where('company_job_id', $job_id)->get();
+        $job = Job::join('users', 'users.id', '=', 'jobs.user_id')
+            ->join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
+            ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+            ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->join('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->join('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->where('jobs.id', $job_id)
+            ->select([
+                'users.username',
+                'users.id as USERID',
+                'users.fullName',
+                'jobs.id',
+                'jobs.title',
+                'jobs.created_at',
+                'jobs.description',
+                'jobs.requirements',
+                'jobs.salary',
+                'jobs.hiring_type',
+                'regions.regname',
+                'regions.regcode',
+                'barangays.bgyname',
+                'barangays.bgycode',
+                'cities.cityname',
+                'cities.citycode',
+                'taskcategory.categoryname',
+                'taskcategory.categorycode',
+                'taskitems.itemname',
+                'taskitems.itemcode'
+            ])
+            ->first();
+
+        return View::make('admin.ADMIN_jobDetails')
+                ->with('job', $job)
+                ->with('custom_skills', $custom_skills);
+    }
 }
