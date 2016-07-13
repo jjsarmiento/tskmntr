@@ -107,17 +107,27 @@
                     <i class="fa fa-4x fa-phone text-primary"></i>
                     <h2 class="section-heading">Contact Info</h2>
                     <hr class="hrLine">
-                    @if($USERINCART > 0)
-                            <a href="#" data-target="#CARTMODAL" data-toggle="modal" class="SHWCRT btn btn-lg btn-danger btn-block" style="border-radius: 0.3em;">Added to Cart</a>
-                    @elseif($PURCHASED > 0)
+
+                    @if($CLIENTFLAG && $role == 'TASKMINATOR')
+                        @if($USERINCART > 0)
+                                <a href="#" data-target="#CARTMODAL" data-toggle="modal" class="SHWCRT btn btn-lg btn-danger btn-block" style="border-radius: 0.3em;">Added to Cart</a>
+                        @elseif($PURCHASED > 0)
+                            <div class="list-group" style="text-align:left;">
+                                <p class="list-group-item"><i class="fa fa-phone fa-fw"></i>&nbsp; {{ $mobile  }}</p>
+                                <a class="list-group-item" href="#"><i class="fa fa-facebook-square fa-fw"></i>&nbsp; Facebook</a>
+                                <a class="list-group-item" href="#"><i class="fa fa-twitter-square fa-fw"></i>&nbsp; Twitter</a>
+                                <a class="list-group-item" href="#"><i class="fa fa-instagram fa-fw"></i>&nbsp; Instagram</a>
+                            </div>
+                        @else
+                            <a href="/addToCart={{$users->id}}" class="btn btn-warning btn-lg btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
+                        @endif
+                    @else
                         <div class="list-group" style="text-align:left;">
                             <p class="list-group-item"><i class="fa fa-phone fa-fw"></i>&nbsp; {{ $mobile  }}</p>
                             <a class="list-group-item" href="#"><i class="fa fa-facebook-square fa-fw"></i>&nbsp; Facebook</a>
                             <a class="list-group-item" href="#"><i class="fa fa-twitter-square fa-fw"></i>&nbsp; Twitter</a>
                             <a class="list-group-item" href="#"><i class="fa fa-instagram fa-fw"></i>&nbsp; Instagram</a>
                         </div>
-                    @else
-                        <a href="/addToCart={{$users->id}}" class="btn btn-warning btn-lg btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
                     @endif
                 </div>
                 

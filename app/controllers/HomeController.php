@@ -79,12 +79,14 @@ class HomeController extends BaseController {
                                 ->count();
             }
             // DETERMINE IF USER HAS CHECKEDOUT WORKER -- END by Jan Sarmiento
+
             $QUERY_CONTACT = Contact::where('user_id', $temp->id);
             $mobile = $QUERY_CONTACT->where('ctype', 'mobileNum')->pluck('content');
             return View::make("profile_worker")
                 ->with("users", User::where('username', '=', $username)->get()->first())
                 ->with('roles', $role)
                 ->with('mobile', $mobile)
+                ->with('CLIENTFLAG', $CLIENTFLAG)
                 ->with('USERINCART', $USERINCART)
                 ->with('PURCHASED', $PURCHASED);
 
