@@ -128,7 +128,7 @@
                             $('#CHECKOUTBTN').prop('disabled', true);
                                 $('#CART-WARNING').hide();
                         }else{
-                            if(totalPrice > pointsLeft){
+                            if(pointsLeft < 0){
                                 $('#CHECKOUTBTN').prop('disabled', true);
                                 $('#CART-WARNING').show();
                             }else{
