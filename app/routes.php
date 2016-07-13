@@ -30,6 +30,8 @@ Route::get('/RESENDVALIDATION={userid}', 'HomeController@RESENDVALIDATION');
 Route::post('/CHKRGWRKR', 'HomeController@CHKRGWRKR');
 Route::get('/CHAINREG', 'HomeController@CHAINREG');
 
+Route::get('/LOCCHAIN:{chainType}:{locationID}', 'HomeController@LOCCHAIN');
+
 
 Route::post('/regWorker', 'HomeController@regWorker');
 Route::post('/regEmployer', 'HomeController@regEmployer');

@@ -1761,8 +1761,15 @@ class HomeController extends BaseController {
         return $registrationErrors;
     }
 
-    public function CHAINREG(){
-
+    public function LOCCHAIN($chainType, $locationID){
+        switch($chainType){
+            case 'REGION_TO_CITY' :
+                return City::where('regcode', $locationID)->orderBy('cityname', 'ASC')->get();
+                break;
+            default :
+                return "FAILED";
+                break;
+        }
     }
 }
 

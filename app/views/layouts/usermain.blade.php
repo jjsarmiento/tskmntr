@@ -66,6 +66,7 @@
     {{ HTML::style('stylesheets/pygments.css') }}
 
     {{ HTML::script('frontend/js/jquery.js') }}
+    {{ HTML::script('js/taskminator.js') }}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -76,6 +77,18 @@
     <link rel="shortcut icon" type="image/x-icon" href="frontend/img/favicon.ico">
     <script>
         $(document).ready(function(){
+
+            CHAINLOCATION($('#adSearch_REG'), $('#adSearch_CITY'));
+            $('#adSearch_BTN').click(function(){
+                var keyword = ($('#adSearch_KEYWORD').val() ? $('#adSearch_KEYWORD').val() : "NONE"),
+                    region = $('#adSearch_REG').val(),
+                    city = $('#adSearch_CITY').val(),
+                    duration = $('#adSearch_DUR').val(),
+                    orderBy = $('#orderBy').val();
+
+                location.href = "/ADMINJbSrch:"+keyword+":"+region+":"+city+":"+duration+":"+orderBy;
+            });
+
             $('.srchAnim').keyup(function(e){
                 if(e.keyCode == 13){
                     var searchParam = ($(this).val() ? $(this).val() : "NONE");
@@ -492,72 +505,68 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-md-12">
+                            <label>Title keyword</label>
+                            <input type="text" class="form-control" placeholder="Enter keyword for job ad title" id="adSearch_KEYWORD" name="jobsrch_keyword" />
+                        </div>
+                        <br/><br/><br/><br/>
                         <div class="col-md-6">
                             <center><h4><i class="fa fa-map-marker"></i> Location</h4></center>
                             <div class="form-group">
-                                <select id="adSearch_REG" class="form-control">
-                                    <option>Display from all cities</option>
+                                <select id="adSearch_REG" data-loctype="REGION_TO_CITY" class="form-control">
+                                    <option value="ALL" selected>Display from all regions</option>
                                     @foreach(Region::get() as $reg)
-                                        <option>{{ $reg->regname }}</option>
+                                        <option value="{{ $reg->regcode }}">{{ $reg->regname }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <select id="adSearch_CITY" class="form-control">
-                                    <option>Display from all cities</option>
+                                    <option value="ALL" selected>Display from all cities</option>
                                     @foreach(City::get() as $city)
-                                        <option>{{ $city->cityname }}</option>
+                                        <option value="{{$city->citycode }}">{{ $city->cityname }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <select id="adSearch_PROV" class="form-control">
-                                    <option>Display from all provinces</option>
-                                    {{--@foreach(Province::get() as $prov)--}}
-                                        {{--<option>{{ $city->provname }}</option>--}}
-                                    {{--@endforeach--}}
-                                </select>
-                            </div>
-
-                            <center><h4><i class="fa fa-map-marker"></i> Employment Type</h4></center>
-                            <div class="form-group">
-                                <select id="adSearch_ETYPE" class="form-control">
-                                    <option>Display all employment types</option>
-                                    <option>Overseas</option>
-                                    <option>Local</option>
-                                </select>
-                            </div>
+                            {{--<center><h4><i class="fa fa-map-marker"></i> Employment Type</h4></center>--}}
+                            {{--<div class="form-group">--}}
+                                {{--<select id="adSearch_ETYPE" class="form-control">--}}
+                                    {{--<option>Display all employment types</option>--}}
+                                    {{--<option>Overseas</option>--}}
+                                    {{--<option>Local</option>--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
                         </div>
                         <div class="col-md-6">
                             <center><h4><i class="fa fa-map-marker"></i> Job Duration</h4></center>
                             <div class="form-group">
                                 <select id="adSearch_DUR" class="form-control">
-                                    <option>Display all duration</option>
-                                    <option>Less Than 6 months</option>
-                                    <option>Greater Than 6 months</option>
+                                    <option value="ALL">Display all duration</option>
+                                    <option value="LT6MOS">Less Than 6 months</option>
+                                    <option value="GT6MOS">Greater Than 6 months</option>
                                 </select>
                             </div>
-                            <center><h4><i class="fa fa-map-marker"></i> Job Status</h4></center>
-                            <div class="form-group">
-                                <select id="adSearch_STAT" class="form-control">
-                                    <option>Open</option>
-                                    <option>Closed</option>
-                                </select>
-                            </div>
+                            {{--<center><h4><i class="fa fa-map-marker"></i> Job Status</h4></center>--}}
+                            {{--<div class="form-group">--}}
+                                {{--<select id="adSearch_STAT" class="form-control">--}}
+                                    {{--<option>Open</option>--}}
+                                    {{--<option>Closed</option>--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
                         </div>
                     </div>
                     <hr/>
                     <div class="row">
                         <div class="col-md-12">
-                            <select class="form-control">
-                                <option>Oldest ads first</option>
-                                <option>Newest ads first</option>
+                            <select class="form-control" id="orderBy" name="orderBy">
+                                <option value="ASC">Oldest ads first</option>
+                                <option value="DESC">Newest ads first</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary">Search</button>
+                    <button class="btn btn-primary" id="adSearch_BTN">Search</button>
                     <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 </div>
             </div>

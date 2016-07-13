@@ -162,6 +162,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
+                                            <!--
                                             <div class="form-group">
                                                 <label for="barangay">Barangay</label>
                                                 <select name="barangay" id="barangay" class="form-control" required="required">
@@ -176,6 +177,7 @@
                                                     @endif
                                                 </select>
                                             </div>
+                                            -->
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">

@@ -1016,7 +1016,7 @@ class ClientIndiController extends \BaseController {
             'skill_category_code'   =>  Input::get('taskcategory'),
             'skill_code'            =>  Input::get('taskitems'),
             'regcode'               =>  Input::get('region'),
-            'bgycode'               =>  Input::get('barangay'),
+//            'bgycode'               =>  Input::get('barangay'),
             'citycode'              =>  Input::get('city'),
             'hiring_type'           =>  Input::get('hireType'),
             'salary'                =>  Input::get('salaryRange'),
@@ -1041,9 +1041,9 @@ class ClientIndiController extends \BaseController {
     public function jobDetails($jobId){
         $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
                 ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
-                ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
-                ->join('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
-                ->join('cities', 'cities.citycode', '=', 'jobs.citycode')
+                ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+                ->leftJoin('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+                ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
                 ->where('jobs.id', $jobId)
                 ->select([
                     'jobs.id',
@@ -1147,9 +1147,9 @@ class ClientIndiController extends \BaseController {
     public function editJob($jobId){
         $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
-            ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
-            ->join('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
-            ->join('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
             ->where('jobs.id', $jobId)
             ->select([
                 'jobs.id',

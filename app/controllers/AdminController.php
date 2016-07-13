@@ -907,7 +907,7 @@ class AdminController extends \BaseController {
 
     public function showJobAds(){
         $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
-                ->orderBy('created_at', 'ASC')
+                ->orderBy('created_at', 'DESC')
                 ->select([
                     'users.id as USERID',
                     'users.username',
@@ -928,9 +928,9 @@ class AdminController extends \BaseController {
         $job = Job::join('users', 'users.id', '=', 'jobs.user_id')
             ->join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
-            ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
-            ->join('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
-            ->join('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
             ->where('jobs.id', $job_id)
             ->select([
                 'users.username',

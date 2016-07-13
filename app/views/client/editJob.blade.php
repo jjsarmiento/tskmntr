@@ -171,7 +171,7 @@
                     </div>
                     <div class="form-group">
                         @foreach($custom_skills as $cs)
-                            <span style="font-size: 1em; margin: 0.3em;" class="badge">{{$cs->skill}} <i class="DELETE_CUSTOM_SKILL fa fa-trash" data-custskillid="{{$cs->id}}"></i></span>
+                            <span style="font-size: 1em; margin: 0.3em;" class="badge DELETE_CUSTOM_SKILL" data-custskillid="{{$cs->id}}">{{$cs->skill}} <i class="DELETE_CUSTOM_SKILL fa fa-trash" data-custskillid="{{$cs->id}}"></i></span>
                         @endforeach
                     </div>
                 {{--</div>--}}
