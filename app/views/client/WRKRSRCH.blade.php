@@ -137,6 +137,18 @@
             $('#SHOWDETAILS').click(function(){
                 $('#DETAILPANEL').slideToggle('fast');
             });
+            
+            $('#SRCH_SubmitBtn').click(function() {
+                var jobId = {{ $job->id }},
+                    categoryCode = $('#taskcategory').val(),
+                    skillCode = $('#taskitems').val(),
+                    regcode = $('#region').val(),
+                    citycode = $('#city').val(),
+                    bgycode = 'ALL',
+                    customSkill = ($('#SRCH_CustomSkill').val() ? $('#SRCH_CustomSkill').val() : 'NONE');
+
+                location.href = '/WRKRSRCH:'+jobId+':'+categoryCode+':'+skillCode+':'+regcode+':'+citycode+':'+bgycode+':'+customSkill;
+            })
         });
     </script>
 @stop
@@ -150,7 +162,7 @@
                 <button type="button" class="close" style="opacity: 100;" id="SHOWDETAILS">
                     <i class="fa fa-chevron-down" style=""></i>
                 </button>
-                <h3 style="margin: 0;">{{$job->title}}</h3>
+                <h3 style="margin: 0;"><a href="/jobDetails={{$job->id}}">{{$job->title}}</a></h3>
                 <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>
                 <br/>
                 <br/>
@@ -206,11 +218,21 @@
                                 </a>
                                 <div class="media-body update-card-body">
                                     <a href="{{$w->username}}" style="font-weight: bolder;">
-                                        {{ $w->fullName }}
+                                        @if($w->purchaseID)
+                                            {{ $w->fullName }}
+                                        @else
+                                            {{substr_replace($w->firstName, str_repeat('*', strlen($w->firstName)-1), 1)}}
+                                            &nbsp;
+                                            {{substr_replace($w->lastName, str_repeat('*', strlen($w->lastName)-1), 1)}}
+                                        @endif
                                     </a>
                                     <p>{{ $w->regname }}, {{ $w->cityname }}</p>
                                 </div>
                                 <br/>
+                                @if(in_array($w->id, $APPLICANTS))
+                                    <span class="btn btn-danger btn-xs btn-block">APPLICANT</span>
+                                @endif
+
                                 @if($w->cartID)
                                     <a href="#" data-target="#CARTMODAL" data-toggle="modal" class="SHWCRT btn btn-xs btn-danger btn-block" style="border-radius: 0.3em;">Added to Cart</a>
                                 @elseif($w->purchaseID)
@@ -235,34 +257,15 @@
         <div class="col-md-4">
             <div class="widget-container padded" style="display: flex; min-height:1em; display:block !important;">
                 <div class="form-group">
-                    <select class="form-control" required="required" name="taskcategory" id="taskcategory">
-                        @foreach($categories as $c)
-                            <option <?php if($categoryCode == $c->categorycode){echo "selected";} ?> value="{{$c->categorycode}}">{{ $c->categoryname }}</option>
-                        @endforeach
-                    </select>
+                    <span data-val="{{$categoryCode}}">{{$categoryName}}</span><br/>
+                    <span data-val="{{$skillCode}}">{{$skillName}}</span><br/>
                 </div>
+                <br/>
                 <div class="form-group">
-                    <select class="form-control" required="required" name="taskitems" id="taskitems">
-                        @foreach($skills as $s)
-                            <option <?php if($skillCode == $s->itemcode){echo "selected";} ?> value="{{$s->itemcode}}">{{$s->itemname}}</option>
-                        @endforeach
-                    </select>
+                    <label>Search for workers custom skill</label>
+                    <input type="text" class="form-control" placeholder="Search for a specific skill" name="SRCH_CustomSkill" id="SRCH_CustomSkill" />
                 </div>
-                <div class="form-group">
-                    <select class="form-control" required="required" name="region" id="region">
-                        @foreach($regions as $region)
-                            <option data-regcode="{{ $region->regcode }}" value="{{ $region->regcode }}" <?php if($regcode == $region->regcode){ echo('selected'); } ?>> {{ $region->regname }} </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select class="form-control" required="required" name="city" id="city">
-                        @foreach($cities as $city)
-                            <option value="{{ $city->citycode }}" <?php if($citycode == $city->citycode){ echo('selected'); } ?>>{{ $city->cityname }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <button class="btn btn-success btn-block">Search</button>
+                <button class="btn btn-success btn-block" id="SRCH_SubmitBtn">Search</button>
             </div>
         </div>
     </div>

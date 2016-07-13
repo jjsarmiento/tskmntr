@@ -1215,7 +1215,7 @@ class ClientIndiController extends \BaseController {
         return Redirect::to('/jobDetails='.Input::get('JOB_ID'));
     }
 
-    public function WRKRSRCH($jobId, $categoryCode, $skillCode, $regcode, $citycode, $bgycode){
+    public function WRKRSRCH($jobId, $categoryCode, $skillCode, $regcode, $citycode, $bgycode, $customSkill){
         $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
             ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
@@ -1252,6 +1252,8 @@ class ClientIndiController extends \BaseController {
             ->where('taskminator_has_skills.taskcategory_code', $categoryCode)
             ->where('taskminator_has_skills.taskitem_code', $skillCode)
             ->select([
+                'users.firstName',
+                'users.lastName',
                 'users.username',
                 'users.fullName',
                 'users.id',
@@ -1270,20 +1272,15 @@ class ClientIndiController extends \BaseController {
             ->get();
 
         return View::make('client.WRKRSRCH')
-                ->with('regions', Region::all())
-                ->with('barangays', Barangay::where('citycode', '012801')->orderBy('bgyname', 'ASC')->get())
-                ->with('cities', City::where('regcode', $regcode)->orderBy('cityname', 'ASC')->get())
-                ->with('categories',TaskCategory::where('categorycode', $categoryCode)->orderBy('categoryname', 'ASC')->get())
-                ->with('skills', TaskItem::where('item_categorycode', $categoryCode)->orderBy('itemname', 'ASC')->get())
                 ->with('job', $job)
-                ->with('jobId', $job)
+                ->with('jobId', $jobId)
                 ->with('categoryCode', $categoryCode)
+                ->with('categoryName', TaskCategory::where('categorycode', $categoryCode)->pluck('categoryname'))
                 ->with('skillCode', $skillCode)
-                ->with('regcode', $regcode)
-                ->with('citycode', $citycode)
-                ->with('bgycode', $bgycode)
+                ->with('skillName', TaskItem::where('item_categorycode', $categoryCode)->pluck('itemname'))
                 ->with('workers', $workers)
-                ->with('INVITEDS', $this->GETINVITEDS($jobId));
+                ->with('INVITEDS', $this->GETINVITEDS($jobId))
+                ->with('APPLICANTS', $this->GETAPPLICANTS($jobId));
     }
 
     public function SNDINVT($invitedId, $jobId){
