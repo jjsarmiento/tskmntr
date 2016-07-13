@@ -308,7 +308,7 @@
                             </a>
                             <div class="media-body update-card-body">
                                 <a href="/{{$a->username}}" target="_tab">
-                                    @if($a->purchaseID)
+                                    @if(in_array($a->id, $CHECKED_OUT_USERS))
                                         <h4 class="media-heading">{{ $a->fullName }}</h4>
                                     @else
                                         <h4 class="media-heading">
@@ -322,12 +322,16 @@
                             </div>
                             <br/>
                             <br/>
-                            @if(!$a->purchaseID)
-                                @if($a->cartID)
-                                    <a href="#" data-target="#CARTMODAL" data-toggle="modal" class="SHWCRT btn btn-xs btn-danger btn-block" style="border-radius: 0.3em;">Added to Cart</a>
+                            @if(in_array($a->id, $INCART))
+                                <a href="#" data-target="#CARTMODAL" data-toggle="modal" class="SHWCRT btn btn-xs btn-danger btn-block" style="border-radius: 0.3em;">Added to Cart</a>
+                            @elseif(in_array($a->id, $CHECKED_OUT_USERS))
+                                @if(in_array($a->id, $INVITEDS))
+                                    <a href="/SNDINVT:{{$a->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-success" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Invite Sent</a>
                                 @else
-                                    <a href="/addToCart={{$a->id}}" class="btn btn-warning btn-xs btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
+                                    <a href="/SNDINVT:{{$a->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-primary" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Send Invite</a>
                                 @endif
+                            @else
+                                <a href="/addToCart={{$a->id}}" class="btn btn-warning btn-xs btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
                             @endif
                         </div>
                     @endforeach
