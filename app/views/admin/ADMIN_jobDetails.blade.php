@@ -15,6 +15,15 @@
 @stop
 
 @section('body-scripts')
+    <script>
+        $(document).ready(function(){
+            $('.DELETE_JOB_BTN').click(function(){
+                if(confirm('Do you want to delete this job advertisement?')){
+                    location.href = $(this).data('href');
+                }
+            })
+        })
+    </script>
 @stop
 
 <!-- @section('user-name')
@@ -102,6 +111,9 @@
                     <div class="widget-content padded">
                         <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
                             {{ $job->title}}
+                            <a href="#" data-href="/ADMIN_DELETEJOB={{$job->id}}" type="button" class="close DELETE_JOB_BTN" style="opacity: 100;">
+                                <i class="fa fa-trash" style="background-color: #C0392B; color: white; border: 1px solid #C0392B; padding: 0.3em; border-radius: 0.2em;"></i>
+                            </a>
                         </h3>
                         <span class="text-right" style="padding:0;margin:0; color:#ccc;">
                             Created at {{ date('m/d/y', strtotime($job->created_at)) }} by <a href="/{{$job->username}}">{{$job->fullName}}</a>

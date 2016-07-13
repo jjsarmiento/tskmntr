@@ -1018,4 +1018,13 @@ class AdminController extends \BaseController {
         return View::make('admin.showJobAds')
                 ->with('jobs', $QUERY);
     }
+
+    public function ADMIN_DELETEJOB($jobId){
+        Job::where('id', $jobId)->delete();
+        JobInvite::where('job_id', $jobId)->delete();
+        JobApplication::where('job_id', $jobId)->delete();
+        CustomSkill::where('company_job_id', $jobId)->delete();
+
+        return Redirect::to('/showJobAds');
+    }
 }
