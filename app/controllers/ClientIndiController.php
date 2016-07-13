@@ -1218,6 +1218,7 @@ class ClientIndiController extends \BaseController {
     }
 
     public function WRKRSRCH($jobId, $categoryCode, $skillCode, $customSkill){
+
         if($customSkill == 'NONE'){
             $customSkill = '';
         }
@@ -1285,6 +1286,10 @@ class ClientIndiController extends \BaseController {
             ->groupBy('users.id')
             ->get();
 
+
+        $INCART = $this->GETINCART(Auth::user()->id);
+        $CHECKED_OUT_USERS = $this->GETCHECKEDOUTUSERS(Auth::user()->id);
+
         return View::make('client.WRKRSRCH')
                 ->with('job', $job)
                 ->with('jobId', $jobId)
@@ -1295,6 +1300,8 @@ class ClientIndiController extends \BaseController {
                 ->with('workers', $workers)
                 ->with('INVITEDS', $this->GETINVITEDS($jobId))
                 ->with('APPLICANTS', $this->GETAPPLICANTS($jobId))
+                ->with('INCART', $INCART)
+                ->with('CHECKED_OUT_USERS', $CHECKED_OUT_USERS)
                 ->with('customSkill', $customSkill);
     }
 

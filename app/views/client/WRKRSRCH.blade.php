@@ -230,9 +230,9 @@
                                     <span class="btn btn-danger btn-xs btn-block">APPLICANT</span>
                                 @endif
 
-                                @if($w->cartID)
+                                @if(in_array($w->id, $INCART))
                                     <a href="#" data-target="#CARTMODAL" data-toggle="modal" class="SHWCRT btn btn-xs btn-danger btn-block" style="border-radius: 0.3em;">Added to Cart</a>
-                                @elseif($w->purchaseID)
+                                @elseif(in_array($w->id, $CHECKED_OUT_USERS))
                                     @if(in_array($w->id, $INVITEDS))
                                         <a data-sample="{{$w->inviteID}}" href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-success" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Invite Sent</a>
                                     @else
