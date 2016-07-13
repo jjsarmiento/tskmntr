@@ -512,13 +512,14 @@
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Title keyword</label>
-                                    <input type="text" class="form-control" placeholder="Enter keyword for job ad title" id="adSearch_KEYWORD" name="jobsrch_keyword" />
-                                </div>
-                                <br/><br/><br/><br/>
-                                <div class="col-md-6">
-                                    <center><h4><i class="fa fa-map-marker"></i> Location</h4></center>
                                     <div class="form-group">
+                                        <label>Title keyword</label>
+                                        <input type="text" class="form-control" placeholder="Enter keyword for job ad title" id="adSearch_KEYWORD" name="jobsrch_keyword" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Region</label>
                                         <select id="adSearch_REG" data-loctype="REGION_TO_CITY" class="form-control">
                                             <option value="ALL" selected>Display from all regions</option>
                                             @foreach(Region::get() as $reg)
@@ -527,6 +528,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                        <label>City</label>
                                         <select id="adSearch_CITY" class="form-control">
                                             <option value="ALL" selected>Display from all cities</option>
                                             @foreach(City::get() as $city)
@@ -534,18 +536,10 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    {{--<center><h4><i class="fa fa-map-marker"></i> Employment Type</h4></center>--}}
-                                    {{--<div class="form-group">--}}
-                                        {{--<select id="adSearch_ETYPE" class="form-control">--}}
-                                            {{--<option>Display all employment types</option>--}}
-                                            {{--<option>Overseas</option>--}}
-                                            {{--<option>Local</option>--}}
-                                        {{--</select>--}}
-                                    {{--</div>--}}
                                 </div>
                                 <div class="col-md-6">
-                                    <center><h4><i class="fa fa-map-marker"></i> Job Duration</h4></center>
                                     <div class="form-group">
+                                        <label>Duration</label>
                                         <select id="adSearch_DUR" class="form-control">
                                             <option value="ALL">Display all duration</option>
                                             <option value="LT6MOS">Less Than 6 months</option>
@@ -572,23 +566,27 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Skill Category</label>
-                                <select class="form-control" id="adSearch_CATEGORY" name="adSearch_CATEGORY">
-                                    <option value="ALL">Display from all category</option>
-                                    @foreach(TaskCategory::orderBy('categoryname', 'ASC')->get() as $c)
-                                        <option value="{{$c->categorycode}}">{{$c->categoryname}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Skill</label>
-                                <select class="form-control" id="adSearch_SKILL" name="adSearch_SKILL">
-                                    <option value="ALL">Display from all skills</option>
-                                    @foreach(TaskItem::get() as $skill)
-                                        <option value="{{$skill->itemcode}}">{{$skill->itemname}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Skill Category</label>
+                                        <select class="form-control" id="adSearch_CATEGORY" name="adSearch_CATEGORY">
+                                            <option value="ALL">Display from all category</option>
+                                            @foreach(TaskCategory::orderBy('categoryname', 'ASC')->get() as $c)
+                                                <option value="{{$c->categorycode}}">{{$c->categoryname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Skill</label>
+                                        <select class="form-control" id="adSearch_SKILL" name="adSearch_SKILL">
+                                            <option value="ALL">Display from all skills</option>
+                                            @foreach(TaskItem::get() as $skill)
+                                                <option value="{{$skill->itemcode}}">{{$skill->itemname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
