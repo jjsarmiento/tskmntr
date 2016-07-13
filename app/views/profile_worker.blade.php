@@ -108,7 +108,7 @@
                     <h2 class="section-heading">Contact Info</h2>
                     <hr class="hrLine">
 
-                    @if($CLIENTFLAG && $role == 'TASKMINATOR')
+                    @if($CLIENTFLAG && $roles == 'TASKMINATOR')
                         @if($USERINCART > 0)
                                 <a href="#" data-target="#CARTMODAL" data-toggle="modal" class="SHWCRT btn btn-lg btn-danger btn-block" style="border-radius: 0.3em;">Added to Cart</a>
                         @elseif($PURCHASED > 0)

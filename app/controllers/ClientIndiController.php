@@ -1218,9 +1218,9 @@ class ClientIndiController extends \BaseController {
     public function WRKRSRCH($jobId, $categoryCode, $skillCode, $regcode, $citycode, $bgycode){
         $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
-            ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
-            ->join('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
-            ->join('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
             ->where('jobs.id', $jobId)
             ->select([
                 'jobs.id',
@@ -1246,10 +1246,13 @@ class ClientIndiController extends \BaseController {
             ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
             ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
             ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+            ->leftJoin('carts', 'carts.worker_id', '=', 'users.id')
             ->leftJoin('job_invites', 'job_invites.invited_id', '=', 'users.id')
+            ->leftJoin('purchases', 'purchases.worker_id', '=', 'users.id')
             ->where('taskminator_has_skills.taskcategory_code', $categoryCode)
             ->where('taskminator_has_skills.taskitem_code', $skillCode)
             ->select([
+                'users.username',
                 'users.fullName',
                 'users.id',
                 'users.address',
@@ -1259,8 +1262,11 @@ class ClientIndiController extends \BaseController {
                 'cities.cityname',
                 'barangays.bgycode',
                 'barangays.bgyname',
-                'job_invites.id as inviteID'
+                'job_invites.id as inviteID',
+                'carts.id as cartID',
+                'purchases.id as purchaseID'
             ])
+            ->groupBy('users.id')
             ->get();
 
         return View::make('client.WRKRSRCH')
@@ -1276,7 +1282,8 @@ class ClientIndiController extends \BaseController {
                 ->with('regcode', $regcode)
                 ->with('citycode', $citycode)
                 ->with('bgycode', $bgycode)
-                ->with('workers', $workers);
+                ->with('workers', $workers)
+                ->with('INVITEDS', $this->GETINVITEDS($jobId));
     }
 
     public function SNDINVT($invitedId, $jobId){
