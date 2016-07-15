@@ -116,7 +116,9 @@
 
                     <div class="col-md-9">
                         <div class="well selected-filters">
-                            <div class="row">
+                            <h3 style="margin: 0; cursor: pointer;" onclick="$('#SEARCH_PARAMETERS').slideToggle('fast');">Search for Workers <i class="fa fa-search"></i></h3>
+                            <div id="SEARCH_PARAMETERS" class="row" style="display: none;">
+                                <br/>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Account Status</label>
@@ -158,6 +160,46 @@
                                 </div>
                             </div>
                         </div>
+                        <!--
+                        @if($users->count() > 0)
+                            @foreach($users as $user)
+                                <div class="widget-container lato-text" style="padding-bottom: 5px; border-bottom: 1px solid #ECF0F1; min-height: 1em;">
+                                    <div class="widget-content padded">
+                                        <div>
+                                            <h3 style="margin : 0;"><a class="lato-text" href="/viewUserProfile/{{ $user->id }}">{{ $user->fullName }} {{ '@'.$user->username }}</a></h3>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <span style="color: rgb(72, 157, 179);">Registered at {{ date('m/d/y', $user->created_at->getTimeStamp()) }}</span><br/>
+                                                    <span style="color: rgb(72, 157, 179);"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;{{ $user->bgyname }}, {{ $user->cityname }}, {{$user->regname}}</span><br/>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    @if($user->status == 'PRE_ACTIVATED')
+                                                        <div class="row">
+                                                            <a href="/adminActivate/{{$user->id}}" class="btn btn-xs btn-info">Fully Activate Account</a><br/>
+                                                            <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger">Deactivate Account</a><br/>
+                                                        </div>
+                                                    @elseif($user->status == 'ACTIVATED')
+                                                        <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger btn-xs">Deactivate Account</a><br/>
+                                                    @elseif($user->status == 'DEACTIVATED')
+                                                        <a href="/adminActivate/{{$user->id}}" class="btn btn-success btn-xs">Activate Account</a><br/>
+                                                    @elseif($user->status == 'SELF_DEACTIVATED')
+                                                        <a href="/adminActivate/{{$user->id}}" class="btn btn-success btn-xs">Activate Account</a><br/>
+                                                    @elseif($user->status == 'ADMIN_DEACTIVATED')
+                                                        <a href="/adminActivate/{{$user->id}}" class="btn btn-success btn-xs">Activate Account</a><br/>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="well selected-filters" style="text-align: center">
+                                <font style="color: red">No data available.</font>
+                            </div>
+                        @endif
+                        -->
+
                         @if($users->count() == 0)
                             <div class="well selected-filters" style="text-align: center">
                                 <font style="color: red">No data available.</font>
@@ -170,26 +212,12 @@
                                         <h3><a class="lato-text" href="/viewUserProfile/{{ $user->id }}">{{ $user->fullName }} {{ '@'.$user->username }}</a></h3>
                                         <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
                                          : <span style="margin-left: 5px">{{ $user->username }}</span><br/>
-                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Status</span> :
+                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Account Status</span> :
                                         <span style="margin-left: 5px">{{ $user->status }}</span><br/>
-                                        @if($user->status != 'PRE_ACTIVATED')
-                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Tasks Done</span> :
-                                            <span style="margin-left: 5px">{{ Task::join('task_has_taskminator', 'tasks.id', '=', 'task_has_taskminator.task_id')->where('task_has_taskminator.taskminator_id', $user->id)->where('tasks.status', 'CLOSED')->count() }}</span><br/>
-                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Current Task</span> :
-                                            <span style="margin-left: 5px">{{ Task::join('task_has_taskminator', 'tasks.id', '=', 'task_has_taskminator.task_id')->where('task_has_taskminator.taskminator_id', $user->id)->where('tasks.status', 'ONGOING')->count() }}</span>
-                                        @else
+                                        @if($user->status == 'PRE_ACTIVATED')
                                             <span style="color: red;">Please check credentials of this user before fully activating their account.</span>
                                         @endif
                                         <br/>
-                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Average Rating : </span>
-                                        @if($user->avg_stars)
-                                            {{ $user->avg_stars  }} <i class="fa fa-star" style="color: yellow"></i>
-                                        @else
-                                            0 <i class="fa fa-star" style="color: yellow"></i> This user has not received any ratings yet.
-                                        @endif
-                                        <br/>
-                                        <br/><br/>
-                        <!--                <hr style="margin: 0;"/>-->
                                         @if($user->status == 'PRE_ACTIVATED')
                                             <div class="row">
                                                 <a href="/adminActivate/{{$user->id}}" class="btn btn-info">Fully Activate Account</a><br/>

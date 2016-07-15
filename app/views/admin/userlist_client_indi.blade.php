@@ -208,36 +208,24 @@
                     <div class="widget-container" style="min-height: 150px; padding-bottom: 5px;">
                         <div class="widget-content padded">
                             <div>
-                                <h3 class="lato-text"><a href="/viewUserProfile/{{ $user->id }}">{{ $user->fullName }}</a></h3>
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
-                                 : <span style="margin-left: 5px">{{ $user->username }}</span><br/>
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Status</span>
+                                <h3 class="lato-text"><a href="/viewUserProfile/{{ $user->id }}">{{ $user->fullName }} {{ '@'.$user->username }}</a></h3>
+                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Account Status</span>
                                  : <span style="margin-left: 5px">{{ $user->status }}</span><br/>
-                                @if($user->status != 'PRE_ACTIVATED')
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Open Tasks</span>
-                                     : <span style="margin-left: 5px">{{ Task::where('user_id', $user->id)->where('status', 'OPEN')->count() }}</span><br/>
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Ongoing Tasks</span>
-                                     : <span style="margin-left: 5px">{{ Task::where('user_id', $user->id)->where('status', 'ONGOING')->count() }}</span><br/>
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Accomplished Tasks</span>
-                                     : <span style="margin-left: 5px">{{ Task::where('user_id', $user->id)->where('status', 'CLOSED')->count() }}</span><br/>
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Cancelled Tasks</span>
-                                     : <span style="margin-left: 5px">{{ Task::where('user_id', $user->id)->where('status', 'CANCELLED')->count() }}</span><br/>
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Total Tasks Posted</span>
-                                     : <span style="margin-left: 5px">{{ Task::where('user_id', $user->id)->count() }}</span><br/><br/>
-                                @else
-                                <span style="color: red; margin-right: 5px;">Please check credentials of this user before fully activating their account.</span>
+                                 <br/>
+                                @if($user->status == 'PRE_ACTIVATED')
+                                    <span style="color: red; margin-right: 5px;">Please check credentials of this user before fully activating their account.</span>
                                 @endif
                                 @if($user->status == 'PRE_ACTIVATED')
-                                <a href="/adminActivate/{{$user->id}}" class="btn btn-info">Fully Activate Account</a>
-                                <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger" class="btn btn-danger">Deactivate Account</a><br/>
+                                    <a href="/adminActivate/{{$user->id}}" class="btn btn-info">Fully Activate Account</a>
+                                    <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger" class="btn btn-danger">Deactivate Account</a><br/>
                                 @elseif($user->status == 'ACTIVATED')
-                                <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger" class="btn btn-danger">Deactivate Account</a><br/>
+                                    <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger" class="btn btn-danger">Deactivate Account</a><br/>
                                 @elseif($user->status == 'DEACTIVATED')
-                                <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
+                                    <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
                                 @elseif($user->status == 'SELF_DEACTIVATED')
-                                <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
+                                    <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
                                 @elseif($user->status == 'ADMIN_DEACTIVATED')
-                                <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
+                                    <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
                                 @endif
                             </div>
                         </div>

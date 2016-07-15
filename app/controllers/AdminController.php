@@ -14,6 +14,10 @@ class AdminController extends \BaseController {
                     ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
                     // join RATINGS table
                     ->leftJoin('ratings', 'ratings.taskminator_id', '=', 'users.id')
+                    // join region/city/barangay
+                    ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+                    ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+                    ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
 
                     ->where('user_has_role.role_id', '=', '2')
                     ->whereNotIn('users.status', ['PRE_ACTIVATED'])
@@ -23,6 +27,10 @@ class AdminController extends \BaseController {
                         'users.status',
                         'users.username',
                         DB::raw('AVG(ratings.stars) as avg_stars'),
+                        'users.created_at',
+                        'regions.regname',
+                        'cities.cityname',
+                        'barangays.bgyname',
                     ])
                     ->orderBy('users.created_at', 'DESC')
                     ->groupBy('users.id')
