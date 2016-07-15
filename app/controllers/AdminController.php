@@ -1068,4 +1068,24 @@ class AdminController extends \BaseController {
                 ->with('users', $users)
                 ->with('jobs', $jobs);
     }
+
+    public function customSkills(){
+        $customSkill = CustomSkill::join('users', 'users.id', '=', 'custom_skills.created_by')
+                        ->select([
+                            'users.id as userID',
+                            'users.fullName',
+                            'users.username',
+                            'custom_skills.id as customSkillID',
+                            'custom_skills.created_at',
+                            'custom_skills.skill',
+                        ])
+                        ->get();
+        return View::make('admin.customSkills')
+                ->with('customSkill', $customSkill);
+    }
+
+    public function DELCSTSKLL($skillID){
+        CustomSkill::where('id', $skillID)->delete();
+        return Redirect::back();
+    }
 }

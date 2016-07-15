@@ -114,7 +114,8 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/skills" class="sidemenu">Manage</a><br>
+                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/skills" class="sidemenu">System Skills</a><br>
+                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/customSkills" class="sidemenu">Custom Skills</a><br>
                         </div>
                         {{--<div class="panel-heading">--}}
                             {{--<div class="panel-title">--}}

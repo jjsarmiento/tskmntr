@@ -89,6 +89,10 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+    // SKILLS ROUTE
+    Route::get('/customSkills', 'AdminController@customSkills');
+    Route::get('/DELCSTSKLL={skillID}', 'AdminController@DELCSTSKLL');
+
     // JOB ADS ROUTES
     Route::get('/showJobAds', 'AdminController@showJobAds');
     Route::get('/ADMIN_jobDetails={job_id}', 'AdminController@ADMIN_jobDetails');
