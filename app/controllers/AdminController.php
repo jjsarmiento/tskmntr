@@ -336,14 +336,11 @@ class AdminController extends \BaseController {
                      ->join('roles', 'roles.id', '=', 'user_has_role.role_id');
 
         switch($role){
-            case 'taskminator'  :
+            case 'workers'  :
                 $query->where('roles.role', 'TASKMINATOR');
                 break;
-            case 'clientindi'  :
-                $query->where('roles.role', 'CLIENT_IND');
-                break;
-            case 'clientcomp'  :
-                $query->where('roles.role', 'CLIENT_CMP');
+            case 'companies'  :
+                $query->whereIn('roles.role', ['CLIENT_IND', 'CLIENT_CMP']);
                 break;
             default :
                 return Redirect::back()->with('errorMsg', 'UNKNOWN REQUEST');
@@ -529,6 +526,7 @@ class AdminController extends \BaseController {
                 'users.fullName',
                 'users.status',
                 'users.username',
+                'users.created_at',
             ])
             ->groupBy('users.id');
 

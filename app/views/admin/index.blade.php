@@ -153,8 +153,8 @@
                                     <div class="form-group">
                                         <label>Order by</label>
                                         <select class="form-control" id="search_orderBy" name="search_orderBy">
-                                            <option value="DESC" <?php if(@$orderBy == "DESC"){ echo('selected'); } ?>>Newest first</option>
-                                            <option value="ASC" <?php if(@$orderBy == "ASC"){ echo('selected'); } ?>>Oldest first</option>
+                                            <option value="DESC" <?php if(@$orderBy == "DESC"){ echo('selected'); } ?>>Oldest first</option>
+                                            <option value="ASC" <?php if(@$orderBy == "ASC"){ echo('selected'); } ?>>Newest first</option>
                                         </select>
                                     </div>
                                 </div>
@@ -214,14 +214,11 @@
                             </div>
                         @endif
                         @foreach($users as $user)
-                            <div class="widget-container lato-text" style="min-height: 150px; padding-bottom: 5px;">
+                            <div class="widget-container lato-text" style="min-height: 150px; padding-bottom: 5px; border-bottom: 1px solid #ECF0F1;">
                                 <div class="widget-content padded">
                                     <div>
-                                        <h3><a class="lato-text" href="/viewUserProfile/{{ $user->id }}">{{ $user->fullName }} {{ '@'.$user->username }}</a></h3>
-                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
-                                         : <span style="margin-left: 5px">{{ $user->username }}</span><br/>
-                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Account Status</span> :
-                                        <span style="margin-left: 5px">{{ $user->status }}</span><br/>
+                                        <h3 style="margin: 0;"><a class="lato-text" href="/viewUserProfile/{{ $user->id }}">{{ $user->fullName }} {{ '@'.$user->username }}</a> <span class="badge">{{ $user->status }}</span></h3>
+                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Registered at {{$user->created_at}}</span><Br/>
                                         @if($user->status == 'PRE_ACTIVATED')
                                             <span style="color: red;">Please check credentials of this user before fully activating their account.</span>
                                         @endif
@@ -242,7 +239,7 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div><br/>
+                            </div>
                         @endforeach
                         <center>{{ $users->links() }}</center>
                     </div>
