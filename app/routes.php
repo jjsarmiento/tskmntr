@@ -162,6 +162,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 
     Route::get('/ADMINGETNEWMSG={userid}={senderid}', 'AdminController@ADMINGETNEWMSG');
     Route::get('/adminMessages', 'TaskminatorController@adminMessages');
+    Route::get('/ADMINNavSearch={keyword}', 'AdminController@ADMINNavSearch');
 });
 
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){

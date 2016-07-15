@@ -1061,4 +1061,13 @@ class AdminController extends \BaseController {
             ->with('users', $userList);
 
     }
+
+    public function ADMINNavSearch($keyword){
+        $users = User::where('fullName', 'LIKE', '%'.$keyword.'%')->paginate(10);
+        $jobs = Job::where('title', 'LIKE', '%'.$keyword.'%')->paginate(10);
+        return View::make('admin.ADMINNavSearch')
+                ->with('keyword', $keyword)
+                ->with('users', $users)
+                ->with('jobs', $jobs);
+    }
 }
