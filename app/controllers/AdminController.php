@@ -522,14 +522,13 @@ class AdminController extends \BaseController {
 
 
         $query->whereNotIn('users.status', ['PRE_ACTIVATED'])
-            ->orderBy('avg_stars', $rating)
+            ->where('users.status', $acctStatus)
             ->orderBy('users.created_at', $orderBy)
             ->select([
                 'users.id',
                 'users.fullName',
                 'users.status',
                 'users.username',
-                DB::raw('AVG(ratings.stars) as avg_stars')
             ])
             ->groupBy('users.id');
 
@@ -537,6 +536,7 @@ class AdminController extends \BaseController {
                 ->with('users', $query->paginate(10))
                 ->with('rating', $rating)
                 ->with('orderBy', $orderBy)
+                ->with('acctStatus', $acctStatus)
                 ->with('keyword', $keyword);
     }
 
