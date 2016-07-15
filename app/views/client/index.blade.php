@@ -234,7 +234,7 @@
 <!-- ENF PROFILE PIC / INFO -->
 
             <div class="col-md-8">
-                <div class="widget-container weather">
+                <div class="widget-container weather" style="min-height: 1em;">
                     <div class="widget-content">
                         <div class="padded text-center" style="min-height:30px; text-align:left; border-bottom:1px solid #e6e6e6; color:#2980b9; font-size:18pt;">
                             <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $total_prog }}% | {{ $freeDuration }}

@@ -1376,9 +1376,9 @@ class ClientIndiController extends \BaseController {
     public function ShowInvited($jobId){
         $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
-            ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
-            ->join('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
-            ->join('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
             ->where('jobs.id', $jobId)
             ->select([
                 'jobs.id',
