@@ -674,7 +674,10 @@ class AdminController extends \BaseController {
     }
 
     public function userListClientIndiSearch($searchBy, $searchWord){
-        $query = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')->where('users.status', 'ACTIVATED')->where('user_has_role.role_id', '3');
+        $query = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
+            ->where('users.status', 'ACTIVATED')
+            ->whereIn('user_has_role.role_id', ['3', '4']);
+//            ->where('user_has_role.role_id', '3');
 
         if($searchBy != '0'){
             $query = $query->where($searchBy, 'LIKE', '%'.$searchWord.'%');
@@ -683,7 +686,7 @@ class AdminController extends \BaseController {
         return View::make('admin.userlist_client_indi')
             ->with('searchBy', $searchBy)
             ->with('searchWord', $searchWord)
-            ->with('users', $query->orderBy('fullName', 'ASC')->paginate(1));
+            ->with('users', $query->orderBy('fullName', 'ASC')->paginate(10));
     }
 
     public function userListClientCompSearch($searchBy, $searchWord){
@@ -1038,5 +1041,24 @@ class AdminController extends \BaseController {
         CustomSkill::where('company_job_id', $jobId)->delete();
 
         return Redirect::to('/showJobAds');
+    }
+
+    public function UsrAccntLstCMPNY(){
+        $userList = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
+            ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+            ->whereIn('user_has_role.role_id', ['3', '4'])
+            ->whereNotIn('users.status', ['PRE_ACTIVATED'])
+            ->orderBy('users.created_at', 'DESC')
+            ->select([
+                'users.id',
+                'users.fullName',
+                'users.username',
+                'users.status',
+            ])
+            ->paginate(10);
+
+        return View::make('admin.userlist_client_indi')
+            ->with('users', $userList);
+
     }
 }

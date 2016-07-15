@@ -105,8 +105,9 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/admin', 'AdminController@index');
     Route::get('/userList', 'AdminController@userList');
     Route::get('/userListTaskminators', 'AdminController@userListTaskminators');
-    Route::get('/userListClientIndi', 'AdminController@userListClientIndi');
-    Route::get('/userListClientComp', 'AdminController@userListClientComp');
+    Route::get('/UsrAccntLstCMPNY', 'AdminController@UsrAccntLstCMPNY');
+//    Route::get('/userListClientIndi', 'AdminController@userListClientIndi');
+//    Route::get('/userListClientComp', 'AdminController@userListClientComp');
     Route::get('/adminActivate/{id}', 'AdminController@adminActivate');
     Route::get('/viewUserProfile/{id}', 'AdminController@viewUserProfile');
 

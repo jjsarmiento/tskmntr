@@ -56,7 +56,7 @@
     <div class="container lato-text">
         <div class="page-title">
             <h1 class="lato-text">
-                User List : Client (Individual)
+                User List : Company
             </h1>
         </div>
         <div class="row">
@@ -84,8 +84,11 @@
                         <div class="panel-body">
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/admin" class="sidemenu">Pending Users</a><br>
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/userListTaskminators" class="sidemenu">Worker</a><br>
+                            <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/UsrAccntLstCMPNY" class="sidemenu">Company</a><br>
+                            <!--
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/userListClientIndi" class="sidemenu">Employer - Individuals</a><br>
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/userListClientComp" class="sidemenu">Employer - Companies</a><br>
+                            -->
                         </div>
                         <div class="panel-heading">
                             <div class="panel-title">
@@ -205,7 +208,7 @@
                     </div>
                 @endif
                 @foreach($users as $user)
-                    <div class="widget-container" style="min-height: 150px; padding-bottom: 5px;">
+                    <div class="widget-container" style="min-height: 1em; padding-bottom: 5px; border-bottom: 1px solid #ECF0F1;">
                         <div class="widget-content padded">
                             <div>
                                 <h3 class="lato-text"><a href="/viewUserProfile/{{ $user->id }}">{{ $user->fullName }} {{ '@'.$user->username }}</a></h3>
