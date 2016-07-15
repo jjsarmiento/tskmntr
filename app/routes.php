@@ -278,7 +278,6 @@ Route::get('/{username}', 'HomeController@toProfile'); // new profile page viewe
 //});
 
 // THIS FUNCTION REDIRECTS USER TO INDEX or '/' IF THE PAGE MAKES AN ERROR - Jan Sarmiento
-//App::error(function(){
-////    return Redirect::to('/');
+//App::error(function(Exception $exception, $code){
 //    return View::make('ERRORPAGE');
 //});
