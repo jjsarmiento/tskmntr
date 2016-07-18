@@ -153,6 +153,33 @@
                             <textarea name="description" id="description" required="required" class="form-control" style="height: auto; text-align: justify;" rows="15">{{ $job->description }}</textarea>
                         </div>
                     </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Average Processing Time</label>
+                                <input type="text" name="AverageProcessingTime" id="AverageProcessingTime" value="{{$job->AverageProcessingTime}}" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Industry</label>
+                                <input type="text" id="Industry" name="Industry" value="{{$job->Industry}}" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Company Size</label>
+                                <input type="text" id="CompanySize" name="CompanySize" value="{{$job->CompanySize}}" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Working Hours</label>
+                                <input type="text" id="WorkingHours" name="WorkingHours" value="{{$job->WorkingHours}}" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Dress Code</label>
+                                <input type="text" id="DressCode" name="DressCode" value="{{$job->DressCode}}" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-footer">
                     <button class="btn btn-primary" type="submit">Save Edit</button>

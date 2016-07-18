@@ -1169,6 +1169,11 @@ class ClientIndiController extends \BaseController {
                 'jobs.created_at',
                 'jobs.description',
                 'jobs.requirements',
+                'jobs.AverageProcessingTime',
+                'jobs.Industry',
+                'jobs.CompanySize',
+                'jobs.WorkingHours',
+                'jobs.DressCode',
                 'regions.regname',
                 'regions.regcode',
                 'barangays.bgyname',
@@ -1210,6 +1215,11 @@ class ClientIndiController extends \BaseController {
             'citycode'              =>  Input::get('city'),
             'hiring_type'           =>  Input::get('hiring_type'),
             'salary'                =>  Input::get('salary'),
+            'AverageProcessingTime' =>  Input::get('AverageProcessingTime'),
+            'Industry'              =>  Input::get('Industry'),
+            'CompanySize'           =>  Input::get('CompanySize'),
+            'WorkingHours'          =>  Input::get('WorkingHours'),
+            'DressCode'             =>  Input::get('DressCode'),
             'updated_at'            =>  date("Y:m:d H:i:s")
         ]);
 

@@ -199,19 +199,35 @@
                             {{$job->requirements}}
                         </div>
                     </div>
-                    <div class="col-md-6" style="text-align: justify;">
-                        <h4>Company Snaphots</h4>
-                        <label>Average Processing Time</label><br/>
-                        {{$job->AverageProcessingTime}}<br/>
-                        <label>Industry</label><br/>
-                        {{$job->Industry}}<br/>
-                        <label>Company Size</label><br/>
-                        {{$job->CompanySize}}<br/>
-                        <label>Working Hours</label><br/>
-                        {{$job->WorkingHours}}<br/>
-                        <label>Dress Code</label><br/>
-                        {{$job->DressCode}}
-                    </div>
+                    @if($job->AverageProcessingTime || $job->Industry || $job->CompanySize || $job->WorkingHours || $job->DressCode)
+                        <div class="col-md-6" style="text-align: justify;">
+                            <h4>Company Snaphots</h4>
+                            @if($job->AverageProcessingTime)
+                                <label>Average Processing Time</label><br/>
+                                {{$job->AverageProcessingTime}}<br/>
+                            @endif
+
+                            @if($job->Industry)
+                                <label>Industry</label><br/>
+                                {{$job->Industry}}<br/>
+                            @endif
+
+                            @if($job->CompanySize)
+                                <label>Company Size</label><br/>
+                                {{$job->CompanySize}}<br/>
+                            @endif
+
+                            @if($job->WorkingHours)
+                                <label>Working Hours</label><br/>
+                                {{$job->WorkingHours}}<br/>
+                            @endif
+
+                            @if($job->DressCode)
+                                <label>Dress Code</label><br/>
+                                {{$job->DressCode}}
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
 
