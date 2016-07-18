@@ -26,6 +26,11 @@ class CreateJobsTable extends Migration {
             $table->string('citycode')->nullable();
             $table->string('hiring_type')->nullable();
             $table->float('salary')->nullable();
+            $table->longText('AverageProcessingTime')->nullable();
+            $table->longText('Industry')->nullable();
+            $table->longText('CompanySize')->nullable();
+            $table->longText('WorkingHours')->nullable();
+            $table->longText('DressCode')->nullable();
 			$table->timestamps();
 		});
 	}

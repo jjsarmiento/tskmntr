@@ -157,7 +157,7 @@
             </div><br/>
         </div>
         <div class="col-md-6">
-            <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
+            <div class="widget-container padded" style="word-wrap: break-word; display: flex; min-height:125px; display:block !important;">
                 <h3 style="margin: 0;">{{$job->title}}</h3>
                 <span style="color: #7F8C8D; font-size: 1em;">by <a target="_tab" href="/{{$job->username}}">{{$job->fullName}}</a></span><Br/>
                 <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>

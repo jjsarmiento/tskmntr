@@ -6,6 +6,13 @@
 
 @section('head-content')
     <style type="text/css">
+        .badge {
+            width: auto;
+            max-width: 10em;
+            overflow:hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+        }
         body{background-color:#E9EAED;}
         .accordion-toggle
         {
@@ -132,6 +139,7 @@
               margin-left: 10px;
             }
     </style>
+
 @stop
 
 
@@ -148,60 +156,61 @@
                 <br/>
                 <br/>
                 <div class="row" style="text-align: left">
-                    <div class="col-md-7">
-                        <div class="col-md-4">Duration</div>
-                        <div class="col-md-8">
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <i class="fa fa-clock-o"></i>&nbsp;
                             @if($job->hiring_type == 'LT6MOS')
                                 Less than 6 months
                             @else
                                 Greater than 6 months
                             @endif
                         </div>
-                        <br/><br/>
-                        <div class="col-md-4">
-                            Skill Category
+                        <div class="col-md-12">
+                            <i class="fa fa-map-marker"></i>&nbsp;&nbsp;&nbsp;{{ $job->cityname }}, {{ $job->regname }}
                         </div>
-                        <div class="col-md-8">
-                            {{ $job->categoryname }}
+                        <div class="col-md-12">P{{ $job->salary }}</div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="col-md-12">
+                            <span style="background-color: #1ABC9C;" title="{{$job->categoryname}}" class="badge">
+                                {{ $job->categoryname }}
+                            </span>
+                            <span style="background-color: #3498DB;" title="{{ $job->itemname }}" class="badge">
+                                {{ $job->itemname }}
+                            </span>
+                            @foreach($custom_skills as $cs)
+                                <span style="background-color: #3498DB;" title="{{$cs->skill}}" class="badge">{{$cs->skill}}</span>
+                            @endforeach
                         </div>
-                        <br/><br/>
-                        <div class="col-md-4">
-                            Skill
-                        </div>
-                        <div class="col-md-8">
-                            {{ $job->itemname }}
-                        </div>
-                        <br/><br/><br/>
-                        <div class="col-md-4">
-                            Location
-                        </div>
-                        <div class="col-md-8">
-                            {{ $job->cityname }}, {{ $job->bgyname }}<br/>
-                            {{ $job->regname }}
-                        </div>
-                        <br/><br/><br/>
-                        <div class="col-md-4">Salary</div>
-                        <div class="col-md-8">P{{ $job->salary }}</div>
                         <br/><br/><br/>
                     </div>
-                    <div class="col-md-5" style="word-wrap: break-word;">
+                    <div class="col-md-6" style="word-wrap: break-word; text-align: justify;">
+                        <label>Description</label><br/>
                         {{ $job->description }}
                     </div>
                 </div>
+                <br/>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="col-md-12 well">
+                        <div class="col-md-12 well" style="text-align: justify;">
                             <label>Requirements</label><br/>
                             {{$job->requirements}}
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="col-md-12">
-                            <label>Other Skills</label><br/>
-                            @foreach($custom_skills as $cs)
-                                <span class="badge">{{$cs->skill}}</span>
-                            @endforeach
-                        </div>
+                    <div class="col-md-6" style="text-align: justify;">
+                        <h4>Company Snaphots</h4>
+                        <label>Average Processing Time</label><br/>
+                        {{$job->AverageProcessingTime}}<br/>
+                        <label>Industry</label><br/>
+                        {{$job->Industry}}<br/>
+                        <label>Company Size</label><br/>
+                        {{$job->CompanySize}}<br/>
+                        <label>Working Hours</label><br/>
+                        {{$job->WorkingHours}}<br/>
+                        <label>Dress Code</label><br/>
+                        {{$job->DressCode}}
                     </div>
                 </div>
             </div>
