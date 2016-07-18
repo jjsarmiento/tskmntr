@@ -219,6 +219,9 @@
                                 @foreach(User::getSkills(Auth::user()->id) as $skill)
                                     <span style="border:2px solid white; padding:8px; background-color: #BDC3C7; display:inline-block; color: white; border-radius: 0.2em; font-size: 12pt;">{{ $skill->itemname }}</span>
                                 @endforeach
+                                @foreach($customSkills as $cs)
+                                    <span style="border:2px solid white; padding:8px; background-color: #BDC3C7; display:inline-block; color: white; border-radius: 0.2em; font-size: 12pt;">{{ $cs->skill }}</span>
+                                @endforeach
                             </div>
                         </div>
                     </div>

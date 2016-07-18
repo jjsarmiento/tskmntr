@@ -1371,6 +1371,7 @@ class HomeController extends BaseController {
     }
 
     public function editProfile(){
+        var_dump(UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id'));
         switch(UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id')){
             case '1'    :
                 return View::make('editProfile_admin')->with('user', User::where('id', Auth::user()->id)->first());
@@ -1378,7 +1379,8 @@ class HomeController extends BaseController {
                 $pincode = Contact::where('user_id',  Auth::user()->id)->pluck('pincode');
                 return View::make('editProfile_tskmntr')
                             ->with('user', User::where('id', Auth::user()->id)->first())
-                            ->with('pincode', $pincode);
+                            ->with('pincode', $pincode)
+                            ->with('customSkills', CustomSkill::where('created_by', Auth::user()->id)->get());
             case '3'    :
             case '4'    :
                 return View::make('editProfile_client')
