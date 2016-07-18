@@ -133,7 +133,7 @@
                         </div>
                     </div>
                     @elseif ( $roles == 'CLIENT_INDI' || $roles == 'CLIENT_CMP')
-                        <div class="col-lg-8 text-center lato-text">
+                        <div class="col-lg-8 text-center lato-text" style="word-wrap: break-word;">
                             <i class="fa fa-4x fa-info-circle text-primary" aria-hidden="true"></i>
                             <h2 class="section-heading">About Us</h2>
                             <hr class="hrLine">

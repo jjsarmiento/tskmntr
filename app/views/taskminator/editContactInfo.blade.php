@@ -109,28 +109,28 @@
                                         Facebook : 
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" required="required" /><br/>
+                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control"/><br/>
                                     </div>
                                 @elseif($contact->ctype == 'linkedin')
                                     <div class="col-md-3">
                                         LinkedIn : 
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" required="required" /><br/>
+                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control"/><br/>
                                     </div>
                                 @elseif($contact->ctype == 'mobileNum')
                                     <div class="col-md-3">
                                         Mobile Number : 
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" required="required" /><br/>
+                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control"/><br/>
                                     </div>
                                 @elseif($contact->ctype == 'twitter')
                                     <div class="col-md-3">
                                         Twitter : 
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control" required="required" /><br/>
+                                        <input type="text" name="{{$contact->ctype}}" value="{{$contact->content}}" class="form-control"/><br/>
                                     </div>
                                 @endif
                             @endforeach

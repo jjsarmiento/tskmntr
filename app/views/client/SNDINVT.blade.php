@@ -181,7 +181,7 @@
                         <div class="col-md-8">P{{ $job->salary }}</div>
                         <br/><br/><br/>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="word-wrap: break-word;">
                         {{ $job->description }}
                     </div>
                 </div>

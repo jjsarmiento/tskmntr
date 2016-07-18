@@ -535,7 +535,7 @@ class TaskminatorController extends \BaseController {
 
     public function editContactInfo(){
         return View::make('taskminator.editContactInfo')
-            ->with('contacts', Contact::where('user_id', Auth::user()->id)->get());
+            ->with('contacts', Contact::where('user_id', Auth::user()->id)->orderBy('content', 'DESC')->get());
     }
 
     public function doEditContactInfo(){
@@ -546,6 +546,7 @@ class TaskminatorController extends \BaseController {
             return Redirect::back()->with('errorMsg', 'Email is already taken')->withInput(Input::except('password'));
         }
 
+        /*
         // FACEBOOK VALIDATION
         if(strlen(trim(strip_tags(Input::get('facebook')))) == 0){
             return Redirect::back()->with('errorMsg', 'Facebook field cannot be empty')->withInput(Input::except('password'));
@@ -554,8 +555,8 @@ class TaskminatorController extends \BaseController {
         // LINKEDIN VALIDATION
         if(strlen(trim(strip_tags(Input::get('linkedin')))) == 0){
             return Redirect::back()->with('errorMsg', 'LinkedIn field cannot be empty')->withInput(Input::except('password'));
-
         }
+        */
 
         // MOBILE NUMBER VALIDATION
         if(!ctype_digit(Input::get('mobileNum'))){
@@ -563,29 +564,41 @@ class TaskminatorController extends \BaseController {
         }else if(strlen(Input::get('mobileNum')) == 0 || strlen(Input::get('mobileNum')) < 11){
             return Redirect::back()->with('errorMsg', 'Mobile number cannot be empty and must be more than 11 digits')->withInput(Input::except('password'));
         }
+        Contact::where('user_id', Auth::user()->id)->where('ctype', 'email')->update(['content' => Input::get('email')]);
+        Contact::where('user_id', Auth::user()->id)->where('ctype', 'facebook')->update(['content' => Input::get('facebook')]);
+        Contact::where('user_id', Auth::user()->id)->where('ctype', 'linkedin')->update(['content' => Input::get('linkedin')]);
+        Contact::where('user_id', Auth::user()->id)->where('ctype', 'twitter')->update(['content' => Input::get('twitter')]);
+        Contact::where('user_id', Auth::user()->id)->where('ctype', 'mobileNum')->update(['content' => Input::get('mobileNum')]);
+        /*
         Contact::where('user_id', Auth::user()->id)->delete();
         Contact::insert(array(
             array(
                 'user_id'       =>  Auth::user()->id,
-                'ctype'       =>  'email',
+                'ctype'         =>  'email',
                 'content'       =>  Input::get('email'),
             ),
             array(
                 'user_id'       =>  Auth::user()->id,
-                'ctype'       =>  'facebook',
+                'ctype'         =>  'facebook',
                 'content'       =>  Input::get('facebook'),
             ),
             array(
                 'user_id'       =>  Auth::user()->id,
-                'ctype'       =>  'linkedin',
+                'ctype'         =>  'linkedin',
                 'content'       =>  Input::get('linkedin'),
             ),
             array(
                 'user_id'       =>  Auth::user()->id,
-                'ctype'       =>  'mobileNum',
+                'ctype'         =>  'twitter',
+                'content'       =>  Input::get('twitter'),
+            ),
+            array(
+                'user_id'       =>  Auth::user()->id,
+                'ctype'         =>  'mobileNum',
                 'content'       =>  Input::get('mobileNum'),
             )
         ));
+        */
 
         return Redirect::back()->with('successMsg', 'Successfully edited contact information.');
     }

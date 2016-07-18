@@ -189,7 +189,7 @@
                 <br/>
                 <br/>
                 <br/>
-                <div class="widget-container padded" style="display: flex; min-height:1em; display:block !important;">
+                <div class="widget-container padded" style="display: flex; min-height:1em; display:block !important; word-wrap: break-word;">
                     <button type="button" class="close" style="opacity: 100;" id="SHOWDETAILS">
                         <i class="fa fa-chevron-down" style=""></i>
                     </button>
