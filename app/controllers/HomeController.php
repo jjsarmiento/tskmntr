@@ -1752,6 +1752,8 @@ class HomeController extends BaseController {
         // CHECK EMAIL
         if(!$this->emailValidate(Input::get('txtEmail'))){
             array_push($registrationErrors, 'Please enter a valid email');
+        }else if($this->IF_EMAIL_EXISTS(Input::get('txtEmail'))){
+            array_push($registrationErrors, Input::get('txtEmail').' is already taken');
         }
 
         // CHECK MOBILE NUMBER

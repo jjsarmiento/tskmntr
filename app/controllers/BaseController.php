@@ -271,5 +271,13 @@ class BaseController extends Controller {
 
         return $myArr;
     }
+
+    public function IF_EMAIL_EXISTS($email){
+        if(Contact::where('content', $email)->count() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }
