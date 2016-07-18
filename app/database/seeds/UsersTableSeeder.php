@@ -260,8 +260,8 @@ class UsersTableSeeder extends Seeder {
             (5, 'facebook', 'facebook.com/januarystays'),
             (5, 'linkedin', 'linkedin.com/sample'),
             (5, 'mobileNum', '639276274641'),
-            (6, 'email', 'jonisalangoy@gmail.com'),
-            (7, 'email', 'nbcapuno@gmail.com')
+            (6, 'email', 'admin@proveek.com'),
+            (7, 'email', 'admin@proveek.com')
         ");
 
         DB::insert("INSERT INTO `taskminator_has_skills` (`user_id`, `taskitem_code`, `taskcategory_code`) VALUES

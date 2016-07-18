@@ -109,6 +109,11 @@ class HomeController extends BaseController {
             if(false){
                 echo "Hey! Spammer I'm Using Google reCAPTCHA! Get Out";
             }else{
+                // back up checking for username - Jan Sarmiento
+                if(User::where('username', Input::get('uName'))->count() > 0){
+                    return Redirect::to('/');
+                }
+
                 Input::merge(array_map('trim', Input::all()));
 
                 $points = 300;
@@ -1371,7 +1376,6 @@ class HomeController extends BaseController {
     }
 
     public function editProfile(){
-        var_dump(UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id'));
         switch(UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id')){
             case '1'    :
                 return View::make('editProfile_admin')->with('user', User::where('id', Auth::user()->id)->first());

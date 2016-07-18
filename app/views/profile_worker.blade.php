@@ -1,7 +1,17 @@
 @extends('layouts.usermain')
 
 @section('title')
-    {{ $users->fullName }} | Profile Page
+    @if($CLIENTFLAG && $roles == 'TASKMINATOR')
+        @if($PURCHASED == 0)
+            {{substr_replace($users->firstName, str_repeat('*', strlen($users->firstName)-1), 1)}}
+            &nbsp;
+            {{substr_replace($users->lastName, str_repeat('*', strlen($users->lastName)-1), 1)}} | Profile Page
+        @else
+            {{ $users->fullName }} | Profile Page
+        @endif
+    @else
+        {{ $users->fullName }} | Profile Page
+    @endif
 @stop
 
 @section('content')
@@ -17,8 +27,18 @@
                     @endif
                     <!-- <img class="userProfile" src="frontend/img/team/01.png"/> -->
                     <h2 class="lato-text">
-                        @if ( $roles == 'TASKMINATOR')
-                            {{ $users->fullName }}
+                        @if($roles == 'TASKMINATOR')
+                            @if($CLIENTFLAG)
+                                @if($PURCHASED == 0)
+                                    {{substr_replace($users->firstName, str_repeat('*', strlen($users->firstName)-1), 1)}}
+                                    &nbsp;
+                                    {{substr_replace($users->lastName, str_repeat('*', strlen($users->lastName)-1), 1)}}
+                                @else
+                                    {{ $users->fullName }}
+                                @endif
+                            @else
+                                {{ $users->fullName }}
+                            @endif
                         @elseif ( $roles == 'CLIENT_INDI' || $roles == 'CLIENT_CMP')
                             {{ $users->companyName }}
                         @else
@@ -56,21 +76,41 @@
                         <hr class="hrLine">
                         <div class="col-lg-12 lato-text" style="font-size:14pt; text-align: left;">
                             <div style="padding-left: 30px;" style="display:table;">
-                                <div style="display:table-row;">
-                                    <span style="display:table-cell;text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">First Name</span>
-                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
-                                    <span style="display:table-cell;">{{ $users->firstName }}</span>
-                                </div>
-                                <div style="display:table-row;">
-                                    <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Middle Name</span>
-                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
-                                    <span style="display:table-cell">{{ $users->midName }}</span>
-                                </div>
-                                <div style="display:table-row;">
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Last Name</span>
-                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
-                                    <span style="display:table-cell">{{ $users->lastName }}</span>
-                                </div>
+                                @if($CLIENTFLAG && $roles == 'TASKMINATOR')
+                                    @if($PURCHASED > 0)
+                                        <div style="display:table-row;">
+                                            <span style="display:table-cell;text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">First Name</span>
+                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                            <span style="display:table-cell;">{{ $users->firstName }}</span>
+                                        </div>
+                                        <div style="display:table-row;">
+                                            <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Middle Name</span>
+                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                            <span style="display:table-cell">{{ $users->midName }}</span>
+                                        </div>
+                                        <div style="display:table-row;">
+                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Last Name</span>
+                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                            <span style="display:table-cell">{{ $users->lastName }}</span>
+                                        </div>
+                                    @endif
+                                @else
+                                    <div style="display:table-row;">
+                                        <span style="display:table-cell;text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">First Name</span>
+                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                        <span style="display:table-cell;">{{ $users->firstName }}</span>
+                                    </div>
+                                    <div style="display:table-row;">
+                                        <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Middle Name</span>
+                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                        <span style="display:table-cell">{{ $users->midName }}</span>
+                                    </div>
+                                    <div style="display:table-row;">
+                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Last Name</span>
+                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                        <span style="display:table-cell">{{ $users->lastName }}</span>
+                                    </div>
+                                @endif
 
                                 <div style="display:table-row;">
                                     <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">City</span>
