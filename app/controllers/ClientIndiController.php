@@ -1581,4 +1581,13 @@ class ClientIndiController extends \BaseController {
 
         return Redirect::back();
     }
+
+    public function deleteJob($jobId){
+        Job::where('id', $jobId)->delete();
+        JobApplication::where('job_id', $jobId)->delete();
+        JobInvite::where('job_id', $jobId)->delete();
+        CustomSkill::where('company_job_id', $jobId)->delete();
+
+        return Redirect::to('/jobs');
+    }
 }
