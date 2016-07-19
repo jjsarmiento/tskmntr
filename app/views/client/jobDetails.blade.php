@@ -356,8 +356,8 @@
                                 @else
                                     <a href="/SNDINVT:{{$a->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-primary" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Send Invite</a>
                                 @endif
-                            @else
                             --}}
+                            @elseif(in_array($a->id, $INVITEDS))
                                 <a href="/addToCart={{$a->id}}" class="btn btn-warning btn-xs btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
                             @endif
                         </div>

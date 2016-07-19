@@ -298,6 +298,7 @@
                                 @endif
                             @endforeach
                         @else
+                            <center><i>No bookmarked users available for this job.</i></center>
                         @endif
                         </div>
                     </div>

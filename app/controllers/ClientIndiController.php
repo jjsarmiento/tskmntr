@@ -1396,6 +1396,7 @@ class ClientIndiController extends \BaseController {
     public function ShowInvited($jobId){
         $INVITEDS = $this->GETINVITEDS($jobId);
         $CHECKED_OUT_USERS = $this->GETCHECKEDOUTUSERS(Auth::user()->id);
+        $APPLICANTS = $this->GETAPPLICANTS($jobId);
 
         $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
@@ -1440,6 +1441,7 @@ class ClientIndiController extends \BaseController {
         $bookmarks = User::join('bookmark_users', 'users.id', '=', 'bookmark_users.worker_id')
             ->where('bookmark_users.company_id', Auth::user()->id)
             ->whereNotIn('users.id', $INVITEDS)
+            ->whereNotIn('users.id', $APPLICANTS)
             ->select([
                 'users.fullName',
                 'users.firstName',

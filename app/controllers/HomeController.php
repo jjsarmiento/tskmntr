@@ -36,6 +36,7 @@ class HomeController extends BaseController {
     */
 
     public function logout(){
+        /*
         date_default_timezone_set("Asia/Manila");
         AuditTrail::insert(array(
             'user_id'       =>  Auth::user()->id,
@@ -43,6 +44,7 @@ class HomeController extends BaseController {
             'created_at'    =>  date("Y:m:d H:i:s")
 //                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
         ));
+        */
         Auth::logout();
         return Redirect::to('/');
     }
