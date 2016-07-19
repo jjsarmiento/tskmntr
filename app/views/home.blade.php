@@ -672,7 +672,7 @@
                     <p>We are currently signing up our first set of workers.<br> If you are a skilled or manual laborer and want to put your profile for employers to easily find you, sign up now and start getting job notifications!</p>
                 </div>
                 <div class="modal-footer text-center" style="text-align:center; padding-bottom:20px;">
-                    <a href="/login" class="btn btn-primary btn-md" style="font-size:15pt; padding:15px 30px 15px 30px;border-radius: 4px;">SIGN UP</a>
+                    <a href="/" class="btn btn-primary btn-md" style="font-size:15pt; padding:15px 30px 15px 30px;border-radius: 4px;">SIGN UP</a>
                 </div>
             </div>
         </div>
