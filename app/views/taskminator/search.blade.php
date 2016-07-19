@@ -160,7 +160,7 @@
                                         <div class="panel-title">
                                             <a class="accordion-toggle" data-parent="#accordion" data-toggle="collapse" href="#collapseThree">
                                             <div class="caret pull-right"></div>
-                                            City</a>
+                                            City / Municipality</a>
                                         </div>
                                     </div>
                                     <div class="panel-collapse collapse in" id="collapseThree">
