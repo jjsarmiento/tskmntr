@@ -78,4 +78,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     public function roles(){
         return $this->belongsToMany('Role', 'user_has_role');
     }
+
+    static function IS_BOOKMARKED($companyID ,$workerID){
+        if(BookmarkUser::where('worker_id', $workerID)->where('company_id', $companyID)->count() == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

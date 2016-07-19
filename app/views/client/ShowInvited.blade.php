@@ -171,7 +171,7 @@
         </div>
         <div class="col-md-4">
             <div class="widget-container stats-container" style="display:block !important;">
-                <div class="col-lg-12 lato-text">
+                <div class="col-lg-6 lato-text">
                     <a id="INVITEDSLINK" href="/ShowInvited:{{$job->id}}" style="text-decoration:none;">
                         <div class="number" style="color:#2980b9;">
                             <i class="fa fa-envelope-square"></i>
@@ -179,6 +179,16 @@
                         </div>
                         <div class="text" style="color:#2980b9;">
                             Invited
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-6 lato-text">
+                    <a href="#" data-toggle="modal" data-target="#MULTI_INVITE_MODAL" style="text-decoration:none;">
+                        <div class="number" style="color:#2980b9;">
+                            <i class="fa fa-send"></i>
+                        </div>
+                        <div class="text" style="color:#2980b9;">
+                            Invite Multiple Workers
                         </div>
                     </a>
                 </div>
@@ -243,4 +253,41 @@
         </div>
     </div>
 </section>
+
+
+<div class="modal modal-vcenter fade lato-text" id="MULTI_INVITE_MODAL" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body" style="padding-top: 2em;">
+                <div class="row">
+                    <div class="col-md-4">
+                        @if($checkoutUsers->count() > 0)
+                            <center><h3 style="margin: 0;">Checked out Worker</h3></center>
+                            @foreach($checkoutUsers as $cu)
+                                <div style="padding: 0.3em;">
+                                    <input type="checkbox" class="MULTI_INVITE_CHECKBOX">
+                                    <a target="_tab" href="/{{$cu->username}}">{{$cu->fullName}}</a>
+                                </div>
+                            @endforeach
+                        @else
+                            <center><i>You have no checked out users yet.</i></center>
+                        @endif
+                    </div>
+                    <div class="col-md-4">
+                        <center><h3 style="margin: 0;">Bookmarked Workers</h3></center>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Invitation Message</label>
+                            <textarea class="form-control" placeholder="INVITATION MESSAGE" rows="10">Hi! We've seen your profile and we would like to invite you for the</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Send Invite</button>
+            </div>
+        </div>
+    </div>
+</div>
 @stop

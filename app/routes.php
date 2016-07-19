@@ -219,6 +219,10 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
 });
 
 Route::group(array('before' => 'CLIENT-ONLY'), function(){
+    // BOOKMARK ROUTES
+    Route::get('/ADD_BOOKMARK:{worker_id}', 'ClientIndiController@ADD_BOOKMARK');
+    Route::get('/REMOVE_BOOKMARK:{bookmark_id}', 'ClientIndiController@REMOVE_BOOKMARK');
+
     // NEW PROVEEK MODEL ROUTES FOR JOBS -- START
     Route::get('/createJob', 'ClientIndiController@createJob');
     Route::post('/doCreateJob', 'ClientIndiController@doCreateJob');

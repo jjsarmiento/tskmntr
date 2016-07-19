@@ -1434,8 +1434,13 @@ class ClientIndiController extends \BaseController {
             ])
             ->get();
 
+        $checkoutUsers = User::join('purchases', 'users.id', '=', 'purchases.worker_id')
+                            ->where('purchases.company_id', '=', Auth::user()->id)
+                            ->get();
+
         return View::make('client.ShowInvited')
                 ->with('job', $job)
+                ->with('checkoutUsers', $checkoutUsers)
                 ->with('invitedWorkers', $invitedWorkers);
     }
 
@@ -1503,6 +1508,21 @@ class ClientIndiController extends \BaseController {
     public function removeCartItem($cartID){
         Cart::where('id', $cartID)->delete();
 
+        return Redirect::back();
+    }
+
+    public function ADD_BOOKMARK($worker_id){
+        BookmarkUser::insert([
+            'worker_id'     =>  $worker_id,
+            'company_id'    =>  Auth::user()->id,
+            'created_at'    =>  date("Y:m:d H:i:s")
+        ]);
+
+        return Redirect::back();
+    }
+
+    public function REMOVE_BOOKMARK($bookmark_id){
+        BookmarkUser::where('id', $bookmark_id)->delete();
         return Redirect::back();
     }
 }

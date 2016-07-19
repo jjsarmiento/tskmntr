@@ -54,6 +54,17 @@
                              Administrator
                         @endif
                     </p>
+                    <br/>
+                    <br/>
+                    @if($roles == 'TASKMINATOR')
+                        @if($CLIENTFLAG)
+                            @if(User::IS_BOOKMARKED(Auth::user()->id, $users->id))
+                                <a href="/REMOVE_BOOKMARK:{{BookmarkUser::where('worker_id', $users->id)->where('company_id', Auth::user()->id)->pluck('id')}}"><i class="BOOKMARK_USER fa fa-bookmark" style="color: #2ECC71; font-size: 2em;"></i></a>
+                            @else
+                                <a href="/ADD_BOOKMARK:{{$users->id}}"><i class="BOOKMARK_USER fa fa-bookmark-o" style="color: #2ECC71; font-size: 2em;"></i></a>
+                            @endif
+                        @endif
+                    @endif
                     <!-- <div class="text-center div_header">
                     <a href="#next" class="page-scroll">
                         <i class="fa fa-4x fa-angle-down"></i>
