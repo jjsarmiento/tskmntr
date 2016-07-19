@@ -479,7 +479,8 @@ class HomeController extends BaseController {
                     'fullName'              =>  Input::get('fName').' '.Input::get('lName'),
                     'created_at'            =>  date("Y:m:d H:i:s"),
                     'updated_at'            =>  date("Y:m:d H:i:s"),
-                    'status'                =>  'PRE_ACTIVATED',
+                    'status'                =>  'ACTIVATED',
+//                    'status'                =>  'PRE_ACTIVATED',
                     'confirmationCode'      =>  $this->generateConfirmationCode()
                 ));
 
