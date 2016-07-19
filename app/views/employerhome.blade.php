@@ -642,19 +642,19 @@
 
 
 <!-- MODALS -->
-    <div class="modal modal-vcenter fade" id="GlobalModal" role="dialog">
+    <div class="modal modal-vcenter fade lato-text" id="GlobalModal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content" style="background-image: url(frontend/img/modalBg.jpg)">
                 <div class="modal-header text-center">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <i class="fa fa-user-plus fa-5x text-primary"></i>
-                    <h2 style="text-transform:uppercase;">Find Jobs That Matched Your Skills</h2>
+                    <h2 style="text-transform:uppercase;">Find Skilled Workers for your Job</h2>
                 </div>
                 <div class="modal-body text-center" style="padding-bottom:0">
-                    <p>We are currently signing up our first set of workers.<br> If you are a skilled or manual laborer and want to put your profile for employers to easily find you, sign up now and start getting job notifications!</p>
+                    <p style="font-size:16px;">Sign up as Employer now, post jobs and find workers suitable for that job. A 3-month subscription is active upon signing up.</p>
                 </div>
                 <div class="modal-footer text-center" style="text-align:center; padding-bottom:20px;">
-                    <a href="/login" class="btn btn-primary btn-md" style="font-size:15pt; padding:15px 30px 15px 30px;border-radius: 4px;">SIGN UP</a>
+                    <a href="/employer" class="btn btn-primary btn-md" style="border:1px solid #2980b9; font-size:16pt; padding:15px 30px 15px 30px;border-radius: 4px;">SIGN UP</a>
                 </div>
             </div>
         </div>
