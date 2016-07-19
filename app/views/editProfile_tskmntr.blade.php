@@ -168,23 +168,25 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 well" style="font-weight: bolder;">
+                                <div class="col-md-6 well" style="margin-bottom:0;">
                                     <div class="heading" style="font-size:14pt; color:#2980b9">
                                         <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Account Information
                                     </div>
-                                    <div style="display:table-row;">
-                                        <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
-                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
-                                        <span style="display:table-cell">{{ Auth::user()->username }}</span>
+                                    <div style="padding-left: 30px;" style="display:table">
+                                        <div style="display:table-row;">
+                                            <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
+                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                            <span style="display:table-cell">{{ Auth::user()->username }}</span>
+                                        </div>
+                                        <div style="display:table-row;">
+                                            <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Password</span>
+                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                            <span style="display:table-cell">******</span>
+                                        </div>
+                                        <br/>
+                                        <a href="#" data-target="#CHNGPSS-MODAL" data-toggle="modal" class="btn btn-primary btn-xs" style="border-radius: 4px; border:1px solid #2980b9">Change password</a><br/>
+                                        <a href="#" data-target="#DEACTIVATE-MODAL" data-toggle="modal" class="btn btn-danger btn-xs" style="border-radius: 4px;">Deactivate Account</a>
                                     </div>
-                                    <div style="display:table-row;">
-                                        <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Password</span>
-                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
-                                        <span style="display:table-cell">******</span>
-                                    </div>
-                                    <br/>
-                                    <a href="#" data-target="#CHNGPSS-MODAL" data-toggle="modal">Change password</a><br/><br/>
-                                    <a href="#" data-target="#DEACTIVATE-MODAL" data-toggle="modal" class="btn btn-danger btn-xs">Deactivate Account</a>
                                 </div>
                             </div>
 
