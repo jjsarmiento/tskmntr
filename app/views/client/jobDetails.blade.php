@@ -7,6 +7,7 @@
 @section('head-content')
     <style type="text/css">
         .badge {
+            background-color: #1ABC9C;
             width: auto;
             max-width: 10em;
             overflow:hidden;
@@ -171,7 +172,9 @@
                         <div class="col-md-12">
                             <i class="fa fa-map-marker"></i>&nbsp;&nbsp;&nbsp;{{ $job->cityname }}, {{ $job->regname }}
                         </div>
-                        <div class="col-md-12">P{{ $job->salary }}</div>
+                        @if($job->salary != 0)
+                            <div class="col-md-12">P{{ $job->salary }}</div>
+                        @endif
                         <br/>
                         <br/>
                         <br/>

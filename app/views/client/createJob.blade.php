@@ -131,7 +131,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="salaryRange">Salary</label>
-                                                {{ Form::text('salaryRange', Input::old('salaryRange'), array('class' => 'form-control', 'placeholder' => 'salaryRange', 'required' => 'true')) }}
+                                                {{ Form::text('salaryRange', Input::old('salaryRange'), array('class' => 'form-control', 'placeholder' => 'salaryRange')) }}
                                             </div>
                                             <div class="well">
                                                 <h4>Company Snapshots</h4>

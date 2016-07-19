@@ -6,6 +6,15 @@
 
 @section('head-content')
     <style type="text/css">
+        .badge {
+            background-color: #1ABC9C;
+            width: auto;
+            max-width: 10em;
+            overflow:hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+        }
+
         body{background-color:#E9EAED;}
         .accordion-toggle
         {

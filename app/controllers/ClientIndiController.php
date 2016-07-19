@@ -1326,6 +1326,7 @@ class ClientIndiController extends \BaseController {
     }
 
     public function SNDINVT($invitedId, $jobId){
+        /*
         $job = Job::leftJoin('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->leftJoin('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
             ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
@@ -1351,6 +1352,39 @@ class ClientIndiController extends \BaseController {
                 'jobs.hiring_type'
             ])
             ->first();
+        */
+        $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
+            ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->where('jobs.id', $jobId)
+            ->select([
+                'jobs.id',
+                'jobs.title',
+                'jobs.created_at',
+                'jobs.description',
+                'jobs.requirements',
+                'jobs.salary',
+                'jobs.hiring_type',
+                'jobs.Industry',
+                'jobs.AverageProcessingTime',
+                'jobs.CompanySize',
+                'jobs.WorkingHours',
+                'jobs.DressCode',
+                'regions.regname',
+                'regions.regcode',
+                'barangays.bgyname',
+                'barangays.bgycode',
+                'cities.cityname',
+                'cities.citycode',
+                'taskcategory.categoryname',
+                'taskcategory.categorycode',
+                'taskitems.itemname',
+                'taskitems.itemcode'
+            ])
+            ->first();
+        $custom_skills = CustomSkill::where('company_job_id', $jobId)->get();
 
         $worker = User::leftJoin('regions', 'regions.regcode', '=', 'users.region')
                 ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
@@ -1370,6 +1404,7 @@ class ClientIndiController extends \BaseController {
         return View::make('client.SNDINVT')
                 ->with('worker', $worker)
                 ->with('job', $job)
+                ->with('custom_skills', $custom_skills)
                 ->with('invitation', $invitation);
     }
 
