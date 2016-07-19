@@ -224,7 +224,7 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
 
     // BOOKMARK ROUTES
     Route::get('/ADD_BOOKMARK:{worker_id}', 'ClientIndiController@ADD_BOOKMARK');
-    Route::get('/REMOVE_BOOKMARK:{book}', 'ClientIndiController@ADD_BOOKMARK');
+    Route::get('/REMOVE_BOOKMARK:{book}', 'ClientIndiController@REMOVE_BOOKMARK');
     Route::get('/bookmarkedUsers', 'ClientIndiController@bookmarkedUsers');
 
     // NEW PROVEEK MODEL ROUTES FOR JOBS -- START
