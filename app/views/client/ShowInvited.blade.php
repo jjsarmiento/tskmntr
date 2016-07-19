@@ -131,6 +131,10 @@
               cursor: pointer;
               margin-left: 10px;
             }
+
+            .INVITE-BOOKMARK-WORKERS:hover {
+                background-color: #cce6ff;
+            }
     </style>
     <script>
         $(document).ready(function(){
@@ -147,26 +151,30 @@
     <div class="container lato-text">
         <div class="col-md-8">
             <div class="row">
-                @foreach($invitedWorkers as $w)
-                <div class="col-md-6" style=" padding-bottom: 1.5em;">
-                    <div class="media block-update-card">
-                        <a class="pull-left" href="#">
-                            @if($w->profilePic != "")
-                                <img class="media-object update-card-MDimentions" src="{{$w->profilePic}}">
-                            @else
-                                <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
-                            @endif
-                        </a>
-                        <div class="media-body update-card-body">
-                            <a href="/{{$w->username}}" style="font-weight: bolder;">
-                                {{$w->fullName }}
+                @if($invitedWorkers->count() == 0)
+                    <center><i>No invited workers yet</i></center>
+                @else
+                    @foreach($invitedWorkers as $w)
+                    <div class="col-md-6" style=" padding-bottom: 1.5em;">
+                        <div class="media block-update-card">
+                            <a class="pull-left" href="#">
+                                @if($w->profilePic != "")
+                                    <img class="media-object update-card-MDimentions" src="{{$w->profilePic}}">
+                                @else
+                                    <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                                @endif
                             </a>
-                            <p>{{$w->regname.', ' }}{{ $w->cityname }}</p>
-                            <a href="/SNDINVT:{{$w->userid}}:{{$job->id}}"><i class="fa fa-envelope"></i> View Invitation</a>
+                            <div class="media-body update-card-body">
+                                <a href="/{{$w->username}}" style="font-weight: bolder;">
+                                    {{$w->fullName }}
+                                </a>
+                                <p>{{$w->regname.', ' }}{{ $w->cityname }}</p>
+                                <a href="/SNDINVT:{{$w->userid}}:{{$job->id}}"><i class="fa fa-envelope"></i> View Invitation</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                @endforeach
+                    @endforeach
+                @endif
             </div>
         </div>
         <div class="col-md-4">
@@ -255,31 +263,48 @@
 </section>
 
 
+<form method="POST" action="/SENDMULTIPLEINVITE">
+<input type="hidden" value="{{$job->id}}" name="JOBID" />
 <div class="modal modal-vcenter fade lato-text" id="MULTI_INVITE_MODAL" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body" style="padding-top: 2em;">
                 <div class="row">
-                    <div class="col-md-4">
-                        @if($checkoutUsers->count() > 0)
-                            <center><h3 style="margin: 0;">Checked out Worker</h3></center>
-                            @foreach($checkoutUsers as $cu)
-                                <div style="padding: 0.3em;">
-                                    <input type="checkbox" class="MULTI_INVITE_CHECKBOX">
-                                    <a target="_tab" href="/{{$cu->username}}">{{$cu->fullName}}</a>
-                                </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                        @if($bookmarks->count() > 0)
+                            <center><h3 style="margin: 0; margin-bottom: 1em;">Bookmarked Workers</h3></center>
+                            @foreach($bookmarks as $bm)
+                                @if(in_array($bm->userID, $CHECKED_OUT_USERS))
+                                    <div class="col-md-12 INVITE-BOOKMARK-WORKERS" style="padding: 0.4em;">
+                                        <div class="col-md-7">
+                                            <a target="_tab" href="/{{$bm->username}}">{{$bm->fullName}}</a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input type="checkbox" class="MULTI_INVITE_CHECKBOX" name="WORKERS[]" value="{{$bm->userID}}">
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="col-md-12 INVITE-BOOKMARK-WORKERS" style="padding: 0.4em;">
+                                        <div class="col-md-7">
+                                            <a href="/{{$bm->username}}">
+                                                {{substr_replace($bm->firstName, str_repeat('*', strlen($bm->firstName)-1), 1)}}
+                                                &nbsp;
+                                                {{substr_replace($bm->lastName, str_repeat('*', strlen($bm->lastName)-1), 1)}}
+                                            </a>
+                                        </div>
+                                        <div class="col-md-5"></div>
+                                    </div>
+                                @endif
                             @endforeach
                         @else
-                            <center><i>You have no checked out users yet.</i></center>
                         @endif
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <center><h3 style="margin: 0;">Bookmarked Workers</h3></center>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label>Invitation Message</label>
-                            <textarea class="form-control" placeholder="INVITATION MESSAGE" rows="10">Hi! We've seen your profile and we would like to invite you for the</textarea>
+                            <textarea name="INVITATIONMSG" required="required" class="form-control" placeholder="INVITATION MESSAGE" rows="10">Hi! We've seen your profile and we would like to invite you to apply for this job ({{$job->title}})</textarea>
                         </div>
                     </div>
                 </div>
@@ -290,4 +315,5 @@
         </div>
     </div>
 </div>
+</form>
 @stop

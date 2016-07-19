@@ -1434,13 +1434,27 @@ class ClientIndiController extends \BaseController {
             ])
             ->get();
 
-        $checkoutUsers = User::join('purchases', 'users.id', '=', 'purchases.worker_id')
-                            ->where('purchases.company_id', '=', Auth::user()->id)
-                            ->get();
+        $bookmarks = User::join('bookmark_users', 'users.id', '=', 'bookmark_users.worker_id')
+            ->where('bookmark_users.company_id', Auth::user()->id)
+            ->select([
+                'users.fullName',
+                'users.firstName',
+                'users.lastName',
+                'users.id as userID',
+                'users.username',
+                'bookmark_users.id as bmID',
+                'bookmark_users.worker_id',
+                'bookmark_users.company_id',
+                'bookmark_users.created_at as bookmarked_at',
+            ])
+            ->get();
+
+        $CHECKED_OUT_USERS = $this->GETCHECKEDOUTUSERS(Auth::user()->id);
 
         return View::make('client.ShowInvited')
                 ->with('job', $job)
-                ->with('checkoutUsers', $checkoutUsers)
+                ->with('bookmarks', $bookmarks)
+                ->with('CHECKED_OUT_USERS', $CHECKED_OUT_USERS)
                 ->with('invitedWorkers', $invitedWorkers);
     }
 
@@ -1523,6 +1537,43 @@ class ClientIndiController extends \BaseController {
 
     public function REMOVE_BOOKMARK($bookmark_id){
         BookmarkUser::where('id', $bookmark_id)->delete();
+        return Redirect::back();
+    }
+
+    public function bookmarkedUsers(){
+        $bookmarks = User::join('bookmark_users', 'users.id', '=', 'bookmark_users.worker_id')
+                        ->where('bookmark_users.company_id', Auth::user()->id)
+                        ->select([
+                            'users.fullName',
+                            'users.firstName',
+                            'users.lastName',
+                            'users.id as userID',
+                            'bookmark_users.id as bmID',
+                            'bookmark_users.worker_id',
+                            'bookmark_users.company_id',
+                            'bookmark_users.created_at as bookmarked_at',
+                        ])
+                        ->get();
+
+        $INCART = $this->GETINCART(Auth::user()->id);
+        $CHECKED_OUT_USERS = $this->GETCHECKEDOUTUSERS(Auth::user()->id);
+
+        return View::make('client.bookmarkedUsers')
+                ->with('INCART', $INCART)
+                ->with('CHECKED_OUT_USERS', $CHECKED_OUT_USERS)
+                ->with('bookmarks', $bookmarks);
+    }
+
+    public function SENDMULTIPLEINVITE(){
+        foreach(Input::get('WORKERS') as $w){
+            JobInvite::insert([
+                'invited_id'    =>  $w,
+                'job_id'        =>  Input::get('JOBID'),
+                'message'       =>  Input::get('INVITATIONMSG'),
+                'created_at'    =>  date("Y:m:d H:i:s")
+            ]);
+        }
+
         return Redirect::back();
     }
 }

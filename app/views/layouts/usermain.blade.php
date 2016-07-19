@@ -315,6 +315,11 @@
                                 </div>
                             @endif
                         </li>
+                        <li>
+                            <a href="/bookmarkedUsers" style="background:transparent; font-size: 14pt;">
+                                <i class="fa fa-bookmark fa-fw"></i>
+                            </a>
+                        </li>
                     @endif
                     <li>
                         <a href="{{ url('/')."/".Auth::user()->username }}" class="user lato-text" style="display:inline-block; padding-right:0;">
