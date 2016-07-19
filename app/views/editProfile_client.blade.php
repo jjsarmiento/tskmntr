@@ -93,7 +93,7 @@
             </div>
             @endif
 
-            <div class="col-sm-12">
+            <div class="col-lg-12">
                 <div class="widget-container fluid-height">
                     <div class="widget-content padded row" style="padding-bottom: 30px">
                         <div class="col-sm-3" style="align-items: center; align-content: center; text-align: center;">
@@ -113,13 +113,13 @@
                                 <span style="margin-top: 1em; border-radius: 0.3em; padding : 0.3em; color: #ECF0F1; display: none; background-color: #2C3E50;" id="picNotice">Click to change profile picture</span>
                             @endif
                         </div>
-                        <div class="col-sm-9">
+                        <div class="col-lg-9">
                             <div class="row">
-                                <div class="col-md-6 col-lg-6 col-sm-6">
-                                    <div class="heading">
-                                        <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Personal Information <button onclick="location.href='/cltEditPersonalInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                                <div class="col-md-6">
+                                    <div class="heading" style="font-size:14pt; color:#2980b9">
+                                        <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>Personal Information <button onclick="location.href='/cltEditPersonalInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
                                     </div>
-                                    <div style="padding: 0 12px;">
+                                    <div style="padding-left: 42px;">
                                         @if(UserHasRole::where('user_id', $user->id)->pluck('role_id') == 3)
                                             <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">First Name</span>
                                              :
@@ -158,30 +158,32 @@
                                         <span style="margin-left: 5px">{{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }}</span><br/>
                                     </div>
                                 </div>
-                                <div class="col-md-6 well">
-                                    {{--<div class="heading" style="font-size:14pt; color:#2980b9">--}}
-                                        {{--<i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Account Information--}}
-                                    {{--</div>--}}
-                                    <div style="display:table-row;">
-                                        <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
-                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
-                                        <span style="display:table-cell">{{ Auth::user()->username }}</span>
+                                <div class="col-md-6 well" style="margin-bottom:0;">
+                                    <div class="heading" style="font-size:14pt; color:#2980b9; background:none;">
+                                        <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>Account Information
                                     </div>
-                                    <div style="display:table-row;">
-                                        <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Password</span>
-                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
-                                        <span style="display:table-cell">******</span>
+                                    <div style="padding-left: 30px;" style="display:table">
+                                        <div style="display:table-row;">
+                                            <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
+                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                            <span style="display:table-cell">{{ Auth::user()->username }}</span>
+                                        </div>
+                                        <div style="display:table-row;">
+                                            <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Password</span>
+                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                            <span style="display:table-cell">******</span>
+                                        </div>
+                                        <br/>
+                                        <a href="#" data-target="#CHNGPSS-MODAL" data-toggle="modal" class="btn btn-primary btn-xs" style="border-radius: 4px; border:1px solid #2980b9">Change password</a><Br/>
+                                        <a href="#" data-target="#DEACTIVATE-MODAL" data-toggle="modal" class="btn btn-danger btn-xs" style="border-radius: 4px;">Deactivate Account</a>
                                     </div>
-                                    <br/>
-                                    <a href="#" data-target="#CHNGPSS-MODAL" data-toggle="modal">Change password</a><Br/>
-                                    <a href="#" data-target="#DEACTIVATE-MODAL" data-toggle="modal" class="btn btn-danger btn-xs">Deactivate Account</a>
                                 </div>
                             </div>
                             <hr/>
-                            <div class="heading">
-                                <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>&nbsp Contact Information <button onclick="location.href='/cltEditContactInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                            <div class="heading" style="font-size:14pt; color:#2980b9">
+                                <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>Contact Information <button onclick="location.href='/cltEditContactInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
                             </div>
-                            <div style="padding: 0 12px;">
+                            <div style="padding-left: 42px">
                                 @foreach($contacts as $contact)
                                     <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">
                                         @if($contact->ctype == "mobileNum") Mobile No.
