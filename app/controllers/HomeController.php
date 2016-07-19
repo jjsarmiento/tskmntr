@@ -67,6 +67,7 @@ class HomeController extends BaseController {
             $USERINCART = false;
             $PURCHASED = false;
             $CLIENTFLAG = false;
+            $MULTIJOB = false;
             if(User::GETROLE(Auth::user()->id) == 'CLIENT_IND' || User::GETROLE(Auth::user()->id) == 'CLIENT_CMP'){
                 $CLIENTFLAG = true;
             }
@@ -79,6 +80,10 @@ class HomeController extends BaseController {
                 $PURCHASED = Purchase::where('worker_id', $temp->id)
                                 ->where('company_id', Auth::user()->id)
                                 ->count();
+
+                $MULTIJOB = Job::where('user_id', Auth::user()->id)
+                            ->whereNotIn('id', $this->WORKERGETINVITES_JOBID($temp->id))
+                            ->get();
             }
             // DETERMINE IF USER HAS CHECKEDOUT WORKER -- END by Jan Sarmiento
 
@@ -90,7 +95,8 @@ class HomeController extends BaseController {
                 ->with('mobile', $mobile)
                 ->with('CLIENTFLAG', $CLIENTFLAG)
                 ->with('USERINCART', $USERINCART)
-                ->with('PURCHASED', $PURCHASED);
+                ->with('PURCHASED', $PURCHASED)
+                ->with('MULTIJOB', $MULTIJOB);
 
         }else{
 //            return "ROUTE DOESN'T EXIST";

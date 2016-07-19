@@ -279,5 +279,25 @@ class BaseController extends Controller {
             return false;
         }
     }
+
+
+    public static function IS_PURCHASED($compID, $workerID){
+        if(Purchase::where('company_id', $compID)->where('worker_id', $workerID)->count() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function WORKERGETINVITES_JOBID($workerID){
+        $j = JobInvite::where('invited_id', $workerID)->get();
+
+        $myArr = array();
+        foreach($j as $o){
+            array_push($myArr, $o->job_id);
+        }
+
+        return $myArr;
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

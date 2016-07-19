@@ -171,6 +171,10 @@
             max-height:1px;
         }
 
+        .JOB-BOX:hover {
+            background-color: #cce6ff;
+        }
+
     </style>
     @yield('head-content')
 </head>
@@ -426,7 +430,49 @@
     </div>
     {{--MODAL FOR CART -- END--}}
 
-    {{--MODAL -- START--}}
+
+    @if(@$MULTIJOB)
+        <form method="POST" action="/INVITEMULTIJOB">
+            <input type="hidden" value="{{$users->id}}" name="workerID">
+            <div class="modal modal-vcenter fade lato-text" id="INVITEMULTIJOB" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body" style="padding-top: 2em;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @if($MULTIJOB->count() > 0)
+                                        <center><h3 style="margin: 0; margin-bottom: 1em;">Jobs</h3></center>
+                                        @foreach($MULTIJOB as $job)
+                                            <div class="col-md-12 JOB-BOX" style="padding: 0.4em;">
+                                                <div class="col-md-2">
+                                                    <input type="checkbox" name="INVITEMULTIJOB_jobID[]" class="form-control" value="{{$job->id}}" >
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <h5 style="margin:0;"><a target="_tab" href="/jobDetails{{$job->id}}">{{$job->title}}</a></h5>
+                                                    <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <center><i>No job ads applicable for this worker</i></center>
+                                    @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Invite Message</label>
+                                        <textarea name="INVITEMULTIJOB_message" rows="10" class="form-control" placeholder="Invitation Message (Worker will see these invitations seperately)">Hi! We've seen your profile and we would like to invite you to apply!</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Send Invites</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    @endif
 
     {{--MODAL FOR CHANGE PASS--}}
     <form method="POST" action="/CHNGPSS">

@@ -246,6 +246,7 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
     Route::get('/checkouts', 'ClientIndiController@checkouts');
     Route::get('/removeCartItem:{cartID}', 'ClientIndiController@removeCartItem');
     Route::get('/deleteJob={cartID}', 'ClientIndiController@deleteJob');
+    Route::post('/INVITEMULTIJOB', 'ClientIndiController@INVITEMULTIJOB');
     // NEW PROVEEK MODEL ROUTES FOR JOBS -- END
 
     // THE ROLE BASED ROUTES FOR CLIENT GOES HERE

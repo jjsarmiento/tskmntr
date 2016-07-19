@@ -19,7 +19,7 @@
     <header style="min-height:70%;">
         <div class="vegas.overlay" style="width:100%; height:100%; background-color:rgba(0,0,0,.7);">
             <div class="header-content">
-                <div class="header-content-inner wow fadeIn text-center" data-wow-delay="2s" > <!--style="background-color:rgba(0,0,0,.5); padding-top: 35px; padding-bottom:15px; border-radius: 8px;" -->
+                <div class="header-content-inner wow fadeIn text-center" data-wow-delay="0s" > <!--style="background-color:rgba(0,0,0,.5); padding-top: 35px; padding-bottom:15px; border-radius: 8px;" -->
                     @if($users->profilePic)
                         <img class="userProfile" src="{{$users->profilePic}}" />
                     @else
@@ -62,6 +62,11 @@
                                 <a href="/REMOVE_BOOKMARK:{{BookmarkUser::where('worker_id', $users->id)->where('company_id', Auth::user()->id)->pluck('id')}}"><i class="BOOKMARK_USER fa fa-bookmark" style="color: #2ECC71; font-size: 2em;"></i></a>
                             @else
                                 <a href="/ADD_BOOKMARK:{{$users->id}}"><i class="BOOKMARK_USER fa fa-bookmark-o" style="color: #2ECC71; font-size: 2em;"></i></a>
+                            @endif
+
+                            @if(BaseController::IS_PURCHASED(Auth::user()->id, $users->id))
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="#" data-toggle="modal" data-target="#INVITEMULTIJOB"><i class="fa fa-envelope" style="color: #F1C40F; font-size: 2em;"></i></a>
                             @endif
                         @endif
                     @endif

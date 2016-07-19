@@ -149,12 +149,6 @@
         <div class="col-md-6">
 
             <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
-                <a href="/deleteJob={{$job->id}}" type="button" class="close" style="opacity: 0.5;">
-                    <i class="fa fa-trash"></i>
-                </a>
-                <a href="/editJob={{$job->id}}" type="button" class="close" style="opacity: 0.5;  margin-right: 0.4em;">
-                    <i class="fa fa-edit"></i>
-                </a>
                 <h3 style="margin: 0;">{{$job->title}}</h3>
                 <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>
                 <br/>

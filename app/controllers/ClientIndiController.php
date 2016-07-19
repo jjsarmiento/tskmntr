@@ -1625,4 +1625,16 @@ class ClientIndiController extends \BaseController {
 
         return Redirect::to('/jobs');
     }
+
+    public function INVITEMULTIJOB(){
+        foreach(Input::get('INVITEMULTIJOB_jobID') as $j){
+            JobInvite::insert([
+                'invited_id'    =>  Input::get('workerID'),
+                'job_id'        =>  $j,
+                'message'       =>  Input::get('INVITEMULTIJOB_message'),
+                'created_at'    =>  date("Y:m:d H:i:s")
+            ]);
+        }
+        return Redirect::back();
+    }
 }
