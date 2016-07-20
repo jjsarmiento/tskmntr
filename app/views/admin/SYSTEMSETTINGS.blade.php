@@ -91,18 +91,18 @@
                         <div class="widget-content padded">
                             <div class="row">
                                 @foreach($SYS_SETTINGS as $sys)
-                                    @if($sys->type == "SYSSETTINGS_POINTSPREAD")
+                                    @if($sys->type == "SYSSETTINGS_POINTSPERAD")
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Job Ad creation cost (POINTS)</label>
-                                                <input value="{{$sys->value}}" required="required" name="SYSSETTINGS_POINTSPREAD" id="SYSSETTINGS_POINTSPREAD" type="text" class="form-control" placeholder="POINTS" />
+                                                <input value="{{$sys->value}}" required="required" name="SYSSETTINGS_POINTSPERAD" id="SYSSETTINGS_POINTSPERAD" type="text" class="form-control" placeholder="POINTS" />
                                             </div>
                                         </div>
                                     @elseif($sys->type == "SYSSETTINGS_JOBADDURATION")
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Duration of Job Ad after creation (HOURS)</label>
-                                                <input value="{{$sys->value}}" required="required" name="SYSSETTINGS_JOBADDURATION" id="SYSSETTINGS_POINTSPREAD" type="text" class="form-control" placeholder="Job ad duration" />
+                                                <input value="{{$sys->value}}" required="required" name="SYSSETTINGS_JOBADDURATION" id="SYSSETTINGS_JOBADDURATION" type="text" class="form-control" placeholder="Job ad duration" />
                                             </div>
                                         </div>
                                     @elseif($sys->type == "SYSSETTINGS_CHECKOUTPRICE")

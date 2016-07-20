@@ -299,5 +299,19 @@ class BaseController extends Controller {
 
         return $myArr;
     }
+
+    public function POINT_CHECK($USERPOINTS, $SCENARIO){
+        switch($SCENARIO){
+            case 'CREATE_JOB' :
+                $POINT_PER_JOB = SystemSetting::where('type', 'SYSSETTINGS_POINTSPERAD')->pluck('value');
+                if($POINT_PER_JOB > $USERPOINTS){
+                    return false;
+                }else{
+                    return true;
+                }
+            default :
+                return false;
+        }
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

@@ -146,6 +146,14 @@
                     location.href = $(this).attr('data-href');
                 }
             });
+
+            $('#CREATE_JOB').click(function(){
+                if(parseFloat($('#SYSSETTINGS_POINTSPERAD').val()) < parseFloat($('#USR_POINTS').text())){
+                    location.href = $(this).data('href');
+                }else{
+                    alert("You don't have enough points to create a job ad");
+                }
+            })
         })
     </script>
 @stop
@@ -155,6 +163,7 @@
 @stop
 
 @section('content')
+<input type="hidden" id="SYSSETTINGS_POINTSPERAD" value="{{SystemSetting::where('type', 'SYSSETTINGS_POINTSPERAD')->pluck('value')}}">
 <section>
     <div class="container lato-text">
         <div class="row">
@@ -197,13 +206,13 @@
                                 <a style="border-radius: 0.3em;" href="/tskmntrSearch" class="btn btn-primary btn-block">Search for Taskminators</a>
                                 -->
 
-                                <a style="border-radius: 0.3em;" href="/createJob" class="btn btn-success btn-block btn-lg">Create Job</a>
+                                <a style="border-radius: 0.3em;" href="#" data-href="/createJob" id="CREATE_JOB" class="btn btn-success btn-block btn-lg">Create Job</a>
                                 <a style="border-radius: 0.3em;" href="/jobs" class="btn btn-primary btn-block">Job</a>
                             @endif
                             <div class="row" style="font-size: 1.2em; font-weight: bolder; text-align: center;">
                                 <div class="col-md-6 padded">
                                     <i class="fa fa-diamond" style="color: #2980B9;"></i>&nbsp;
-                                    {{ Auth::user()->points }}
+                                    <span id="USR_POINTS">{{ Auth::user()->points }}</span>
                                 </div>
                                 <div class="col-md-6 padded">
                                     <i class="fa fa-user" style="color: #2980B9;"></i>&nbsp;

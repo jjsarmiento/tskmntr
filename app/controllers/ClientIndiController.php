@@ -998,49 +998,62 @@ class ClientIndiController extends \BaseController {
     }
 
     public function createJob(){
-        return View::make('client.createJob')
-            ->with('regions', Region::all())
-            ->with('barangays', Barangay::where('citycode', '012801')->orderBy('bgyname', 'ASC')->get())
-            ->with('cities', City::where('regcode', '01')->orderBy('cityname', 'ASC')->get())
-            ->with('taskcategories',TaskCategory::orderBy('categoryname', 'ASC')->get())
-            ->with('intiTaskitems', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get());
+        if($this->POINT_CHECK(Auth::user()->points, 'CREATE_JOB')){
+            return View::make('client.createJob')
+                ->with('regions', Region::all())
+                ->with('barangays', Barangay::where('citycode', '012801')->orderBy('bgyname', 'ASC')->get())
+                ->with('cities', City::where('regcode', '01')->orderBy('cityname', 'ASC')->get())
+                ->with('taskcategories',TaskCategory::orderBy('categoryname', 'ASC')->get())
+                ->with('intiTaskitems', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get());
+        }else{
+            return Redirect::to('/');
+        }
     }
 
     public function doCreateJob(){
-
-        $jobId = Job::insertGetId(array(
-            'user_id'               =>  Auth::user()->id,
-            'title'                 =>  Input::get('title'),
-            'description'           =>  Input::get('description'),
-            'requirements'          =>  Input::get('requirements'),
-            'skill_category_code'   =>  Input::get('taskcategory'),
-            'skill_code'            =>  Input::get('taskitems'),
-            'regcode'               =>  Input::get('region'),
+        if($this->POINT_CHECK(Auth::user()->points, 'CREATE_JOB')){
+            $jobId = Job::insertGetId(array(
+                'user_id'               =>  Auth::user()->id,
+                'title'                 =>  Input::get('title'),
+                'description'           =>  Input::get('description'),
+                'requirements'          =>  Input::get('requirements'),
+                'skill_category_code'   =>  Input::get('taskcategory'),
+                'skill_code'            =>  Input::get('taskitems'),
+                'regcode'               =>  Input::get('region'),
 //            'bgycode'               =>  Input::get('barangay'),
-            'citycode'              =>  Input::get('city'),
-            'hiring_type'           =>  Input::get('hireType'),
-            'salary'                =>  Input::get('salaryRange'),
-            'AverageProcessingTime' =>  Input::get('AverageProcessingTime'),
-            'Industry'              =>  Input::get('Industry'),
-            'CompanySize'           =>  Input::get('CompanySize'),
-            'WorkingHours'          =>  Input::get('WorkingHours'),
-            'DressCode'             =>  Input::get('DressCode'),
-            'created_at'            =>  date("Y:m:d H:i:s")
-        ));
+                'citycode'              =>  Input::get('city'),
+                'hiring_type'           =>  Input::get('hireType'),
+                'salary'                =>  Input::get('salaryRange'),
+                'AverageProcessingTime' =>  Input::get('AverageProcessingTime'),
+                'Industry'              =>  Input::get('Industry'),
+                'CompanySize'           =>  Input::get('CompanySize'),
+                'WorkingHours'          =>  Input::get('WorkingHours'),
+                'DressCode'             =>  Input::get('DressCode'),
+                'created_at'            =>  date("Y:m:d H:i:s")
+            ));
 
-        $other_skills = array_map('trim', explode(',', Input::get('otherskills')));
-        foreach($other_skills as $os){
-            if(strip_tags($os) != ""){
-                CustomSkill::insert([
-                    'created_by'        =>  Auth::user()->id,
-                    'company_job_id'    =>  $jobId,
-                    'skill'             =>  strip_tags($os),
-                    'created_at'        =>  date("Y:m:d H:i:s")
-                ]);
+            $other_skills = array_map('trim', explode(',', Input::get('otherskills')));
+            foreach($other_skills as $os){
+                if(strip_tags($os) != ""){
+                    CustomSkill::insert([
+                        'created_by'        =>  Auth::user()->id,
+                        'company_job_id'    =>  $jobId,
+                        'skill'             =>  strip_tags($os),
+                        'created_at'        =>  date("Y:m:d H:i:s")
+                    ]);
+                }
             }
-        }
 
-        return Redirect::to('/jobDetails='.$jobId);
+            // POINT DEDUCTION FOR JOB ADS
+            User::where('id', Auth::user()->id)
+                ->update([
+                    'points'    =>  (Auth::user()->points - SystemSetting::where('type', 'SYSSETTINGS_POINTSPERAD')->pluck('value'))
+                ]);
+
+            return Redirect::to('/jobDetails='.$jobId);
+        }else{
+            return Redirect::to('/');
+        }
     }
 
     public function jobDetails($jobId){

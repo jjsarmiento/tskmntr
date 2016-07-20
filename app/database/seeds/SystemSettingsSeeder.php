@@ -11,7 +11,7 @@ class SystemSettingsSeeder extends Seeder {
         date_default_timezone_set("Asia/Manila");
 
         SystemSetting::create(array(
-            'type'          =>  "SYSSETTINGS_POINTSPREAD",
+            'type'          =>  "SYSSETTINGS_POINTSPERAD",
             'value'         =>  "5",
             'created_at'    =>  date("Y:m:d H:i:s")
         ));

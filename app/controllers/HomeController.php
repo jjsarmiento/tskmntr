@@ -710,10 +710,6 @@ class HomeController extends BaseController {
 
     public function index(){
         if(Auth::check()){
-            // if(Auth::user()->id!=19) {
-            //     Auth::logout();
-            //     return View::make('profile');
-            // }
             switch(Auth::user()->status){
                 case 'DEACTIVATED'      :
                 case 'SELF_DEACTIVATED' :
