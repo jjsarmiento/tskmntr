@@ -871,18 +871,27 @@ class TaskminatorController extends \BaseController {
                         ->where('invited_id', Auth::user()->id)
                         ->first();
 
+
         $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+            ->join('users', 'users.id', '=', 'jobs.user_id')
             ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
             ->leftJoin('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
             ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
-            ->join('users', 'users.id', '=', 'jobs.user_id')
             ->where('jobs.id', $jobId)
             ->select([
-                'jobs.id as jobId',
+                'jobs.id',
                 'jobs.title',
                 'jobs.created_at',
                 'jobs.description',
+                'jobs.requirements',
+                'jobs.salary',
+                'jobs.hiring_type',
+                'jobs.Industry',
+                'jobs.AverageProcessingTime',
+                'jobs.CompanySize',
+                'jobs.WorkingHours',
+                'jobs.DressCode',
                 'regions.regname',
                 'regions.regcode',
                 'barangays.bgyname',
@@ -893,15 +902,17 @@ class TaskminatorController extends \BaseController {
                 'taskcategory.categorycode',
                 'taskitems.itemname',
                 'taskitems.itemcode',
-                'jobs.salary',
-                'jobs.hiring_type',
                 'users.fullName',
-                'users.username'
+                'users.username',
+                'users.id as companyID',
             ])
             ->first();
 
+        $custom_skills = CustomSkill::where('company_job_id', $jobId)->get();
+
         return View::make('taskminator.jbdtls')
                 ->with('job', $job)
+                ->with('custom_skills', $custom_skills)
                 ->with('application', $application)
                 ->with('hasInvite', $hasInvite);
     }

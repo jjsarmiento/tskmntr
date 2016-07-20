@@ -6,6 +6,15 @@
 
 @section('head-content')
     <style type="text/css">
+        .badge {
+            background-color: #1ABC9C;
+            width: auto;
+            max-width: 10em;
+            overflow:hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+        }
+
         body{background-color:#E9EAED;}
         .accordion-toggle
         {
@@ -137,7 +146,7 @@
 @section('content')
 <section>
     <div class="container lato-text">
-        <div class="col-md-6">
+        <div class="col-md-5">
             @if($hasInvite)
                 <div class="widget-container padded" style="min-height: 10px; display:block !important;">
                     <span style="color: #2980B9; font-weight: bold;">
@@ -160,53 +169,87 @@
                     </div><br/>
                 @endif
         </div>
-        <div class="col-md-6">
-            <div class="widget-container padded" style="word-wrap: break-word; display: flex; min-height:125px; display:block !important;">
+        <div class="col-md-7">
+            <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
                 <h3 style="margin: 0;">{{$job->title}}</h3>
-                <span style="color: #7F8C8D; font-size: 1em;">by <a target="_tab" href="/{{$job->username}}">{{$job->fullName}}</a></span><Br/>
-                <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>
+                <span style="color: #7F8C8D;">by <a target="_tab" href="/{{$job->username}}">{{$job->fullName}}</a> created at {{$job->created_at}}</span>
                 <br/>
                 <br/>
                 <div class="row" style="text-align: left">
                     <div class="col-md-6">
-                        <div class="col-md-4">Duration</div>
-                        <div class="col-md-8">
+                        <div class="col-md-12">
+                            <i class="fa fa-clock-o"></i>&nbsp;
                             @if($job->hiring_type == 'LT6MOS')
                                 Less than 6 months
                             @else
                                 Greater than 6 months
                             @endif
                         </div>
-                        <br/><br/>
-                        <div class="col-md-4">
-                            Skill Category
+                        <div class="col-md-12">
+                            <i class="fa fa-map-marker"></i>&nbsp;&nbsp;&nbsp;{{ $job->cityname }}, {{ $job->regname }}
                         </div>
-                        <div class="col-md-8">
-                            {{ $job->categoryname }}
+                        @if($job->salary != 0)
+                            <div class="col-md-12">P{{ $job->salary }}</div>
+                        @endif
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="col-md-12">
+                            <span style="background-color: #1ABC9C;" title="{{$job->categoryname}}" class="badge">
+                                {{ $job->categoryname }}
+                            </span>
+                            <span style="background-color: #3498DB;" title="{{ $job->itemname }}" class="badge">
+                                {{ $job->itemname }}
+                            </span>
+                            @foreach($custom_skills as $cs)
+                                <span style="background-color: #3498DB;" title="{{$cs->skill}}" class="badge">{{$cs->skill}}</span>
+                            @endforeach
                         </div>
-                        <br/><br/>
-                        <div class="col-md-4">
-                            Skill
-                        </div>
-                        <div class="col-md-8">
-                            {{ $job->itemname }}
-                        </div>
-                        <br/><br/><br/>
-                        <div class="col-md-4">
-                            Location
-                        </div>
-                        <div class="col-md-8">
-                            {{ $job->cityname }}, {{ $job->bgyname }}<br/>
-                            {{ $job->regname }}
-                        </div>
-                        <br/><br/><br/>
-                        <div class="col-md-4">Salary</div>
-                        <div class="col-md-8">P{{ $job->salary }}</div>
                         <br/><br/><br/>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="word-wrap: break-word; text-align: justify;">
+                        <label>Description</label><br/>
                         {{ $job->description }}
                     </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-12 well" style="text-align: justify;">
+                            <label>Requirements</label><br/>
+                            {{$job->requirements}}
+                        </div>
+                    </div>
+                    @if($job->AverageProcessingTime || $job->Industry || $job->CompanySize || $job->WorkingHours || $job->DressCode)
+                        <div class="col-md-6" style="text-align: justify;">
+                            <h4>Company Snaphots</h4>
+                            @if($job->AverageProcessingTime)
+                                <label>Average Processing Time</label><br/>
+                                {{$job->AverageProcessingTime}}<br/>
+                            @endif
+
+                            @if($job->Industry)
+                                <label>Industry</label><br/>
+                                {{$job->Industry}}<br/>
+                            @endif
+
+                            @if($job->CompanySize)
+                                <label>Company Size</label><br/>
+                                {{$job->CompanySize}}<br/>
+                            @endif
+
+                            @if($job->WorkingHours)
+                                <label>Working Hours</label><br/>
+                                {{$job->WorkingHours}}<br/>
+                            @endif
+
+                            @if($job->DressCode)
+                                <label>Dress Code</label><br/>
+                                {{$job->DressCode}}
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
