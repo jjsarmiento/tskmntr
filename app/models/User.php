@@ -53,6 +53,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
             ->get();
     }
 
+    static function getSkillsCODE_ARRAY($id){
+        $SKILLS = User::getSkillsCODE($id);
+
+        $myArr = array();
+        foreach($SKILLS as $o){
+            array_push($myArr, $o->itemcode);
+        }
+
+        return $myArr;
+    }
+
     static function getMessages(){
         $thread = [];
 

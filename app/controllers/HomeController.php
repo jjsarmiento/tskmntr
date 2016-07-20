@@ -82,6 +82,7 @@ class HomeController extends BaseController {
                                 ->count();
 
                 $MULTIJOB = Job::where('user_id', Auth::user()->id)
+                            ->whereIn('skill_code', User::getSkillsCODE_ARRAY($temp->id))
                             ->whereNotIn('id', $this->WORKERGETINVITES_JOBID($temp->id))
                             ->get();
             }
