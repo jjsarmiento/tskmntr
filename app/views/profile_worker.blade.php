@@ -129,7 +129,19 @@
                                 @endif
 
                                 <div style="display:table-row;">
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">City</span>
+                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Region</span>
+                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                    <span style="display:table-cell">{{ Region::where('regcode', $users->region)->pluck('regname') }}</span>
+                                </div>
+
+                                <div style="display:table-row;">
+                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Province</span>
+                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                    <span style="display:table-cell">{{ Province::where('provcode', $users->province)->pluck('provname') }}</span>
+                                </div>
+
+                                <div style="display:table-row;">
+                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">City / Municipality</span>
                                     <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
                                     <span style="display:table-cell">{{ City::where('citycode', $users->city)->pluck('cityname') }}</span>
                                 </div>

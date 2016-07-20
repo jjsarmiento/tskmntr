@@ -108,123 +108,136 @@
             {{--@endif--}}
 
             <div class="col-lg-12 padded" style="background-color:white; border-radius:8px;" >
-                        <div class="col-lg-3" style="align-items: center; align-content: center; text-align: center;">
-                            <h3 class="lato-text">{{ $user->fullName }}</h3>
-                            @if($user->profilePic == null)
-                                <div style="border: 1px solid #333333;">
-                                    {{ Form::open(array('url' => '/uploadProfilePic', 'id' => 'uploadProfilePicForm', 'files' => 'true')) }}
-                                    Please upload a profile picture<br/>
-                                    <input type="file" name="profilePic" accept="image/*" required="required"/><br/>
-                                    <button type="submit">Upload</button>
-                                    {{ Form::close() }}
-                                </div>
-                            @else
-                                <div style="width:100%; overflow:hidden; border-radius: 100%;" id="profilePicDiv">
-                                    <a href="#" data-toggle="modal" data-target="#newProfilePic"><img src="{{ Auth::user()->profilePic }}" class="portrait" style="width: 100%" /></a>
-                                </div>
-                                <span style="margin-top: 1em; border-radius: 0.3em; padding : 0.3em; color: #ECF0F1; display:none; background-color: #2C3E50;" id="picNotice">Click to change profile picture</span>
-                            @endif
+                <div class="col-lg-3" style="align-items: center; align-content: center; text-align: center;">
+                    <h3 class="lato-text">{{ $user->fullName }}</h3>
+                    @if($user->profilePic == null)
+                        <div style="border: 1px solid #333333;">
+                            {{ Form::open(array('url' => '/uploadProfilePic', 'id' => 'uploadProfilePicForm', 'files' => 'true')) }}
+                            Please upload a profile picture<br/>
+                            <input type="file" name="profilePic" accept="image/*" required="required"/><br/>
+                            <button type="submit">Upload</button>
+                            {{ Form::close() }}
                         </div>
-                        <div class="col-lg-9">
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="heading" style="font-size:14pt; color:#2980b9">
-                                        <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Personal Information <button onclick="location.href='/editPersonalInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
-                                    </div>
-                                    <div style="padding-left: 30px;" style="display:table">
-                                        <div style="display:table-row;">
-                                            <span style="display:table-cell;text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">First Name</span>
-                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
-                                            <span style="display:table-cell;">{{ $user->firstName }}</span>
-                                        </div>
-                                        <div style="display:table-row;">
-                                            <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Middle Name</span>
-                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
-                                            <span style="display:table-cell">{{ $user->midName }}</span>
-                                        </div>
-                                        <div style="display:table-row;">
-                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Last Name</span>
-                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
-                                            <span style="display:table-cell">{{ $user->lastName }}</span>
-                                        </div>
-
-                                        <div style="display:table-row;">
-                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">City</span>
-                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
-                                            <span style="display:table-cell">{{ City::where('citycode', $user->city)->pluck('cityname') }}</span>
-                                        </div>
-
-                                        <div style="display:table-row;">
-                                            <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Barangay</span>
-                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
-                                            <span style="display:table-cell">{{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }}</span>
-                                        </div>
-
-                                        <div style="display:table-row;">
-                                            <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Gender</span>
-                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
-                                            <span style="display:table-cell">{{ Auth::user()->gender }}</span>
-                                        </div>
-                                    </div>
+                    @else
+                        <div style="width:100%; overflow:hidden; border-radius: 100%;" id="profilePicDiv">
+                            <a href="#" data-toggle="modal" data-target="#newProfilePic"><img src="{{ Auth::user()->profilePic }}" class="portrait" style="width: 100%" /></a>
+                        </div>
+                        <span style="margin-top: 1em; border-radius: 0.3em; padding : 0.3em; color: #ECF0F1; display:none; background-color: #2C3E50;" id="picNotice">Click to change profile picture</span>
+                    @endif
+                </div>
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="heading" style="font-size:14pt; color:#2980b9">
+                                <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Personal Information <button onclick="location.href='/editPersonalInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                            </div>
+                            <div style="padding-left: 30px;" style="display:table">
+                                <div style="display:table-row;">
+                                    <span style="display:table-cell;text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">First Name</span>
+                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                    <span style="display:table-cell;">{{ $user->firstName }}</span>
                                 </div>
-                                <div class="col-md-6 well" style="font-weight: bolder;">
-                                    <div class="heading" style="font-size:14pt; color:#2980b9">
-                                        <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Account Information
-                                    </div>
-                                    <div style="display:table-row;">
-                                        <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
-                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
-                                        <span style="display:table-cell">{{ Auth::user()->username }}</span>
-                                    </div>
-                                    <div style="display:table-row;">
-                                        <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Password</span>
-                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
-                                        <span style="display:table-cell">******</span>
-                                    </div>
-                                    <br/>
-                                    <a href="#" data-target="#CHNGPSS-MODAL" data-toggle="modal">Change password</a><br/><br/>
-                                    <a href="#" data-target="#DEACTIVATE-MODAL" data-toggle="modal" class="btn btn-danger btn-xs">Deactivate Account</a>
+                                <div style="display:table-row;">
+                                    <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Middle Name</span>
+                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                    <span style="display:table-cell">{{ $user->midName }}</span>
+                                </div>
+                                <div style="display:table-row;">
+                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Last Name</span>
+                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                    <span style="display:table-cell">{{ $user->lastName }}</span>
+                                </div>
+
+                                <div style="display:table-row;">
+                                    <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Region</span>
+                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                    <span style="display:table-cell">{{ Region::where('regcode', $user->region)->pluck('regname') }}</span>
+                                </div>
+
+                                <div style="display:table-row;">
+                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Province</span>
+                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                    <span style="display:table-cell">{{ Province::where('provcode', $user->province)->pluck('provname') }}</span>
+                                </div>
+
+                                <div style="display:table-row;">
+                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">City</span>
+                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                    <span style="display:table-cell">{{ City::where('citycode', $user->city)->pluck('cityname') }}</span>
+                                </div>
+
+                                <div style="display:table-row;">
+                                    <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Barangay</span>
+                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;">:</span>
+                                    <span style="display:table-cell">{{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }}</span>
+                                </div>
+
+                                <div style="display:table-row;">
+                                    <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Gender</span>
+                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                    <span style="display:table-cell">{{ Auth::user()->gender }}</span>
                                 </div>
                             </div>
-
-                            <hr/>
+                        </div>
+                        <div class="col-md-6 well" style="margin-bottom:0;">
                             <div class="heading" style="font-size:14pt; color:#2980b9">
-                                <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>&nbsp Contact Information <button class="btn btn-xs btn-default pull-right" onclick="location.href='/editContactInfo'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                                <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Account Information
                             </div>
-                            <div style="padding-left: 30px;">
-                                @foreach(Contact::where('user_id', $user->id)->get() as $con)
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">
-                                        @if($con->ctype == "mobileNum") Mobile No.
-                                        @elseif($con->ctype == "businessNum") Business No.
-                                        @else {{ $con->ctype }} @endif
-                                    </span>
-                                     :
-                                    <span style="margin-left: 5px">{{ $con->content }}</span>
-                                    @if($con->ctype == "mobileNum")
-                                        @if(Contact::where('user_id',  Auth::user()->id)->pluck('pincode')!='verified')
-                                            {{--<button class="btn btn-xs btn-primary" onclick="location.href='/doVerifyMobileNumber'" style="padding: 2px 10px 2px 10px; margin: 5px; text-transform: none;">Verify</button>--}}
-                                        @else
-                                            {{--<span class="btn btn-xs btn-default" style=" margin: 5px;">Verified</span>--}}
-                                        @endif
-                                    @endif
-                                    <br/>
-                                @endforeach
-                            </div>
-                            <hr/>
-                            <div class="heading" style="font-size:14pt; color:#2980b9">
-                                <i class="glyphicon glyphicon-star" style="font-size:14pt; color:#2980b9"></i>&nbsp Skills <button class="btn btn-xs btn-default pull-right" onclick="location.href='/editSkillInfo'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
-                            </div>
-                            <div style="padding-left: 30px;">
-                                @foreach(User::getSkills(Auth::user()->id) as $skill)
-                                    <span style="border:2px solid white; padding:8px; background-color: #BDC3C7; display:inline-block; color: white; border-radius: 0.2em; font-size: 12pt;">{{ $skill->itemname }}</span>
-                                @endforeach
-                                @foreach($customSkills as $cs)
-                                    <span style="border:2px solid white; padding:8px; background-color: #BDC3C7; display:inline-block; color: white; border-radius: 0.2em; font-size: 12pt;">{{ $cs->skill }}</span>
-                                @endforeach
+                            <div style="padding-left: 30px;" style="display:table">
+                                <div style="display:table-row;">
+                                    <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
+                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                    <span style="display:table-cell">{{ Auth::user()->username }}</span>
+                                </div>
+                                <div style="display:table-row;">
+                                    <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Password</span>
+                                    <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                    <span style="display:table-cell">******</span>
+                                </div>
+                                <br/>
+                                <a href="#" data-target="#CHNGPSS-MODAL" data-toggle="modal" class="btn btn-primary btn-xs" style="border-radius: 4px; border:1px solid #2980b9">Change password</a><br/>
+                                <a href="#" data-target="#DEACTIVATE-MODAL" data-toggle="modal" class="btn btn-danger btn-xs" style="border-radius: 4px;">Deactivate Account</a>
                             </div>
                         </div>
                     </div>
+
+                    <hr/>
+                    <div class="heading" style="font-size:14pt; color:#2980b9">
+                        <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>&nbsp Contact Information <button class="btn btn-xs btn-default pull-right" onclick="location.href='/editContactInfo'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                    </div>
+                    <div style="padding-left: 30px;">
+                        @foreach(Contact::where('user_id', $user->id)->get() as $con)
+                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">
+                                @if($con->ctype == "mobileNum") Mobile No.
+                                @elseif($con->ctype == "businessNum") Business No.
+                                @else {{ $con->ctype }} @endif
+                            </span>
+                             :
+                            <span style="margin-left: 5px">{{ $con->content }}</span>
+                            @if($con->ctype == "mobileNum")
+                                @if(Contact::where('user_id',  Auth::user()->id)->pluck('pincode')!='verified')
+                                    {{--<button class="btn btn-xs btn-primary" onclick="location.href='/doVerifyMobileNumber'" style="padding: 2px 10px 2px 10px; margin: 5px; text-transform: none;">Verify</button>--}}
+                                @else
+                                    {{--<span class="btn btn-xs btn-default" style=" margin: 5px;">Verified</span>--}}
+                                @endif
+                            @endif
+                            <br/>
+                        @endforeach
+                    </div>
+                    <hr/>
+                    <div class="heading" style="font-size:14pt; color:#2980b9">
+                        <i class="glyphicon glyphicon-star" style="font-size:14pt; color:#2980b9"></i>&nbsp Skills <button class="btn btn-xs btn-default pull-right" onclick="location.href='/editSkillInfo'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                    </div>
+                    <div style="padding-left: 30px;">
+                        @foreach(User::getSkills(Auth::user()->id) as $skill)
+                            <span style="border:2px solid white; padding:8px; background-color: #BDC3C7; display:inline-block; color: white; border-radius: 0.2em; font-size: 12pt;">{{ $skill->itemname }}</span>
+                        @endforeach
+                        @foreach($customSkills as $cs)
+                            <span style="border:2px solid white; padding:8px; background-color: #BDC3C7; display:inline-block; color: white; border-radius: 0.2em; font-size: 12pt;">{{ $cs->skill }}</span>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
