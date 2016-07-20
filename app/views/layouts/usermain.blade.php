@@ -350,25 +350,23 @@
                                 <li>
                                     <a href="/editProfile"><i class="fa fa-pencil fa-fw"></i> Edit Profile</a>
                                 </li>
-                            @endif
-                            <li><a href="#"><i class="fa fa-camera-retro fa-fw"></i> Edit Cover Photo</a></li>
-                            @if(Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')->where('user_has_role.user_id', Auth::user()->id)->pluck('role') == 'ADMIN')
-                                <li><a href="/cms"><i class="fa fa-edit fa-fw"></i> CMS</a></li>
-                            @endif
-                            <li><a href="#"><i class="fa fa-cog fa-fw"></i> Settings</a></li>
-                            @if($role != 'ADMIN')
                                 <li>
                                     <a href="/admessages" style="color: #e74c3c;">
                                         <i class="fa fa-comment fa-fw"></i> Message Admin
                                     </a>
                                 </li>
                             @endif
+                            <li><a href="#"><i class="fa fa-camera-retro fa-fw"></i> Edit Cover Photo</a></li>
+                            @if($role == 'ADMIN')
+                                <li><a href="/cms"><i class="fa fa-edit fa-fw"></i> CMS</a></li>
+                            <li><a href="/SYSTEMSETTINGS"><i class="fa fa-cog fa-fw"></i> Settings</a></li>
+                            @endif
                             @if($role == 'CLIENT_CMP' || $role == 'CLIENT_IND')
-                            <li>
-                                <a href="/checkouts">
-                                    <i class="fa fa-users fa-fw"></i> Checkouts
-                                </a>
-                            </li>
+                                <li>
+                                    <a href="/checkouts">
+                                        <i class="fa fa-users fa-fw"></i> Checkouts
+                                    </a>
+                                </li>
                             @endif
                             <li class="divider"></li>
                             <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Log out</a></li>

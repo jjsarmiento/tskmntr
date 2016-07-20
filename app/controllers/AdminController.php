@@ -1115,4 +1115,33 @@ class AdminController extends \BaseController {
         CustomSkill::where('id', $skillID)->delete();
         return Redirect::back();
     }
+
+    public function SYSTEMSETTINGS(){
+        return View::make('admin.SYSTEMSETTINGS')
+                ->with('SYS_SETTINGS', SystemSetting::get());
+    }
+
+    public function doSYSTEMSETTINGS(){
+
+        if(!is_numeric(Input::get('SYSSETTINGS_POINTSPREAD')) || !is_numeric(Input::get('SYSSETTINGS_JOBADDURATION'))){
+            Session::flash('error', 'Numbers only');
+        }else{
+            SystemSetting::where('type', 'SYSSETTINGS_POINTSPREAD')
+                ->update([
+                    'value'     =>  Input::get('SYSSETTINGS_POINTSPREAD')
+                ]);
+
+            SystemSetting::where('type', 'SYSSETTINGS_JOBADDURATION')
+                ->update([
+                    'value'     =>  Input::get('SYSSETTINGS_JOBADDURATION')
+                ]);
+
+            SystemSetting::where('type', 'SYSSETTINGS_CHECKOUTPRICE')
+                ->update([
+                    'value'     =>  Input::get('SYSSETTINGS_CHECKOUTPRICE')
+                ]);
+        }
+
+        return Redirect::back();
+    }
 }

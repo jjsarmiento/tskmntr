@@ -89,6 +89,10 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+    // SYSTEM SETTINGS ROUTE
+    Route::get('/SYSTEMSETTINGS', 'AdminController@SYSTEMSETTINGS');
+    Route::post('/doSYSTEMSETTINGS','AdminController@doSYSTEMSETTINGS');
+
     // SKILLS ROUTE
     Route::get('/customSkills', 'AdminController@customSkills');
     Route::get('/DELCSTSKLL={skillID}', 'AdminController@DELCSTSKLL');
