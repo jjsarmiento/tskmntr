@@ -163,7 +163,6 @@
 @stop
 
 @section('content')
-<input type="hidden" id="SYSSETTINGS_POINTSPERAD" value="{{SystemSetting::where('type', 'SYSSETTINGS_POINTSPERAD')->pluck('value')}}">
 <section>
     <div class="container lato-text">
         <div class="row">

@@ -109,9 +109,10 @@
                     type    :   'GET',
                     url     :   '/GET_CART_CONTENTS',
                     success :   function(data) {
-                        var totalPrice = 20 * (data.length);
+                        var checkoutPricePerWorker = $('#SYSSETTINGS_CHECKOUTPRICE').val();
+                        var totalPrice = checkoutPricePerWorker * (data.length);
                         var pointsLeft = parseFloat($('#CRT_PTSLEFT').data('ptsleft')) - totalPrice;
-
+                        $('#CRT_PRICEPERITEM').empty().text(checkoutPricePerWorker);
                         $('#CRT_QTY').empty().append(data.length);
                         $('#CRT_TOTAL').empty();
                         $('#CHECKOUTFORM').empty();
@@ -179,6 +180,8 @@
     @yield('head-content')
 </head>
 <body id="page-top">
+<input type="hidden" id="SYSSETTINGS_POINTSPERAD" value="{{SystemSetting::where('type', 'SYSSETTINGS_POINTSPERAD')->pluck('value')}}">
+<input type="hidden" id="SYSSETTINGS_CHECKOUTPRICE" value="{{SystemSetting::where('type', 'SYSSETTINGS_CHECKOUTPRICE')->pluck('value')}}">
 <!-- NAVIGATION MASTER USER LAYOUT -->
 	<nav id="mainNav" class="navbar navbar-default navbar-fixed-top affix" role="navigation">
         <div class="container">
@@ -398,7 +401,7 @@
                                 </div>
                                 <div class="col-md-6">Price per item</div>
                                 <div class="col-md-6">
-                                    <span id="CRT_PRICEPERITEM">20 Points</span>
+                                    <span id="CRT_PRICEPERITEM"></span>
                                 </div>
                                 <div class="col-md-6" style="font-weight: bold;">TOTAL PRICE</div>
                                 <div class="col-md-6" style="font-weight: bold;">
