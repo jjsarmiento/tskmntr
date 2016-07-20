@@ -146,7 +146,7 @@
 @section('content')
 <section>
     <div class="container lato-text">
-        <div class="col-md-6">
+        <div class="col-md-7">
 
             <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
                 <h3 style="margin: 0;">{{$job->title}}</h3>
@@ -231,7 +231,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             @if($invitation)
                 <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
                     <h3 style="margin: 0;">{{$worker->fullName}}</h3>
