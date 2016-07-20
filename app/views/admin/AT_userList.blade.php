@@ -262,7 +262,7 @@
             <div class="col-md-9">
                 @foreach($users as $user)
                     <div class="media block-update-card" style="">
-                        <a class="pull-left" href="/viewUserProfile/{{$user->id}}">
+                        <a class="pull-left" href="/userAuditTrail_{{$user->id}}">
                             @if($user->profilePic != "")
                                 <img class="media-object update-card-MDimentions" src="{{$user->profilePic}}">
                             @else
@@ -270,7 +270,7 @@
                             @endif
                         </a>
                         <div class="media-body update-card-body">
-                            <a href="viewUserProfile/{{$user->id}}" style="font-weight: bolder;">
+                            <a href="/userAuditTrail_{{$user->id}}" style="font-weight: bolder;">
                                 {{ $user->fullName }} {{'@'.$user->username}}
                             </a>
                             <p>
@@ -280,9 +280,9 @@
                         </div>
                     </div>
                 @endforeach
+                {{ $users->links() }}
             </div>
         </div>
-        {{ $users->links() }}
     </div>
 </section>
 @stop
