@@ -334,7 +334,9 @@ class AdminController extends \BaseController {
 
     public function auditTrail($role){
         $query = User::join('user_has_role', 'user_has_role.user_id', '=', 'users.id')
-                     ->join('roles', 'roles.id', '=', 'user_has_role.role_id');
+                     ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+                    ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+                    ->leftJoin('cities', 'cities.citycode', '=', 'users.city');
 
         switch($role){
             case 'workers'  :
@@ -351,6 +353,9 @@ class AdminController extends \BaseController {
             'users.id',
             'users.fullName',
             'users.status',
+            'users.created_at',
+            'cities.cityname',
+            'regions.regname',
         ));
 
         return View::make('admin.AT_userList')->with('users', $query->paginate(10));
