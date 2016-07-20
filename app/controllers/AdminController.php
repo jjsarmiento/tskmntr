@@ -1123,12 +1123,12 @@ class AdminController extends \BaseController {
 
     public function doSYSTEMSETTINGS(){
 
-        if(!is_numeric(Input::get('SYSSETTINGS_POINTSPREAD')) || !is_numeric(Input::get('SYSSETTINGS_JOBADDURATION'))){
+        if(!is_numeric(Input::get('SYSSETTINGS_POINTSPERAD')) || !is_numeric(Input::get('SYSSETTINGS_JOBADDURATION')) || !is_numeric(Input::get('SYSSETTINGS_CHECKOUTPRICE'))){
             Session::flash('error', 'Numbers only');
         }else{
-            SystemSetting::where('type', 'SYSSETTINGS_POINTSPREAD')
+            SystemSetting::where('type', 'SYSSETTINGS_POINTSPERAD')
                 ->update([
-                    'value'     =>  Input::get('SYSSETTINGS_POINTSPREAD')
+                    'value'     =>  Input::get('SYSSETTINGS_POINTSPERAD')
                 ]);
 
             SystemSetting::where('type', 'SYSSETTINGS_JOBADDURATION')
