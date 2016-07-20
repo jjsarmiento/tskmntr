@@ -15,6 +15,106 @@
         {
             text-decoration: none !important; 
         }
+
+        .block-update-card {
+                padding: 0.8em;
+              height: 100%;
+              border: 1px #FFFFFF solid;
+              /*width: 380px;*/
+              float: left;
+              /*margin-left: 10px;*/
+              /*margin-top: 0;*/
+              /*padding: 0;*/
+              box-shadow: 1px 1px 8px #d8d8d8;
+              background-color: #FFFFFF;
+            }
+            .block-update-card .h-status {
+              width: 100%;
+              height: 7px;
+              background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+            }
+            .block-update-card .v-status {
+              width: 5px;
+              height: 80px;
+              float: left;
+              margin-right: 5px;
+              background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+            }
+            .block-update-card .update-card-MDimentions {
+              width: 80px;
+              height: 80px;
+            }
+            .block-update-card .update-card-body {
+              margin-top: 10px;
+              margin-left: 5px;
+            }
+            .block-update-card .update-card-body h4 {
+              color: #737373;
+              font-weight: bold;
+              /*font-size: 13px;*/
+            }
+            .block-update-card .update-card-body p {
+              color: #737373;
+              font-size: 12px;
+            }
+            .block-update-card .card-action-pellet {
+              padding: 5px;
+            }
+            .block-update-card .card-action-pellet div {
+              margin-right: 10px;
+              font-size: 15px;
+              cursor: pointer;
+              color: #dddddd;
+            }
+            .block-update-card .card-action-pellet div:hover {
+              color: #999999;
+            }
+            .block-update-card .card-bottom-status {
+              color: #a9a9aa;
+              font-weight: bold;
+              font-size: 14px;
+              border-top: #e0e0e0 1px solid;
+              padding-top: 5px;
+              margin: 0px;
+            }
+            .block-update-card .card-bottom-status:hover {
+              background-color: #dd4b39;
+              color: #FFFFFF;
+              cursor: pointer;
+            }
+
+            /*
+            Creating a block for social media buttons
+            */
+            .card-body-social {
+              font-size: 30px;
+              margin-top: 10px;
+            }
+            .card-body-social .git {
+              color: black;
+              cursor: pointer;
+              margin-left: 10px;
+            }
+            .card-body-social .twitter {
+              color: #19C4FF;
+              cursor: pointer;
+              margin-left: 10px;
+            }
+            .card-body-social .google-plus {
+              color: #DD4B39;
+              cursor: pointer;
+              margin-left: 10px;
+            }
+            .card-body-social .facebook {
+              color: #49649F;
+              cursor: pointer;
+              margin-left: 10px;
+            }
+            .card-body-social .linkedin {
+              color: #007BB6;
+              cursor: pointer;
+              margin-left: 10px;
+            }
     </style>
 @stop
 
@@ -117,86 +217,11 @@
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/skills" class="sidemenu">System Skills</a><br>
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/customSkills" class="sidemenu">Custom Skills</a><br>
                         </div>
-                        {{--<div class="panel-heading">--}}
-                            {{--<div class="panel-title">--}}
-                                {{--<a class="accordion-toggle" href="/categoryAndSkills">--}}
-                                {{--Category & Skills</a>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
                     </div>
                 </div>
             </div>
 
             <div class="col-md-9">
-                <!--
-                {{--<div class="well selected-filters">--}}
-                    {{--<div class="row">--}}
-                        {{--<div class="col-md-2">--}}
-                            {{--Search By:--}}
-                        {{--</div>--}}
-                        {{--<div class="col-md-3">--}}
-                            {{--<select name="searchBy" id="searchBy" class="form-control">--}}
-                                {{--<option value="0" <?php if(@$searchBy == '0'){ echo('selected'); } ?>>Display all tasks</option>--}}
-                                {{--<option value="name" <?php if(@$searchBy == 'name'){ echo('selected'); } ?>>Task Name</option>--}}
-                            {{--</select>--}}
-                        {{--</div>--}}
-                        {{--<div class="col-md-3">--}}
-                            {{--<select name="workTimeValue" id="workTimeValue" class="form-control">--}}
-                                {{--<option value="0" <?php if(@$workTimeValue == '0'){ echo('selected'); } ?>>Display all employment type</option>--}}
-                                {{--<option value="PTIME" <?php if(@$workTimeValue == 'PTIME'){ echo('selected'); } ?>>Part Time</option>--}}
-                                {{--<option value="FTIME" <?php if(@$workTimeValue == 'FTIME'){ echo('selected'); } ?>>Full Time</option>--}}
-                            {{--</select>--}}
-                        {{--</div>--}}
-                        {{--<div class="col-md-4">--}}
-                            {{--<input type="text" value="<?php if(@$searchWord){ echo($searchWord); } ?>" name="searchWord" id="searchWord" placeholder="search keyword" class="form-control"/>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="row" style="padding-top:10px;">--}}
-                        {{--<div class="col-md-2">--}}
-                            {{--Status:--}}
-                        {{--</div>--}}
-                        {{--<div class="col-md-6">--}}
-                            {{--<select name="status" id="status" class="form-control">--}}
-                                {{--<option value="0" <?php if(@$status == '0'){ echo('selected'); } ?>>Display all status</option>--}}
-                                {{--<option value="OPEN" <?php if(@$status == 'OPEN'){ echo('selected'); } ?>>Open</option>--}}
-                                {{--<option value="ONGOING" <?php if(@$status == 'ONGOING'){ echo('selected'); } ?>>On Going</option>--}}
-                                {{--<option value="COMPLETE" <?php if(@$status == 'COMPLETED'){ echo('selected'); } ?>>Complete</option>--}}
-                                {{--<option value="CANCELLED" <?php if(@$status == 'CANCELLED'){ echo('selected'); } ?>>Cancelled</option>--}}
-                            {{--</select>--}}
-                        {{--</div>--}}
-                        {{--<div class="col-md-4">--}}
-                            {{--<button type="submit" id="searchBtn" class="btn btn-block btn-primary">Search</button>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                -->
-
-                {{--@if($tasks->count() == 0)--}}
-                    {{--<div class="well selected-filters" style="text-align: center">--}}
-                        {{--<font style="color: red">No data available.</font>--}}
-                    {{--</div>--}}
-                {{--@endif--}}
-
-                {{--@foreach($tasks as $task)--}}
-                    {{--<div class="widget-container" style="min-height: 150px; padding-bottom: 5px;">--}}
-                        {{--<div class="widget-content padded">--}}
-                            {{--<div>--}}
-                                {{--<span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Name</span>--}}
-                                 {{--: <span style="margin-left: 5px"><a target="_tab" href="/admin/taskDetails/{{$task->id}}">{{ $task->name }}</a></span><br/>--}}
-                                {{--<span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">By</span>--}}
-                                 {{--: <span style="margin-left: 5px"><a target="_tab" href="/viewUserProfile/{{User::where('id', $task->id)->pluck('id')}}">{{ User::where('id', $task->id)->pluck('fullName') }}</a></span><br/>--}}
-                                {{--<span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Work Time</span>--}}
-                                 {{--: <span style="margin-left: 5px">{{ $task->workTime }}</span><br/>--}}
-                                {{--<span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Created at</span>--}}
-                                 {{--: <span style="margin-left: 5px">{{ $task->created_at }}</span><br/>--}}
-                                {{--<span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Status</span>--}}
-                                 {{--: <span style="margin-left: 5px">{{ $task->status }}</span>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div><br/>--}}
-                {{--@endforeach--}}
-                {{--<center>{{ $tasks->links() }}</center>--}}
-
                 <div class="well selected-filters">
                     <div class="row">
                         <div class="col-md-8">
@@ -262,14 +287,24 @@
                         <div class="col-lg-5"><hr class="hrLine"></div>
                     </div><br><br><br><br>
                     @foreach($pendingUsers as $user)
-                        <div class="widget-container" style="min-height: 150px; padding-bottom: 5px;">
-                            <div class="widget-content padded">
-                                <div>
-                                    <a style="font-weight: bold; font-size: 20px;" href="viewUserProfile/{{$user->id}}">{{$user->fullName}} | {{ $user->username }}</a><br/>
+                        <div class="media block-update-card" style="">
+                            <a class="pull-left" href="/viewUserProfile/{{$user->userID}}">
+                                @if($user->profilePic != "")
+                                    <img class="media-object update-card-MDimentions" src="{{$user->profilePic}}">
+                                @else
+                                    <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                                @endif
+                            </a>
+                            <div class="media-body update-card-body">
+                                <a href="/viewUserProfile/{{$user->userID}}" style="font-weight: bolder;">
+                                    {{ $user->fullName }} {{'@'.$user->username}}
+                                </a>
+                                <p>
+                                    <i class="fa fa-map-marker"></i> {{ $user->regname }}, {{ $user->cityname }}<br/>
                                     Registered at {{ date('D, M j, Y \a\t g:ia', strtotime($user->created_at)) }}
-                                </div>
+                                </p>
                             </div>
-                        </div><br/>
+                        </div>
                     @endforeach
                     <center>{{ $pendingUsers->links()  }}</center>
                 @endif

@@ -25,6 +25,7 @@ class AdminController extends \BaseController {
                         'users.id',
                         'users.fullName',
                         'users.status',
+                        'users.profilePic',
                         'users.username',
                         DB::raw('AVG(ratings.stars) as avg_stars'),
                         'users.created_at',
@@ -389,9 +390,22 @@ class AdminController extends \BaseController {
     }
 
     public function index(){
+        $users = User::leftJoin('regions', 'regions.regcode', '=', 'users.region')
+                ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+                ->where('users.status', 'PRE_ACTIVATED')
+                ->orderBy('users.created_at', 'ASC')
+                ->select([
+                    'users.id as userID',
+                    'users.username',
+                    'users.created_at',
+                    'cities.cityname',
+                    'regions.regname',
+                ])
+                ->paginate(10);
+
         return View::make('admin.taskList')
             ->with('pendingCount', $this->countPendingUsers())
-            ->with('pendingUsers', User::where('status', 'PRE_ACTIVATED')->orderBy('created_at', 'ASC')->paginate(10))
+            ->with('pendingUsers', $users)
             ->with('pageName', 'Proveek Admin | Dashbooard')
             ->with('formUrl', '/pendingUserSearch');
     }
@@ -659,7 +673,9 @@ class AdminController extends \BaseController {
     }
 
     public function userListTaskminatorsSearch($searchBy, $searchWord){
-        $query = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')->where('users.status', 'ACTIVATED')->where('user_has_role.role_id', '2');
+        $query = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
+                    ->where('users.status', 'ACTIVATED')
+                    ->where('user_has_role.role_id', '2');
 
         if($searchBy != '0'){
             $query = $query->where($searchBy, 'LIKE', '%'.$searchWord.'%');
@@ -668,7 +684,7 @@ class AdminController extends \BaseController {
         return View::make('admin.index')
             ->with('searchBy', $searchBy)
             ->with('searchWord', $searchWord)
-            ->with('users', $query->orderBy('fullName', 'ASC')->paginate(10));
+            ->with('users', $query->orderBy('created_at', 'ASC')->paginate(10));
     }
 
     public function userListClientIndiSearch($searchBy, $searchWord){
@@ -1044,6 +1060,8 @@ class AdminController extends \BaseController {
     public function UsrAccntLstCMPNY(){
         $userList = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
             ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+            ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+            ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
             ->whereIn('user_has_role.role_id', ['3', '4'])
             ->whereNotIn('users.status', ['PRE_ACTIVATED'])
             ->orderBy('users.created_at', 'DESC')
@@ -1051,7 +1069,11 @@ class AdminController extends \BaseController {
                 'users.id',
                 'users.fullName',
                 'users.username',
+                'users.profilePic',
                 'users.status',
+                'users.created_at',
+                'cities.cityname',
+                'regions.regname',
             ])
             ->paginate(10);
 

@@ -11,6 +11,106 @@
         {
             text-decoration: none !important; 
         }
+
+        .block-update-card {
+                padding: 0.8em;
+              height: 100%;
+              border: 1px #FFFFFF solid;
+              /*width: 380px;*/
+              float: left;
+              /*margin-left: 10px;*/
+              /*margin-top: 0;*/
+              /*padding: 0;*/
+              box-shadow: 1px 1px 8px #d8d8d8;
+              background-color: #FFFFFF;
+            }
+            .block-update-card .h-status {
+              width: 100%;
+              height: 7px;
+              background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+            }
+            .block-update-card .v-status {
+              width: 5px;
+              height: 80px;
+              float: left;
+              margin-right: 5px;
+              background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+            }
+            .block-update-card .update-card-MDimentions {
+              width: 80px;
+              height: 80px;
+            }
+            .block-update-card .update-card-body {
+              margin-top: 10px;
+              margin-left: 5px;
+            }
+            .block-update-card .update-card-body h4 {
+              color: #737373;
+              font-weight: bold;
+              /*font-size: 13px;*/
+            }
+            .block-update-card .update-card-body p {
+              color: #737373;
+              font-size: 12px;
+            }
+            .block-update-card .card-action-pellet {
+              padding: 5px;
+            }
+            .block-update-card .card-action-pellet div {
+              margin-right: 10px;
+              font-size: 15px;
+              cursor: pointer;
+              color: #dddddd;
+            }
+            .block-update-card .card-action-pellet div:hover {
+              color: #999999;
+            }
+            .block-update-card .card-bottom-status {
+              color: #a9a9aa;
+              font-weight: bold;
+              font-size: 14px;
+              border-top: #e0e0e0 1px solid;
+              padding-top: 5px;
+              margin: 0px;
+            }
+            .block-update-card .card-bottom-status:hover {
+              background-color: #dd4b39;
+              color: #FFFFFF;
+              cursor: pointer;
+            }
+
+            /*
+            Creating a block for social media buttons
+            */
+            .card-body-social {
+              font-size: 30px;
+              margin-top: 10px;
+            }
+            .card-body-social .git {
+              color: black;
+              cursor: pointer;
+              margin-left: 10px;
+            }
+            .card-body-social .twitter {
+              color: #19C4FF;
+              cursor: pointer;
+              margin-left: 10px;
+            }
+            .card-body-social .google-plus {
+              color: #DD4B39;
+              cursor: pointer;
+              margin-left: 10px;
+            }
+            .card-body-social .facebook {
+              color: #49649F;
+              cursor: pointer;
+              margin-left: 10px;
+            }
+            .card-body-social .linkedin {
+              color: #007BB6;
+              cursor: pointer;
+              margin-left: 10px;
+            }
     </style>
 @stop
 
@@ -171,77 +271,32 @@
                             </div>
                         </div>
 
-                        {{--@if($users->count() > 0)--}}
-                            {{--@foreach($users as $user)--}}
-                                {{--<div class="widget-container lato-text" style="padding-bottom: 5px; border-bottom: 1px solid #ECF0F1; min-height: 1em;">--}}
-                                    {{--<div class="widget-content padded">--}}
-                                        {{--<div>--}}
-                                            {{--<h3 style="margin : 0;"><a class="lato-text" href="/viewUserProfile/{{ $user->id }}">{{ $user->fullName }} {{ '@'.$user->username }}</a></h3>--}}
-                                            {{--<div class="row">--}}
-                                                {{--<div class="col-md-6">--}}
-                                                    {{--<span style="color: rgb(72, 157, 179);">Registered at {{ date('m/d/y', $user->created_at->getTimeStamp()) }}</span><br/>--}}
-                                                    {{--<span style="color: rgb(72, 157, 179);"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;{{ $user->bgyname }}, {{ $user->cityname }}, {{$user->regname}}</span><br/>--}}
-                                                {{--</div>--}}
-                                                {{--<div class="col-md-6">--}}
-                                                    {{--@if($user->status == 'PRE_ACTIVATED')--}}
-                                                        {{--<div class="row">--}}
-                                                            {{--<a href="/adminActivate/{{$user->id}}" class="btn btn-xs btn-info">Fully Activate Account</a><br/>--}}
-                                                            {{--<a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger">Deactivate Account</a><br/>--}}
-                                                        {{--</div>--}}
-                                                    {{--@elseif($user->status == 'ACTIVATED')--}}
-                                                        {{--<a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger btn-xs">Deactivate Account</a><br/>--}}
-                                                    {{--@elseif($user->status == 'DEACTIVATED')--}}
-                                                        {{--<a href="/adminActivate/{{$user->id}}" class="btn btn-success btn-xs">Activate Account</a><br/>--}}
-                                                    {{--@elseif($user->status == 'SELF_DEACTIVATED')--}}
-                                                        {{--<a href="/adminActivate/{{$user->id}}" class="btn btn-success btn-xs">Activate Account</a><br/>--}}
-                                                    {{--@elseif($user->status == 'ADMIN_DEACTIVATED')--}}
-                                                        {{--<a href="/adminActivate/{{$user->id}}" class="btn btn-success btn-xs">Activate Account</a><br/>--}}
-                                                    {{--@endif--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--@endforeach--}}
-                        {{--@else--}}
-                            {{--<div class="well selected-filters" style="text-align: center">--}}
-                                {{--<font style="color: red">No data available.</font>--}}
-                            {{--</div>--}}
-                        {{--@endif--}}
-
                         @if($users->count() == 0)
                             <div class="well selected-filters" style="text-align: center">
                                 <font style="color: red">No data available.</font>
                             </div>
-                        @endif
-                        @foreach($users as $user)
-                            <div class="widget-container lato-text" style="min-height: 150px; padding-bottom: 5px; border-bottom: 1px solid #ECF0F1;">
-                                <div class="widget-content padded">
-                                    <div>
-                                        <h3 style="margin: 0;"><a class="lato-text" href="/viewUserProfile/{{ $user->id }}">{{ $user->fullName }} {{ '@'.$user->username }}</a> <span class="badge">{{ $user->status }}</span></h3>
-                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Registered at {{$user->created_at}}</span><Br/>
-                                        @if($user->status == 'PRE_ACTIVATED')
-                                            <span style="color: red;">Please check credentials of this user before fully activating their account.</span>
+                        @else
+                            @foreach($users as $user)
+                                <div class="media block-update-card" style="">
+                                    <a class="pull-left" href="/viewUserProfile/{{$user->id}}">
+                                        @if($user->profilePic != "")
+                                            <img class="media-object update-card-MDimentions" src="{{$user->profilePic}}">
+                                        @else
+                                            <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
                                         @endif
-                                        <br/>
-                                        @if($user->status == 'PRE_ACTIVATED')
-                                            <div class="row">
-                                                <a href="/adminActivate/{{$user->id}}" class="btn btn-info">Fully Activate Account</a><br/>
-                                                <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger">Deactivate Account</a><br/>
-                                            </div>
-                                        @elseif($user->status == 'ACTIVATED')
-                                            <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger">Deactivate Account</a><br/>
-                                        @elseif($user->status == 'DEACTIVATED')
-                                            <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
-                                        @elseif($user->status == 'SELF_DEACTIVATED')
-                                            <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
-                                        @elseif($user->status == 'ADMIN_DEACTIVATED')
-                                            <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
-                                        @endif
+                                    </a>
+                                    <div class="media-body update-card-body">
+                                        <a href="viewUserProfile/{{$user->id}}" style="font-weight: bolder;">
+                                            {{ $user->fullName }} {{'@'.$user->username}}
+                                        </a>
+                                        <p>
+                                            <i class="fa fa-map-marker"></i> {{ $user->regname }}, {{ $user->cityname }}<br/>
+                                            Registered at {{ date('D, M j, Y \a\t g:ia', strtotime($user->created_at)) }}
+                                        </p>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @endif
                         <center>{{ $users->links() }}</center>
                     </div>
                 </div>
