@@ -139,7 +139,7 @@
         <div class="col-md-6">
             <center>Applications</center><br/>
             @foreach($applications as $a)
-                <div class="widget-container fluid-height padded" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">
+                <div class="widget-container fluid-height padded" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px; border-bottom: 1px solid #E9EAED;">
                     <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
                         <a href="/jbdtls={{$a->jobID}}">{{ $a->title}}</a>
                     </h3>
@@ -153,8 +153,8 @@
             <center>Available Jobs</center><Br/>
             @foreach($jobs as $job)
                 @if($job->applicant_id != Auth::user()->id)
-                    <div class="widget-container fluid-height padded" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">
-                        <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
+                    <div class="widget-container fluid-height padded" style="border-bottom: 1px solid #E9EAED; word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">
+                        <div style="display:flex;padding-bottom:5px;">
                             <span style="padding:0;margin:0; flex:1">
                                 @if($job->profilePic)
                                     <img src="{{ $job->profilePic }}" class="thumbnail" style="margin:0; width:64px; height:64px;" >
@@ -180,7 +180,6 @@
                             {{ $job->description }}
                         </p>
                     </div>
-                    <br>
                 @endif
             @endforeach
             <center>{{$jobs->links()}}</center>

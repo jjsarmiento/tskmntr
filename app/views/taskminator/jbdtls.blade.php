@@ -138,23 +138,27 @@
 <section>
     <div class="container lato-text">
         <div class="col-md-6">
-            <div class="widget-container padded" style="min-height: 10px; display:block !important;">
-                @if($hasInvite)
+            @if($hasInvite)
+                <div class="widget-container padded" style="min-height: 10px; display:block !important;">
                     <span style="color: #2980B9; font-weight: bold;">
                         Invitation sent at {{$hasInvite->created_at}}
                     </span><br/><br/>
                     {{$hasInvite->message}}
-                @else
-                    @if($application)
-                        <i class="fa fa-warning" style="color: red;"></i>&nbsp;You have already applied for this job.
+                </div><br/>
+            @endif
+                @if($application)
+                    <div class="widget-container padded" style="min-height: 10px; display:block !important;">
+                        <i class="fa fa-check-circle" style="color: #2ECC71; font-size: 1.5em;"></i>&nbsp;You have applied for this job.<br/>
+                        <span style="color: #7F8C8D; font-size: 0.8em;">Application sent at {{$application->created_at}}</span>
                         <br/>
                         <br/>
                         <a class="btn btn-danger btn-block" href="/CNCLAPPLCTN:{{$job->jobId}}">Cancel Application</a>
-                    @else
+                    </div><br/>
+                @else
+                    <div class="widget-container padded" style="min-height: 10px; display:block !important;">
                         <a href="/APPLYFRJB:{{$job->jobId}}" class="btn btn-primary btn-block">Apply</a>
-                    @endif
+                    </div><br/>
                 @endif
-            </div><br/>
         </div>
         <div class="col-md-6">
             <div class="widget-container padded" style="word-wrap: break-word; display: flex; min-height:125px; display:block !important;">

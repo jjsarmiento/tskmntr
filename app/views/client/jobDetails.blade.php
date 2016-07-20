@@ -140,7 +140,15 @@
               margin-left: 10px;
             }
     </style>
-
+    <script>
+        $(document).ready(function(){
+            $('#DELETE_AD').click(function() {
+                if(confirm('Do you want to delete this Job Ad?')){
+                    location.href = $(this).data('href');
+                }
+            })
+        });
+    </script>
 @stop
 
 
@@ -149,7 +157,7 @@
     <div class="container lato-text">
         <div class="col-md-8">
             <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
-                <a href="/deleteJob={{$job->id}}" type="button" class="close" style="opacity: 0.5;">
+                <a href="#" data-href="/deleteJob={{$job->id}}" id="DELETE_AD" type="button" class="close" style="opacity: 0.5;">
                     <i class="fa fa-trash"></i>
                 </a>
                 <a href="/editJob={{$job->id}}" type="button" class="close" style="opacity: 0.5;  margin-right: 0.4em;">
