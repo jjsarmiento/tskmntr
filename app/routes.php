@@ -290,6 +290,8 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
     Route::get('/SKILLCATCHAIN={categoryId}', 'ClientIndiController@SKILLCATCHAIN');
 });
 
+Route::get('/TESTINGROUTE', 'HomeController@TESTINGROUTE');
+
 Route::get('/{username}', 'HomeController@toProfile'); // new profile page viewer
 
 // THIS FUNCTION IS FOR ROUTE PROTECTION - IT REDIRECTS THE SYSTEM WHEN cTHE ROUTE/METHOD IS NOT FOUND AND/OR DOESN'T EXIST - Jan Sarmiento

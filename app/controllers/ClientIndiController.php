@@ -1012,6 +1012,7 @@ class ClientIndiController extends \BaseController {
 
     public function doCreateJob(){
         if($this->POINT_CHECK(Auth::user()->points, 'CREATE_JOB')){
+            $created_at_date = date("Y:m:d H:i:s");
             $jobId = Job::insertGetId(array(
                 'user_id'               =>  Auth::user()->id,
                 'title'                 =>  Input::get('title'),
@@ -1029,7 +1030,8 @@ class ClientIndiController extends \BaseController {
                 'CompanySize'           =>  Input::get('CompanySize'),
                 'WorkingHours'          =>  Input::get('WorkingHours'),
                 'DressCode'             =>  Input::get('DressCode'),
-                'created_at'            =>  date("Y:m:d H:i:s")
+                'expires_at'            =>  $this->GET_JOBAD_EXPIRATION($created_at_date),
+                'created_at'            =>  $created_at_date,
             ));
 
             $other_skills = array_map('trim', explode(',', Input::get('otherskills')));
@@ -1052,6 +1054,7 @@ class ClientIndiController extends \BaseController {
 
             return Redirect::to('/jobDetails='.$jobId);
         }else{
+            Session::flash('errorMsg', 'Not enough points to create a job ad');
             return Redirect::to('/');
         }
     }

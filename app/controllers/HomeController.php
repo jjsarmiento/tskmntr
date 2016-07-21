@@ -6,6 +6,12 @@ use Carbon\Carbon;
 
 class HomeController extends BaseController {
 
+    public function TESTINGROUTE(){
+        $created_at_date = date("Y:m:d H:i:s");
+        echo $created_at_date.'</br>';
+        echo $this->GET_JOBAD_EXPIRATION($created_at_date);
+    }
+
     function generateConfirmationCode(){
         $random = '';
         while(1){

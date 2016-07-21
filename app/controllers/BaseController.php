@@ -313,5 +313,10 @@ class BaseController extends Controller {
                 return false;
         }
     }
+
+    public function GET_JOBAD_EXPIRATION($timestamp){
+        $SYSSETTINGS_JOBADDURATION = SystemSetting::where('type', 'SYSSETTINGS_JOBADDURATION')->pluck('value');
+        return date("Y:m:d H:i:s", time($timestamp) + ((floatval($SYSSETTINGS_JOBADDURATION) * 60 * 60)));
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }
