@@ -17,58 +17,6 @@ class TaskminatorController extends \BaseController {
         return preg_match('/^(([^<>()[\]\\.,;:\s@"\']+(\.[^<>()[\]\\.,;:\s@"\']+)*)|("[^"\']+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\d\-]+\.)+[a-zA-Z]{2,}))$/', $email);
     }
 
-    public function taskSearch(){
-        return View::make('taskminator.search')->with('cities', City::orderBy('cityname', 'ASC')->get());
-    }
-
-    public function doTaskSearch($workingTime, $searchField, $searchCity, $searchWord, $rateRange, $rangeValue){
-        if($this->getProfilePercentage(Auth::user()->id) < 50){
-            Session::flash('err_search', 'Please fill out your profile atleast 50%');
-            return Redirect::to('/');
-        }else{
-            $errorMsg = null;
-
-            $query = new Task;
-
-            if($searchField != '0'  && $searchField != null){
-                if($searchField == 'city' && $searchWord != '0'){
-                    $query = $query->where($searchField, $searchCity)->where('name', 'LIKE', '%'.$searchWord.'%');
-                }else if($searchField == 'city' && $searchWord == '0'){
-                    $query = $query->where($searchField, $searchCity);
-                }else{
-                    $query = $query->where('name', 'LIKE', '%'.Input::get('searchWord').'%');
-                }
-            }
-
-            if($rangeValue != '0'){
-                switch($rateRange){
-                    case 'ABOVE' :
-                        $query = $query->where('salary', '>', $rangeValue);
-                        break;
-                    case 'BELOW' :
-                        $query = $query->where('salary', '<', $rangeValue);
-                        break;
-                }
-            }
-
-            $query = $query->where('workTime', $workingTime)
-                ->where('hiringType', 'BIDDING')
-                ->where('status', 'OPEN')->orderBy('created_at', 'DESC')
-                ->paginate(10);
-
-            return View::make('taskminator.search')
-                ->with('tasks', $query)
-                ->with('errorMsg', $errorMsg)
-                ->with('cities', City::orderBy('cityname', 'ASC')->get())
-                ->with('workingTime', $workingTime)
-                ->with('searchField', $searchField)
-                ->with('searchCity', $searchCity)
-                ->with('searchWord', $searchWord)
-                ->with('rateRange', $rateRange)
-                ->with('rangeValue', $rangeValue);
-        }
-    }
-
     public function messages(){
         return View::make('taskminator.messages')
             ->with('threads', Thread::where('user_id', Auth::user()->id)->where('status', 'OPEN')->orderBy('created_at', 'ASC')->get());
@@ -1007,5 +955,39 @@ class TaskminatorController extends \BaseController {
     public function RMVCSTMSKLL($custom_skill_id){
         CustomSkill::where('id', $custom_skill_id)->delete();
         return Redirect::back();
+    }
+
+    public function jobSearch($keyword, $workDuration, $regionFIELD, $city, $categoryFIELD, $skill, $orderBy){
+        if($keyword == 'NO_KW_INPT'){   $keyword = "";}
+
+        $jobs = Job::where('title', 'LIKE', '%'.$keyword.'%');
+
+        if($workDuration != 'ALL'){     $jobs = $jobs->where('hiring_type', $workDuration);}
+        if($regionFIELD != 'ALL'){      $jobs = $jobs->where('regcode', $regionFIELD);}
+        if($city != 'ALL'){             $jobs = $jobs->where('citycode', $city);}
+        if($categoryFIELD != 'ALL'){    $jobs = $jobs->where('skill_category_code', $categoryFIELD);}
+        if($skill != 'ALL'){            $jobs = $jobs->where('skill_code', $skill);}
+
+        $jobs = $jobs->orderBy('created_at', $orderBy)->paginate(10);
+
+        $regions = Region::orderBy('regname', 'ASC')->get();
+        $category = TaskCategory::orderBy('categoryname', 'ASC')->get();
+
+        if($categoryFIELD != 'ALL'){
+            $skills_OBJECTS = TaskItem::where('item_categorycode', $categoryFIELD)->orderBy('itemname', 'ASC')->get();
+        }
+
+        return View::make('taskminator.jobSearch')
+                ->with('skills_OBJECTS', $skills_OBJECTS)
+                ->with('jobs', $jobs)
+                ->with('keyword', $keyword)
+                ->with('workDuration', $workDuration)
+                ->with('regionFIELD', $regionFIELD)
+                ->with('city', $city)
+                ->with('categoryFIELD', $categoryFIELD)
+                ->with('skill', $skill)
+                ->with('orderBy', $orderBy)
+                ->with('category', $category)
+                ->with('regions', $regions);
     }
 }

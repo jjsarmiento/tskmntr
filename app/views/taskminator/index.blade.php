@@ -152,6 +152,7 @@
                     <div class="widget-content">
                         <div class="panel-group" id="accordion">
                             <div class="panel">
+                                <!--
                                 <div class="widget-container" style="min-height:25px; border:1px solid #e6e6e6">
                                     <div class="widget-content">
                                         <div class="padded" style="color:#2980b9; font-size:14pt;">
@@ -159,11 +160,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                -->
                                 <div class="panel filter-categories">
                                     <div class="panel-body">
                                         <!-- <input name="searchWord" id="searchWord" type="text" class="form-control input-trans" placeholder="Search for workers" required> -->
                                         <div class="col-lg-12">
                                             @if($total_prog >= 50)
+                                               <a href="/jobSearch:NO_KW_INPT:ALL:ALL:ALL:ALL:ALL:DESC" class="btn btn-default btn-block" style="border-radius: 0.3em;">
+                                                <i class="fa fa-search"></i> Click here to search for jobs
+                                               </a>
+                                                <!--
                                                 <button name="searchBtn" id="searchBtn" class="lato-text btn btn-default btn-trans" style="text-transform: none; border:1px solid #2980b9; width:100%; border-radius: 4px;" type="button">
                                                     @if (Session::has('err_search'))
                                                         <i style="color: red" class="fa fa-warning"></i> {{ Session::get('err_search')  }}
@@ -171,6 +177,7 @@
                                                         Click here to search for jobs
                                                     @endif
                                                 </button>
+                                                -->
                                             @else
                                                 <button disabled="true" class="lato-text btn btn-default btn-trans" style="text-transform: none; border:1px solid #2980b9; width:100%; border-radius: 4px;" type="button">Please complete atleast 50% of profile</button>
                                             @endif

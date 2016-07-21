@@ -187,8 +187,10 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     // THE ROLE BASED ROUTES FOR TASKMINATORS GOES HERE
     Route::get('/tskmntr/taskSearch', 'TaskminatorController@taskSearch');
 
+    // SEARCH ROUTES by Jan Sarmiento
+    Route::get('/jobSearch:{keyword}:{workDuration}:{region}:{city}:{category}:{skill}:{orderBy}', 'TaskminatorController@jobSearch');
    // Route::post('/tskmntr/doTaskSearch', 'TaskminatorController@doTaskSearch');
-    Route::get('/tskmntr/doTaskSearch={workingTime}={searchField}={searchCity}={searchWord}={rateRange}={rangeValue}', 'TaskminatorController@doTaskSearch');
+   // Route::get('/tskmntr/doTaskSearch={workingTime}={searchField}={searchCity}={searchWord}={rateRange}={rangeValue}', 'TaskminatorController@doTaskSearch');
 
     Route::get('/tskmntr/currentTask', 'TaskminatorController@currentTask');
     Route::get('/bidPTIME/{id}', 'TaskminatorController@bidPtime');
