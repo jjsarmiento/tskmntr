@@ -37,7 +37,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h3 style="margin: 0"><a href="/jobDetails={{$job->id}}">{{ $job->title }}</a></h3>
-                                <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>
+                                <span style="color: #7F8C8D;">
+                                    Created at {{ date('D, M j, Y \a\t g:ia', strtotime($job->created_at)) }}<br/>
+                                    @if($job->expired)
+                                        <span class="badge" style="background-color: #E74C3C">EXPIRED</span>
+                                    @else
+                                        Expires at {{ date('D, M j, Y \a\t g:ia', strtotime($job->expires_at)) }}<br/>
+                                    @endif
+                                </span>
                             </div>
                             <div class="col-md-6">
                                 {{$job->description}}

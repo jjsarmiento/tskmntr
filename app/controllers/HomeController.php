@@ -899,6 +899,10 @@ class HomeController extends BaseController {
                     break;
                 case 'CLIENT_IND' :
                 case 'CLIENT_CMP' :
+                    // UPDATE JOB ADS EXPIRATIONS -- START by Jan Sarmiento
+                    $this->UPDATE_JOBADS(Auth::user()->id);
+                    // UPDATE JOB ADS EXPIRATIONS -- END by Jan Sarmiento
+
                     // CHECKER FOR the first 3 FREE MONTHS SUBSCRIPTION
                     $tempDate = Auth::user()->created_at->addMonths(3);
                     $freeDuration = null;

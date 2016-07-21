@@ -318,5 +318,29 @@ class BaseController extends Controller {
         $SYSSETTINGS_JOBADDURATION = SystemSetting::where('type', 'SYSSETTINGS_JOBADDURATION')->pluck('value');
         return date("Y:m:d H:i:s", time($timestamp) + ((floatval($SYSSETTINGS_JOBADDURATION) * 60 * 60)));
     }
+
+    public function UPDATE_JOBADS($userID){
+        $jobs = Job::where('user_id', $userID)->get();
+
+        // CHECK FOR EXPIRATION
+        // Updates `expired` column to TRUE if job is expired, else, FALSE
+        foreach($jobs as $j){
+            if(time($j->expires_at) > time($j->created_at)){
+                Job::where('id', $j->id)->update('expired', true);
+            }
+        }
+    }
+
+    public static function ROUTE_UPDATE_JOBADS($userID){
+        $jobs = Job::where('user_id', $userID)->get();
+
+        // CHECK FOR EXPIRATION
+        // Updates `expired` column to TRUE if job is expired, else, FALSE
+        foreach($jobs as $j){
+            if(time($j->expires_at) > time($j->created_at)){
+                Job::where('id', $j->id)->update('expired', true);
+            }
+        }
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

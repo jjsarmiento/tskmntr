@@ -109,6 +109,7 @@ Route::filter('CLIENT-ONLY', function(){
             return Redirect::to('/');
         }
 
+        BaseController::ROUTE_UPDATE_JOBADS(Auth::user()->id);
     }else{
         return Redirect::to('/');
     }

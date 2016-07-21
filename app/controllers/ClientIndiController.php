@@ -1031,6 +1031,7 @@ class ClientIndiController extends \BaseController {
                 'WorkingHours'          =>  Input::get('WorkingHours'),
                 'DressCode'             =>  Input::get('DressCode'),
                 'expires_at'            =>  $this->GET_JOBAD_EXPIRATION($created_at_date),
+                'expired'               =>  false,
                 'created_at'            =>  $created_at_date,
             ));
 

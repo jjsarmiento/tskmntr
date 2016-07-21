@@ -32,6 +32,7 @@ class CreateJobsTable extends Migration {
             $table->longText('WorkingHours')->nullable();
             $table->longText('DressCode')->nullable();
             $table->timestamp('expires_at')->nullable();
+            $table->boolean('expired')->nullable();
 			$table->timestamps();
 		});
 	}
