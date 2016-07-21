@@ -1061,103 +1061,109 @@ class ClientIndiController extends \BaseController {
     }
 
     public function jobDetails($jobId){
-        $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
-                ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
-                ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
-                ->leftJoin('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
-                ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
-                ->where('jobs.id', $jobId)
-                ->select([
-                    'jobs.id',
-                    'jobs.title',
-                    'jobs.created_at',
-                    'jobs.description',
-                    'jobs.requirements',
-                    'jobs.salary',
-                    'jobs.hiring_type',
-                    'jobs.Industry',
-                    'jobs.AverageProcessingTime',
-                    'jobs.CompanySize',
-                    'jobs.WorkingHours',
-                    'jobs.DressCode',
-                    'regions.regname',
-                    'regions.regcode',
-                    'barangays.bgyname',
-                    'barangays.bgycode',
-                    'cities.cityname',
-                    'cities.citycode',
-                    'taskcategory.categoryname',
-                    'taskcategory.categorycode',
-                    'taskitems.itemname',
-                    'taskitems.itemcode'
-                ])
-                ->first();
-
         $custom_skills = CustomSkill::where('company_job_id', $jobId)->get();
-
-//        $applications = JobApplication::where('job_id', $jobId)->get();
-        $applications = User::join('job_applications', 'job_applications.applicant_id', '=', 'users.id')
-                            ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
-                            ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
-                            ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
-                            ->where('job_applications.job_id', $jobId)
-                            ->select([
-                                'users.username',
-                                'users.fullName',
-                                'users.firstName',
-                                'users.lastName',
-                                'users.id',
-                                'job_applications.created_at as applied_at',
-                                'cities.cityname',
-                                'regions.regname',
-                                'barangays.bgyname',
-                                'users.profilePic',
-                            ])
-                            ->groupBy('users.id')
-                            ->get();
-
-        $APPLICANTS = $this->GETAPPLICANTS($jobId);
-        $INVITEDS = $this->GETINVITEDS($jobId);
-        $INCART = $this->GETINCART(Auth::user()->id);
-        $CHECKED_OUT_USERS = $this->GETCHECKEDOUTUSERS(Auth::user()->id);
-
-        $workers = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
-            ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
-            ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
-            ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
-//            ->leftJoin('carts', 'carts.worker_id', '=', 'users.id')
-            ->leftJoin('purchases', 'purchases.worker_id', '=', 'users.id')
-//            ->leftJoin('job_invites', 'job_invites.job_id', '=', $jobId)
-            ->where('taskminator_has_skills.taskcategory_code', $job->categorycode)
-            ->where('taskminator_has_skills.taskitem_code', $job->itemcode)
-//            ->where('purchases.company_id', Auth::user()->id)
-            ->whereNotIn('users.id', $APPLICANTS)
+        $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
+            ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->where('jobs.id', $jobId)
             ->select([
-                'users.username',
-                'users.fullName',
-                'users.firstName',
-                'users.lastName',
-                'users.id',
-                'users.address',
-                'users.profilePic',
+                'jobs.id',
+                'jobs.title',
+                'jobs.created_at',
+                'jobs.description',
+                'jobs.requirements',
+                'jobs.salary',
+                'jobs.hiring_type',
+                'jobs.Industry',
+                'jobs.AverageProcessingTime',
+                'jobs.CompanySize',
+                'jobs.WorkingHours',
+                'jobs.DressCode',
+                'jobs.expired',
+                'jobs.expires_at',
                 'regions.regname',
                 'regions.regcode',
-                'cities.citycode',
-                'cities.cityname',
-                'barangays.bgycode',
                 'barangays.bgyname',
-//                'carts.id as cartID',
-                'purchases.id as purchaseID'
-//                'job_invites.invited_id'
+                'barangays.bgycode',
+                'cities.cityname',
+                'cities.citycode',
+                'taskcategory.categoryname',
+                'taskcategory.categorycode',
+                'taskitems.itemname',
+                'taskitems.itemcode'
             ])
-            ->orderBy('users.id', 'ASC')
-            ->groupBy('users.id')
-            ->take(5)
-            ->get();
+            ->first();
+        if(!$job->expired){
+            return View::make('client.jobDetails_EXPIRED')
+                    ->with('job', $job)
+                    ->with('custom_skills', $custom_skills);
+        }else{
 
-        $invited = JobInvite::where('job_id', $jobId)->get();
+//        $applications = JobApplication::where('job_id', $jobId)->get();
+            $applications = User::join('job_applications', 'job_applications.applicant_id', '=', 'users.id')
+                ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+                ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+                ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+                ->where('job_applications.job_id', $jobId)
+                ->select([
+                    'users.username',
+                    'users.fullName',
+                    'users.firstName',
+                    'users.lastName',
+                    'users.id',
+                    'job_applications.created_at as applied_at',
+                    'cities.cityname',
+                    'regions.regname',
+                    'barangays.bgyname',
+                    'users.profilePic',
+                ])
+                ->groupBy('users.id')
+                ->get();
 
-        return View::make('client.jobDetails')
+            $APPLICANTS = $this->GETAPPLICANTS($jobId);
+            $INVITEDS = $this->GETINVITEDS($jobId);
+            $INCART = $this->GETINCART(Auth::user()->id);
+            $CHECKED_OUT_USERS = $this->GETCHECKEDOUTUSERS(Auth::user()->id);
+
+            $workers = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
+                ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+                ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+                ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+//            ->leftJoin('carts', 'carts.worker_id', '=', 'users.id')
+                ->leftJoin('purchases', 'purchases.worker_id', '=', 'users.id')
+//            ->leftJoin('job_invites', 'job_invites.job_id', '=', $jobId)
+                ->where('taskminator_has_skills.taskcategory_code', $job->categorycode)
+                ->where('taskminator_has_skills.taskitem_code', $job->itemcode)
+//            ->where('purchases.company_id', Auth::user()->id)
+                ->whereNotIn('users.id', $APPLICANTS)
+                ->select([
+                    'users.username',
+                    'users.fullName',
+                    'users.firstName',
+                    'users.lastName',
+                    'users.id',
+                    'users.address',
+                    'users.profilePic',
+                    'regions.regname',
+                    'regions.regcode',
+                    'cities.citycode',
+                    'cities.cityname',
+                    'barangays.bgycode',
+                    'barangays.bgyname',
+//                'carts.id as cartID',
+                    'purchases.id as purchaseID'
+//                'job_invites.invited_id'
+                ])
+                ->orderBy('users.id', 'ASC')
+                ->groupBy('users.id')
+                ->take(5)
+                ->get();
+
+            $invited = JobInvite::where('job_id', $jobId)->get();
+
+            return View::make('client.jobDetails')
                 ->with('job', $job)
                 ->with('workers', $workers)
                 ->with('applications', $applications)
@@ -1166,6 +1172,7 @@ class ClientIndiController extends \BaseController {
                 ->with('INCART', $INCART)
                 ->with('CHECKED_OUT_USERS', $CHECKED_OUT_USERS)
                 ->with('custom_skills', $custom_skills);
+        }
     }
 
     public function jobs(){

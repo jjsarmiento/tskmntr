@@ -288,7 +288,7 @@
 
                 <!-- NEW JOBS MODULE -- START : Authored by Jan Sarmiento -->
                 @foreach($jobs as $job)
-                    <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".3s" data-wow-offset="0" data-wow-delay="0" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">
+                    <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".3s" data-wow-offset="0" data-wow-delay="0" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 1em; max-height: 10">
                         <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
                             <div style="flex:11;">
                             <a href="/jobDetails={{$job->id}}" style="text-decoration:none;">
@@ -296,7 +296,11 @@
                                     {{ $job->title}}
                                 </h3>
                                 <span class="text-right" style="padding:0;margin:0; color:#ccc;">
-                                    {{ date('m/d/y', strtotime($job->created_at)) }}
+                                    @if($job->expired)
+                                        <span class="badge" style="background-color: #E74C3C">EXPIRED</span>
+                                    @else
+                                        {{ date('m/d/y', strtotime($job->created_at)) }}
+                                    @endif
                                 </span>
                                 </a>
                             </div>

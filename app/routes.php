@@ -290,7 +290,7 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
     Route::get('/SKILLCATCHAIN={categoryId}', 'ClientIndiController@SKILLCATCHAIN');
 });
 
-Route::get('/TESTINGROUTE', 'HomeController@TESTINGROUTE');
+Route::get('/TESTINGROUTE', 'HomeController@TESTINGROUTE'); // TESTING
 
 Route::get('/{username}', 'HomeController@toProfile'); // new profile page viewer
 

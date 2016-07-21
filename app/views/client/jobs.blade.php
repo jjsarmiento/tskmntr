@@ -36,7 +36,9 @@
                     <div class="widget-container padded" style="display: flex; min-height:5em; display:block !important; border-bottom: #ECF0F1 solid 1px;">
                         <div class="row">
                             <div class="col-md-6">
-                                <h3 style="margin: 0"><a href="/jobDetails={{$job->id}}">{{ $job->title }}</a></h3>
+                                <h3 style="margin: 0">
+                                    <a href="/jobDetails={{$job->id}}">{{ $job->title }}</a>
+                                </h3>
                                 <span style="color: #7F8C8D;">
                                     Created at {{ date('D, M j, Y \a\t g:ia', strtotime($job->created_at)) }}<br/>
                                     @if($job->expired)
