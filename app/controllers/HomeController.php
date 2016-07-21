@@ -760,6 +760,7 @@ class HomeController extends BaseController {
                     // NEW JOB MODULE -- START by JAN SARMIENTO
                     $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
                             ->whereIn('jobs.skill_code', $skillCodeArray)
+                            ->where('expired', false)
                             ->orderBy('jobs.created_at', 'DESC')
                             ->select([
                                 'users.id as user_id',

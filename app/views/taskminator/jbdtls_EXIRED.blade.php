@@ -6,7 +6,6 @@
 
 @section('head-content')
     <style type="text/css">
-        body{background-color:#E9EAED;}
         .badge {
             background-color: #1ABC9C;
             width: auto;
@@ -15,6 +14,8 @@
             white-space:nowrap;
             text-overflow:ellipsis;
         }
+
+        body{background-color:#E9EAED;}
         .accordion-toggle
         {
             text-decoration: none !important;
@@ -139,34 +140,21 @@
               cursor: pointer;
               margin-left: 10px;
             }
-
-            .INVITE-BOOKMARK-WORKERS:hover {
-                background-color: #cce6ff;
-            }
     </style>
-    <script>
-        $(document).ready(function(){
-            $('#DELETE_AD').click(function() {
-                if(confirm('Do you want to delete this Job Ad?')){
-                    location.href = $(this).data('href');
-                }
-            })
-        });
-    </script>
 @stop
-
 
 @section('content')
 <section>
     <div class="container lato-text">
-        <div class="col-md-8">
+        <div class="col-md-5">
+            <div class="widget-container padded" style="min-height: 10px; display:block !important;">
+                <h3 style="margin: 0; text-align: center;"><i style="color: #E74C3C;" class="fa fa-warning"></i> This Job Ad is expired!</h3>
+            </div>
+        </div>
+        <div class="col-md-7">
             <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
-                <a href="#" data-href="/deleteJob={{$job->id}}" id="DELETE_AD" type="button" class="close" style="opacity: 0.5;">
-                    <i class="fa fa-trash"></i>
-                </a>
                 <h3 style="margin: 0;">{{$job->title}}</h3>
-                <span class="badge" style="background-color: #E74C3C;">EXPIRED</span>
-                Created at {{ date('D, M j, Y \a\t g:ia', strtotime($job->created_at)) }}
+                <span style="color: #7F8C8D;">by <a target="_tab" href="/{{$job->username}}">{{$job->fullName}}</a> created at {{$job->created_at}}</span>
                 <br/>
                 <br/>
                 <div class="row" style="text-align: left">
@@ -245,10 +233,6 @@
                         </div>
                     @endif
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="widget-container" style="display:block !important; word-wrap: break-word; min-height: 1em;">
             </div>
         </div>
     </div>

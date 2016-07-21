@@ -863,15 +863,6 @@ class TaskminatorController extends \BaseController {
     }
 
     public function jbdtls($jobId){
-        $application = JobApplication::where('job_id', $jobId)
-                        ->where('applicant_id', Auth::user()->id)
-                        ->first();
-
-        $hasInvite = JobInvite::where('job_id', $jobId)
-                        ->where('invited_id', Auth::user()->id)
-                        ->first();
-
-
         $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
             ->join('users', 'users.id', '=', 'jobs.user_id')
@@ -910,11 +901,26 @@ class TaskminatorController extends \BaseController {
 
         $custom_skills = CustomSkill::where('company_job_id', $jobId)->get();
 
-        return View::make('taskminator.jbdtls')
+        if($job->expired){
+            return View::make('taskminator.jbdtls_EXIRED')
+                ->with('job', $job)
+                ->with('custom_skills', $custom_skills);
+
+        }else{
+            $application = JobApplication::where('job_id', $jobId)
+                ->where('applicant_id', Auth::user()->id)
+                ->first();
+
+            $hasInvite = JobInvite::where('job_id', $jobId)
+                ->where('invited_id', Auth::user()->id)
+                ->first();
+
+            return View::make('taskminator.jbdtls')
                 ->with('job', $job)
                 ->with('custom_skills', $custom_skills)
                 ->with('application', $application)
                 ->with('hasInvite', $hasInvite);
+        }
     }
 
     public function APPLYFRJB($jobId){

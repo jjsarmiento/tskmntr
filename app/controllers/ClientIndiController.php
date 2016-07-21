@@ -1095,7 +1095,7 @@ class ClientIndiController extends \BaseController {
                 'taskitems.itemcode'
             ])
             ->first();
-        if(!$job->expired){
+        if($job->expired){
             return View::make('client.jobDetails_EXPIRED')
                     ->with('job', $job)
                     ->with('custom_skills', $custom_skills);
