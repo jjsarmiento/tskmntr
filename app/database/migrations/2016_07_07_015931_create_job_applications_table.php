@@ -17,6 +17,7 @@ class CreateJobApplicationsTable extends Migration {
 			$table->increments('id');
 			$table->string('applicant_id');
 			$table->string('job_id');
+			$table->string('message');
 			$table->timestamps();
 		});
 	}

@@ -176,7 +176,8 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     // JOBS MODULE ROUTES -- START by JAN SARMIENTO
     Route::get('/jbdtls={jobId}', 'TaskminatorController@jbdtls');
-    Route::get('/APPLYFRJB:{jobId}', 'TaskminatorController@APPLYFRJB');
+//    Route::get('/APPLYFRJB:{jobId}', 'TaskminatorController@APPLYFRJB');
+    Route::post('/APPLYFRJB', 'TaskminatorController@APPLYFRJB');
     Route::get('/CNCLAPPLCTN:{jobId}', 'TaskminatorController@CNCLAPPLCTN');
     Route::get('/WRKR_APPLCTNS', 'TaskminatorController@WRKR_APPLCTNS');
     Route::get('/WRKR_INVTS', 'TaskminatorController@WRKR_INVTS');

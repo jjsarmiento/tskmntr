@@ -147,27 +147,44 @@
 <section>
     <div class="container lato-text">
         <div class="col-md-5">
+            @if($job->expired)
+                <div class="widget-container padded" style="min-height: 10px; display:block !important;">
+                    <h3 style="margin: 0; text-align: center;"><i style="color: #E74C3C;" class="fa fa-warning"></i> This Job Ad is expired!</h3>
+                </div><br/>
+            @endif
+
             @if($hasInvite)
                 <div class="widget-container padded" style="min-height: 10px; display:block !important;">
                     <span style="color: #2980B9; font-weight: bold;">
-                        Invitation sent at {{$hasInvite->created_at}}
+                        Invitation sent at {{ date('D, M j, Y \a\t g:ia', strtotime($hasInvite->created_at)) }}<br/>
                     </span><br/><br/>
                     {{$hasInvite->message}}
                 </div><br/>
             @endif
-                @if($application)
-                    <div class="widget-container padded" style="min-height: 10px; display:block !important;">
-                        <i class="fa fa-check-circle" style="color: #2ECC71; font-size: 1.5em;"></i>&nbsp;You have applied for this job.<br/>
-                        <span style="color: #7F8C8D; font-size: 0.8em;">Application sent at {{$application->created_at}}</span>
-                        <br/>
-                        <br/>
-                        <a class="btn btn-danger btn-block" href="/CNCLAPPLCTN:{{$job->jobId}}">Cancel Application</a>
-                    </div><br/>
-                @else
-                    <div class="widget-container padded" style="min-height: 10px; display:block !important;">
-                        <a href="/APPLYFRJB:{{$job->jobId}}" class="btn btn-primary btn-block">Apply</a>
-                    </div><br/>
+
+            @if($application)
+                <div class="widget-container padded" style="min-height: 10px; display:block !important;">
+                    <i class="fa fa-check-circle" style="color: #2ECC71; font-size: 1.5em;"></i>&nbsp;You have applied for this job.<br/>
+                    <span style="color: #7F8C8D;">Application sent at {{ date('D M j, Y \a\t g:ia', strtotime($application->created_at)) }}</span><br/>
+                    <span>{{$application->message}}</span>
+                    <br/>
+                    <br/>
+                    <a class="btn btn-danger btn-block" href="/CNCLAPPLCTN:{{$job->jobId}}">Cancel Application</a>
+                </div><br/>
+            @else
+                @if(!$job->expired)
                 @endif
+                <div class="widget-container padded" style="min-height: 10px; display:block !important;">
+                    <form method="POST" action="/APPLYFRJB">
+                        <div class="form-group">
+                            <label>Application Message</label>
+                            <textarea class="form-control" name="application_message" placeholder="Attach a message with your application" rows="5"></textarea>
+                            <input type="hidden" name="application_jobID" value="{{$job->jobId}}" />
+                        </div>
+                        <button class="btn btn-primary btn-block">Send Application</button>
+                    </form>
+                </div><br/>
+            @endif
         </div>
         <div class="col-md-7">
             <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">

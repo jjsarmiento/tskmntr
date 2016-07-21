@@ -819,7 +819,7 @@ class TaskminatorController extends \BaseController {
             ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
             ->where('jobs.id', $jobId)
             ->select([
-                'jobs.id',
+                'jobs.id as jobId',
                 'jobs.title',
                 'jobs.created_at',
                 'jobs.description',
@@ -831,6 +831,7 @@ class TaskminatorController extends \BaseController {
                 'jobs.CompanySize',
                 'jobs.WorkingHours',
                 'jobs.DressCode',
+                'jobs.expired',
                 'regions.regname',
                 'regions.regcode',
                 'barangays.bgyname',
@@ -848,34 +849,27 @@ class TaskminatorController extends \BaseController {
             ->first();
 
         $custom_skills = CustomSkill::where('company_job_id', $jobId)->get();
+        $application = JobApplication::where('job_id', $jobId)
+            ->where('applicant_id', Auth::user()->id)
+            ->first();
 
-        if($job->expired){
-            return View::make('taskminator.jbdtls_EXIRED')
-                ->with('job', $job)
-                ->with('custom_skills', $custom_skills);
+        $hasInvite = JobInvite::where('job_id', $jobId)
+            ->where('invited_id', Auth::user()->id)
+            ->first();
 
-        }else{
-            $application = JobApplication::where('job_id', $jobId)
-                ->where('applicant_id', Auth::user()->id)
-                ->first();
-
-            $hasInvite = JobInvite::where('job_id', $jobId)
-                ->where('invited_id', Auth::user()->id)
-                ->first();
-
-            return View::make('taskminator.jbdtls')
-                ->with('job', $job)
-                ->with('custom_skills', $custom_skills)
-                ->with('application', $application)
-                ->with('hasInvite', $hasInvite);
-        }
+        return View::make('taskminator.jbdtls')
+            ->with('job', $job)
+            ->with('custom_skills', $custom_skills)
+            ->with('application', $application)
+            ->with('hasInvite', $hasInvite);
     }
 
-    public function APPLYFRJB($jobId){
-        if(JobApplication::where('job_id', $jobId)->where('applicant_id', Auth::user()->id)->count() == 0){
+    public function APPLYFRJB(){
+        if(JobApplication::where('job_id', Input::get('application_jobID'))->where('applicant_id', Auth::user()->id)->count() == 0){
             JobApplication::insert([
                 'applicant_id'  =>  Auth::user()->id,
-                'job_id'        =>  $jobId,
+                'job_id'        =>  Input::get('application_jobID'),
+                'message'       =>  Input::get('application_message'),
                 'created_at'    =>  date("Y:m:d H:i:s")
             ]);
         }
@@ -960,7 +954,8 @@ class TaskminatorController extends \BaseController {
     public function jobSearch($keyword, $workDuration, $regionFIELD, $city, $categoryFIELD, $skill, $orderBy){
         if($keyword == 'NO_KW_INPT'){   $keyword = "";}
 
-        $jobs = Job::where('title', 'LIKE', '%'.$keyword.'%');
+        $jobs = Job::where('title', 'LIKE', '%'.$keyword.'%')
+                    ->where('expired', false);
 
         if($workDuration != 'ALL'){     $jobs = $jobs->where('hiring_type', $workDuration);}
         if($regionFIELD != 'ALL'){      $jobs = $jobs->where('regcode', $regionFIELD);}
@@ -975,6 +970,8 @@ class TaskminatorController extends \BaseController {
 
         if($categoryFIELD != 'ALL'){
             $skills_OBJECTS = TaskItem::where('item_categorycode', $categoryFIELD)->orderBy('itemname', 'ASC')->get();
+        }else{
+            $skills_OBJECTS = NULL;
         }
 
         return View::make('taskminator.jobSearch')
