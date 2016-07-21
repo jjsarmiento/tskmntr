@@ -157,7 +157,7 @@
                 <div class="widget-container padded" style="min-height: 10px; display:block !important;">
                     <span style="color: #2980B9; font-weight: bold;">
                         Invitation sent at {{ date('D, M j, Y \a\t g:ia', strtotime($hasInvite->created_at)) }}<br/>
-                    </span><br/><br/>
+                    </span>
                     {{$hasInvite->message}}
                 </div><br/>
             @endif
@@ -173,17 +173,17 @@
                 </div><br/>
             @else
                 @if(!$job->expired)
+                    <div class="widget-container padded" style="min-height: 10px; display:block !important;">
+                        <form method="POST" action="/APPLYFRJB">
+                            <div class="form-group">
+                                <label>Application Message</label>
+                                <textarea class="form-control" name="application_message" placeholder="Attach a message with your application" rows="5"></textarea>
+                                <input type="hidden" name="application_jobID" value="{{$job->jobId}}" />
+                            </div>
+                            <button class="btn btn-primary btn-block">Send Application</button>
+                        </form>
+                    </div><br/>
                 @endif
-                <div class="widget-container padded" style="min-height: 10px; display:block !important;">
-                    <form method="POST" action="/APPLYFRJB">
-                        <div class="form-group">
-                            <label>Application Message</label>
-                            <textarea class="form-control" name="application_message" placeholder="Attach a message with your application" rows="5"></textarea>
-                            <input type="hidden" name="application_jobID" value="{{$job->jobId}}" />
-                        </div>
-                        <button class="btn btn-primary btn-block">Send Application</button>
-                    </form>
-                </div><br/>
             @endif
         </div>
         <div class="col-md-7">
