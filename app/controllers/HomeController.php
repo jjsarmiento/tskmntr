@@ -733,23 +733,6 @@ class HomeController extends BaseController {
                     return Redirect::to('/admin');
                     break;
                 case 'TASKMINATOR' :
-                    $bidCount = Task::join('task_has_bidders', 'task_has_bidders.task_id', '=', 'tasks.id')
-                        ->where('task_has_bidders.taskminator_id', Auth::user()->id)
-                        ->where('tasks.status', 'OPEN')
-                        ->where('tasks.hiringType', 'BIDDING')->count();
-
-                    $offerCount = Task::join('taskminator_has_offer', 'taskminator_has_offer.task_id', '=', 'tasks.id')
-                        ->where('taskminator_has_offer.taskminator_id', Auth::user()->id)
-                        ->where('tasks.status', 'OPEN')->count();
-
-//                    $ongoingCount = Task::join('task_has_taskminator', 'task_has_taskminator.task_id', '=', 'tasks.id')
-//                        ->where('task_has_taskminator.taskminator_id', Auth::user()->id)
-//                        ->where('tasks.status', 'ONGOING')->count();
-//
-//                    $completedCount = Task::join('task_has_taskminator', 'task_has_taskminator.task_id', '=', 'tasks.id')
-//                        ->where('task_has_taskminator.taskminator_id', Auth::user()->id)
-//                        ->where('tasks.status', 'COMPLETE')->count();
-
                     $skillCodeArray = $this->GETTASKCODES(Auth::user()->id);
 
                     $taskList = Task::where('hiringType', 'BIDDING')
@@ -759,6 +742,8 @@ class HomeController extends BaseController {
 
                     // NEW JOB MODULE -- START by JAN SARMIENTO
                     $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
+                            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+                            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
                             ->whereIn('jobs.skill_code', $skillCodeArray)
                             ->where('expired', false)
                             ->orderBy('jobs.created_at', 'DESC')
@@ -768,8 +753,13 @@ class HomeController extends BaseController {
                                 'users.profilePic',
                                 'jobs.title',
                                 'jobs.id as job_id',
+                                'jobs.expires_at',
+                                'jobs.salary',
                                 'jobs.created_at',
                                 'jobs.description',
+                                'jobs.hiring_type',
+                                'cities.cityname',
+                                'regions.regname',
                             ])
                             ->groupBy('jobs.id')
                             ->take('5')
@@ -884,10 +874,6 @@ class HomeController extends BaseController {
                     // END OF OPTIONAL PROGRESS
 
                     return View::make('taskminator.index')
-                            ->with('bidCount', $bidCount)
-                            ->with('offerCount', $offerCount)
-//                            ->with('ongoingCount', $ongoingCount)
-//                            ->with('completedCount', $completedCount)
                             ->with('accountRole', $role)
                             ->with('tasks', $taskList)
                             ->with('intProgress', $intProgress)

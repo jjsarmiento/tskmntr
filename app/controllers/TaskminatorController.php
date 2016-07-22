@@ -954,7 +954,10 @@ class TaskminatorController extends \BaseController {
     public function jobSearch($keyword, $workDuration, $regionFIELD, $city, $categoryFIELD, $skill, $orderBy){
         if($keyword == 'NO_KW_INPT'){   $keyword = "";}
 
-        $jobs = Job::where('title', 'LIKE', '%'.$keyword.'%')
+        $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
+                    ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+                    ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+                    ->where('title', 'LIKE', '%'.$keyword.'%')
                     ->where('expired', false);
 
         if($workDuration != 'ALL'){     $jobs = $jobs->where('hiring_type', $workDuration);}
@@ -963,7 +966,23 @@ class TaskminatorController extends \BaseController {
         if($categoryFIELD != 'ALL'){    $jobs = $jobs->where('skill_category_code', $categoryFIELD);}
         if($skill != 'ALL'){            $jobs = $jobs->where('skill_code', $skill);}
 
-        $jobs = $jobs->orderBy('created_at', $orderBy)->paginate(10);
+        $jobs = $jobs->orderBy('created_at', $orderBy)
+                ->select([
+                    'users.id as user_id',
+                    'users.fullName',
+                    'users.profilePic',
+                    'jobs.title',
+                    'jobs.id as job_id',
+                    'jobs.expires_at',
+                    'jobs.salary',
+                    'jobs.created_at',
+                    'jobs.description',
+                    'jobs.hiring_type',
+                    'cities.cityname',
+                    'regions.regname',
+
+                ])
+                ->paginate(10);
 
         $regions = Region::orderBy('regname', 'ASC')->get();
         $category = TaskCategory::orderBy('categoryname', 'ASC')->get();

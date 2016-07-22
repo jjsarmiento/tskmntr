@@ -107,28 +107,40 @@
                     <center><i>No jobs found</i></center>
                 @else
                     @foreach($jobs as $job)
-                    <div class="widget-container fluid-height padded" style=" word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 1em; max-height: 10">
-                        <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
-                            <div style="flex:11;">
-                            <a href="/jbdtls={{$job->id}}" style="text-decoration:none;">
-                                <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
-                                    {{ $job->title}}
-                                </h3>
-                                <span class="text-right" style="padding:0;margin:0; color:#ccc;">
-                                    @if($job->expired)
-                                        <span class="badge" style="background-color: #E74C3C">EXPIRED</span>
-                                    @else
-                                        {{ date('m/d/y', strtotime($job->created_at)) }}
-                                    @endif
+                        <div class="widget-container fluid-height padded" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">
+                            <div style="display:flex;padding-bottom:5px;">
+                                <span style="padding:0;margin:0; flex:1">
+                                    <img src="{{ $job->profilePic }}" class="thumbnail" style="margin:0; width:64px; height:64px;" >
                                 </span>
-                                </a>
+                                <div style="flex:11; padding-left: 5px;">
+                                <a href="/jbdtls={{$job->job_id}}" style="text-decoration:none;">
+                                    <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
+                                        {{ $job->title}} by {{ $job->fullName }}
+                                    </h3>
+                                    <div class="row" style="color:#95A5A6;">
+                                        <div class="col-md-4">
+                                            <span style="padding:0;margin:0;">
+                                                <i class="fa fa-briefcase"></i>
+                                                @if($job->hiring_type == 'LT6MOS')
+                                                    Less than 6 months
+                                                @else
+                                                    Greater than 6 months
+                                                @endif
+                                            </span><br>
+                                            <span class="text-right" style="padding:0;margin:0;">
+                                                <i class="fa fa-clock-o"></i>Ad Expires at {{ date('m/d/y', strtotime($job->expires_at)) }}
+                                            </span>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span class="text-right" style="padding:0;margin:0;"><i class="fa fa-map-marker"></i> {{$job->regname}}, {{$job->cityname}}</span><br/>
+                                            <span class="text-right" style="padding:0;margin:0;"><b>P</b>{{$job->salary}}</span>
+                                        </div>
+                                    </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <p class="lato-text no-padding">
-                            {{ $job->description }}
-                        </p>
-                    </div>
-                    <br>
+                        <br>
                     @endforeach
                 @endif
             </div>
