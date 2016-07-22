@@ -69,41 +69,57 @@ class HomeController extends BaseController {
                 ->where('user_has_role.user_id', $temp->id)
                 ->pluck('role');
 
+            $QUERY_CONTACT = Contact::where('user_id', $temp->id);
+            $mobile = $QUERY_CONTACT->where('ctype', 'mobileNum')->pluck('content');
+
             // DETERMINE IF USER HAS CHECKEDOUT WORKER -- START by Jan Sarmiento
             $USERINCART = false;
             $PURCHASED = false;
             $CLIENTFLAG = false;
             $MULTIJOB = false;
-            if(User::GETROLE(Auth::user()->id) == 'CLIENT_IND' || User::GETROLE(Auth::user()->id) == 'CLIENT_CMP'){
-                $CLIENTFLAG = true;
+
+            if(Auth::check()){
+                if(User::GETROLE(Auth::user()->id) == 'CLIENT_IND' || User::GETROLE(Auth::user()->id) == 'CLIENT_CMP'){
+                    $CLIENTFLAG = true;
+                }
+
+                if($role == 'TASKMINATOR' && $CLIENTFLAG){
+                    $USERINCART =  Cart::where('worker_id', $temp->id)
+                        ->where('company_id', Auth::user()->id)
+                        ->count();
+
+                    $PURCHASED = Purchase::where('worker_id', $temp->id)
+                        ->where('company_id', Auth::user()->id)
+                        ->count();
+
+                    $MULTIJOB = Job::where('user_id', Auth::user()->id)
+                        ->whereIn('skill_code', User::getSkillsCODE_ARRAY($temp->id))
+                        ->whereNotIn('id', $this->WORKERGETINVITES_JOBID($temp->id))
+                        ->get();
+                }
+                // DETERMINE IF USER HAS CHECKEDOUT WORKER -- END by Jan Sarmiento
+                return View::make("profile_worker")
+                    ->with("users", User::where('username', '=', $username)->get()->first())
+                    ->with('roles', $role)
+                    ->with('mobile', $mobile)
+                    ->with('CLIENTFLAG', $CLIENTFLAG)
+                    ->with('USERINCART', $USERINCART)
+                    ->with('PURCHASED', $PURCHASED)
+                    ->with('MULTIJOB', $MULTIJOB);
+            }else{
+                if($role == 'TASKMINATOR'){
+                    return View::make("publicProfile")
+                        ->with("users", User::where('username', '=', $username)->get()->first())
+                        ->with('roles', $role)
+                        ->with('mobile', $mobile)
+                        ->with('CLIENTFLAG', $CLIENTFLAG)
+                        ->with('USERINCART', $USERINCART)
+                        ->with('PURCHASED', $PURCHASED)
+                        ->with('MULTIJOB', $MULTIJOB);
+                }else{
+                    return View::make('ERRORPAGE');
+                }
             }
-
-            if($role == 'TASKMINATOR' && $CLIENTFLAG){
-                $USERINCART =  Cart::where('worker_id', $temp->id)
-                                ->where('company_id', Auth::user()->id)
-                                ->count();
-
-                $PURCHASED = Purchase::where('worker_id', $temp->id)
-                                ->where('company_id', Auth::user()->id)
-                                ->count();
-
-                $MULTIJOB = Job::where('user_id', Auth::user()->id)
-                            ->whereIn('skill_code', User::getSkillsCODE_ARRAY($temp->id))
-                            ->whereNotIn('id', $this->WORKERGETINVITES_JOBID($temp->id))
-                            ->get();
-            }
-            // DETERMINE IF USER HAS CHECKEDOUT WORKER -- END by Jan Sarmiento
-
-            $QUERY_CONTACT = Contact::where('user_id', $temp->id);
-            $mobile = $QUERY_CONTACT->where('ctype', 'mobileNum')->pluck('content');
-            return View::make("profile_worker")
-                ->with("users", User::where('username', '=', $username)->get()->first())
-                ->with('roles', $role)
-                ->with('mobile', $mobile)
-                ->with('CLIENTFLAG', $CLIENTFLAG)
-                ->with('USERINCART', $USERINCART)
-                ->with('PURCHASED', $PURCHASED)
-                ->with('MULTIJOB', $MULTIJOB);
 
         }else{
 //            return "ROUTE DOESN'T EXIST";
@@ -825,8 +841,8 @@ class HomeController extends BaseController {
                     break;
             }
         }else{
-            Auth::logout();
-            return Redirect::to('/');
+            $jobs = Job::orderBy('created_at', 'DESC')->paginate(3);
+            return View::make('home')->with('tasks', $jobs);
         }
     }
 

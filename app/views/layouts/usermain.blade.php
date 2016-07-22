@@ -183,6 +183,7 @@
 <input type="hidden" id="SYSSETTINGS_POINTSPERAD" value="{{SystemSetting::where('type', 'SYSSETTINGS_POINTSPERAD')->pluck('value')}}">
 <input type="hidden" id="SYSSETTINGS_CHECKOUTPRICE" value="{{SystemSetting::where('type', 'SYSSETTINGS_CHECKOUTPRICE')->pluck('value')}}">
 <!-- NAVIGATION MASTER USER LAYOUT -->
+    @if(Auth::check())
 	<nav id="mainNav" class="navbar navbar-default navbar-fixed-top affix" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -195,10 +196,14 @@
                 </button>
                 <a class="navbar-brand page-scroll logoImg" href="/" style="padding:0; margin:0;"></a>
             </div>
-            
-            <?php $role = Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')
-            ->where('user_has_role.user_id', Auth::user()->id)
-            ->pluck('role'); ?>
+
+            <?php
+                if(Auth::check()){
+                    $role = Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')
+                    ->where('user_has_role.user_id', Auth::user()->id)
+                    ->pluck('role');
+                }
+            ?>
     <!-- FOR SEARCH ON THE NAVIGATION BAR -->
         <!-- ADMIN -->
             @if ($role == 'ADMIN')
@@ -380,57 +385,60 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+    @endif
 
-    {{--MODAL FOR CART -- START--}}
-    <div class="modal modal-vcenter fade lato-text" id="CARTMODAL" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-body" style="padding-top: 2em;">
-                    <div id="CARTLOADING">
-                        <center><i class="fa fa-circle-o-notch fa-spin" style="font-size: 4em; opacity: 0.4"></i></center>
-                    </div>
-                    <div class="row" style="display: none;" id="MAINCARTBODY">
-                        <div class="col-md-6" id="CARTCONTENTS" style="text-align: center;">
-
+    <!-- MODALS FOR AUTHORIZED LOGIN -->
+    @if(Auth::check())
+        {{--MODAL FOR CART -- START--}}
+        <div class="modal modal-vcenter fade lato-text" id="CARTMODAL" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body" style="padding-top: 2em;">
+                        <div id="CARTLOADING">
+                            <center><i class="fa fa-circle-o-notch fa-spin" style="font-size: 4em; opacity: 0.4"></i></center>
                         </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-6">Number of items</div>
-                                <div class="col-md-6">
-                                    <span id="CRT_QTY"></span>
+                        <div class="row" style="display: none;" id="MAINCARTBODY">
+                            <div class="col-md-6" id="CARTCONTENTS" style="text-align: center;">
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">Number of items</div>
+                                    <div class="col-md-6">
+                                        <span id="CRT_QTY"></span>
+                                    </div>
+                                    <div class="col-md-6">Price per item</div>
+                                    <div class="col-md-6">
+                                        <span id="CRT_PRICEPERITEM"></span>
+                                    </div>
+                                    <div class="col-md-6" style="font-weight: bold;">TOTAL PRICE</div>
+                                    <div class="col-md-6" style="font-weight: bold;">
+                                        <span id="CRT_TOTAL"></span>
+                                    </div>
+                                    <div class="col-md-6" style="font-weight: bold;">Your points</div>
+                                    <div class="col-md-6" style="font-weight: bold;">
+                                        <span>{{Auth::user()->points}}</span>
+                                    </div>
+                                    <div class="col-md-6" style="font-weight: bold;">Total points after purchase</div>
+                                    <div class="col-md-6" style="font-weight: bold;">
+                                        <span id="CRT_PTSLEFT" data-ptsleft="{{Auth::user()->points}}">{{Auth::user()->points}}</span>
+                                    </div>
+                                    <div class="col-md-12" id="CART-WARNING" style="color: red;">You don't have enough points to make this purchase</div>
                                 </div>
-                                <div class="col-md-6">Price per item</div>
-                                <div class="col-md-6">
-                                    <span id="CRT_PRICEPERITEM"></span>
-                                </div>
-                                <div class="col-md-6" style="font-weight: bold;">TOTAL PRICE</div>
-                                <div class="col-md-6" style="font-weight: bold;">
-                                    <span id="CRT_TOTAL"></span>
-                                </div>
-                                <div class="col-md-6" style="font-weight: bold;">Your points</div>
-                                <div class="col-md-6" style="font-weight: bold;">
-                                    <span>{{Auth::user()->points}}</span>
-                                </div>
-                                <div class="col-md-6" style="font-weight: bold;">Total points after purchase</div>
-                                <div class="col-md-6" style="font-weight: bold;">
-                                    <span id="CRT_PTSLEFT" data-ptsleft="{{Auth::user()->points}}">{{Auth::user()->points}}</span>
-                                </div>
-                                <div class="col-md-12" id="CART-WARNING" style="color: red;">You don't have enough points to make this purchase</div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <form method="POST" action="/doCheckout" id="CHECKOUTFORM">
-                    </form>
-                    <button disabled type="button" onclick="$('#CHECKOUTFORM').submit()" id="CHECKOUTBTN" class="btn btn-primary">Checkout</button>
-                    <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <div class="modal-footer">
+                        <form method="POST" action="/doCheckout" id="CHECKOUTFORM">
+                        </form>
+                        <button disabled type="button" onclick="$('#CHECKOUTFORM').submit()" id="CHECKOUTBTN" class="btn btn-primary">Checkout</button>
+                        <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {{--MODAL FOR CART -- END--}}
-
+        {{--MODAL FOR CART -- END--}}
+    @endif
 
     @if(@$MULTIJOB)
         <form method="POST" action="/INVITEMULTIJOB">
