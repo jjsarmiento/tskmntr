@@ -744,28 +744,28 @@ class HomeController extends BaseController {
 
                     // NEW JOB MODULE -- START by JAN SARMIENTO
                     $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
-                            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
-                            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
-                            ->whereIn('jobs.skill_code', $skillCodeArray)
-                            ->where('expired', false)
-                            ->orderBy('jobs.created_at', 'DESC')
-                            ->select([
-                                'users.id as user_id',
-                                'users.fullName',
-                                'users.profilePic',
-                                'jobs.title',
-                                'jobs.id as job_id',
-                                'jobs.expires_at',
-                                'jobs.salary',
-                                'jobs.created_at',
-                                'jobs.description',
-                                'jobs.hiring_type',
-                                'cities.cityname',
-                                'regions.regname',
-                            ])
-                            ->groupBy('jobs.id')
-                            ->take('5')
-                            ->get();
+                        ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+                        ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+                        ->whereIn('jobs.skill_code', $skillCodeArray)
+                        ->where('expired', false)
+                        ->orderBy('jobs.created_at', 'DESC')
+                        ->select([
+                            'users.id as user_id',
+                            'users.fullName',
+                            'users.profilePic',
+                            'jobs.title',
+                            'jobs.id as job_id',
+                            'jobs.expires_at',
+                            'jobs.salary',
+                            'jobs.created_at',
+                            'jobs.description',
+                            'jobs.hiring_type',
+                            'cities.cityname',
+                            'regions.regname',
+                        ])
+                        ->groupBy('jobs.id')
+                        ->take('5')
+                        ->get();
 
                     $applicationCount = JobApplication::where('applicant_id', Auth::user()->id)->count();
                     $invitesCount = JobInvite::where('invited_id', Auth::user()->id)->count();
@@ -793,6 +793,24 @@ class HomeController extends BaseController {
                         $freeDuration = Carbon::now()->diffInDays($tempDate, false). " days until 3-Month Subscription expires";
                     }
 
+                    $jobs = Job::where('user_id', Auth::user()->id)
+                            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+                            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+                            ->select([
+                                'jobs.title',
+                                'jobs.id as job_id',
+                                'jobs.expires_at',
+                                'jobs.salary',
+                                'jobs.created_at',
+                                'jobs.description',
+                                'jobs.hiring_type',
+                                'cities.cityname',
+                                'regions.regname',
+                            ])
+                            ->groupBy('jobs.id')
+                            ->take('5')
+                            ->get();
+
                     // $freeDuration = $tempDate->diffInDays(Carbon::now());
                     return View::make('client.index')
                     ->with('freeDuration', $freeDuration)
@@ -800,25 +818,15 @@ class HomeController extends BaseController {
                     ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get())
                     ->with('TOTALPROG', $this->PROFILE_PERCENTAGE_COMPANY(Auth::user()->id))
                     ->with('tasks', Task::where('user_id', Auth::user()->id)->whereNotIn('status', ['CANCELLED', 'COMPLETE'])->orderBy('created_at', 'DESC')->paginate(10))
-                    ->with('jobs', Job::where('user_id', Auth::user()->id)->get());
+                    ->with('jobs', $jobs);
                     break;
                 default :
                     return Redirect::to('/');
                     break;
             }
         }else{
-
-            $task = Job::orderBy('created_at', 'DESC')->paginate(3);
-            /*
-            $task = new Task;
-            $task = $task->where('hiringType', 'BIDDING')
-            ->where('status', 'OPEN')
-            ->orderBy('created_at','DESC')->paginate(3);
-            */
-            // $task = DB::table('tasks')->where('hiringType', '=', 'BIDDING')
-            // ->where('status', '=', 'OPEN')->orderBy('created_at', 'DESC')
-            // ->get();
-            return View::make('home')->with('tasks', $task);
+            Auth::logout();
+            return Redirect::to('/');
         }
     }
 

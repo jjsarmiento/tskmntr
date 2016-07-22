@@ -426,9 +426,6 @@ class TaskminatorController extends \BaseController {
     }
 
     public function doEditPersonalInfo(){
-        // compute completeness of user's profile and update total_profile_progress column
-        $this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
-
         // FIRSTNAME VALIDATION
         if(!ctype_alpha(str_replace(' ', '', trim(Input::get('firstName'))))){
             return Redirect::back()->with('errorMsg', 'First name must be letters only')->withInput(Input::except('password'));
@@ -480,6 +477,9 @@ class TaskminatorController extends \BaseController {
             'barangay'          =>  Input::get('barangay-task'),
         ));
 
+        // compute completeness of user's profile and update total_profile_progress column
+        $this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
+
         return Redirect::back()
                 ->with('successMsg', 'Personal Information has been successfully edited.');
     }
@@ -520,73 +520,12 @@ class TaskminatorController extends \BaseController {
         Contact::where('user_id', Auth::user()->id)->where('ctype', 'linkedin')->update(['content' => Input::get('linkedin')]);
         Contact::where('user_id', Auth::user()->id)->where('ctype', 'twitter')->update(['content' => Input::get('twitter')]);
         Contact::where('user_id', Auth::user()->id)->where('ctype', 'mobileNum')->update(['content' => Input::get('mobileNum')]);
-        /*
-        Contact::where('user_id', Auth::user()->id)->delete();
-        Contact::insert(array(
-            array(
-                'user_id'       =>  Auth::user()->id,
-                'ctype'         =>  'email',
-                'content'       =>  Input::get('email'),
-            ),
-            array(
-                'user_id'       =>  Auth::user()->id,
-                'ctype'         =>  'facebook',
-                'content'       =>  Input::get('facebook'),
-            ),
-            array(
-                'user_id'       =>  Auth::user()->id,
-                'ctype'         =>  'linkedin',
-                'content'       =>  Input::get('linkedin'),
-            ),
-            array(
-                'user_id'       =>  Auth::user()->id,
-                'ctype'         =>  'twitter',
-                'content'       =>  Input::get('twitter'),
-            ),
-            array(
-                'user_id'       =>  Auth::user()->id,
-                'ctype'         =>  'mobileNum',
-                'content'       =>  Input::get('mobileNum'),
-            )
-        ));
-        */
+
+        // compute completeness of user's profile and update total_profile_progress column
+        $this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
 
         return Redirect::back()->with('successMsg', 'Successfully edited contact information.');
     }
-
-//    public function doEditContactInfo(){
-////        dd(Input::all());
-//        $query = Contact::where('user_id', Auth::user()->id);
-////        $query->delete();
-//        foreach(Input::all() as $key => $value){
-//            foreach($value as $val){
-////                var_dump($val.'<br/>');
-//                switch($key){
-//                    case 'email'        :
-//                        if(!$this->emailValidate($val){
-//                            return Redirect::back()->with('errorMsg', 'Please enter valid email')->withInput(Input::except('password'));
-//                        }else if(Contact::where('ctype', 'email')->where('content', Input::get('email'))->count() > 0){
-//                            return Redirect::back()->with('errorMsg', 'Email is already taken')->withInput(Input::except('password'));
-//                        }
-//                        break;
-//                    case 'facebook'     :
-//                        break;
-//                    case 'linkedin'     :
-//                        break;
-//                    case 'mobileNum'    :
-//                        break;
-//                }
-//
-////                $query->insert(array(
-////                    'user_id'   =>  Auth::user()->id,
-////                    'ctype'     =>  $key,
-////                    'content'   =>  $val
-////                ));
-//            }
-//        }
-//
-////        return Redirect::back()->with('successMsg', 'Successfully edited contact information.');
-//    }
 
     public function editSkillInfo(){
         $query = TaskminatorHasSkill::join('taskcategory', 'taskcategory.categorycode', '=', 'taskminator_has_skills.taskcategory_code')
@@ -603,6 +542,9 @@ class TaskminatorController extends \BaseController {
 
         $custom_skills = CustomSkill::get();
         $worker_cust_skills = CustomSkill::where('created_by', Auth::user()->id)->get();
+
+        // compute completeness of user's profile and update total_profile_progress column
+        $this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
 
         return View::make('taskminator.editSkillInfo')
                 ->with('skills', $query)

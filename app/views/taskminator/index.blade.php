@@ -284,7 +284,11 @@
                                                             @endif
                                                         </span><br>
                                                         <span class="text-right" style="padding:0;margin:0;">
-                                                            <i class="fa fa-clock-o"></i>Ad Expires at {{ date('m/d/y', strtotime($job->expires_at)) }}
+                                                            @if($job->expired)
+                                                                <span class="badge" style="background-color: #E74C3C">EXPIRED</span>
+                                                            @else
+                                                                <i class="fa fa-clock-o"></i> Expires at {{ date('m/d/y', strtotime($job->expires_at)) }}
+                                                            @endif
                                                         </span>
                                                     </div>
                                                     <div class="col-md-8">

@@ -678,6 +678,9 @@ class ClientIndiController extends \BaseController {
             $formUrl = '/doCltEditPersonalInfo';
         }
 
+        // compute completeness of user's profile and update total_profile_progress column
+        $this->PROFILE_PERCENTAGE_COMPANY(Auth::user()->id);
+
         return View::make('client.editPersonalInfo')
             ->with('user', Auth::user())
             ->with('regions', Region::orderBy('regname', 'ASC')->get())
@@ -748,6 +751,10 @@ class ClientIndiController extends \BaseController {
         }else{
             $formUrl = '/doCltEditContactInfo';
         }
+
+        // compute completeness of user's profile and update total_profile_progress column
+        $this->PROFILE_PERCENTAGE_COMPANY(Auth::user()->id);
+
         return View::make('client.editContactInfo')
             ->with('contacts', Contact::where('user_id', Auth::user()->id)->get())
             ->with('formUrl',   $formUrl);
@@ -982,6 +989,7 @@ class ClientIndiController extends \BaseController {
                     ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
                     ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
                     ->where('taskminator_has_skills.taskitem_code', $skillId)
+                    ->where('users.total_profile_progress', '>=', '50')
                     ->get();
 
         return View::make('client.searchWorker_SKILL')
@@ -1131,12 +1139,10 @@ class ClientIndiController extends \BaseController {
                 ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
                 ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
                 ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
-//            ->leftJoin('carts', 'carts.worker_id', '=', 'users.id')
                 ->leftJoin('purchases', 'purchases.worker_id', '=', 'users.id')
-//            ->leftJoin('job_invites', 'job_invites.job_id', '=', $jobId)
                 ->where('taskminator_has_skills.taskcategory_code', $job->categorycode)
                 ->where('taskminator_has_skills.taskitem_code', $job->itemcode)
-//            ->where('purchases.company_id', Auth::user()->id)
+                ->where('users.total_profile_progress', '>=', '50')
                 ->whereNotIn('users.id', $APPLICANTS)
                 ->select([
                     'users.username',
@@ -1176,8 +1182,24 @@ class ClientIndiController extends \BaseController {
     }
 
     public function jobs(){
+        $jobs = Job::where('user_id', Auth::user()->id)
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->select([
+                'jobs.title',
+                'jobs.id as job_id',
+                'jobs.expires_at',
+                'jobs.salary',
+                'jobs.created_at',
+                'jobs.description',
+                'jobs.hiring_type',
+                'cities.cityname',
+                'regions.regname',
+            ])
+            ->groupBy('jobs.id')
+            ->paginate(10);
         return View::make('client.jobs')
-                ->with('jobs', Job::where('user_id', Auth::user()->id)->get());
+                ->with('jobs', $jobs);
     }
 
     public function editJob($jobId){
@@ -1310,6 +1332,7 @@ class ClientIndiController extends \BaseController {
 
         $workers = $workers->where('taskminator_has_skills.taskcategory_code', $categoryCode)
             ->where('taskminator_has_skills.taskitem_code', $skillCode)
+            ->where('total_profile_progress', '>=', '50')
             ->select([
                 'users.firstName',
                 'users.lastName',

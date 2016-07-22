@@ -274,41 +274,50 @@
                 <br/>
                 {{--<div class="col-md-2 col-md-offset-5"><p>My Jobs</p></div>--}}
 
-                <!--
-                @if($tasks->count() != 0)
-                    @foreach($tasks as $task)
-                        <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".2s" data-wow-offset="0" data-wow-delay="0" style="padding-left:10px; padding-right:10px; min-height: 50px; margin-bottom: 1em;">
-                              <a href="/taskDetails/{{$task->id}}"><h3>{{ $task->name }}</h3></a>
-                        </div>
-                    @endforeach
-                @endif
-                -->
-
                 <!-- NEW JOBS MODULE -- START : Authored by Jan Sarmiento -->
-                @foreach($jobs as $job)
-                    <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".3s" data-wow-offset="0" data-wow-delay="0" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 1em; max-height: 10">
-                        <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
-                            <div style="flex:11;">
-                            <a href="/jobDetails={{$job->id}}" style="text-decoration:none;">
-                                <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
-                                    {{ $job->title}}
-                                </h3>
-                                <span class="text-right" style="padding:0;margin:0; color:#ccc;">
-                                    @if($job->expired)
-                                        <span class="badge" style="background-color: #E74C3C">EXPIRED</span>
-                                    @else
-                                        {{ date('m/d/y', strtotime($job->created_at)) }}
-                                    @endif
-                                </span>
-                                </a>
+                @if($jobs->count() == 0)
+                    <br/>
+                    <center><i>No jobs posted yet</i></center>
+                @else
+                    @foreach($jobs as $job)
+                        <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".3s" data-wow-offset="0" data-wow-delay="0" style=" word-wrap: break-word; padding-left:1em; padding-right:10px; min-height: 1em; max-height: 10">
+                            <div style="display:flex;padding-bottom:5px;">
+                                <div style="flex:11;">
+                                    <a href="/jobDetails={{$job->job_id}}" style="text-decoration:none;">
+                                        <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
+                                            {{ $job->title}}
+                                        </h3>
+
+                                        <div class="row" style="color:#95A5A6;">
+                                            <div class="col-md-4">
+                                                <span style="padding:0;margin:0;">
+                                                    <i class="fa fa-briefcase"></i>
+                                                    @if($job->hiring_type == 'LT6MOS')
+                                                        Less than 6 months
+                                                    @else
+                                                        Greater than 6 months
+                                                    @endif
+                                                </span><br>
+                                                <span class="text-right" style="padding:0;margin:0;">
+                                                    @if($job->expired)
+                                                        <span class="badge" style="background-color: #E74C3C">EXPIRED</span>
+                                                    @else
+                                                        <i class="fa fa-clock-o"></i> Expires at {{ date('m/d/y', strtotime($job->expires_at)) }}
+                                                    @endif
+                                                </span>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <span class="text-right" style="padding:0;margin:0;"><i class="fa fa-map-marker"></i> {{$job->regname}}, {{$job->cityname}}</span><br/>
+                                                <span class="text-right" style="padding:0;margin:0;"><b>P</b>{{$job->salary}}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <p class="lato-text no-padding">
-                            {{ $job->description }}
-                        </p>
-                    </div>
-                    <br>
-                @endforeach
+                        <br>
+                    @endforeach
+                @endif
                 <!-- NEW JOBS MODULE -- END : Authored by Jan Sarmiento -->
             </div>
         </div>
