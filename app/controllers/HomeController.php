@@ -772,6 +772,7 @@ class HomeController extends BaseController {
                             'jobs.title',
                             'jobs.id as job_id',
                             'jobs.expires_at',
+                            'jobs.expired',
                             'jobs.salary',
                             'jobs.created_at',
                             'jobs.description',
@@ -819,6 +820,7 @@ class HomeController extends BaseController {
                                 'jobs.salary',
                                 'jobs.created_at',
                                 'jobs.description',
+                                'jobs.expired',
                                 'jobs.hiring_type',
                                 'cities.cityname',
                                 'regions.regname',
@@ -1628,6 +1630,27 @@ class HomeController extends BaseController {
 
     public function CHAINCATEGORYANDSKILL($categoryID){
         return TaskItem::where('item_categorycode', '=', $categoryID)->orderBy('itemname', 'ASC')->get();
+    }
+
+    public function ContactUs(){
+        if(!$this->emailValidate(Input::get('ContactUs_email'))){
+            Session::flash('errorMsg', 'Please input a valid email');
+        }else{
+            $data = array(
+                'msg'   =>  Input::get('ContactUs_msg'),
+                'name'  =>  Input::get('ContactUs_name'),
+                'userMail'  =>  Input::get('ContactUs_email')
+            );
+
+            $email = Input::get('ContactUs_email');
+
+            Mail::send('emails.CONTACTUS', $data, function($message) use($email){
+                $message->from('admin@proveek.com', 'Inquiries - Proveek');
+                $message->from('admin@proveek.com', 'Inquiries - Proveek');
+            });
+        }
+
+        return Redirect::back();
     }
 }
 

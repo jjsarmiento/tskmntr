@@ -618,20 +618,25 @@
                             </div>
                         </div>
                         <div class="col-lg-8 text-left feedback_footer">
-                            <h2>Contact Us</h2>
-                            <p>We love to hear from you. Please drop us a message.</p>
-                            <div class="col-lg-12" style="padding:0;">
-                                <input type="text" placeholder="Name">
-                            </div>
-                            <div class="col-lg-12" style="padding:15px 0 0 0 ;">
-                                <input type="email" placeholder="Email">
-                            </div>
-                            <div class="col-lg-12" style="padding:15px 0 0 0 ;">
-                                <input type="text" placeholder="Message">
-                            </div>
-                            <div class="col-lg-12 text-right" style="padding:15px 0 0 0 ;">
-                                <button type="button" class="btn btn-primary btn-md" style="width: 120px;border-radius: 4px;">Send</button>
-                            </div>
+                            <form method="POST" action="/ContactUs">
+                                <h2>Contact Us</h2>
+                                <p>We love to hear from you. Please drop us a message.</p>
+                                <div class="col-lg-12" style="padding:0;">
+                                    <input type="text" name="ContactUs_name" placeholder="Name" required="required">
+                                </div>
+                                <div class="col-lg-12" style="padding:15px 0 0 0 ;">
+                                    @if(Session::has('errorMsg'))
+                                        <p><i class="fa fa-warning" style="color:#E74C3C"></i> {{Session::get('errorMsg')}}</p>
+                                    @endif
+                                    <input type="email" name="ContactUs_email" placeholder="Email" required="required">
+                                </div>
+                                <div class="col-lg-12" style="padding:15px 0 0 0 ;">
+                                    <input type="text" name="ContactUs_msg" placeholder="Message" required="required">
+                                </div>
+                                <div class="col-lg-12 text-right" style="padding:15px 0 0 0 ;">
+                                    <button type="submit" class="btn btn-primary btn-md" style="width: 120px;border-radius: 4px;">Send</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="col-lg-4 text-center">

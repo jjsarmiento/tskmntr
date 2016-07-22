@@ -29,6 +29,7 @@ Route::get('/VRFYACCT={code}', 'HomeController@VRFYACCT');
 Route::get('/RESENDVALIDATION={userid}', 'HomeController@RESENDVALIDATION');
 Route::post('/CHKRGWRKR', 'HomeController@CHKRGWRKR');
 Route::get('/CHAINREG', 'HomeController@CHAINREG');
+Route::post('/ContactUs', 'HomeController@ContactUs');
 
 Route::get('/LOCCHAIN:{chainType}:{locationID}', 'HomeController@LOCCHAIN');
 Route::get('/CHAINCATEGORYANDSKILL:{categoryID}', 'HomeController@CHAINCATEGORYANDSKILL');
