@@ -77,7 +77,6 @@
     <link rel="shortcut icon" type="image/x-icon" href="frontend/img/favicon.ico">
     <script>
         $(document).ready(function(){
-
             CHAINLOCATION($('#adSearch_REG'), $('#adSearch_CITY'));
             CHAINCATEGORYANDSKILL($('#adSearch_CATEGORY'), $('#adSearch_SKILL'));
 
@@ -138,17 +137,11 @@
                             }
                         }
 
-                        INITLISTENER();
+//                        INITLISTENER();
                     }
                 })
             });
         });
-
-        function INITLISTENER(){
-            $('.CART-ITEMS').click(function(){
-                alert('FUCK');
-            });
-        }
     </script>
     <style type="text/css">
         .lato-text { font-family: 'Lato', sans-serif}
@@ -270,7 +263,6 @@
                         </div>
                     </li> -->
                     <li class="dropdown messages hidden-xs">
-
                         <a id="notificationLink" class="dropdown-toggle" data-toggle="dropdown" href="#" style="background:transparent; font-size: 14pt;">
                             <i class="fa fa-bell fa-fw"></i><span class="visible-xs-inline hidden-sm hidden-md" style="text-transform:none; font-size:11pt;">Notification</span>
                         </a>
@@ -287,24 +279,24 @@
                             <!--<span id="notification_count">3</span>-->
                           </div>
                         </div>
-                        <div id="notificationContainer" class="messages">
-                        <div id="notificationTitle">Notifications</div>
-                        <div id="notificationsBody" class="notifications">
-                            <ul class="dropdown-msg">
-                            @if(User::getNotif()->count() > 0)
-                                @foreach(User::getNotif() as $notif)
-                                  <li onclick="location.href='{{$notif->notif_url}}'">
-                                      <a href="{{$notif->notif_url}}">
-                                          {{ $notif->content }}
-                                      </a>
-                                  </li>
-                                @endforeach
-                            @else
-                                <center><i>You have no notifications yet</i></center>
-                            @endif
-                            </ul>
-                        </div>
-                        <div id="notificationFooter"><a href="/showAllNotif" onclick="location.href='/showAllNotif'">See All</a></div>
+                        <div id="notificationContainer" class="messages" style="min-height: 1em !important;">
+                            <div id="notificationTitle">Notifications</div>
+                            <div id="notificationsBody" style="min-height: 1em !important;" class="notifications">
+                                <ul class="dropdown-msg">
+                                @if(User::getNotif()->count() > 0)
+                                    @foreach(User::getNotif() as $notif)
+                                      <li onclick="location.href='{{$notif->notif_url}}'">
+                                          <a href="{{$notif->notif_url}}">
+                                              {{ $notif->content }}
+                                          </a>
+                                      </li>
+                                    @endforeach
+                                @else
+                                    <center><i>You have no notifications yet</i></center>
+                                @endif
+                                </ul>
+                            </div>
+                            <div id="notificationFooter"><a href="/showAllNotif" onclick="location.href='/showAllNotif'">See All</a></div>
                         </div>
                     </li>
 

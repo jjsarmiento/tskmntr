@@ -819,6 +819,17 @@ class TaskminatorController extends \BaseController {
             ]);
         }
 
+        // NOTIFICATION
+        $job = Job::where('id', Input::get('application_jobID'))->first();
+        $client = User::where('id', $job->user_id)->first();
+        Notification::insert([
+            'user_id'   =>  $client->id,
+            'content'   =>  '<b>'.Auth::user()->fullName.'</b> has applied for <b>'.$job->title.'</b>',
+            'notif_url' =>  '/jobDetails='.$job->id,
+            'status'    =>  'NEW',
+            'created_at'=>  date("Y:m:d H:i:s")
+        ]);
+
         return Redirect::back();
     }
 

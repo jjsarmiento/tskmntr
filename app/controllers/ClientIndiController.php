@@ -354,85 +354,85 @@ class ClientIndiController extends \BaseController {
         }
     }
 
-    public function hireTskmntr($userid, $taskid){
-        date_default_timezone_set("Asia/Manila");
-        $client = User::where('id', Auth::user()->id);
-        $taskDetails = Task::where('id', $taskid)->first();
-        $threadCode = $this->generateUniqueId();
-        $authUserId = Auth::user()->id;
-        $currentDate = date('Y:m:d H:i:s');
-        $taskName = $taskDetails->name;
-        $pointDeduction = 0;
-        $mobileNum = Contact::where('user_id', $userid)->where('ctype', 'mobileNum')->pluck('content');
-
-        if($taskDetails->workTime == 'PTIME'){
-            if($client->pluck('points') < 25){
-                return Redirect::back()->with('errorMsg', 'You need 25 points to hire a taskminator for a part-time task. Click <a href="/addPoints_'.Auth::user()->id.'">here</a> for more details');
-            }
-            $pointDeduction = 25;
-        }else if($taskDetails->workTime == 'FTIME'){
-            if($client->pluck('points') < 100){
-                return Redirect::back()->with('errorMsg', 'You need 25 points to hire a taskminator for a full-time task. Click <a href="/addPoints_'.Auth::user()->id.'">here</a> for more details');
-            }
-            $pointDeduction = 100;
-        }else{
-            return Redirect::back()->with('errorMsg', 'UNKNOWN REQUEST');
-        }
-//        if($client->pluck('points') < 25){
-//            return Redirect::back()->with('errorMsg', 'You need 25 points to hire a taskminator. Click <a href="/addPoints_'.Auth::user()->id.'">here</a> for more details');
+//    public function hireTskmntr($userid, $taskid){
+//        date_default_timezone_set("Asia/Manila");
+//        $client = User::where('id', Auth::user()->id);
+//        $taskDetails = Task::where('id', $taskid)->first();
+//        $threadCode = $this->generateUniqueId();
+//        $authUserId = Auth::user()->id;
+//        $currentDate = date('Y:m:d H:i:s');
+//        $taskName = $taskDetails->name;
+//        $pointDeduction = 0;
+//        $mobileNum = Contact::where('user_id', $userid)->where('ctype', 'mobileNum')->pluck('content');
+//
+//        if($taskDetails->workTime == 'PTIME'){
+//            if($client->pluck('points') < 25){
+//                return Redirect::back()->with('errorMsg', 'You need 25 points to hire a taskminator for a part-time task. Click <a href="/addPoints_'.Auth::user()->id.'">here</a> for more details');
+//            }
+//            $pointDeduction = 25;
+//        }else if($taskDetails->workTime == 'FTIME'){
+//            if($client->pluck('points') < 100){
+//                return Redirect::back()->with('errorMsg', 'You need 25 points to hire a taskminator for a full-time task. Click <a href="/addPoints_'.Auth::user()->id.'">here</a> for more details');
+//            }
+//            $pointDeduction = 100;
+//        }else{
+//            return Redirect::back()->with('errorMsg', 'UNKNOWN REQUEST');
 //        }
-
-        $bidInfo = TaskHasBidder::where('taskminator_id', $userid)->where('task_id', $taskid)->first();
-
-        TaskHasTaskminator::insert(array(
-            'task_id'   =>  $taskid,
-            'taskminator_id'   =>  $userid,
-            'proposedRate'   =>  $bidInfo->proposedRate,
-            'message'   =>  $bidInfo->message,
-            'created_at'   =>  date("Y:m:d H:i:s"),
-        ));
-
-        Task::where('id', $taskid)->update(array(
-            'status'    =>  'ONGOING'
-        ));
-
-        $client->update(array('points' => ($client->pluck('points')-$pointDeduction)));
-
-//         CREATE THREAD FOR CHAT MODULE
-        DB::insert("INSERT INTO `threads` (`user_id`, `task_id`,`title`, `code`, `created_at`, `status`) VALUES
-            ('$authUserId', '$taskid', '$taskName', '$threadCode', '$currentDate', 'OPEN'),
-            ('$userid', '$taskid', '$taskName', '$threadCode', '$currentDate', 'OPEN')
-        ");
-
-        Notification::insert(array(
-            'content'   =>  "You've been hired!. Your bid for '.$taskDetails->name.' has been approved!",
-            'user_id'   =>  $userid,
-            'notif_url'       =>  '/taskDetails_'.$taskDetails->id,
-            'status'    =>  'NEW',
-            'created_at'=>  date("Y:m:d H:i:s")
-        ));
-        $smsMessage = "You've been hired!. Your bid for '.$taskDetails->name.' has been approved!";
-        $this->sendSms($mobileNum, $smsMessage, $userid);
-
-        $tskmntrDetails = User::where('id', $userid)->first();
-
-        AuditTrail::insert(array(
-            'user_id'   =>  Auth::user()->id,
-            'content'   =>  'Hired <span style="color:#2980B9">'.$tskmntrDetails->fullName.'</span> for <span style="color:#16A085">'.$taskDetails->name.'</span> at '.date('D, M j, Y \a\t g:ia'),
-            'created_at'    =>  date("Y:m:d H:i:s"),
-            'at_url'        =>  '/taskDetails/'.$taskid
-        ));
-
-        AuditTrail::insert(array(
-            'user_id'   =>  $tskmntrDetails->id,
-            'content'   =>  'Hired by '.Auth::user()->fullName.' for <span style="color:#16A085">'.$taskDetails->name.'</span> at '.date('D, M j, Y \a\t g:ia'),
-            'created_at'    =>  date("Y:m:d H:i:s"),
-            'at_url'        =>  '/taskDetails/'.$taskid
-        ));
-
-        $user = User::where('id', $userid)->first();
-        return Redirect::back()->with('successMsg', $user->firstName.' '.$user->lastName.' has been hired');
-    }
+////        if($client->pluck('points') < 25){
+////            return Redirect::back()->with('errorMsg', 'You need 25 points to hire a taskminator. Click <a href="/addPoints_'.Auth::user()->id.'">here</a> for more details');
+////        }
+//
+//        $bidInfo = TaskHasBidder::where('taskminator_id', $userid)->where('task_id', $taskid)->first();
+//
+//        TaskHasTaskminator::insert(array(
+//            'task_id'   =>  $taskid,
+//            'taskminator_id'   =>  $userid,
+//            'proposedRate'   =>  $bidInfo->proposedRate,
+//            'message'   =>  $bidInfo->message,
+//            'created_at'   =>  date("Y:m:d H:i:s"),
+//        ));
+//
+//        Task::where('id', $taskid)->update(array(
+//            'status'    =>  'ONGOING'
+//        ));
+//
+//        $client->update(array('points' => ($client->pluck('points')-$pointDeduction)));
+//
+////         CREATE THREAD FOR CHAT MODULE
+//        DB::insert("INSERT INTO `threads` (`user_id`, `task_id`,`title`, `code`, `created_at`, `status`) VALUES
+//            ('$authUserId', '$taskid', '$taskName', '$threadCode', '$currentDate', 'OPEN'),
+//            ('$userid', '$taskid', '$taskName', '$threadCode', '$currentDate', 'OPEN')
+//        ");
+//
+//        Notification::insert(array(
+//            'content'   =>  "You've been hired!. Your bid for '.$taskDetails->name.' has been approved!",
+//            'user_id'   =>  $userid,
+//            'notif_url'       =>  '/taskDetails_'.$taskDetails->id,
+//            'status'    =>  'NEW',
+//            'created_at'=>  date("Y:m:d H:i:s")
+//        ));
+//        $smsMessage = "You've been hired!. Your bid for '.$taskDetails->name.' has been approved!";
+//        $this->sendSms($mobileNum, $smsMessage, $userid);
+//
+//        $tskmntrDetails = User::where('id', $userid)->first();
+//
+//        AuditTrail::insert(array(
+//            'user_id'   =>  Auth::user()->id,
+//            'content'   =>  'Hired <span style="color:#2980B9">'.$tskmntrDetails->fullName.'</span> for <span style="color:#16A085">'.$taskDetails->name.'</span> at '.date('D, M j, Y \a\t g:ia'),
+//            'created_at'    =>  date("Y:m:d H:i:s"),
+//            'at_url'        =>  '/taskDetails/'.$taskid
+//        ));
+//
+//        AuditTrail::insert(array(
+//            'user_id'   =>  $tskmntrDetails->id,
+//            'content'   =>  'Hired by '.Auth::user()->fullName.' for <span style="color:#16A085">'.$taskDetails->name.'</span> at '.date('D, M j, Y \a\t g:ia'),
+//            'created_at'    =>  date("Y:m:d H:i:s"),
+//            'at_url'        =>  '/taskDetails/'.$taskid
+//        ));
+//
+//        $user = User::where('id', $userid)->first();
+//        return Redirect::back()->with('successMsg', $user->firstName.' '.$user->lastName.' has been hired');
+//    }
 
     public function tskmntrSearch(){
         return View::make('client.tskmntrSearch')
@@ -1373,33 +1373,6 @@ class ClientIndiController extends \BaseController {
     }
 
     public function SNDINVT($invitedId, $jobId){
-        /*
-        $job = Job::leftJoin('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
-            ->leftJoin('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
-            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
-            ->leftJoin('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
-            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
-            ->where('jobs.id', $jobId)
-            ->select([
-                'jobs.id',
-                'jobs.title',
-                'jobs.created_at',
-                'jobs.description',
-                'regions.regname',
-                'regions.regcode',
-                'barangays.bgyname',
-                'barangays.bgycode',
-                'cities.cityname',
-                'cities.citycode',
-                'taskcategory.categoryname',
-                'taskcategory.categorycode',
-                'taskitems.itemname',
-                'taskitems.itemcode',
-                'jobs.salary',
-                'jobs.hiring_type'
-            ])
-            ->first();
-        */
         $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
             ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
@@ -1464,6 +1437,16 @@ class ClientIndiController extends \BaseController {
                 'created_at'    =>  date("Y:m:d H:i:s")
             ]);
         }
+
+        // NOTIFICATION
+        $job = Job::where('id', Input::get('JBID'))->first();
+        Notification::insert([
+            'user_id'   =>  Input::get('USRID'),
+            'content'   =>  '<b>'.Auth::user()->fullName.'</b> has sent you an invitation to apply for <b>'.$job->title.'</b>',
+            'notif_url' =>  '/jbdtls='.$job->id,
+            'status'    =>  'NEW',
+            'created_at'=>  date("Y:m:d H:i:s")
+        ]);
 
         return Redirect::back();
     }
