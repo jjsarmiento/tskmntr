@@ -338,5 +338,16 @@ class BaseController extends Controller {
             }
         }
     }
+
+    public function GETAPPLICATIONS_ID($workerID){
+        $jobs = JobApplication::where('applicant_id', $workerID)->select(['job_id'])->get();
+
+        $myArr = array();
+        foreach($jobs as $o){
+            array_push($myArr, $o->job_id);
+        }
+
+        return $myArr;
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

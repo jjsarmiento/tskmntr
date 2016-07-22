@@ -832,9 +832,11 @@ class TaskminatorController extends \BaseController {
     public function WRKR_APPLCTNS(){
         $skillCodeArray = $this->GETTASKCODES(Auth::user()->id);
         $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
-            ->leftJoin('job_applications', 'jobs.id', '=', 'job_applications.job_id')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
             ->whereIn('jobs.skill_code', $skillCodeArray)
-//            ->whereNotIn('job_applications.applicant_id', [Auth::user()->id])
+            ->whereNotIn('jobs.id', $this->GETAPPLICATIONS_ID(Auth::user()->id))
+            ->where('expired', false)
             ->orderBy('jobs.created_at', 'DESC')
             ->select([
                 'users.id as user_id',
@@ -842,17 +844,79 @@ class TaskminatorController extends \BaseController {
                 'users.profilePic',
                 'jobs.title',
                 'jobs.id as job_id',
+                'jobs.expires_at',
+                'jobs.expired',
+                'jobs.salary',
                 'jobs.created_at',
                 'jobs.description',
-                'job_applications.applicant_id'
+                'jobs.hiring_type',
+                'cities.cityname',
+                'regions.regname',
+            ])
+            ->paginate(10);
+
+//        $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
+//            ->leftJoin('job_applications', 'jobs.id', '=', 'job_applications.job_id')
+//            ->whereIn('jobs.skill_code', $skillCodeArray)
+////            ->whereNotIn('job_applications.applicant_id', [Auth::user()->id])
+//            ->orderBy('jobs.created_at', 'DESC')
+//            ->select([
+//                'users.id as user_id',
+//                'users.fullName',
+//                'users.profilePic',
+//                'jobs.title',
+//                'jobs.id as job_id',
+//                'jobs.created_at',
+//                'jobs.description',
+//                'job_applications.applicant_id'
+//            ])
+//            ->paginate(10);
+
+        $applications = Job::join('users', 'users.id', '=', 'jobs.user_id')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->whereIn('jobs.skill_code', $skillCodeArray)
+            ->whereNotIn('jobs.id', $this->GETAPPLICATIONS_ID(Auth::user()->id))
+            ->where('expired', false)
+            ->orderBy('jobs.created_at', 'DESC')
+            ->select([
+                'users.id as user_id',
+                'users.fullName',
+                'users.profilePic',
+                'jobs.title',
+                'jobs.id as job_id',
+                'jobs.expires_at',
+                'jobs.expired',
+                'jobs.salary',
+                'jobs.created_at',
+                'jobs.description',
+                'jobs.hiring_type',
+                'cities.cityname',
+                'regions.regname',
             ])
             ->paginate(10);
 
         $applications = JobApplication::join('jobs', 'jobs.id', '=', 'job_applications.job_id')
+                        ->join('users', 'users.id', '=', 'jobs.user_id')
+                        ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+                        ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
                         ->where('job_applications.applicant_id', Auth::user()->id)
                         ->select([
+                            'users.id as user_id',
+                            'users.fullName',
+                            'users.profilePic',
                             'jobs.title',
                             'jobs.id as jobID',
+                            'jobs.expires_at',
+                            'jobs.expired',
+                            'jobs.salary',
+                            'jobs.created_at',
+                            'jobs.description',
+                            'jobs.hiring_type',
+                            'cities.cityname',
+                            'regions.regname',
+//                            'jobs.title',
+//                            'jobs.id as jobID',
                             'job_applications.id as jobAppID',
                             'job_applications.created_at'
                         ])
