@@ -5,8 +5,6 @@
 @stop
 
 @section('head-content')
-{{ $calculated_prog = $intProgress + $reqProgress}}
-{{ $total_prog = number_format($calculated_prog + $optProgress) }}
 <style>
     #progressbar {
         background-color: #f6f6f6;
@@ -23,7 +21,7 @@
         height: 20px;
         border-radius: 10px;
         max-width: 70%;
-        width:{{ $calculated_prog }}%;
+        width:{{ $PROFILE_PROG['CALCULATED_PROG'] }}%;
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
     }
@@ -36,17 +34,17 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
         max-width: 30%;
-        width:{{ $optProgress }}%;
+        width:{{ $PROFILE_PROG['OPTIONAL_PROGRESS'] }}%;
     }
 
     @keyframes reqProgress {
     from {width:0%;}
-    to {width:{{ $calculated_prog }}%;}
+    to {width:{{ $PROFILE_PROG['CALCULATED_PROG'] }}%;}
     }
 
     @keyframes optProgress {
     from {width:0%;}
-    to {width:{{ $optProgress }}%;}
+    to {width:{{ $PROFILE_PROG['OPTIONAL_PROGRESS'] }}%;}
     }
 
     body{background-color:#E9EAED;}
@@ -152,20 +150,11 @@
                     <div class="widget-content">
                         <div class="panel-group" id="accordion">
                             <div class="panel">
-                                <!--
-                                <div class="widget-container" style="min-height:25px; border:1px solid #e6e6e6">
-                                    <div class="widget-content">
-                                        <div class="padded" style="color:#2980b9; font-size:14pt;">
-                                            <i class="glyphicon glyphicon-search"></i>&nbspSearch
-                                        </div>
-                                    </div>
-                                </div>
-                                -->
                                 <div class="panel filter-categories">
                                     <div class="panel-body">
                                         <!-- <input name="searchWord" id="searchWord" type="text" class="form-control input-trans" placeholder="Search for workers" required> -->
                                         <div class="col-lg-12">
-                                            @if($total_prog >= 50)
+                                            @if($PROFILE_PROG['TOTAL_PROGRESS'] >= 50)
                                                <a href="/jobSearch:NO_KW_INPT:ALL:ALL:ALL:ALL:ALL:DESC" class="btn btn-default btn-block" style="border-radius: 0.3em;">
                                                 <i class="fa fa-search"></i> Click here to search for jobs
                                                </a>
@@ -200,8 +189,8 @@
                     <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
                         <div class="widget-content">
                             <div class="padded" style="color:#2980b9; font-size:18pt;">
-                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $total_prog }}%
-                                @if($total_prog < 50)
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $PROFILE_PROG['TOTAL_PROGRESS'] }}%
+                                @if($PROFILE_PROG['TOTAL_PROGRESS'] < 50)
                                     <p style="color: #000000;">
                                         <i style="color: red" class="fa fa-warning"></i> <b>You can start applying for jobs when you complete your profile above 50%. Click <a href="/editProfile">here</a> to edit your profile</b>
                                     </p>
@@ -264,57 +253,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="col-lg-12">
-                        <!-- LOOP HERE -->
-                            <!--
-                            @if($total_prog >= 50)
-                                <div class="col-lg-12 padded" style="padding-top: 25px;">
-                                    <div class="col-lg-5"><hr class="hrLine"></div>
-                                    <div class="col-lg-2" style="margin-top:10px;"><p style="font-size:10pt;">Available Jobs</p></div>
-                                    <div class="col-lg-5"><hr class="hrLine"></div>
-                                </div>
-
-                                <br><br><br><br>
-                                <?php $counter = 0; ?>
-                                @foreach(array_chunk($tasks->getCollection()->all(), 1) as $task)
-                                    @foreach($task as $item)
-                                        <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".5s" data-wow-offset="0" data-wow-delay="0" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">
-                                            <div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">
-                                                <span style="padding:0;margin:0; flex:1">
-                                                    @foreach(User::where('id', $item->user_id)->get() as $user)
-                                                        <img src="{{ $user->profilePic }}" class="thumbnail" style="margin:0; width:64px; height:64px;" >
-                                                    @endforeach
-                                                </span>
-                                                <div style="flex:11; padding-left: 5px;">
-                                                <a href="/bid{{$item->workTime}}/{{ $item->id }}" style="text-decoration:none;">
-                                                    <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
-                                                        {{ $item->name }}
-                                                    </h3>
-                                                    <span style="padding:0;margin:0; color:#ccc;">
-                                                        @foreach(User::where('id', $item->user_id)->get() as $user)
-                                                            {{ $user->companyName }}
-                                                        @endforeach
-                                                    </span><br>
-                                                    <span class="text-right" style="padding:0;margin:0; color:#ccc;">
-                                                        {{ date('m/d/y', $item->created_at->getTimeStamp()) }}
-                                                    </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <p class="lato-text no-padding">
-                                                {{ $item->description }}
-                                            </p>
-                                        </div>
-                                        <br>
-                                        <?php $counter++;?>
-                                    @endforeach
-                                @endforeach
-                                {{ $tasks->links() }}
-                            @endif
-                            -->
-<!-- END LOOP -->
-
                         <!-- NEW JOBS MODULE LOOP -- START by Jan Sarmiento -->
-                        @if($total_prog >= 50)
+                        @if($PROFILE_PROG['TOTAL_PROGRESS'] >= 50)
                             @if($jobs->count() != 0)
                                 <div class="col-lg-12 padded" style="padding-top: 25px;">
                                     <div class="col-lg-5"><hr class="hrLine"></div>
@@ -324,7 +264,7 @@
                                 <br><br><br><br>
                                 @foreach($jobs as $job)
                                     <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".3s" data-wow-offset="0" data-wow-delay="0" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">
-                                        <div style="display:flex;padding-bottom:5px;">
+                                        <div style="display:flex;padding-bottom:5px">
                                             <span style="padding:0;margin:0; flex:1">
                                                 <img src="{{ $job->profilePic }}" class="thumbnail" style="margin:0; width:64px; height:64px;" >
                                             </span>

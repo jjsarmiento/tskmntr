@@ -712,7 +712,9 @@ class HomeController extends BaseController {
 
         return View::make('userdashboard');
     }  
-  
+
+    public function initWORKER(){}
+    public function initCOMPANY(){}
 
     public function index(){
         if(Auth::check()){
@@ -770,117 +772,11 @@ class HomeController extends BaseController {
 
                     // NEW JOB MODULE -- END by JAN SARMIENTO
 
-                    $reqMeter = 0;
-                    $optMeter = 0;
-
-                    $intProgress = 0;
-                    $reqProgress = 0;
-                    $optProgress = 0;
-                    
-                    // INITIAL REQUIRED
-                    if(Auth::user()->firstName != "")
-                    {
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->lastName != "")
-                    {
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->username != "")
-                    {
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->password != "")
-                    {
-                        $reqMeter++;
-                    }
-                    if(Contact::where('user_id', Auth::user()->id)->get() != "")
-                    {
-                        $reqMeter++;
-                    }
-                    // END OF INITIAL REQUIRED
-
-                    $intProgress = ($reqMeter / 5) * 30;
-                    $reqMeter = 0; // to reset the value;
-
-                    // REQUIRED
-                    if(Auth::user()->profilePic != "")
-                    {
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->birthdate != "")
-                    {
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->gender != "")
-                    {
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->preferredJob != "")
-                    {
-                        $reqMeter++;
-                    }
-                    if(Contact::where('user_id', Auth::user()->id)->get() != "")
-                    {
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->city != "")
-                    {
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->address != "")
-                    {
-                        $reqMeter++;
-                    }
-                    // END OF REQUIRED
-
-                    $reqProgress = ($reqMeter/7) * 40;
-
-                    // OPTIONAL PROGRESS
-                    if(Auth::user()->midName != "")
-                    {
-                        $optMeter++;
-                    }
-                    if(Auth::user()->nationality != "")
-                    {
-                        $optMeter++;
-                    }
-                    if(Auth::user()->minRate != "")
-                    {
-                        $optMeter++;
-                    }
-                    if(Auth::user()->maxRate != "")
-                    {
-                        $optMeter++;
-                    }
-                    if(Auth::user()->tin != "")
-                    {
-                        $optMeter++;
-                    }
-                    if(Auth::user()->skills != "")
-                    {
-                        $optMeter++;
-                    }
-                    if(Auth::user()->yearsOfExperience != "")
-                    {
-                        $optMeter++;
-                    }
-                    if(Auth::user()->barangay != "")
-                    {
-                        $optMeter++;
-                    }
-
-                    $optProgress = ($optMeter / 7) * 30;
-                    // END OF OPTIONAL PROGRESS
-
                     return View::make('taskminator.index')
                             ->with('accountRole', $role)
                             ->with('tasks', $taskList)
-                            ->with('intProgress', $intProgress)
-                            ->with('reqProgress', $reqProgress)
-                            ->with('optProgress', $optProgress)
                             ->with('jobs', $jobs)
-                            ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id))
+                            ->with('PROFILE_PROG', $this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id))
                             ->with('applicationsCount', $applicationCount)
                             ->with('invitesCount', $invitesCount);
                     break;
@@ -898,87 +794,11 @@ class HomeController extends BaseController {
                     }
 
                     // $freeDuration = $tempDate->diffInDays(Carbon::now());
-
-
-                    $reqMeter = 0;
-                    $optMeter = 0;
-
-                    $intProgress = 0;
-                    $reqProgress = 0;
-                    $optProgress = 0;
-                    
-                    // INITIAL REQUIRED
-                    if(Auth::user()->firstName != ""){
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->lastName != ""){
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->companyName != ""){
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->username != ""){
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->password != ""){
-                        $reqMeter++;
-                    }
-                    if(Contact::where('user_id', Auth::user()->id)->get() != ""){
-                        $reqMeter++;
-                    }
-                    // END OF INITIAL REQUIRED
-
-                    $intProgress = ($reqMeter / 6) * 30;
-                    $reqMeter = 0; // to reset the value;
-
-                    // REQUIRED
-                    if(Auth::user()->profilePic != ""){
-                        $reqMeter++;
-                    }
-                    if(Contact::where('user_id', Auth::user()->id)->get() != ""){
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->city != ""){
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->address != ""){
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->businessPermit != ""){
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->businessDescription != ""){
-                        $reqMeter++;
-                    }
-                    if(Auth::user()->businessNature != ""){
-                        $reqMeter++;
-                    }
-
-                    // END OF REQUIRED
-
-                    $reqProgress = ($reqMeter/7) * 50;
-
-                    // OPTIONAL PROGRESS
-                    if(Auth::user()->midName != ""){
-                        $optMeter++;
-                    }
-                    if(Auth::user()->yearsOfExperience != ""){
-                        $optMeter++;
-                    }
-                    if(Auth::user()->barangay != ""){
-                        $optMeter++;
-                    }
-
-                    $optProgress = ($optMeter / 3) * 20;
-                    // END OF OPTIONAL PROGRESS
                     return View::make('client.index')
-                    ->with('intProgress', $intProgress)
-                    ->with('reqProgress', $reqProgress)
-                    ->with('optProgress', $optProgress)
                     ->with('freeDuration', $freeDuration)
                     ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
                     ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get())
-                    ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id))
+                    ->with('TOTALPROG', $this->PROFILE_PERCENTAGE_COMPANY(Auth::user()->id))
                     ->with('tasks', Task::where('user_id', Auth::user()->id)->whereNotIn('status', ['CANCELLED', 'COMPLETE'])->orderBy('created_at', 'DESC')->paginate(10))
                     ->with('jobs', Job::where('user_id', Auth::user()->id)->get());
                     break;

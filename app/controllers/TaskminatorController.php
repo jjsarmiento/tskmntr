@@ -23,7 +23,7 @@ class TaskminatorController extends \BaseController {
     }
 
     public function bidPtime($id){
-        if($this->getProfilePercentage(Auth::user()->id) < 50){
+        if($this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id) < 50){
             Session::flash('err_search', 'Please fill out your profile atleast 50%');
             return Redirect::to('/');
         }else{
@@ -42,7 +42,7 @@ class TaskminatorController extends \BaseController {
     }
 
     public function bidFtime($id){
-        if($this->getProfilePercentage(Auth::user()->id) < 50){
+        if($this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id) < 50){
             Session::flash('err_search', 'Please fill out your profile atleast 50%');
             return Redirect::to('/');
         }else{
@@ -426,6 +426,9 @@ class TaskminatorController extends \BaseController {
     }
 
     public function doEditPersonalInfo(){
+        // compute completeness of user's profile and update total_profile_progress column
+        $this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
+
         // FIRSTNAME VALIDATION
         if(!ctype_alpha(str_replace(' ', '', trim(Input::get('firstName'))))){
             return Redirect::back()->with('errorMsg', 'First name must be letters only')->withInput(Input::except('password'));
@@ -807,7 +810,7 @@ class TaskminatorController extends \BaseController {
                 ->with('keyword', $keyword)
                 ->with('users', $users)
                 ->with('tasks', $tasks)
-                ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id));
+                ->with('TOTALPROG', $this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id));
     }
 
     public function jbdtls($jobId){

@@ -5,8 +5,6 @@
 @stop
 
 @section('head-content')
-{{ $calculated_prog = $intProgress + $reqProgress}}
-{{ $total_prog = number_format($calculated_prog + $optProgress) }}
     <style>
         #progressbar {
             background-color: #f6f6f6;
@@ -23,7 +21,7 @@
             height: 20px;
             border-radius: 10px;
             max-width: 70%;
-            width:{{ $calculated_prog }}%;
+            width:{{ $TOTALPROG['CALCULATED_PROG'] }}%;
             border-top-right-radius: 0px;
             border-bottom-right-radius: 0px;
         }
@@ -36,17 +34,17 @@
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
             max-width: 30%;
-            width:{{ $optProgress }}%;
+            width:{{ $TOTALPROG['OPTIONAL_PROGRESS'] }}%;
         }
 
         @keyframes reqProgress {
         from {width:0%;}
-        to {width:{{ $calculated_prog }}%;}
+        to {width:{{ $TOTALPROG['CALCULATED_PROG'] }}%;}
         }
 
         @keyframes optProgress {
         from {width:0%;}
-        to {width:{{ $optProgress }}%;}
+        to {width:{{ $TOTALPROG['OPTIONAL_PROGRESS'] }}%;}
         }
 
         body{background-color:#E9EAED;}
@@ -197,7 +195,7 @@
                                 This could take 24 hours or less.</b>
                             {{--</div>--}}
                         @else
-                            @if($total_prog >= 50)
+                            @if($TOTALPROG['TOTAL_PROGRESS'] >= 50)
                                 <!--
                                 OLD TASK/JOB MODULE LINKS
                                 <a style="border-radius: 0.3em;" href="/createTask" class="btn btn-success btn-block btn-lg">Create Task</a>
@@ -245,8 +243,8 @@
                 <div class="widget-container weather" style="min-height: 1em;">
                     <div class="widget-content">
                         <div class="padded text-center" style="min-height:30px; text-align:left; border-bottom:1px solid #e6e6e6; color:#2980b9; font-size:18pt;">
-                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $total_prog }}% | {{ $freeDuration }}
-                            @if($total_prog < 50)
+                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $TOTALPROG['TOTAL_PROGRESS'] }}% | {{ $freeDuration }}
+                            @if($TOTALPROG['TOTAL_PROGRESS'] < 50)
                                 <p style="color: #000000;">
                                     <i style="color: red" class="fa fa-warning"></i> <b>You can start posting jobs when you complete your profile above 50%. Click <a href="/editProfile">here</a> to edit your profile</b>
                                 </p>

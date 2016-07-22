@@ -973,7 +973,7 @@ class ClientIndiController extends \BaseController {
             ->with('keyword', $keyword)
             ->with('users', $users)
             ->with('tasks', $tasks)
-            ->with('TOTALPROG', $this->getProfilePercentage(Auth::user()->id));
+            ->with('TOTALPROG', $this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id));
     }
 
     public function SRCHWRKRSKLL($categoryId, $skillId){

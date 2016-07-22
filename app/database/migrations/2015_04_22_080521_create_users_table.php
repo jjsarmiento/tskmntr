@@ -44,6 +44,7 @@ class CreateUsersTable extends Migration {
             $table->integer('yearsOfExperience')->nullable();
             $table->integer('maxRate')->nullable();
             $table->integer('minRate')->nullable();
+            $table->float('total_profile_progress')->nullable();
             $table->string('remember_token')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->timestamps();
