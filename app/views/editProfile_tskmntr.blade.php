@@ -80,36 +80,10 @@
                 </div>
             @endif
 
-
-            {{--@if($user->status == 'PRE_ACTIVATED')--}}
-            {{--<div class="col-sm-12">--}}
-                {{--<div class="alert alert-warning">--}}
-                    {{--@if(Document::where('user_id', $user->id)->count() == 0 || Photo::where('user_id', $user->id)->count() == 0)--}}
-                        {{--<div>--}}
-                            {{--{{ Form::open(array('url' => '/doUploadDocuments', 'id' => 'registrationForm-task', 'files' => 'true')) }}--}}
-                            {{--<h3>Activate Your Account</h3>--}}
-                            {{--upload 1 old document with complete name and address (i.e Transcript of record, birth certificate, etc. Accepted files are .doc, .pdf)--}}
-                            {{--<input required="required" type="file" name="document" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"/><br/>--}}
-                            {{--2 (Two) Key Skills Certification (All image files are accepted)--}}
-                            {{--<input type="file" name="keySkills[]" accept='image/*' multiple required="required"/><br/>--}}
-                            {{--<button type="submit">Upload</button>--}}
-                            {{--{{ Form::close() }}--}}
-                        {{--</div>--}}
-
-                    {{--@else--}}
-                        {{--<div>--}}
-                            {{--Your profile is being reviewed by our staff.<br/>--}}
-                            {{--After your profile has been activated, you can start looking for tasks!<br/>--}}
-                            {{--This could take 24 hours or less.--}}
-                        {{--</div>--}}
-                    {{--@endif--}}
-                {{--</div>--}}
-            {{--</div>--}}
-            {{--@endif--}}
-
             <div class="col-lg-12 padded" style="background-color:white; border-radius:8px;" >
                 <div class="col-lg-3" style="align-items: center; align-content: center; text-align: center;">
                     <h3 class="lato-text">{{ $user->fullName }}</h3>
+                    <!--
                     @if($user->profilePic == null)
                         <div style="border: 1px solid #333333;">
                             {{ Form::open(array('url' => '/uploadProfilePic', 'id' => 'uploadProfilePicForm', 'files' => 'true')) }}
@@ -124,6 +98,30 @@
                         </div>
                         <span style="margin-top: 1em; border-radius: 0.3em; padding : 0.3em; color: #ECF0F1; display:none; background-color: #2C3E50;" id="picNotice">Click to change profile picture</span>
                     @endif
+                    -->
+
+                    <div class="widget-container small">
+                        @if(Auth::user()->profilePic == null)
+                            <div class="heading">
+                                <i class="icon-signal"></i>Please upload a profile picture
+                            </div>
+                            <div class="widget-content padded">
+                                {{ Form::open(array('url' => '/uploadProfilePic', 'id' => 'uploadProfilePicForm', 'files' => 'true')) }}
+                                    <input type="file" name="profilePic" accept="image/*" class="form-control" /><br/>
+                                    <button type="submit" class="btn btn-success">Upload</button>
+                                {{ Form::close() }}
+                            </div>
+                        @else
+                            <div class="widget-content padded">
+                                <div class="heading">
+                                    <i class="glyphicon glyphicon-user"></i>{{ Auth::user()->fullName }}
+                                </div>
+                                <div class="thumbnail">
+                                    <a href="/editProfile"><img src="{{ Auth::user()->profilePic }}" class="portrait"/></a>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                 </div>
                 <div class="col-lg-9">
                     <div class="row">

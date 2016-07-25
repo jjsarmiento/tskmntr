@@ -419,9 +419,10 @@ class TaskminatorController extends \BaseController {
 
     public function editPersonalInfo(){
         return View::make('taskminator.editPersonalInfo')
-                ->with('regions', Region::orderBy('regname', 'ASC')->get())
                 ->with('user', Auth::user())
-                ->with('cities', City::orderBy('cityname', 'ASC')->get())
+                ->with('regions', Region::orderBy('regname', 'ASC')->get())
+                ->with('prov', Province::orderBy('provname', 'ASC')->where('regcode', Auth::user()->region)->get())
+                ->with('cities', City::orderBy('cityname', 'ASC')->where('regcode', Auth::user()->region)->get())
                 ->with('barangays', Barangay::orderBy('bgyname', 'ASC')->where('citycode', Auth::user()->city)->get());
     }
 
@@ -472,9 +473,10 @@ class TaskminatorController extends \BaseController {
             'fullName'          =>  Input::get('firstName').' '.Input::get('midName').' '.Input::get('lastName'),
             'gender'            =>  Input::get('gender'),
             'address'           =>  strip_tags(Input::get('address')),
-            'region'              =>  Input::get('reg-task'),
+            'region'            =>  Input::get('reg-task'),
             'city'              =>  Input::get('city-task'),
             'barangay'          =>  Input::get('barangay-task'),
+            'province'          =>  Input::get('edt_prov'),
         ));
 
         // compute completeness of user's profile and update total_profile_progress column

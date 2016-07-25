@@ -65,7 +65,7 @@
                     </div>
                     <div class="form-group">
                         <label>City</label>
-                        <select id="jobSearch_city" name="jobSearch_city" class="form-control">
+                        <select id="jobSearch_city" data-loctype="REGION_TO_CITY" name="jobSearch_city" class="form-control">
                             <option value="ALL">All citites</option>
                         </select>
                     </div>

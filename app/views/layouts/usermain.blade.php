@@ -590,7 +590,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>City</label>
-                                        <select id="adSearch_CITY" class="form-control">
+                                        <select id="adSearch_CITY" data-loctype="REGION_TO_CITY" class="form-control">
                                             <option value="ALL" selected>Display from all cities</option>
                                             @foreach(City::get() as $city)
                                                 <option value="{{$city->citycode }}">{{ $city->cityname }}</option>

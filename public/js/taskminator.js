@@ -62,16 +62,32 @@ function CHAINLOCATION(SENDER, RECEIVER){
         SENDER.prop('disabled', true);
         RECEIVER.prop('disabled', true).empty();
 
-        var ROUTE = '/LOCCHAIN:'+SENDER.data('loctype')+':'+SENDER.val();
+        var ROUTE = '/LOCCHAIN:'+RECEIVER.data('loctype')+':'+SENDER.val();
 
         $.ajax({
             type    :   'GET',
             url     :   ROUTE,
             success :   function(data){
-                RECEIVER.append('<option value="ALL">Display all cities from region</option>');
-                $.each(data, function(key,value){
-                    RECEIVER.append('<option value="'+value['citycode']+'">'+value['cityname']+'</option>');
-                });
+                switch(RECEIVER.data('loctype')){
+                    case 'REGION_TO_PROVINCE' :
+                        RECEIVER.append('<option value="ALL">Select a province</option>');
+                        $.each(data, function(key,value){
+                            RECEIVER.append('<option value="'+value['provcode']+'">'+value['provname']+'</option>');
+                        });
+                        break;
+                    case 'REGION_TO_CITY' :
+                        RECEIVER.append('<option value="ALL">Select a city</option>');
+                        $.each(data, function(key,value){
+                            RECEIVER.append('<option value="'+value['citycode']+'">'+value['cityname']+'</option>');
+                        });
+                        break;
+                    case 'CITY_TO_BARANGAY' :
+                        RECEIVER.append('<option value="ALL">Select a barangay</option>');
+                        $.each(data, function(key,value){
+                            RECEIVER.append('<option value="'+value['bgycode']+'">'+value['bgyname']+'</option>');
+                        });
+                        break;
+                }
 
                 SENDER.prop('disabled', false);
                 RECEIVER.val('ALL').prop('disabled', false);

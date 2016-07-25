@@ -53,17 +53,20 @@
                 var citydropdown = $('#city-task');
                 var ALLCTY = citydropdown.children('option');
 
-                locationChain($('#city-task'), $('#barangay-task'),$('#editPersonalInfo'), '/chainCity');
-                $('#reg-task').change(function(){
-                    citydropdown.prop('disabled', true);
-                    $('#barangay-task').prop('disabled', true);
-                    var regcode = 'city-value-'+$(this).val();
-                    var options = $('.'+regcode);
-                    citydropdown.val(options.eq(0).val());
-                    citydropdown.children('option').hide()
-                    options.show();
-                    citydropdown.prop('disabled', false);
-                });
+                CHAINLOCATION($('#reg-task'), $('#edt_prov'));
+                CHAINLOCATION($('#reg-task'), $('#city-task'));
+                CHAINLOCATION($('#city-task'), $('#barangay-task'));
+//                locationChain($('#city-task'), $('#barangay-task'),$('#editPersonalInfo'), '/chainCity');
+//                $('#reg-task').change(function(){
+//                    citydropdown.prop('disabled', true);
+//                    $('#barangay-task').prop('disabled', true);
+//                    var regcode = 'city-value-'+$(this).val();
+//                    var options = $('.'+regcode);
+//                    citydropdown.val(options.eq(0).val());
+//                    citydropdown.children('option').hide()
+//                    options.show();
+//                    citydropdown.prop('disabled', false);
+//                });
             });
         </script>
 @stop
@@ -142,20 +145,33 @@
                                 Region :
                             </div>
                             <div class="col-md-9">
-                                <select name="reg-task" id="reg-task" class="form-control" required="required">
+                                <select name="reg-task" id="reg-task" data-loctype="REGION_TO_PROVINCE" class="form-control" required="required">
                                     <option value="">Please Select your region</option>
                                     @foreach($regions as $region)
                                         <option value="{{$region->regcode}}" <?php if($region->regcode == $user->region){ echo('selected'); } ?> >{{ $region->regname }}</option>
                                     @endforeach
                                 </select><br/>
                             </div>
+
+                            <div class="col-md-3">
+                                Province :
+                            </div>
+                            <div class="col-md-9">
+                                <select name="edt_prov" id="edt_prov" data-loctype="REGION_TO_PROVINCE" class="form-control">
+                                    <option value="">Please Select your province</option>
+                                    @foreach($prov as $p)
+                                        <option <?php if($p->provcode == Auth::user()->province){echo 'selected';} ?> value="{{$p->provcode}}">{{$p->provname}}</option>
+                                    @endforeach
+                                </select><br/>
+                            </div>
+
                             <div class="col-md-3">
                                 City : 
                             </div>
                             <div class="col-md-9">
-                                <select name="city-task" id="city-task" class="form-control" required="required" disabled>
+                                <select name="city-task" data-loctype="REGION_TO_CITY" id="city-task" class="form-control" required="required">
                                     @foreach($cities as $city)
-                                        <option class="city-value-{{$city->regcode}}" data-regcode="{{$city->regcode}}" value="{{$city->citycode}}" <?php if($city->citycode == $user->city){ echo('selected'); } ?> >{{ $city->cityname }}</option>
+                                        <option <?php if($city->citycode == Auth::user()->city){echo 'selected';} ?> class="city-value-{{$city->regcode}}" data-regcode="{{$city->regcode}}" value="{{$city->citycode}}" <?php if($city->citycode == $user->city){ echo('selected'); } ?> >{{ $city->cityname }}</option>
                                     @endforeach
                                 </select><br/>
                             </div>
@@ -163,10 +179,10 @@
                                 Barangay : 
                             </div>
                             <div class="col-md-9">
-                                <select name="barangay-task" id="barangay-task" class="form-control" disabled  required="required">
+                                <select data-loctype="CITY_TO_BARANGAY" name="barangay-task" id="barangay-task" class="form-control" required="required">
                                     @foreach($barangays as $bgy)
-                                    <option value=""></option>
-                                    <option value="{{$bgy->bgycode}}" <?php if($bgy->bgycode == $user->barangay){ echo('selected'); } ?> >{{ $bgy->bgyname }}</option>
+                                        <option value=""></option>
+                                        <option value="{{$bgy->bgycode}}" <?php if($bgy->bgycode == $user->barangay){ echo('selected'); } ?> >{{ $bgy->bgyname }}</option>
                                     @endforeach
                                 </select><br/>
                             </div>
