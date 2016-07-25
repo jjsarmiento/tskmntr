@@ -349,5 +349,15 @@ class BaseController extends Controller {
 
         return $myArr;
     }
+
+    public function NOTIFICATION_INSERT($receiverID, $msg, $url){
+        Notification::insert([
+            'user_id'   =>  $receiverID,
+            'content'   =>  $msg,
+            'notif_url' =>  $url,
+            'status'    =>  'NEW',
+            'created_at'=>  date("Y:m:d H:i:s")
+        ]);
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

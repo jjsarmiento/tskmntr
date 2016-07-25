@@ -1440,13 +1440,7 @@ class ClientIndiController extends \BaseController {
 
         // NOTIFICATION
         $job = Job::where('id', Input::get('JBID'))->first();
-        Notification::insert([
-            'user_id'   =>  Input::get('USRID'),
-            'content'   =>  '<b>'.Auth::user()->fullName.'</b> has sent you an invitation to apply for <b>'.$job->title.'</b>',
-            'notif_url' =>  '/jbdtls='.$job->id,
-            'status'    =>  'NEW',
-            'created_at'=>  date("Y:m:d H:i:s")
-        ]);
+        $this->NOTIFICATION_INSERT(Input::get('USRID'), '<b>'.Auth::user()->fullName.'</b> has sent you an invitation to apply for <b>'.$job->title.'</b>', '/jbdtls='.$job->id);
 
         return Redirect::back();
     }
