@@ -1664,4 +1664,8 @@ class ClientIndiController extends \BaseController {
         }
         return Redirect::back();
     }
+
+    public function editDocumentsCMP(){
+        return View::make('client.editDocumentsCMP');
+    }
 }
