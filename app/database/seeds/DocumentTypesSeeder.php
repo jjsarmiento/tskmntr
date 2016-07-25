@@ -8,6 +8,7 @@
 
 class DocumentTypesSeeder extends Seeder {
     public function run(){
+        // WORKER DOCUMENTS -- START
         // NBI
         DocumentType::create([
             'sys_doc_type'      =>  'NBI',
@@ -119,5 +120,80 @@ class DocumentTypesSeeder extends Seeder {
             'sys_doc_role'      =>  'WORKER',
             'sys_doc_disabled'  =>  false,
         ]);
+        // WORKER DOCUMENTS -- END
+
+        // COMPANY DOCUMENTS -- START
+        // SEC / DTI Certificate
+        DocumentType::create([
+            'sys_doc_type'      =>  'SEC_DTI_CERTIFICATE',
+            'sys_doc_label'     =>  "SEC / DTI Certificate",
+            'sys_doc_role'      =>  'COMPANY',
+            'sys_doc_disabled'  =>  false,
+        ]);
+
+        // BIR CERT
+        DocumentType::create([
+            'sys_doc_type'      =>  'BIR_CERT',
+            'sys_doc_label'     =>  "BIR Certificate",
+            'sys_doc_role'      =>  'COMPANY',
+            'sys_doc_disabled'  =>  false,
+        ]);
+
+        // DOLE / POEA LISENCE
+        DocumentType::create([
+            'sys_doc_type'      =>  'DOLE_POEA_LISENCE',
+            'sys_doc_label'     =>  "DOLE / POEA Lisence",
+            'sys_doc_role'      =>  'COMPANY',
+            'sys_doc_disabled'  =>  false,
+        ]);
+
+        // Company PRofile
+        DocumentType::create([
+            'sys_doc_type'      =>  'COMP_PROFILE',
+            'sys_doc_label'     =>  "Company Profile",
+            'sys_doc_role'      =>  'COMPANY',
+            'sys_doc_disabled'  =>  false,
+        ]);
+
+        // NSO
+        DocumentType::create([
+            'sys_doc_type'      =>  'NSO',
+            'sys_doc_label'     =>  "NSO",
+            'sys_doc_role'      =>  'COMPANY',
+            'sys_doc_disabled'  =>  false,
+        ]);
+
+        // TIN ID
+        DocumentType::create([
+            'sys_doc_type'      =>  'TIN_ID',
+            'sys_doc_label'     =>  "TIN ID",
+            'sys_doc_role'      =>  'COMPANY',
+            'sys_doc_disabled'  =>  false,
+        ]);
+
+        // Barangay Clearance
+        DocumentType::create([
+            'sys_doc_type'      =>  'BGY_CLEARANCE',
+            'sys_doc_label'     =>  "Barangay Clearance",
+            'sys_doc_role'      =>  'COMPANY',
+            'sys_doc_disabled'  =>  false,
+        ]);
+
+        // NBI Clearance
+        DocumentType::create([
+            'sys_doc_type'      =>  'NBI_CLEARANCE',
+            'sys_doc_label'     =>  "NBI Clearance",
+            'sys_doc_role'      =>  'COMPANY',
+            'sys_doc_disabled'  =>  false,
+        ]);
+
+        // Police Clearance
+        DocumentType::create([
+            'sys_doc_type'      =>  'POLICE_CLEARANCE',
+            'sys_doc_label'     =>  "Police Clearance",
+            'sys_doc_role'      =>  'COMPANY',
+            'sys_doc_disabled'  =>  false,
+        ]);
+        // COMPANY DOCUMENTS -- END
     }
 }
