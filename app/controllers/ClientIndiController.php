@@ -984,7 +984,9 @@ class ClientIndiController extends \BaseController {
     }
 
     public function SRCHWRKRSKLL($categoryId, $skillId){
-        $users = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
+        if(Auth::user()->status == 'ACTIVATED'){
+            if(Auth::user()->total_profile_progress >= 50){
+                $users = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
                     ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
                     ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
                     ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
@@ -992,13 +994,18 @@ class ClientIndiController extends \BaseController {
                     ->where('users.total_profile_progress', '>=', '50')
                     ->get();
 
-        return View::make('client.searchWorker_SKILL')
-                ->with('categoryId', $categoryId)
-                ->with('skillId', $skillId)
-                ->with('users', $users)
-                ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
+                return View::make('client.searchWorker_SKILL')
+                    ->with('categoryId', $categoryId)
+                    ->with('skillId', $skillId)
+                    ->with('users', $users)
+                    ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
 //                ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get());
-                ->with('categorySkills', TaskItem::where('item_categorycode', $categoryId)->orderBy('itemname', 'ASC')->get());
+                    ->with('categorySkills', TaskItem::where('item_categorycode', $categoryId)->orderBy('itemname', 'ASC')->get());
+            }
+        }
+
+        Auth::logout();
+        return Redirect::to('/');
     }
 
     public function SKILLCATCHAIN($categoryId){

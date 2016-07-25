@@ -219,23 +219,25 @@
                         @endif
                 </div>
 
-                <div style="background-color: white; padding: 1em; margin-top: 2em;">
-                    <div class="form-group">
-                        <select name="taskcategory" id="taskcategory" class="form-control">
-                            @foreach($categories as $category)
-                                <option value="{{ $category->categorycode }}">{{ $category->categoryname }}</option>
-                            @endforeach
-                        </select>
+                @if(Auth::user()->total_profile_progress >= 50 && Auth::user()->status == 'ACTIVATED')
+                    <div style="background-color: white; padding: 1em; margin-top: 2em;">
+                        <div class="form-group">
+                            <select name="taskcategory" id="taskcategory" class="form-control">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->categorycode }}">{{ $category->categoryname }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select name="taskitems" id="taskitems" class="form-control">
+                                @foreach($categorySkills as $skill)
+                                    <option value="{{ $skill->itemcode }}">{{ $skill->itemname }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button class="btn btn-primary btn-block" id="SRCHBTN_SKILL"><i class="fa fa-search"></i> Search for workers</button>
                     </div>
-                    <div class="form-group">
-                        <select name="taskitems" id="taskitems" class="form-control">
-                            @foreach($categorySkills as $skill)
-                                <option value="{{ $skill->itemcode }}">{{ $skill->itemname }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <button class="btn btn-primary btn-block" id="SRCHBTN_SKILL"><i class="fa fa-search"></i> Search for workers</button>
-                </div>
+                @endif
             </div>
 <!-- ENF PROFILE PIC / INFO -->
 

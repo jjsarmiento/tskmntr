@@ -83,6 +83,8 @@ class HomeController extends BaseController {
                     $CLIENTFLAG = true;
                 }
 
+                $CLIENT_PROGRESSFLAG = (Auth::user()->total_profile_progress >= 50) ? true : false;
+
                 if($role == 'TASKMINATOR' && $CLIENTFLAG){
                     $USERINCART =  Cart::where('worker_id', $temp->id)
                         ->where('company_id', Auth::user()->id)
@@ -102,6 +104,7 @@ class HomeController extends BaseController {
                     ->with("users", User::where('username', '=', $username)->get()->first())
                     ->with('roles', $role)
                     ->with('mobile', $mobile)
+                    ->with('CLIENT_PROGRESSFLAG', $CLIENT_PROGRESSFLAG)
                     ->with('CLIENTFLAG', $CLIENTFLAG)
                     ->with('USERINCART', $USERINCART)
                     ->with('PURCHASED', $PURCHASED)
