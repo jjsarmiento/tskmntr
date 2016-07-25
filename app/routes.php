@@ -93,6 +93,12 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     // SYSTEM SETTINGS ROUTE
     Route::get('/SYSTEMSETTINGS', 'AdminController@SYSTEMSETTINGS');
     Route::post('/doSYSTEMSETTINGS','AdminController@doSYSTEMSETTINGS');
+    Route::get('/DELETEDOC:{docID}', 'AdminController@DELETEDOC');
+    Route::get('/DISABLEDOC:{doctypeID}', 'AdminController@DISABLEDOC');
+    Route::get('/ENABLEDOC:{doctypeID}', 'AdminController@ENABLEDOC');
+    Route::post('/SYS_ADD_DOC', 'AdminController@SYS_ADD_DOC');
+    Route::get('/COMPANYDOCUMENTS', 'AdminController@COMPANYDOCUMENTS');
+    Route::get('/WORKERDOCUMENTS', 'AdminController@WORKERDOCUMENTS');
 
     // SKILLS ROUTE
     Route::get('/customSkills', 'AdminController@customSkills');

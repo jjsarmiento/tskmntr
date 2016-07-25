@@ -1118,6 +1118,7 @@ class AdminController extends \BaseController {
 
     public function SYSTEMSETTINGS(){
         return View::make('admin.SYSTEMSETTINGS')
+                ->with('doc_types', DocumentType::orderBy('created_at', 'DESC')->get())
                 ->with('SYS_SETTINGS', SystemSetting::get());
     }
 
@@ -1143,5 +1144,53 @@ class AdminController extends \BaseController {
         }
 
         return Redirect::back();
+    }
+
+    public function DISABLEDOC($docID){
+        DocumentType::where('id', $docID)->update([
+            'sys_doc_disabled'  =>  true,
+        ]);
+        return Redirect::back();
+    }
+
+    public function ENABLEDOC($docID){
+        DocumentType::where('id', $docID)->update([
+            'sys_doc_disabled'  =>  false,
+        ]);
+        return Redirect::back();
+    }
+
+    public function SYS_ADD_DOC(){
+        DocumentType::insert([
+            'sys_doc_type'      =>  Input::get('DOCUMENT_TYPE'),
+            'sys_doc_label'     =>  Input::get('DOCUMENT_LABEL'),
+            'sys_doc_role'      =>  Input::get('DOC_ROLE'),
+            'sys_doc_disabled'  =>  false,
+            'created_at'        =>  date("Y:m:d H:i:s")
+        ]);
+
+        return Redirect::back();
+    }
+
+    public function DELETEDOC($docID){
+        DocumentType::where('id', $docID)->delete();
+        return Redirect::back();
+    }
+
+    public function WORKERDOCUMENTS(){
+        $docs = DocumentType::orderBy('created_at', 'DESC')
+                ->where('sys_doc_role', 'WORKER')
+                ->paginate(10);
+        return View::make('admin.WORKERDOCUMENTS')
+            ->with('doc_types', $docs);
+    }
+
+    public function COMPANYDOCUMENTS(){
+        $docs = DocumentType::orderBy('created_at', 'DESC')
+            ->where('sys_doc_role', 'COMPANY')
+            ->paginate(10);
+        return View::make('admin.COMPANYDOCUMENTS')
+            ->with('doc_types', $docs);
+
     }
 }
