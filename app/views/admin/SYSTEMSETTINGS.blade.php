@@ -118,9 +118,26 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button type="submit" class="btn btn-danger" style="border-radius: 0.3em;">Save Settings</button>
+                        <button type="submit" class="btn btn-danger" style="border-radius: 0.3em;">Save</button>
                     </div>
                 </form>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <form method="POST" action="doSYSTEMSETTINGS">
+                            <div class="widget-container" style="min-height: 1em;">
+                                <div class="widget-content padded">
+                                    <div class="row">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <button type="submit" class="btn btn-danger" style="border-radius: 0.3em;">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

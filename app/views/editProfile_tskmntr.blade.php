@@ -198,29 +198,39 @@
                             </div>
                         </div>
                     </div>
-
                     <hr/>
-                    <div class="heading" style="font-size:14pt; color:#2980b9">
-                        <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>&nbsp Contact Information <button class="btn btn-xs btn-default pull-right" onclick="location.href='/editContactInfo'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
-                    </div>
-                    <div style="padding-left: 30px;">
-                        @foreach(Contact::where('user_id', $user->id)->get() as $con)
-                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">
-                                @if($con->ctype == "mobileNum") Mobile No.
-                                @elseif($con->ctype == "businessNum") Business No.
-                                @else {{ $con->ctype }} @endif
-                            </span>
-                             :
-                            <span style="margin-left: 5px">{{ $con->content }}</span>
-                            @if($con->ctype == "mobileNum")
-                                @if(Contact::where('user_id',  Auth::user()->id)->pluck('pincode')!='verified')
-                                    {{--<button class="btn btn-xs btn-primary" onclick="location.href='/doVerifyMobileNumber'" style="padding: 2px 10px 2px 10px; margin: 5px; text-transform: none;">Verify</button>--}}
-                                @else
-                                    {{--<span class="btn btn-xs btn-default" style=" margin: 5px;">Verified</span>--}}
-                                @endif
-                            @endif
-                            <br/>
-                        @endforeach
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="heading" style="font-size:14pt; color:#2980b9">
+                                <i class="fa fa-file" style="font-size:14pt; color:#2980b9"></i>&nbsp Supporting Documents
+                                <button class="btn btn-xs btn-default pull-right" onclick="location.href='/editDocuments'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="heading" style="font-size:14pt; color:#2980b9">
+                                <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>&nbsp Contact Information <button class="btn btn-xs btn-default pull-right" onclick="location.href='/editContactInfo'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                            </div>
+                            <div style="padding-left: 30px;">
+                                @foreach(Contact::where('user_id', $user->id)->get() as $con)
+                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">
+                                        @if($con->ctype == "mobileNum") Mobile No.
+                                        @elseif($con->ctype == "businessNum") Business No.
+                                        @else {{ $con->ctype }} @endif
+                                    </span>
+                                     :
+                                    <span style="margin-left: 5px">{{ $con->content }}</span>
+                                    @if($con->ctype == "mobileNum")
+                                        @if(Contact::where('user_id',  Auth::user()->id)->pluck('pincode')!='verified')
+                                            {{--<button class="btn btn-xs btn-primary" onclick="location.href='/doVerifyMobileNumber'" style="padding: 2px 10px 2px 10px; margin: 5px; text-transform: none;">Verify</button>--}}
+                                        @else
+                                            {{--<span class="btn btn-xs btn-default" style=" margin: 5px;">Verified</span>--}}
+                                        @endif
+                                    @endif
+                                    <br/>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                     <hr/>
                     <div class="heading" style="font-size:14pt; color:#2980b9">

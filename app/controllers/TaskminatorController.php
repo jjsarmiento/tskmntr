@@ -1022,4 +1022,8 @@ class TaskminatorController extends \BaseController {
                 ->with('category', $category)
                 ->with('regions', $regions);
     }
+
+    public function editDocuments(){
+        return View::make('taskminator.editDocuments');
+    }
 }
