@@ -104,6 +104,7 @@ class HomeController extends BaseController {
                     ->with("users", User::where('username', '=', $username)->get()->first())
                     ->with('roles', $role)
                     ->with('mobile', $mobile)
+                    ->with('DOCS', $this->DOCUMENTS_GETEXISTINGLABELS($temp->id))
                     ->with('CLIENT_PROGRESSFLAG', $CLIENT_PROGRESSFLAG)
                     ->with('CLIENTFLAG', $CLIENTFLAG)
                     ->with('USERINCART', $USERINCART)
@@ -1227,12 +1228,14 @@ class HomeController extends BaseController {
         switch(UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id')){
             case '1'    :
                 return View::make('editProfile_admin')->with('user', User::where('id', Auth::user()->id)->first());
-            case '2'    :
+            case '2'    : // WORKER
                 $pincode = Contact::where('user_id',  Auth::user()->id)->pluck('pincode');
+                $docs = Document::join('document_types', 'document_types.sys_doc_type', '=', 'documents.type')->select(['document_types.sys_doc_label'])->where('documents.user_id', Auth::user()->id)->get();
                 return View::make('editProfile_tskmntr')
                             ->with('user', User::where('id', Auth::user()->id)->first())
                             ->with('pincode', $pincode)
-                            ->with('customSkills', CustomSkill::where('created_by', Auth::user()->id)->get());
+                            ->with('customSkills', CustomSkill::where('created_by', Auth::user()->id)->get())
+                            ->with('docs', $docs);
             case '3'    :
             case '4'    :
                 return View::make('editProfile_client')

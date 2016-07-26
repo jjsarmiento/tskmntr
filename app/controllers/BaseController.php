@@ -373,5 +373,19 @@ class BaseController extends Controller {
 
         return $myArr;
     }
+
+    public function DOCUMENTS_GETEXISTINGLABELS($userID){
+        $types = Document::join('document_types', 'document_types.sys_doc_type', '=', 'documents.type')
+            ->where('documents.user_id', $userID)
+            ->select(['document_types.sys_doc_label'])
+            ->get();
+
+        $myArr = array();
+        foreach($types as $o){
+            array_push($myArr, $o->sys_doc_label);
+        }
+
+        return $myArr;
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

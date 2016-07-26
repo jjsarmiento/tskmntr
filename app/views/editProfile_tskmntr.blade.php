@@ -204,6 +204,10 @@
                             <div class="heading" style="font-size:14pt; color:#2980b9">
                                 <i class="fa fa-file" style="font-size:14pt; color:#2980b9"></i>&nbsp Supporting Documents
                                 <button class="btn btn-xs btn-default pull-right" onclick="location.href='/editDocuments'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                                <br/>
+                                @foreach($docs as $d)
+                                    <i class="fa fa-check" style="color: #2ECC71;"></i>&nbsp;<span style="color: rgb(72, 157, 179); font-size: 0.8em;">{{$d->sys_doc_label}}</span><br/>
+                                @endforeach
                             </div>
 
                         </div>

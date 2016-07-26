@@ -1,7 +1,7 @@
 @extends('layouts.usermain')
 
 @section('title')
-    Edit Personal Information
+    Upload Supporting Documents
 @stop
 
 @section('head-content')
@@ -89,7 +89,7 @@
                         <a href="/editProfile">Edit Profile</a>
                     </li>
                     <li class="active">
-                        Edit Personal Information
+                        Documents
                     </li>
                 </ul>
             </div>
