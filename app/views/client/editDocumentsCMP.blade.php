@@ -60,6 +60,7 @@
             // DELETE DOCUMENT LISTENER
             $('.ANCHOR_DELETE_DOC').click(function() {
                 if(confirm('Do you really want to delete '+$(this).data('docname'))){
+//                    alert($(this).data('href'));
                     location.href = $(this).data('href');
                 }
             })
@@ -127,7 +128,7 @@
                                             <td><a target="_tab" href="{{$ud->path}}">{{$ud->label}}</a></td>
                                             <td>{{$ud->sys_doc_label}}</td>
                                             <td style="text-align: right; font-size: 1.3em;">
-                                                <a data-docname="{{$ud->label}}" title="Delete {{$ud->label}}" href="#" class="ANCHOR_DELETE_DOC" data-href="/DELETE_DOC_{{$ud->id}}" style="padding-right: 0.8em;"><i class="fa fa-trash"></i></a>
+                                                <a data-docname="{{$ud->label}}" title="Delete {{$ud->label}}" href="#" class="ANCHOR_DELETE_DOC" data-href="/DELDOCCMP_{{$ud->id}}" style="padding-right: 0.8em;"><i class="fa fa-trash"></i></a>
                                                 <a title="Download {{$ud->label}}" download href="{{$ud->path}}" style="padding-right: 0.8em;"><i class="fa fa-download"></i></a>
                                             </td>
                                         </tr>

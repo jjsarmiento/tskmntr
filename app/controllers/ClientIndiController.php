@@ -1692,7 +1692,7 @@ class ClientIndiController extends \BaseController {
                 'documents.label',
                 'document_types.sys_doc_label'
             ])
-            ->orderBy('documents.created_at')
+            ->orderBy('documents.created_at', 'DESC')
             ->paginate(10);
 
         return View::make('client.editDocumentsCMP')
@@ -1736,5 +1736,10 @@ class ClientIndiController extends \BaseController {
                 return Redirect::back();
             }
         }
+    }
+
+    public function DELDOCCMP($docID){
+        Document::where('id', $docID)->delete();
+        return Redirect::back();
     }
 }
