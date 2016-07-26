@@ -1729,7 +1729,10 @@ class ClientIndiController extends \BaseController {
                 Document::insert([
                     'user_id'       =>  Auth::user()->id,
                     'docname'       =>  $file_name,
-                    'path'          =>  $destinationPath.'/'.$file_name,
+                    // PATH FOR LOCALHOST
+                    // 'path'          =>  $destinationPath.'/'.$file_name,
+                    // PATH FOR LIVE SITE
+                    'path'          =>  'public/'.$destinationPath.'/'.$file_name,
                     'label'         =>  $file_label,
                     'type'          =>  $doc_type,
                     'created_at'    =>  date("Y:m:d H:i:s"),
