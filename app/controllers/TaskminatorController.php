@@ -1089,4 +1089,9 @@ class TaskminatorController extends \BaseController {
             }
         }
     }
+
+    public function DELETE_DOC($docID){
+        Document::where('id', $docID)->delete();
+        return Redirect::back();
+    }
 }
