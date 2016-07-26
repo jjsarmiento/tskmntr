@@ -117,18 +117,18 @@
                         @else
                             <table class="table table-hover">
                                 <thead>
-                                    <th>File</th>
-                                    <th>Document Type</th>
+                                    <th width="50%">File</th>
+                                    <th width="35%">Document Type</th>
                                     <th>Actions</th>
                                 </thead>
                                 <tbody>
                                     @foreach($user_docs as $ud)
                                         <tr>
-                                            <td><a target="_tab" href="{{$ud->path}}">{{$ud->docname}}</a></td>
+                                            <td><a target="_tab" href="{{$ud->path}}">{{$ud->label}}</a></td>
                                             <td>{{$ud->sys_doc_label}}</td>
                                             <td style="text-align: right; font-size: 1.3em;">
-                                                <a data-docname="{{$ud->docname}}" title="Delete {{$ud->docname}}" href="#" class="ANCHOR_DELETE_DOC" data-href="/DELETE_DOC_{{$ud->id}}" style="padding-right: 0.8em;"><i class="fa fa-trash"></i></a>
-                                                <a title="Download {{$ud->docname}}" download href="{{$ud->path}}" style="padding-right: 0.8em;"><i class="fa fa-download"></i></a>
+                                                <a data-docname="{{$ud->label}}" title="Delete {{$ud->label}}" href="#" class="ANCHOR_DELETE_DOC" data-href="/DELETE_DOC_{{$ud->id}}" style="padding-right: 0.8em;"><i class="fa fa-trash"></i></a>
+                                                <a title="Download {{$ud->label}}" download href="{{$ud->path}}" style="padding-right: 0.8em;"><i class="fa fa-download"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
