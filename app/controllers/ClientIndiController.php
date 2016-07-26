@@ -1673,6 +1673,68 @@ class ClientIndiController extends \BaseController {
     }
 
     public function editDocumentsCMP(){
-        return View::make('client.editDocumentsCMP');
+        $EXISTING_DOCUMENTS = $this->DOCUMENTS_GETEXISTINGTYPES(Auth::user()->id);
+        $doc_types = DocumentType::orderBy('sys_doc_label', 'ASC')
+            ->where('sys_doc_role', 'COMPANY')
+            ->where('sys_doc_disabled', false)
+            ->whereNotIn('sys_doc_type', $EXISTING_DOCUMENTS)
+            ->get();
+
+        $user_docs = Document::leftJoin('document_types', 'document_types.sys_doc_type', '=', 'documents.type')
+            ->where('documents.user_id', Auth::user()->id)
+            ->select([
+                'documents.id',
+                'documents.user_id',
+                'documents.created_at',
+                'documents.path',
+                'documents.docname',
+                'documents.type',
+                'documents.label',
+                'document_types.sys_doc_label'
+            ])
+            ->orderBy('documents.created_at')
+            ->paginate(10);
+
+        return View::make('client.editDocumentsCMP')
+                ->with('user_docs', $user_docs)
+                ->with('doc_types', $doc_types);
+    }
+
+    public function doUploadDocumentsCMP(){
+        $doc_file = Input::file('DOC_FILE');
+        $doc_type = Input::get('DOC_TYPE');
+
+        if(!isset($doc_file)){
+            Session::flash('errorMsg', 'Please attach a document before uploading');
+            return Redirect::back();
+        }else{
+            $rules = array('file' => 'required|mimes:pdf,doc,docx');
+            $validator = Validator::make(array('file'=> $doc_file), $rules);
+            if($validator->passes()){
+                $destinationPath = 'public/upload/documents/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
+
+                $doc_label = DocumentType::where('sys_doc_type', $doc_type)->pluck('sys_doc_label');
+                $file_label = $doc_label.' - '.Auth::user()->fullName;
+                $file_name = md5(uniqid(time(), true)).'.'.$doc_file->getClientOriginalExtension();
+
+                // INITIALIZE UPLOAD
+                $INIT_UPLOAD = $doc_file->move('public/'.$destinationPath, $file_name);
+
+                Document::insert([
+                    'user_id'       =>  Auth::user()->id,
+                    'docname'       =>  $file_name,
+                    'path'          =>  $destinationPath.'/'.$file_name,
+                    'label'         =>  $file_label,
+                    'type'          =>  $doc_type,
+                    'created_at'    =>  date("Y:m:d H:i:s"),
+                ]);
+
+                Session::flash('successMsg', 'Document has been uploaded!');
+                return Redirect::back();
+            }else{
+                Session::flash('errorMsg', 'Document failed to upload. Accepted file types are .PDF, .DOC and .DOCX');
+                return Redirect::back();
+            }
+        }
     }
 }

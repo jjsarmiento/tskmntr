@@ -240,6 +240,7 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
 Route::group(array('before' => 'CLIENT-ONLY'), function(){
     // DOCUMENTS
     Route::get('/editDocumentsCMP', 'ClientIndiController@editDocumentsCMP');
+    Route::post('/doUploadDocumentsCMP', 'ClientIndiController@doUploadDocumentsCMP');
 
     // MULTIPLE INVITE ROUTES
     Route::post('/SENDMULTIPLEINVITE', 'ClientIndiController@SENDMULTIPLEINVITE');
