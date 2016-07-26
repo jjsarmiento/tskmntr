@@ -1238,7 +1238,9 @@ class HomeController extends BaseController {
                             ->with('docs', $docs);
             case '3'    :
             case '4'    :
+                $docs = Document::join('document_types', 'document_types.sys_doc_type', '=', 'documents.type')->select(['document_types.sys_doc_label'])->where('documents.user_id', Auth::user()->id)->get();
                 return View::make('editProfile_client')
+                    ->with('docs', $docs)
                     ->with('user', User::where('id', Auth::user()->id)->first())
                     ->with('contacts', Contact::where('user_id', Auth::user()->id)->get());
         }

@@ -188,6 +188,10 @@
                                         <a href="/editDocumentsCMP" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</a>
                                     </div>
                                     <div style="">
+
+                                    @foreach($docs as $d)
+                                        <i class="fa fa-check" style="color: #2ECC71;"></i>&nbsp;<span style="color: rgb(72, 157, 179); font-size: 1em;">{{$d->sys_doc_label}}</span><br/>
+                                    @endforeach
                                     </div>
                                 </div>
                                 <div class="col-md-6">
