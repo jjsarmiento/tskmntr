@@ -1068,7 +1068,11 @@ class TaskminatorController extends \BaseController {
             $rules = array('file' => 'required|mimes:pdf,doc,docx');
             $validator = Validator::make(array('file'=> $doc_file), $rules);
             if($validator->passes()){
+                // FOR LOCALHOST
                 $destinationPath = 'public/upload/documents/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
+
+                // FOR LIVE SITE
+                $destinationPath = 'upload/documents/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
 
                 $doc_label = DocumentType::where('sys_doc_type', $doc_type)->pluck('sys_doc_label');
                 $file_label = $doc_label.' - '.Auth::user()->fullName;
@@ -1080,7 +1084,10 @@ class TaskminatorController extends \BaseController {
                 Document::insert([
                     'user_id'       =>  Auth::user()->id,
                     'docname'       =>  $file_name,
-                    'path'          =>  $destinationPath.'/'.$file_name,
+                    // PATH FOR LOCALHOST
+                    // 'path'          =>  $destinationPath.'/'.$file_name,
+                    // PATH FOR LIVE SITE
+                    'path'          =>  'public/'.$destinationPath.'/'.$file_name,
                     'label'         =>  $file_label,
                     'type'          =>  $doc_type,
                     'created_at'    =>  date("Y:m:d H:i:s"),
