@@ -16,6 +16,7 @@ class CreateDocumentsTable extends Migration {
         {
             $table->increments('id');
             $table->string('user_id')->nullable();
+            $table->string('label')->nullable();
             $table->string('docname')->nullable();
             $table->string('path')->nullable();
             $table->string('type')->nullable();

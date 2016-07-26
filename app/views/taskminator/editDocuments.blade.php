@@ -112,26 +112,30 @@
             <div class="col-md-8">
                 <div class="widget-container " style="min-height: 1em;">
                     <div class="widget-content padded">
-                        <table class="table table-hover">
-                            <thead>
-                                <th>File</th>
-                                <th>Document Type</th>
-                                <th>Actions</th>
-                            </thead>
-                            <tbody>
-                                @foreach($user_docs as $ud)
-                                    <tr>
-                                        <td><a target="_tab" href="{{$ud->path}}">{{$ud->docname}}</a></td>
-                                        <td>{{$ud->sys_doc_label}}</td>
-                                        <td style="text-align: right; font-size: 1.3em;">
-                                            <a data-docname="{{$ud->docname}}" title="Delete {{$ud->docname}}" href="#" class="ANCHOR_DELETE_DOC" data-href="/DELETE_DOC_{{$ud->id}}" style="padding-right: 0.8em;"><i class="fa fa-trash"></i></a>
-                                            <a title="Download {{$ud->docname}}" download href="{{$ud->path}}" style="padding-right: 0.8em;"><i class="fa fa-download"></i></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {{$user_docs->links()}}
+                        @if($user_docs->count() == 0)
+                            <center><i><label>No supporting documents uploaded</label></i></center>
+                        @else
+                            <table class="table table-hover">
+                                <thead>
+                                    <th>File</th>
+                                    <th>Document Type</th>
+                                    <th>Actions</th>
+                                </thead>
+                                <tbody>
+                                    @foreach($user_docs as $ud)
+                                        <tr>
+                                            <td><a target="_tab" href="{{$ud->path}}">{{$ud->docname}}</a></td>
+                                            <td>{{$ud->sys_doc_label}}</td>
+                                            <td style="text-align: right; font-size: 1.3em;">
+                                                <a data-docname="{{$ud->docname}}" title="Delete {{$ud->docname}}" href="#" class="ANCHOR_DELETE_DOC" data-href="/DELETE_DOC_{{$ud->id}}" style="padding-right: 0.8em;"><i class="fa fa-trash"></i></a>
+                                                <a title="Download {{$ud->docname}}" download href="{{$ud->path}}" style="padding-right: 0.8em;"><i class="fa fa-download"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            {{$user_docs->links()}}
+                        @endif
                     </div>
                 </div>
             </div>

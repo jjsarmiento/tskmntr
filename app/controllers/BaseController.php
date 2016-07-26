@@ -359,5 +359,19 @@ class BaseController extends Controller {
             'created_at'=>  date("Y:m:d H:i:s")
         ]);
     }
+
+    public function DOCUMENTS_GETEXISTINGTYPES($userID){
+        $types = Document::join('document_types', 'document_types.sys_doc_type', '=', 'documents.type')
+                    ->where('documents.user_id', $userID)
+                    ->select(['document_types.sys_doc_type'])
+                    ->get();
+
+        $myArr = array();
+        foreach($types as $o){
+            array_push($myArr, $o->sys_doc_type);
+        }
+
+        return $myArr;
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

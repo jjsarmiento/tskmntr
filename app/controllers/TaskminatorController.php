@@ -1024,9 +1024,11 @@ class TaskminatorController extends \BaseController {
     }
 
     public function editDocuments(){
+        $EXISTING_DOCUMENTS = $this->DOCUMENTS_GETEXISTINGTYPES(Auth::user()->id);
         $doc_types = DocumentType::orderBy('sys_doc_label', 'ASC')
                         ->where('sys_doc_role', 'WORKER')
                         ->where('sys_doc_disabled', false)
+                        ->whereNotIn('sys_doc_type', $EXISTING_DOCUMENTS)
                         ->get();
 
         $user_docs = Document::leftJoin('document_types', 'document_types.sys_doc_type', '=', 'documents.type')
@@ -1038,8 +1040,10 @@ class TaskminatorController extends \BaseController {
                         'documents.path',
                         'documents.docname',
                         'documents.type',
+                        'documents.label',
                         'document_types.sys_doc_label'
                     ])
+                    ->orderBy('documents.created_at')
                     ->paginate(10);
 
 //        $user_docs = Document::get();
@@ -1059,22 +1063,20 @@ class TaskminatorController extends \BaseController {
             $rules = array('file' => 'required|mimes:pdf,doc,docx');
             $validator = Validator::make(array('file'=> $doc_file), $rules);
             if($validator->passes()){
-                // THIS PATH IS FOR THE LIVE SITE
-                // $destinationPath = 'public/upload/documents/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
-
-                // THIS PATH IS FOR LOCALHOST
-                 $destinationPath = 'upload/documents/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
+                $destinationPath = 'public/upload/documents/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
 
                 $doc_label = DocumentType::where('sys_doc_type', $doc_type)->pluck('sys_doc_label');
-                $newFileName = $doc_label.' - '.Auth::user()->fullName.'.'.$doc_file->getClientOriginalExtension();
+                $file_label = $doc_label.' - '.Auth::user()->fullName;
+                $file_name = md5(uniqid(time(), true)).'.'.$doc_file->getClientOriginalExtension();
 
                 // INITIALIZE UPLOAD
-                $INIT_UPLOAD = $doc_file->move($destinationPath, $newFileName);
+                $INIT_UPLOAD = $doc_file->move('public/'.$destinationPath, $file_name);
 
                 Document::insert([
                     'user_id'       =>  Auth::user()->id,
-                    'docname'       =>  $newFileName,
-                    'path'          =>  $destinationPath.'/'.$newFileName,
+                    'docname'       =>  $file_name,
+                    'path'          =>  $destinationPath.'/'.$file_name,
+                    'label'         =>  $file_label,
                     'type'          =>  $doc_type,
                     'created_at'    =>  date("Y:m:d H:i:s"),
                 ]);
