@@ -830,6 +830,11 @@ class TaskminatorController extends \BaseController {
     }
 
     public function CNCLAPPLCTN($jobId){
+        $job = Job::where('id', $jobId)->first();
+        Cart::where('worker_id', Auth::user()->id)
+            ->where('company_id', $job->user_id)
+            ->delete();
+
         JobApplication::where('job_id', $jobId)
             ->where('applicant_id', Auth::user()->id)
             ->delete();

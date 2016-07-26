@@ -387,5 +387,33 @@ class BaseController extends Controller {
 
         return $myArr;
     }
+
+    public function ALL_JOBS($companyID){
+        $jobs = Job::where('user_id', $companyID)->get();
+
+        $myArr = array();
+        foreach($jobs as $o){
+            array_push($myArr, $o->id);
+        }
+
+        return $myArr;
+    }
+
+    public static function ALL_JOBS_STATIC($companyID){
+        $jobs = Job::where('user_id', $companyID)->get();
+
+        $myArr = array();
+        foreach($jobs as $o){
+            array_push($myArr, $o->id);
+        }
+
+        return $myArr;
+    }
+
+    public static function IS_AN_APPLICANT_FOR_COMPANY($workerID, $compID){
+        $ALL_JOBS_OF_COMP = BaseController::ALL_JOBS_STATIC($compID);
+        $flag = JobApplication::whereIn('job_id', $ALL_JOBS_OF_COMP)->where('applicant_id', $workerID)->count();
+        return ($flag > 0);
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }
