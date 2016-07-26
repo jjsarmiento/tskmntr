@@ -50,14 +50,21 @@
 @stop
 
 @section('body-scripts')
-        {{ HTML::script('js/taskminator.js') }}
-        <script>
-            $(document).ready(function(){
-                CHAINLOCATION($('#reg-task'), $('#edt_prov'));
-                CHAINLOCATION($('#reg-task'), $('#city-task'));
-                CHAINLOCATION($('#city-task'), $('#barangay-task'));
-            });
-        </script>
+    {{ HTML::script('js/taskminator.js') }}
+    <script>
+        $(document).ready(function(){
+            CHAINLOCATION($('#reg-task'), $('#edt_prov'));
+            CHAINLOCATION($('#reg-task'), $('#city-task'));
+            CHAINLOCATION($('#city-task'), $('#barangay-task'));
+
+            // DELETE DOCUMENT LISTENER
+            $('.ANCHOR_DELETE_DOC').click(function() {
+                if(confirm('Do you really want to delete '+$(this).data('docname'))){
+                    location.href = $(this).data('href');
+                }
+            })
+        });
+    </script>
 @stop
 
 @section('user-name')
@@ -103,34 +110,49 @@
             @endif
 
             <div class="col-md-8">
-                <div class="widget-container" style="min-height: 150px; padding-bottom: 5px; padding-top: 20px;">
+                <div class="widget-container " style="min-height: 1em;">
                     <div class="widget-content padded">
+                        <table class="table table-hover">
+                            <thead>
+                                <th>File</th>
+                                <th>Document Type</th>
+                                <th>Actions</th>
+                            </thead>
+                            <tbody>
+                                @foreach($user_docs as $ud)
+                                    <tr>
+                                        <td><a target="_tab" href="{{$ud->path}}">{{$ud->docname}}</a></td>
+                                        <td>{{$ud->sys_doc_label}}</td>
+                                        <td style="text-align: right; font-size: 1.3em;">
+                                            <a data-docname="{{$ud->docname}}" title="Delete {{$ud->docname}}" href="#" class="ANCHOR_DELETE_DOC" data-href="/DELETE_DOC_{{$ud->id}}" style="padding-right: 0.8em;"><i class="fa fa-trash"></i></a>
+                                            <a title="Download {{$ud->docname}}" download href="{{$ud->path}}" style="padding-right: 0.8em;"><i class="fa fa-download"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        {{$user_docs->links()}}
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div class="widget-container small">
-                    @if(Auth::user()->profilePic == null)
-                        <div class="heading">
-                            <i class="icon-signal"></i>Please upload a profile picture
-                        </div>
-                        <div class="widget-content padded">
-                            {{ Form::open(array('url' => '/uploadProfilePic', 'id' => 'uploadProfilePicForm', 'files' => 'true')) }}
-                                <input type="file" name="profilePic" accept="image/*" class="form-control" /><br/>
-                                <button type="submit" class="btn btn-success">Upload</button>
-                            {{ Form::close() }}
-                        </div>
-                    @else
-                        <div class="widget-content padded">
-                            <div class="heading">
-                                <i class="glyphicon glyphicon-user"></i>{{ Auth::user()->fullName }}
+                <div class="widget-container" style="min-height: 1em;">
+                    <div class="widget-content padded">
+                        {{ Form::open(array('url' => '/doUploadDocumentsWRKR', 'files' => 'true')) }}
+                            <div class="form-group">
+                                <select class="form-control" name="DOC_TYPE" required="required">
+                                    <option value="">Please select the type of document you want to upload</option>
+                                    @foreach($doc_types as $dt)
+                                        <option value="{{$dt->sys_doc_type}}">{{$dt->sys_doc_label}}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="thumbnail">
-                                <a href="/editProfile"><img src="{{ Auth::user()->profilePic }}" class="portrait"/></a>
-                            </div>
-                        </div>
-                    @endif
+                            {{--<input type="file" name="DOC_FILE" class="form-control" multiple required="required" /><br/>--}}
+                            <input type="file" name="DOC_FILE" class="form-control" required="required" /><br/>
+                            <button type="submit" class="btn btn-success">Upload</button>
+                        {{ Form::close() }}
+                    </div>
                 </div>
             </div>
         </div>

@@ -183,6 +183,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     // DOCUMENTS MODULE
     Route::get('/editDocuments', 'TaskminatorController@editDocuments');
+    Route::post('/doUploadDocumentsWRKR', 'TaskminatorController@doUploadDocumentsWRKR');
 
     // JOBS MODULE ROUTES -- START by JAN SARMIENTO
     Route::get('/jbdtls={jobId}', 'TaskminatorController@jbdtls');

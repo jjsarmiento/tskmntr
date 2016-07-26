@@ -1024,6 +1024,67 @@ class TaskminatorController extends \BaseController {
     }
 
     public function editDocuments(){
-        return View::make('taskminator.editDocuments');
+        $doc_types = DocumentType::orderBy('sys_doc_label', 'ASC')
+                        ->where('sys_doc_role', 'WORKER')
+                        ->where('sys_doc_disabled', false)
+                        ->get();
+
+        $user_docs = Document::leftJoin('document_types', 'document_types.sys_doc_type', '=', 'documents.type')
+                    ->where('documents.user_id', Auth::user()->id)
+                    ->select([
+                        'documents.id',
+                        'documents.user_id',
+                        'documents.created_at',
+                        'documents.path',
+                        'documents.docname',
+                        'documents.type',
+                        'document_types.sys_doc_label'
+                    ])
+                    ->paginate(10);
+
+//        $user_docs = Document::get();
+        return View::make('taskminator.editDocuments')
+                ->with('user_docs', $user_docs)
+                ->with('doc_types', $doc_types);
+    }
+
+    public function doUploadDocumentsWRKR(){
+        $doc_file = Input::file('DOC_FILE');
+        $doc_type = Input::get('DOC_TYPE');
+
+        if(!isset($doc_file)){
+            Session::flash('errorMsg', 'Please attach a document before uploading');
+            return Redirect::back();
+        }else{
+            $rules = array('file' => 'required|mimes:pdf,doc,docx');
+            $validator = Validator::make(array('file'=> $doc_file), $rules);
+            if($validator->passes()){
+                // THIS PATH IS FOR THE LIVE SITE
+                // $destinationPath = 'public/upload/documents/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
+
+                // THIS PATH IS FOR LOCALHOST
+                 $destinationPath = 'upload/documents/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
+
+                $doc_label = DocumentType::where('sys_doc_type', $doc_type)->pluck('sys_doc_label');
+                $newFileName = $doc_label.' - '.Auth::user()->fullName.'.'.$doc_file->getClientOriginalExtension();
+
+                // INITIALIZE UPLOAD
+                $INIT_UPLOAD = $doc_file->move($destinationPath, $newFileName);
+
+                Document::insert([
+                    'user_id'       =>  Auth::user()->id,
+                    'docname'       =>  $newFileName,
+                    'path'          =>  $destinationPath.'/'.$newFileName,
+                    'type'          =>  $doc_type,
+                    'created_at'    =>  date("Y:m:d H:i:s"),
+                ]);
+
+                Session::flash('successMsg', 'Document has been uploaded!');
+                return Redirect::back();
+            }else{
+                Session::flash('errorMsg', 'Document failed to upload. Accepted file types are .PDF, .DOC and .DOCX');
+                return Redirect::back();
+            }
+        }
     }
 }
