@@ -141,6 +141,7 @@
             $('#SHOWDETAILS').click(function(){
                 $('#DETAILPANEL').slideToggle('fast');
             });
+
         });
     </script>
 @stop
@@ -315,7 +316,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success">Send Invite</button>
+                @if($bookmarks->count() == 0)
+                    <button id="SND_INVITE_BTN" type="button" disabled class="btn btn-success">Send Invite</button>
+                @else
+                    <button id="SND_INVITE_BTN" type="submit" class="btn btn-success">Send Invite</button>
+                @endif
             </div>
         </div>
     </div>

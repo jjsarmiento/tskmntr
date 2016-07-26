@@ -1639,13 +1639,15 @@ class ClientIndiController extends \BaseController {
     }
 
     public function SENDMULTIPLEINVITE(){
-        foreach(Input::get('WORKERS') as $w){
-            JobInvite::insert([
-                'invited_id'    =>  $w,
-                'job_id'        =>  Input::get('JOBID'),
-                'message'       =>  Input::get('INVITATIONMSG'),
-                'created_at'    =>  date("Y:m:d H:i:s")
-            ]);
+        if(Input::has('WORKERS')){
+            foreach(Input::get('WORKERS') as $w){
+                JobInvite::insert([
+                    'invited_id'    =>  $w,
+                    'job_id'        =>  Input::get('JOBID'),
+                    'message'       =>  Input::get('INVITATIONMSG'),
+                    'created_at'    =>  date("Y:m:d H:i:s")
+                ]);
+            }
         }
 
         return Redirect::back();
