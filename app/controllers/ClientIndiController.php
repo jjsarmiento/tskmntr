@@ -1713,7 +1713,11 @@ class ClientIndiController extends \BaseController {
             $rules = array('file' => 'required|mimes:pdf,doc,docx');
             $validator = Validator::make(array('file'=> $doc_file), $rules);
             if($validator->passes()){
+                // FOR LOCALHOST
                 $destinationPath = 'public/upload/documents/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
+
+                // FOR LIVE SITE
+                $destinationPath = 'upload/documents/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
 
                 $doc_label = DocumentType::where('sys_doc_type', $doc_type)->pluck('sys_doc_label');
                 $file_label = $doc_label.' - '.Auth::user()->fullName;
