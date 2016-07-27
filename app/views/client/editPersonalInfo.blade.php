@@ -174,8 +174,8 @@
                                         <input value="{{Auth::user()->years_in_operation}}" type="text" class="form-control" name="YIO" id="YIO"/>
                                     </div>
                                     <div class="form-group">
-                                        <label>Company Size</label>
-                                        <input value="{{Auth::user()->company_size}}" type="text" class="form-control" name="companySize" id="companySize"/>
+                                        <label>Number of Branches</label>
+                                        <input value="{{Auth::user()->number_of_branches}}" type="text" class="form-control" name="NOB" id="NOB"/>
                                     </div>
                                     <div class="form-group">
                                         <label>Contact Person Position</label>

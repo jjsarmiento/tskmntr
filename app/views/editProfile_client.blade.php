@@ -139,7 +139,7 @@
                                             <span style="margin-left: 5px">{{ $user->companyName }}</span><br/>
                                             <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Business Description</span>
                                              :
-                                            <span style="margin-left: 5px">{{ $user->businessDescription }}</span><br/>
+                                            <div style="overflow-y: hidden; text-overflow: ellipsis; max-height: 7em; margin-left: 5px">{{ $user->businessDescription }}</div><br/>
                                             <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Business Nature</span>
                                              :
                                             <span style="margin-left: 5px">{{ $user->businessNature }}</span><br/>

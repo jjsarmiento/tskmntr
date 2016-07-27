@@ -55,7 +55,8 @@ class CreateUsersTable extends Migration {
             $table->longText('businessNature')->nullable();
 
             $table->string('years_in_operation')->nullable();
-            $table->longText('company_size')->nullable();
+//            $table->longText('company_size')->nullable();
+            $table->longText('number_of_branches')->nullable();
             $table->string('contact_person_position')->nullable();
             $table->longText('number_of_employees')->nullable();
             $table->longText('working_hours')->nullable();

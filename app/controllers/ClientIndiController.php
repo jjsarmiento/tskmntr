@@ -747,7 +747,7 @@ class ClientIndiController extends \BaseController {
 
                 // ADDITIONAL INFO
                 'years_in_operation'    =>  Input::get('YIO'),
-                'company_size'          =>  Input::get('companySize'),
+                'number_of_branches'    =>  Input::get('NOB'),
                 'contact_person_position'  =>  Input::get('CPP'),
                 'number_of_employees'   =>  Input::get('NOE'),
                 'working_hours'         =>  Input::get('WH'),
