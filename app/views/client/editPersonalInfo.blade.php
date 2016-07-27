@@ -118,119 +118,135 @@
                     </div>
                 @endif
 
-                <div class="col-md-8" style="background-color: white; padding: 2.5em;">
-                    {{--<div class="widget-container" style="padding-bottom: 5px; padding-top: 20px;">--}}
-                        {{--<div class="widget-content padded">--}}
-                           <form method="POST" action="{{$formUrl}}" id="editPersonalInfo">
-                               @if(UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id') == 4)
-                                    <div class="col-md-3">
-                                        Company Name
+                <form method="POST" action="{{$formUrl}}" id="editPersonalInfo">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="widget-container">
+                                <div class="widget-content padded">
+                                    <h4 style="margin: 0; padding: 0; border-bottom: 1px solid #ECF0F1; padding-bottom: 0.6em; margin-bottom: 0.6em;"><i class="fa fa-briefcase"></i> Company Details</h4>
+                                    @if(UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id') == 4)
+                                        <div class="form-group">
+                                            <label>Company Name</label>
+                                            <input type="text" class="form-control" value="{{ $user->companyName }}" name="companyName" required="required"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Nature of Business</label>
+                                            <input type="text" class="form-control" value="{{ $user->businessNature }}" name="businessNature"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Business Permit</label>
+                                            <input class="form-control" type="text" value="{{ $user->businessPermit }}" name="businessPermit"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Business Description</label>
+                                            <textarea class="form-control" rows="5" name="businessDescription" >{{ $user->businessDescription }}</textarea>
+                                        </div>
+                                    @else
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input class="form-control" type="text" value="{{ $user->firstName }}" name="firstName" required="required"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Middle Name</label>
+                                            <input class="form-control" type="text" value="{{ $user->midName }}" name="midName"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input class="form-control" type="text" value="{{ $user->lastName }}" name="lastName" required="required"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Gender</label>
+                                            <select name="gender" class="form-control">
+                                               <option value="FEMALE" <?php if($user->gender == 'FEMALE'){ echo('selected'); } ?>>Female</option>
+                                               <option value="MALE" <?php if($user->gender == 'MALE'){ echo('selected'); } ?>>Male</option>
+                                           </select>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="widget-container">
+                                <div class="widget-content padded">
+                                    <h4 style="margin: 0; padding: 0; border-bottom: 1px solid #ECF0F1; padding-bottom: 0.6em; margin-bottom: 0.6em;"><i class="fa fa-plus"></i> Additional Information</h4>
+                                    <div class="form-group">
+                                        <label>Years in Operation</label>
+                                        <input type="text" class="form-control" name="YIO" id="YIO"/>
                                     </div>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" value="{{ $user->companyName }}" name="companyName" required="required"/><br/>
+                                    <div class="form-group">
+                                        <label>Company Size</label>
+                                        <input type="text" class="form-control" name="companySize" id="companySize"/>
                                     </div>
-                                    <div class="col-md-3">
-                                        Business Nature
+                                    <div class="form-group">
+                                        <label>Contact Person Position</label>
+                                        <input type="text" class="form-control" name="CPP" id="CPP"/>
                                     </div>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" value="{{ $user->businessNature }}" name="businessNature"/><br/>
+                                    <div class="form-group">
+                                        <label>Number of employees</label>
+                                        <input type="text" class="form-control" name="NOE" id="NOE"/>
                                     </div>
-                                    <div class="col-md-3">
-                                        Business Permit
+                                    <div class="form-group">
+                                        <label>Working Hours</label>
+                                        <input type="text" class="form-control" name="WH" id="WH"/>
                                     </div>
-                                    <div class="col-md-9">
-                                        <input class="form-control" type="text" value="{{ $user->businessPermit }}" name="businessPermit"/><br/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="widget-container">
+                                <div class="widget-content padded">
+                                    <h4 style="margin: 0; padding: 0; border-bottom: 1px solid #ECF0F1; padding-bottom: 0.6em; margin-bottom: 0.6em;"><i class="fa fa-map-marker"></i> Location Details</h4>
+                                    <div class="form-group">
+                                        <label>Street</label>
+                                       <input class="form-control" type="text" value="{{ $user->address }}" name="address"/>
                                     </div>
-                                    <div class="col-md-3">
-                                        Business Description
+                                    <div class="form-group">
+                                        <label>Region</label>
+                                        <select name="reg-task" id="reg-task" class="form-control" data-loctype="REGION_TO_PROVINCE">
+                                            <option value="">Select a region</option>
+                                            @foreach($regions as $region)
+                                                <option value="{{$region->regcode}}" <?php if($region->regcode == $user->region){ echo('selected'); } ?> >{{ $region->regname }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div class="col-md-9">
-                                        <textarea class="form-control" rows="5" name="businessDescription" >{{ $user->businessDescription }}</textarea><br/>
-                                    </div>
-                               @else
-                                    <div class="col-md-3">
-                                        First Name
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input class="form-control" type="text" value="{{ $user->firstName }}" name="firstName" required="required"/><br/>
-                                    </div>
-                                    <div class="col-md-3">
-                                        Middle Name
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input class="form-control" type="text" value="{{ $user->midName }}" name="midName"/><br/>
-                                    </div>
-                                    <div class="col-md-3">
-                                        Last Name
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input class="form-control" type="text" value="{{ $user->lastName }}" name="lastName" required="required"/><br/>
-                                    </div>
-                                    <div class="col-md-3">
-                                        Gender
-                                    </div>
-                                    <div class="col-md-9">
-                                        <select name="gender" class="form-control">
-                                           <option value="FEMALE" <?php if($user->gender == 'FEMALE'){ echo('selected'); } ?>>Female</option>
-                                           <option value="MALE" <?php if($user->gender == 'MALE'){ echo('selected'); } ?>>Male</option>
-                                       </select><br/>
-                                    </div>
-                               @endif
-                               <div class="col-md-3">
-                                       Street
-                                   </div>
-                                   <div class="col-md-9">
-                                       <input class="form-control" type="text" value="{{ $user->address }}" name="address"/><br/>
-                                   </div>
-                                   <div class="col-md-3">
-                                       Region
-                                   </div>
-                                   <div class="col-md-9">
-                                       <select name="reg-task" id="reg-task" class="form-control" data-loctype="REGION_TO_PROVINCE">
-                                           <option value="">Select a region</option>
-                                           @foreach($regions as $region)
-                                               <option value="{{$region->regcode}}" <?php if($region->regcode == $user->region){ echo('selected'); } ?> >{{ $region->regname }}</option>
-                                           @endforeach
-                                       </select><br/>
-                                   </div>
-                                   <div class="col-md-3">
-                                       Province
-                                   </div>
-                                   <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label>Province</label>
                                         <select name="edt_prov" id="edt_prov" data-loctype="REGION_TO_PROVINCE" class="form-control">
                                             <option value="">Select a province</option>
                                             @foreach($prov as $p)
                                                 <option <?php if($p->provcode == Auth::user()->province){echo 'selected';} ?> value="{{$p->provcode}}">{{$p->provname}}</option>
                                             @endforeach
-                                        </select><br/>
-                                   </div>
-                                   <div class="col-md-3">
-                                       City
-                                   </div>
-                                   <div class="col-md-9">
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>City</label>
                                        <select disabled name="city-comp" id="city" data-loctype="REGION_TO_CITY" class="form-control">
                                             <option value="">Select a city</option>
                                            @foreach($cities as $city)
                                               <option class="city-value-{{$city->regcode}}" value="{{$city->citycode}}" <?php if($city->citycode == $user->city){ echo('selected'); } ?> >{{ $city->cityname }}</option>
                                           @endforeach
-                                       </select><br/>
-                                   </div>
-                                   <div class="col-md-3">
-                                       Barangay
-                                   </div>
-                                   <div class="col-md-9">
+                                       </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Barangay</label>
                                        <select disabled class="form-control" data-loctype="CITY_TO_BARANGAY" name="barangay-comp" id="barangay">
                                         <option value="">Select a barangay</option>
                                           @foreach($barangays as $bgy)
                                           <option value="{{$bgy->bgycode}}" <?php if($bgy->bgycode == $user->barangay){ echo('selected'); } ?> >{{ $bgy->bgyname }}</option>
                                           @endforeach
-                                      </select><br/>
-                                   </div>
-                                <div class="text-right padded"><button type="submit" class="btn btn-primary">Edit</button></div>
-                           </form>
-                        {{--</div>--}}
-                    {{--</div>--}}
-                </div>
+                                      </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-success pull-right" style="border-radius: 0.3em;" type="submit">Save Profile Details</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
