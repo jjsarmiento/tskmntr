@@ -35,13 +35,15 @@ class CreateUsersTable extends Migration {
             $table->string('status')->nullable();
             $table->string('workTime')->nullable();
             $table->string('businessPermit')->nullable();
-            $table->string('businessDescription')->nullable();
-            $table->string('businessNature')->nullable();
-            // FOR TASKMINATORS
-            $table->string('educationalBackground')->nullable();
+            // FOR COMPANIES
+            $table->longText('businessDescription')->nullable();
+            $table->longText('businessNature')->nullable();
+            // FOR WORKERS
+            $table->longText('educationalBackground')->nullable();
             $table->string('servicesOffered')->nullable();
             $table->string('skills')->nullable();
-            $table->integer('yearsOfExperience')->nullable();
+//            $table->integer('yearsOfExperience')->nullable();
+            $table->longText('experience')->nullable();
             $table->integer('maxRate')->nullable();
             $table->integer('minRate')->nullable();
             $table->float('total_profile_progress')->nullable();

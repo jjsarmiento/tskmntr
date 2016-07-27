@@ -248,6 +248,31 @@
                             <span style="border:2px solid white; padding:8px; background-color: #BDC3C7; display:inline-block; color: white; border-radius: 0.2em; font-size: 12pt;">{{ $cs->skill }}</span>
                         @endforeach
                     </div>
+                    <div class="row">
+                        @if(Auth::user()->educationalBackground)
+                            <div class="col-md-6">
+                                <hr/>
+                                <div class="heading" style="font-size:14pt; color:#2980b9">
+                                    <i class="fa fa-graduation-cap" style="font-size:14pt; color:#2980b9"></i>&nbsp Educational Background
+                                </div>
+                                <div style="padding-left: 30px;">
+                                    {{Auth::user()->educationalBackground}}
+                                </div>
+                            </div>
+                        @endif
+
+                        @if(Auth::user()->experience)
+                            <div class="col-md-6">
+                                <hr/>
+                                <div class="heading" style="font-size:14pt; color:#2980b9">
+                                    <i class="fa fa-lightbulb-o" style="font-size:14pt; color:#2980b9"></i>&nbsp Experience
+                                </div>
+                                <div style="padding-left: 30px;">
+                                    {{Auth::user()->experience}}
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

@@ -477,6 +477,8 @@ class TaskminatorController extends \BaseController {
             'city'              =>  Input::get('city-task'),
             'barangay'          =>  Input::get('barangay-task'),
             'province'          =>  Input::get('edt_prov'),
+            'educationalBackground'          =>  Input::get('educBg'),
+            'experience'        =>  Input::get('experience'),
         ));
 
         // compute completeness of user's profile and update total_profile_progress column
