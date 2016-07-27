@@ -165,7 +165,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="title">Other Qualifications (Other skills and competencies Required)</label>
-                                                <textarea rows="10" name="otherskills" class="form-control" required="required" placeholder="Example : Baby Sitting, English Proficiency, Household Chores, ..."></textarea>
+                                                <textarea rows="10" name="otherskills" class="form-control" placeholder="Example : Baby Sitting, English Proficiency, Household Chores, ..."></textarea>
                                                 <span style="color: #E74C3C; font-weight: bold;">*Please seperate skills with comma</span>
                                             </div>
                                             <div class="form-group">

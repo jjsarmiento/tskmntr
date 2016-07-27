@@ -139,13 +139,13 @@
                                 Street :
                             </div>
                             <div class="col-md-9">
-                                <input type="text"  class="form-control"value="{{ $user->address }}" name="address" required="required"/><br/>
+                                <input type="text"  class="form-control"value="{{ $user->address }}" name="address"/><br/>
                             </div>
                             <div class="col-md-3">
                                 Region :
                             </div>
                             <div class="col-md-9">
-                                <select name="reg-task" id="reg-task" data-loctype="REGION_TO_PROVINCE" class="form-control" required="required">
+                                <select name="reg-task" id="reg-task" data-loctype="REGION_TO_PROVINCE" class="form-control">
                                     <option value="">Please Select your region</option>
                                     @foreach($regions as $region)
                                         <option value="{{$region->regcode}}" <?php if($region->regcode == $user->region){ echo('selected'); } ?> >{{ $region->regname }}</option>
@@ -169,7 +169,7 @@
                                 City : 
                             </div>
                             <div class="col-md-9">
-                                <select name="city-task" data-loctype="REGION_TO_CITY" id="city-task" class="form-control" required="required">
+                                <select name="city-task" data-loctype="REGION_TO_CITY" id="city-task" class="form-control">
                                     @foreach($cities as $city)
                                         <option <?php if($city->citycode == Auth::user()->city){echo 'selected';} ?> class="city-value-{{$city->regcode}}" data-regcode="{{$city->regcode}}" value="{{$city->citycode}}" <?php if($city->citycode == $user->city){ echo('selected'); } ?> >{{ $city->cityname }}</option>
                                     @endforeach
@@ -179,7 +179,7 @@
                                 Barangay : 
                             </div>
                             <div class="col-md-9">
-                                <select data-loctype="CITY_TO_BARANGAY" name="barangay-task" id="barangay-task" class="form-control" required="required">
+                                <select data-loctype="CITY_TO_BARANGAY" name="barangay-task" id="barangay-task" class="form-control">
                                     @foreach($barangays as $bgy)
                                         <option value=""></option>
                                         <option value="{{$bgy->bgycode}}" <?php if($bgy->bgycode == $user->barangay){ echo('selected'); } ?> >{{ $bgy->bgyname }}</option>
@@ -190,7 +190,7 @@
                                 Gender : 
                             </div>
                             <div class="col-md-9">
-                                <select name="gender" class="form-control"  required="required">
+                                <select name="gender" class="form-control">
                                     <option value="">Please Select your gender</option>
                                     <option value="FEMALE" <?php if($user->gender == 'FEMALE'){ echo('selected'); } ?>>Female</option>
                                     <option value="MALE" <?php if($user->gender == 'MALE'){ echo('selected'); } ?>>Male</option>
