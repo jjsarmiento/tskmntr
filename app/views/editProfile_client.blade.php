@@ -86,7 +86,7 @@
                 <div class="alert alert-warning">
                     <div>
                         Your profile is being reviewed by our staff.<br/>
-                        After your profile has been activated, you can start looking for tasks!<br/>
+                        After your profile has been activated, you can start posting job ads or search for workers<br/>
                         This could take 24 hours or less.
                     </div>
                 </div>
@@ -116,10 +116,10 @@
                         <div class="col-lg-9">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="heading" style="font-size:14pt; color:#2980b9">
+                                    <div class="heading" style="font-size:14pt; color:#2980b9; word-wrap: break-word;">
                                         <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>Personal Information <button onclick="location.href='/cltEditPersonalInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
                                     </div>
-                                    <div style="padding-left: 42px;">
+                                    <div style="padding-left: 42px; word-wrap: break-word;">
                                         @if(UserHasRole::where('user_id', $user->id)->pluck('role_id') == 3)
                                             <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">First Name</span>
                                              :
