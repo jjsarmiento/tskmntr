@@ -130,6 +130,12 @@
 
                     location.href = "/searchWorker:"+acctStatus+":"+rating+":"+hiring+":"+orderBy+":"+keyword;
             });
+
+            $('.ACT_DEAC').click(function(){
+                if(confirm($(this).data('msg'))){
+                    location.href = $(this).data('href');
+                }
+            })
         });
     </script>
 @stop
@@ -290,8 +296,13 @@
                                             {{ $user->fullName }} {{'@'.$user->username}}
                                         </a>
                                         <p>
-                                            <i class="fa fa-map-marker"></i> {{ $user->regname }}, {{ $user->cityname }}<br/>
-                                            Registered at {{ date('D, M j, Y \a\t g:ia', strtotime($user->created_at)) }}
+                                            {{--<i class="fa fa-map-marker"></i> {{ $user->regname }}, {{ $user->cityname }}<br/>--}}
+                                            Registered at {{ date('D, M j, Y \a\t g:ia', strtotime($user->created_at)) }}<br/>
+                                            @if($user->status == 'ACTIVATED')
+                                                <a style="border-radius: 0.3em;" data-msg="Confirm account DEACTIVATION of {{$user->fullName}}" class="ACT_DEAC btn btn-danger btn-xs" data-href="/adminDeactivate/{{$user->id}}">DEACTIVATE</a>
+                                            @else
+                                                <a style="border-radius: 0.3em;" data-msg="Confirm account ACTIVATION of {{$user->fullName}}" class="ACT_DEAC btn btn-success btn-xs" data-href="/adminActivate/{{$user->id}}">ACTIVATE</a>
+                                            @endif
                                         </p>
                                     </div>
                                 </div>

@@ -87,26 +87,8 @@ class AdminController extends \BaseController {
             'status'    =>  'ACTIVATED'
         ));
 
-        // TRAIL FOR ADMIN
-        AuditTrail::insert(array(
-            'user_id'   =>  Auth::user()->id,
-            'content'   =>  'Administratively activate account for <span style="color: #2980B9;">'.$query->pluck('fullName').'</span> at '.date('D, M j, Y \a\t g:ia'),
-            'created_at'    =>  date("Y:m:d H:i:s"),
-            'at_url'        =>  '/viewUserProfile/'.$id
-//                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
-        ));
-
-        // TRAIL FOR USER
-        AuditTrail::insert(array(
-            'user_id'   =>  $id,
-            'content'   =>  'Account administratively activated by <span style="color: #E74C3C;">'.Auth::user()->fullName.'</span> at '.date('D, M j, Y \a\t g:ia'),
-            'created_at'    =>  date("Y:m:d H:i:s"),
-            'at_url'        =>  '/viewUserProfile/'.$id
-//                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
-        ));
-
-//        return Redirect::back();
-        return Redirect::to('/viewUserProfile/'.$id);
+        Session::flash('successMsg', 'User has been activated');
+        return Redirect::back();
     }
 
     public function adminDeactivate($id){
@@ -115,26 +97,8 @@ class AdminController extends \BaseController {
             'status'    =>  'ADMIN_DEACTIVATED'
         ));
 
-        // TRAIL FOR ADMIN
-        AuditTrail::insert(array(
-            'user_id'   =>  Auth::user()->id,
-            'content'   =>  'Administratively deactivate account for <span style="color: #2980B9;">'.$query->pluck('fullName').'</span> at '.date('D, M j, Y \a\t g:ia'),
-            'created_at'    =>  date("Y:m:d H:i:s"),
-            'at_url'        =>  '/viewUserProfile/'.$id
-//                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
-        ));
-
-        // TRAIL FOR USER
-        AuditTrail::insert(array(
-            'user_id'   =>  $id,
-            'content'   =>  'Account administratively deactivated by <span style="color: #E74C3C;">'.Auth::user()->fullName.'</span> at '.date('D, M j, Y \a\t g:ia'),
-            'created_at'    =>  date("Y:m:d H:i:s"),
-            'at_url'        =>  '/viewUserProfile/'.$id
-//                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
-        ));
-
-//        return Redirect::back()->with('successMsg', 'User has been deactivated.');
-        return Redirect::to('/viewUserProfile/'.$id)->with('successMsg', 'User has been deactivated.');
+        Session::flash('successMsg', 'User has been deactivated');
+        return Redirect::back();
     }
 
     public function viewUserProfile($id){
