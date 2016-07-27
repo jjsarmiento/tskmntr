@@ -403,9 +403,12 @@ class AdminController extends \BaseController {
                     'users.id as userID',
                     'users.username',
                     'users.created_at',
+                    'users.fullName',
+                    'users.total_profile_progress',
                     'cities.cityname',
                     'regions.regname',
                 ])
+                ->groupBy('users.id')
                 ->paginate(10);
 
         return View::make('admin.taskList')

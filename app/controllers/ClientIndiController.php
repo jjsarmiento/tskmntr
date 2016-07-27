@@ -683,6 +683,7 @@ class ClientIndiController extends \BaseController {
 
         return View::make('client.editPersonalInfo')
             ->with('user', Auth::user())
+            ->with('prov', Province::orderBy('provname', 'ASC')->get())
             ->with('regions', Region::orderBy('regname', 'ASC')->get())
             ->with('cities', City::orderBy('cityname', 'ASC')->get())
             ->with('barangays', Barangay::orderBy('bgyname', 'ASC')->where('citycode', Auth::user()->city)->get())
@@ -691,17 +692,18 @@ class ClientIndiController extends \BaseController {
 
     public function doCltEditPersonalInfo(){
         // COMPANY NAME VALIDATION
-        if(strlen(trim(strip_tags(Input::get('companyName')))) == 0){
+        /*
+        if(trim(strip_tags(Input::get('companyName'))) == 0){
             return Redirect::back()->with('errorMsg', 'Company name cannot be empty')->withInput(Input::except('password'));
         }
 
         // BUSINESS NATURE VALIDATION
-        if(strlen(trim(strip_tags(Input::get('businessNature')))) == 0){
+        if(trim(strip_tags(Input::get('businessNature'))) == 0){
             return Redirect::back()->with('errorMsg', 'Business nature name cannot be empty')->withInput(Input::except('password'));
         }
 
         // BUSINESS DESCRIPTION VALIDATION
-        if(strlen(trim(strip_tags(Input::get('businessDescription')))) == 0){
+        if(trim(strip_tags(Input::get('businessDescription'))) == 0){
             return Redirect::back()->with('errorMsg', 'Company name cannot be empty')->withInput(Input::except('password'));
         }else if(strlen(Input::get('businessDescription')) < 50){
             return Redirect::back()->with('errorMsg', 'Business description  must be at least or more than 50 characters')->withInput(Input::except('password'));
@@ -728,6 +730,7 @@ class ClientIndiController extends \BaseController {
         if(Input::get('businessPermit') == "" || Input::get('businessPermit') == null){
             return Redirect::back()->with('errorMsg', 'Business Permit cannot be empty')->withInput(Input::except('password'));
         }
+        */
 
         User::where('id', Auth::user()->id)
             ->update(array(

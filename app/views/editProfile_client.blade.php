@@ -147,7 +147,7 @@
                                              :
                                             <span style="margin-left: 5px">{{ $user->businessPermit }}</span><br/>
                                         @endif
-                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Address</span>
+                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Street</span>
                                          :
                                         <span style="margin-left: 5px">{{ $user->address }}</span><br/>
                                         <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">City</span>
