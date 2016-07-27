@@ -191,7 +191,7 @@
                             {{--<div style="margin: 0 15px;">--}}
                                 <b><i class="fa fa-warning" style="color: red;"></i>
                                 Your profile is being reviewed by our staff.<br/>
-                                After your profile has been activated, you can start looking for tasks!<br/>
+                                After your profile has been activated, you can start posting job ads or look for workers!<br/>
                                 This could take 24 hours or less.</b>
                             {{--</div>--}}
                         @else
@@ -248,7 +248,7 @@
                             <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $TOTALPROG['TOTAL_PROGRESS'] }}% | {{ $freeDuration }}
                             @if($TOTALPROG['TOTAL_PROGRESS'] < 50)
                                 <p style="color: #000000;">
-                                    <i style="color: red" class="fa fa-warning"></i> <b>You can start posting jobs when you complete your profile above 50%. Click <a href="/editProfile">here</a> to edit your profile</b>
+                                    <i style="color: red" class="fa fa-warning"></i> <b>You can start posting jobs and look for workers when you complete your profile above 50%. Click <a href="/editProfile">here</a> to edit your profile</b>
                                 </p>
                             @endif
                         </div>
