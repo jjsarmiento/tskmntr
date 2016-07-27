@@ -89,19 +89,19 @@
                 </h1>
             </div>
             <div class="row">
-                {{--<div class="col-lg-12">--}}
-                    {{--<ul class="breadcrumb">--}}
-                        {{--<li>--}}
-                            {{--<a href="/"><i class="fa fa-home"></i></a>--}}
-                        {{--</li>--}}
-                        {{--<li>--}}
-                            {{--<a href="/editProfile">Edit Profile</a>--}}
-                        {{--</li>--}}
-                        {{--<li class="active">--}}
-                            {{--Edit Personal Information--}}
-                        {{--</li>--}}
-                    {{--</ul>--}}
-                {{--</div>--}}
+                <div class="col-lg-12">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="/"><i class="fa fa-home"></i></a>
+                        </li>
+                        <li>
+                            <a href="/editProfile">Edit Profile</a>
+                        </li>
+                        <li class="active">
+                            Edit Personal Information
+                        </li>
+                    </ul>
+                </div>
 
                 @if(Session::has('errorMsg'))
                     <div class="col-sm-12">
