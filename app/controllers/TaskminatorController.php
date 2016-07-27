@@ -818,7 +818,7 @@ class TaskminatorController extends \BaseController {
             JobApplication::insert([
                 'applicant_id'  =>  Auth::user()->id,
                 'job_id'        =>  Input::get('application_jobID'),
-                'message'       =>  Input::get('application_message'),
+//                'message'       =>  Input::get('application_message'),
                 'created_at'    =>  date("Y:m:d H:i:s")
             ]);
         }

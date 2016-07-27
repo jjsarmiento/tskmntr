@@ -177,7 +177,7 @@
                         <form method="POST" action="/APPLYFRJB">
                             <div class="form-group">
                                 <label>Application Message</label>
-                                <textarea class="form-control" name="application_message" placeholder="Attach a message with your application" rows="5"></textarea>
+                                {{--<textarea class="form-control" name="application_message" placeholder="Attach a message with your application" rows="5"></textarea>--}}
                                 <input type="hidden" name="application_jobID" value="{{$job->jobId}}" />
                             </div>
                             <button class="btn btn-primary btn-block">Send Application</button>

@@ -103,7 +103,6 @@
                     location.href = $(this).data('url')+''+searchParam;
                 }
             });
-
             $('.SHWCRT').click(function(){
                 $('#MAINCARTBODY').hide();
                 $('#CARTLOADING').show();
@@ -120,7 +119,9 @@
                         $('#CRT_TOTAL').empty();
                         $('#CHECKOUTFORM').empty();
                         $.each(data, function(key,value){
-                            $('#CARTCONTENTS').append('<a class="CART-ITEMS" href="/'+value['username']+'" target="_tab">'+value['fullName']+'</a>&nbsp;&nbsp;<a href="/removeCartItem:'+value['cartID']+'"><i class="fa fa-close"></i></a><br/>');
+                            var worker_name = value['fullName'].charAt(0)+'**********';
+
+                            $('#CARTCONTENTS').append('<a class="CART-ITEMS" href="/'+value['username']+'" target="_tab">'+worker_name+'</a>&nbsp;&nbsp;<a href="/removeCartItem:'+value['cartID']+'"><i class="fa fa-close"></i></a><br/>');
                             $('#CHECKOUTFORM').append('<input type="hidden" name="WORKERID[]" value="'+value['workerID']+'" />')
                         });
                         $('#CRT_TOTAL').empty().append(totalPrice);
@@ -403,7 +404,7 @@
                                     <div class="col-md-6">
                                         <span id="CRT_QTY"></span>
                                     </div>
-                                    <div class="col-md-6">Price per item</div>
+                                    <div class="col-md-6">Price per Worker's Profile</div>
                                     <div class="col-md-6">
                                         <span id="CRT_PRICEPERITEM"></span>
                                     </div>
@@ -415,7 +416,7 @@
                                     <div class="col-md-6" style="font-weight: bold;">
                                         <span>{{Auth::user()->points}}</span>
                                     </div>
-                                    <div class="col-md-6" style="font-weight: bold;">Total points after purchase</div>
+                                    <div class="col-md-6" style="font-weight: bold;">Total points after checkout</div>
                                     <div class="col-md-6" style="font-weight: bold;">
                                         <span id="CRT_PTSLEFT" data-ptsleft="{{Auth::user()->points}}">{{Auth::user()->points}}</span>
                                     </div>
