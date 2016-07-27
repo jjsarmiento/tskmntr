@@ -683,9 +683,9 @@ class ClientIndiController extends \BaseController {
 
         return View::make('client.editPersonalInfo')
             ->with('user', Auth::user())
-            ->with('prov', Province::orderBy('provname', 'ASC')->get())
+            ->with('prov', Province::orderBy('provname', 'ASC')->where('regcode', Auth::user()->region)->get())
             ->with('regions', Region::orderBy('regname', 'ASC')->get())
-            ->with('cities', City::orderBy('cityname', 'ASC')->get())
+            ->with('cities', City::orderBy('cityname', 'ASC')->where('regcode', Auth::user()->region)->get())
             ->with('barangays', Barangay::orderBy('bgyname', 'ASC')->where('citycode', Auth::user()->city)->get())
             ->with('formUrl', $formUrl);
     }
@@ -740,9 +740,17 @@ class ClientIndiController extends \BaseController {
                 'businessDescription'   =>  Input::get('businessDescription'),
                 'address'               =>  Input::get('address'),
                 'region'                =>  Input::get('reg-task'),
+                'province'              =>  Input::get('edt_prov'),
                 'city'                  =>  Input::get('city-comp'),
                 'barangay'              =>  Input::get('barangay-comp'),
                 'businessPermit'        =>  Input::get('businessPermit'),
+
+                // ADDITIONAL INFO
+                'years_in_operation'    =>  Input::get('YIO'),
+                'company_size'          =>  Input::get('companySize'),
+                'contact_person_position'  =>  Input::get('CPP'),
+                'number_of_employees'   =>  Input::get('NOE'),
+                'working_hours'         =>  Input::get('WH'),
             ));
 
         return Redirect::back()->with('successMsg', 'Personal Information has been successfully edited');

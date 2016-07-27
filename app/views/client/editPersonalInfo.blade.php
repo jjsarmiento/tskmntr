@@ -171,23 +171,23 @@
                                     <h4 style="margin: 0; padding: 0; border-bottom: 1px solid #ECF0F1; padding-bottom: 0.6em; margin-bottom: 0.6em;"><i class="fa fa-plus"></i> Additional Information</h4>
                                     <div class="form-group">
                                         <label>Years in Operation</label>
-                                        <input type="text" class="form-control" name="YIO" id="YIO"/>
+                                        <input value="{{Auth::user()->years_in_operation}}" type="text" class="form-control" name="YIO" id="YIO"/>
                                     </div>
                                     <div class="form-group">
                                         <label>Company Size</label>
-                                        <input type="text" class="form-control" name="companySize" id="companySize"/>
+                                        <input value="{{Auth::user()->company_size}}" type="text" class="form-control" name="companySize" id="companySize"/>
                                     </div>
                                     <div class="form-group">
                                         <label>Contact Person Position</label>
-                                        <input type="text" class="form-control" name="CPP" id="CPP"/>
+                                        <input value="{{Auth::user()->contact_person_position}}" type="text" class="form-control" name="CPP" id="CPP"/>
                                     </div>
                                     <div class="form-group">
                                         <label>Number of employees</label>
-                                        <input type="text" class="form-control" name="NOE" id="NOE"/>
+                                        <input value="{{Auth::user()->number_of_employees}}" type="text" class="form-control" name="NOE" id="NOE"/>
                                     </div>
                                     <div class="form-group">
                                         <label>Working Hours</label>
-                                        <input type="text" class="form-control" name="WH" id="WH"/>
+                                        <input value="{{Auth::user()->working_hours}}" type="text" class="form-control" name="WH" id="WH"/>
                                     </div>
                                 </div>
                             </div>
@@ -220,7 +220,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>City</label>
-                                       <select disabled name="city-comp" id="city" data-loctype="REGION_TO_CITY" class="form-control">
+                                       <select name="city-comp" id="city" data-loctype="REGION_TO_CITY" class="form-control">
                                             <option value="">Select a city</option>
                                            @foreach($cities as $city)
                                               <option class="city-value-{{$city->regcode}}" value="{{$city->citycode}}" <?php if($city->citycode == $user->city){ echo('selected'); } ?> >{{ $city->cityname }}</option>
@@ -229,7 +229,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Barangay</label>
-                                       <select disabled class="form-control" data-loctype="CITY_TO_BARANGAY" name="barangay-comp" id="barangay">
+                                       <select class="form-control" data-loctype="CITY_TO_BARANGAY" name="barangay-comp" id="barangay">
                                         <option value="">Select a barangay</option>
                                           @foreach($barangays as $bgy)
                                           <option value="{{$bgy->bgycode}}" <?php if($bgy->bgycode == $user->barangay){ echo('selected'); } ?> >{{ $bgy->bgyname }}</option>
