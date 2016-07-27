@@ -125,6 +125,18 @@
                         </a>
                     </div>
                 </div><br/>
+                <div class="widget-container stats-container" style="display:block !important;">
+                    <div class="col-lg-6 lato-text">
+                        <a id="APPLICANTSLINK" href="/TERMS_AND_POLICY" style="text-decoration:none;">
+                            <div class="number" style="color:#2980b9;">
+                                <i class="fa fa-gavel"></i>
+                            </div>
+                            <div class="text" style="color:#2980b9;">
+                                Terms And Policy
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

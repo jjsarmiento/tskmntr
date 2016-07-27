@@ -99,6 +99,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::post('/SYS_ADD_DOC', 'AdminController@SYS_ADD_DOC');
     Route::get('/COMPANYDOCUMENTS', 'AdminController@COMPANYDOCUMENTS');
     Route::get('/WORKERDOCUMENTS', 'AdminController@WORKERDOCUMENTS');
+    Route::get('/TERMS_AND_POLICY', 'AdminController@TERMS_AND_POLICY');
 
     // SKILLS ROUTE
     Route::get('/customSkills', 'AdminController@customSkills');

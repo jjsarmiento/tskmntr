@@ -1160,4 +1160,8 @@ class AdminController extends \BaseController {
             ->with('doc_types', $docs);
 
     }
+
+    public function TERMS_AND_POLICY(){
+        return View::make('admin.TERMS_AND_POLICY');
+    }
 }
