@@ -826,7 +826,7 @@ class TaskminatorController extends \BaseController {
         // NOTIFICATION
         $job = Job::where('id', Input::get('application_jobID'))->first();
         $client = User::where('id', $job->user_id)->first();
-        $this->NOTIFICATION_INSERT($client->id, '<b>'.Auth::user()->fullName.'</b> has applied for <b>'.$job->title.'</b>', '/jobDetails='.$job->id);
+        $this->NOTIFICATION_INSERT($client->id, 'Worker has applied for <b>'.$job->title.'</b>', '/jobDetails='.$job->id);
 
         return Redirect::back();
     }
