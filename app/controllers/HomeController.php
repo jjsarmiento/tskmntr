@@ -881,7 +881,7 @@ class HomeController extends BaseController {
 
             return Redirect::to('/');
         }else if(User::where('username', Input::get('username'))->count() == 0){
-            return Redirect::back()->with('successMsg', 'This account has not been registered. Click <a href="/register">here</a> to register.');
+            return Redirect::back()->with('successMsg', 'This account has not been registered. Click <a href="/">here</a> to register.');
         }else{
             return Redirect::back()->with('errorMsg', 'Username or Password is incorrect')->withInput();
         }
