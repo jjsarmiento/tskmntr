@@ -59,9 +59,9 @@
                     @if($roles == 'TASKMINATOR')
                         @if($CLIENTFLAG)
                             @if(User::IS_BOOKMARKED(Auth::user()->id, $users->id))
-                                <a href="/REMOVE_BOOKMARK:{{BookmarkUser::where('worker_id', $users->id)->where('company_id', Auth::user()->id)->pluck('id')}}"><i class="BOOKMARK_USER fa fa-bookmark" style="color: #2ECC71; font-size: 2em;"></i></a>
+                                <a class="btn btn-warning" href="/REMOVE_BOOKMARK:{{BookmarkUser::where('worker_id', $users->id)->where('company_id', Auth::user()->id)->pluck('id')}}"><i class="BOOKMARK_USER fa fa-bookmark" style="color: #2ECC71;"></i> Worker is bookmarked</a>
                             @else
-                                <a href="/ADD_BOOKMARK:{{$users->id}}"><i class="BOOKMARK_USER fa fa-bookmark-o" style="color: #2ECC71; font-size: 2em;"></i></a>
+                                <a class="btn btn-warning" href="/ADD_BOOKMARK:{{$users->id}}"><i class="BOOKMARK_USER fa fa-bookmark-o" style="color: #2ECC71;"></i> Bookmark this worker</a>
                             @endif
 
                             @if(BaseController::IS_PURCHASED(Auth::user()->id, $users->id))
