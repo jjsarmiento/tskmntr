@@ -847,8 +847,28 @@ class HomeController extends BaseController {
                     break;
             }
         }else{
-            $jobs = Job::orderBy('created_at', 'DESC')->paginate(3);
-            return View::make('home')->with('tasks', $jobs);
+            $jobs = Job::join('users', 'jobs.user_id', '=', 'users.id')
+                ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+                ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+                ->select([
+                    'users.fullName',
+                    'jobs.title',
+                    'jobs.id as job_id',
+                    'jobs.expires_at',
+                    'jobs.salary',
+                    'jobs.created_at',
+                    'jobs.description',
+                    'jobs.hiring_type',
+                    'cities.cityname',
+                    'regions.regname',
+                ])
+                ->groupBy('jobs.id')
+                ->paginate(3);
+
+//            $jobs = Job::orderBy('created_at', 'DESC')->paginate(3);
+            return View::make('home')
+                    ->with('jobs', $jobs)
+                    ->with('tasks', $jobs);
         }
     }
 
