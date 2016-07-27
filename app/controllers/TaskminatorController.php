@@ -427,6 +427,7 @@ class TaskminatorController extends \BaseController {
     }
 
     public function doEditPersonalInfo(){
+        /*
         // FIRSTNAME VALIDATION
         if(!ctype_alpha(str_replace(' ', '', trim(Input::get('firstName'))))){
             return Redirect::back()->with('errorMsg', 'First name must be letters only')->withInput(Input::except('password'));
@@ -440,7 +441,6 @@ class TaskminatorController extends \BaseController {
 //        }else if(strlen(trim(Input::get('midName'))) == 0){
 //            return Redirect::back()->with('errorMsg', 'Middle name cannot be empty')->withInput(Input::except('password'));
 //        }
-        $middleName = (Input::has('midName') ? Input::get('midName') : null);
 
         // LAST NAME VALIDATION
         if(!ctype_alpha(str_replace(' ', '', trim(Input::get('lastName'))))){
@@ -465,7 +465,8 @@ class TaskminatorController extends \BaseController {
         if(Input::get('barangay-task') == null || Input::get('barangay-task') == 0){
             return Redirect::back()->with('errorMsg', 'City cannot be empty')->withInput(Input::except('password'));
         }
-
+        */
+        $middleName = (Input::has('midName') ? Input::get('midName') : null);
         User::where('id', Auth::user()->id)->update(array(
             'firstName'         =>  Input::get('firstName'),
             'midName'           =>  $middleName,
