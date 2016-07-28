@@ -12,8 +12,8 @@
                 <div class="row">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#ES_VERSION" aria-controls="home" role="tab" data-toggle="tab">TOS - English Version</a></li>
-                        <li role="presentation"><a href="#TG_VERSION" aria-controls="profile" role="tab" data-toggle="tab">TOS - Tagalog Version</a></li>
+                        <li role="presentation" class="active"><a href="#ES_VERSION" aria-controls="home" role="tab" data-toggle="tab">English Version</a></li>
+                        <li role="presentation"><a href="#TG_VERSION" aria-controls="profile" role="tab" data-toggle="tab">Tagalog Version</a></li>
                     </ul>
                 </div>
 

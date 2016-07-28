@@ -1161,7 +1161,7 @@ class AdminController extends \BaseController {
 
     }
 
-    public function TERMS_AND_POLICY(){
+    public function TOS(){
         return View::make('admin.TERMS_AND_POLICY')
                 ->with('content_es', SystemSetting::where('type', 'SYSSETTINGS_TOS_ES')->pluck('value'))
                 ->with('content_tg', SystemSetting::where('type', 'SYSSETTINGS_TOS_TG')->pluck('value'));
@@ -1195,6 +1195,41 @@ class AdminController extends \BaseController {
         }
 
         return Redirect::back();
+    }
 
+    public function POLICY(){
+        return View::make('admin.POLICY')
+                ->with('pol_es', SystemSetting::where('type', 'SYSSETTINGS_POLICY_ES')->pluck('value'))
+                ->with('pol_tg', SystemSetting::where('type', 'SYSSETTINGS_POLICY_TG')->pluck('value'));
+    }
+
+    public function POLICY_SAVE_ES(){
+        if(SystemSetting::where('type', 'SYSSETTINGS_POLICY_ES')->count() == 0){
+            SystemSetting::insert([
+                'type'  =>  'SYSSETTINGS_POLICY_ES',
+                'value' =>  Input::get('editor')
+            ]);
+        }else{
+            SystemSetting::where('type', 'SYSSETTINGS_POLICY_ES')->update([
+                'value' =>  Input::get('editor')
+            ]);
+        }
+
+        return Redirect::back();
+    }
+
+    public function POLICY_SAVE_TG(){
+        if(SystemSetting::where('type', 'SYSSETTINGS_POLICY_TG')->count() == 0){
+            SystemSetting::insert([
+                'type'  =>  'SYSSETTINGS_POLICY_TG',
+                'value' =>  Input::get('editor')
+            ]);
+        }else{
+            SystemSetting::where('type', 'SYSSETTINGS_POLICY_TG')->update([
+                'value' =>  Input::get('editor')
+            ]);
+        }
+
+        return Redirect::back();
     }
 }

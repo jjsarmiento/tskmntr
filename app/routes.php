@@ -99,9 +99,12 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::post('/SYS_ADD_DOC', 'AdminController@SYS_ADD_DOC');
     Route::get('/COMPANYDOCUMENTS', 'AdminController@COMPANYDOCUMENTS');
     Route::get('/WORKERDOCUMENTS', 'AdminController@WORKERDOCUMENTS');
-    Route::get('/TERMS_AND_POLICY', 'AdminController@TERMS_AND_POLICY');
+    Route::get('/TOS', 'AdminController@TOS');
     Route::post('/TOS_SAVE_ES', 'AdminController@TOS_SAVE_ES');
     Route::post('/TOS_SAVE_TG', 'AdminController@TOS_SAVE_TG');
+    Route::get('/POLICY', 'AdminController@POLICY');
+    Route::post('/POLICY_SAVE_ES', 'AdminController@POLICY_SAVE_ES');
+    Route::post('/POLICY_SAVE_TG', 'AdminController@POLICY_SAVE_TG');
 
     // SKILLS ROUTE
     Route::get('/customSkills', 'AdminController@customSkills');

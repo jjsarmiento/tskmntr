@@ -59,7 +59,7 @@
                         <a href="/SYSTEMSETTINGS">System Settings</a>
                     </li>
                     <li>
-                        Terms of Service and Policy Documents
+                        Policy
                     </li>
                 </ul>
             </div>
@@ -67,24 +67,24 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#ES_VERSION" aria-controls="home" role="tab" data-toggle="tab">TOS - English Version</a></li>
-                    <li role="presentation"><a href="#TG_VERSION" aria-controls="profile" role="tab" data-toggle="tab">TOS - Tagalog Version</a></li>
+                    <li role="presentation" class="active"><a href="#ES_VERSION" aria-controls="home" role="tab" data-toggle="tab">Policy - English Version</a></li>
+                    <li role="presentation"><a href="#TG_VERSION" aria-controls="profile" role="tab" data-toggle="tab">Policy - Tagalog Version</a></li>
                 </ul>
             </div>
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active fade in" id="ES_VERSION">
                     <div class="col-md-12">
-                        <form method="POST" action="TOS_SAVE_ES">
+                        <form method="POST" action="POLICY_SAVE_ES">
                             <div class="adjoined-bottom">
                                 <div class="grid-container">
                                     <div class="grid-width-100" style="padding: 0; margin: 0;">
-                                        <textarea class="ckeditor-editor" name="editor" id="editor">{{$content_es}}</textarea>
+                                        <textarea class="ckeditor-editor" name="editor" id="editor">{{$pol_es}}</textarea>
                                     </div>
                                 </div>
                             </div>
                             <br/>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary" style="border-radius: 0.3em;">Save (TOS - ENGLISH VERSION)</button>
+                                <button type="submit" class="btn btn-primary" style="border-radius: 0.3em;">Save (POLICY - ENGLISH VERSION)</button>
                             </div>
                         </form>
                     </div>
@@ -92,17 +92,17 @@
 
                 <div role="tabpanel" class="tab-pane fade" id="TG_VERSION">
                     <div class="col-md-12">
-                        <form method="POST" action="TOS_SAVE_TG">
+                        <form method="POST" action="POLICY_SAVE_TG">
                             <div class="adjoined-bottom">
                                 <div class="grid-container">
                                     <div class="grid-width-100" style="padding: 0; margin: 0;">
-                                        <textarea name="editor" id="editor_tg">{{$content_tg}}</textarea>
+                                        <textarea name="editor" id="editor_tg">{{$pol_tg}}</textarea>
                                     </div>
                                 </div>
                             </div>
                             <br/>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary" style="border-radius: 0.3em;">Save (TOS - TAGALOG VERSION)</button>
+                                <button type="submit" class="btn btn-primary" style="border-radius: 0.3em;">Save (POLICY - TAGALOG VERSION)</button>
                             </div>
                         </form>
                     </div>

@@ -17,6 +17,8 @@ class CreateSystemSettingsTable extends Migration {
         //SYSSETTINGS_CHECKOUTPRICE
         //SYSSETTINGS_TOS_ES
         //SYSSETTINGS_TOS_TG
+        //SYSSETTINGS_POLICY_ES
+        //SYSSETTINGS_POLICY_TG
 		Schema::create('system_settings', function(Blueprint $table)
 		{
 			$table->increments('id');
