@@ -103,6 +103,11 @@
                     location.href = $(this).data('url')+''+searchParam;
                 }
             });
+
+            $(document).on('hidden.bs.modal', '.modal', function () {
+                $('.modal:visible').length && $(document.body).addClass('modal-open');
+            });
+
             $('.SHWCRT').click(function(){
                 $('#MAINCARTBODY').hide();
                 $('#CARTLOADING').show();
@@ -149,6 +154,9 @@
         });
     </script>
     <style type="text/css">
+        .modal-open {
+            overflow: scroll;
+        }
         .lato-text { font-family: 'Lato', sans-serif}
         /*section{padding:0px 0px;}*/
 
