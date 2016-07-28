@@ -55,9 +55,12 @@
                     <h2 class="section-heading">Business Address</h2>
                     <hr class="hrLine">
                     <p style="font-size: 14pt;">
+                        {{$users->regname}}, {{$users->provname}}
+                        <!--
                         {{$users->address}}<br/>
                         {{$users->regname}}<br/>
                         {{$users->cityname}}, {{$users->bgyname}}
+                        -->
                     </p>
                 </div>
 
