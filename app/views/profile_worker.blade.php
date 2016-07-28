@@ -202,37 +202,37 @@
                     @endif
                 </div>
 
-                    <div class="row">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-lg-12 text-center">
+                            <i class="fa fa-4x fa-briefcase text-primary" aria-hidden="true"></i>
+                            <h2 class="section-heading">Documents</h2>
+                            <hr class="hrLine">
+                            <div class="col-12-lg lato-text" style="text-align: left;">
+                                @foreach($DOCS as $d)
+                                    <h4><i class="fa fa-check-circle" style="color: #2ECC71;"></i> {{$d}}</h4>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    @if($roles == 'TASKMINATOR')
                         <div class="col-md-6">
                             <div class="col-lg-12 text-center">
-                                <i class="fa fa-4x fa-briefcase text-primary" aria-hidden="true"></i>
-                                <h2 class="section-heading">Documents</h2>
+                                <i class="fa fa-4x fa-star text-primary" aria-hidden="true"></i>
+                                <h2 class="section-heading">Skills</h2>
                                 <hr class="hrLine">
                                 <div class="col-12-lg lato-text" style="text-align: left;">
-                                    @foreach($DOCS as $d)
-                                        <h4><i class="fa fa-check-circle" style="color: #2ECC71;"></i> {{$d}}</h4>
+                                    @foreach(User::getSkills($users->id) as $skill)
+                                        <span style="border:2px solid white; padding:8px; background-color: #2980b9; display:inline-block; color: #f9f9f9; border-radius: 0.2em; font-size: 12pt;">{{ $skill->itemname }}</span>
+                                    @endforeach
+                                    @foreach(User::GET_CUSTOM_SKILLS($users->id) as $skill)
+                                        <span style="border:2px solid white; padding:8px; background-color: #2980b9; display:inline-block; color: #f9f9f9; border-radius: 0.2em; font-size: 12pt;">{{ $skill->skill }}</span>
                                     @endforeach
                                 </div>
                             </div>
                         </div>
-                        @if($roles == 'TASKMINATOR')
-                            <div class="col-md-6">
-                                <div class="col-lg-12 text-center">
-                                    <i class="fa fa-4x fa-star text-primary" aria-hidden="true"></i>
-                                    <h2 class="section-heading">Skills</h2>
-                                    <hr class="hrLine">
-                                    <div class="col-12-lg lato-text" style="text-align: left;">
-                                        @foreach(User::getSkills($users->id) as $skill)
-                                            <span style="border:2px solid white; padding:8px; background-color: #2980b9; display:inline-block; color: #f9f9f9; border-radius: 0.2em; font-size: 12pt;">{{ $skill->itemname }}</span>
-                                        @endforeach
-                                        @foreach(User::GET_CUSTOM_SKILLS($users->id) as $skill)
-                                            <span style="border:2px solid white; padding:8px; background-color: #2980b9; display:inline-block; color: #f9f9f9; border-radius: 0.2em; font-size: 12pt;">{{ $skill->skill }}</span>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
+                    @endif
+                </div>
 
 
 

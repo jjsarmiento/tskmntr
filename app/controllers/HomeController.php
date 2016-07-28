@@ -42,15 +42,6 @@ class HomeController extends BaseController {
     */
 
     public function logout(){
-        /*
-        date_default_timezone_set("Asia/Manila");
-        AuditTrail::insert(array(
-            'user_id'       =>  Auth::user()->id,
-            'content'       =>  'Logged out at '.date('D, M j, Y \a\t g:ia'),
-            'created_at'    =>  date("Y:m:d H:i:s")
-//                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
-        ));
-        */
         Auth::logout();
         return Redirect::to('/');
     }
@@ -79,37 +70,66 @@ class HomeController extends BaseController {
             $MULTIJOB = false;
 
             if(Auth::check()){
-                if(User::GETROLE(Auth::user()->id) == 'CLIENT_IND' || User::GETROLE(Auth::user()->id) == 'CLIENT_CMP'){
-                    $CLIENTFLAG = true;
+                if($role == 'TASKMINATOR'){
+                    if(User::GETROLE(Auth::user()->id) == 'CLIENT_IND' || User::GETROLE(Auth::user()->id) == 'CLIENT_CMP'){
+                        $CLIENTFLAG = true;
+                    }
+
+                    $CLIENT_PROGRESSFLAG = (Auth::user()->total_profile_progress >= 50) ? true : false;
+
+                    if($role == 'TASKMINATOR' && $CLIENTFLAG){
+                        $USERINCART =  Cart::where('worker_id', $temp->id)
+                            ->where('company_id', Auth::user()->id)
+                            ->count();
+
+                        $PURCHASED = Purchase::where('worker_id', $temp->id)
+                            ->where('company_id', Auth::user()->id)
+                            ->count();
+
+                        $MULTIJOB = Job::where('user_id', Auth::user()->id)
+                            ->whereIn('skill_code', User::getSkillsCODE_ARRAY($temp->id))
+                            ->whereNotIn('id', $this->WORKERGETINVITES_JOBID($temp->id))
+                            ->get();
+                    }
+                    // DETERMINE IF USER HAS CHECKEDOUT WORKER -- END by Jan Sarmiento
+                    return View::make('profile_worker')
+                        ->with("users", User::where('username', '=', $username)->get()->first())
+                        ->with('roles', $role)
+                        ->with('mobile', $mobile)
+                        ->with('DOCS', $this->DOCUMENTS_GETEXISTINGLABELS($temp->id))
+                        ->with('CLIENT_PROGRESSFLAG', $CLIENT_PROGRESSFLAG)
+                        ->with('CLIENTFLAG', $CLIENTFLAG)
+                        ->with('USERINCART', $USERINCART)
+                        ->with('PURCHASED', $PURCHASED)
+                        ->with('MULTIJOB', $MULTIJOB);
+                }else{
+                    $users = User::leftJoin('regions', 'regions.regcode', '=', 'users.region')
+                                ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+                                ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+                                ->leftJoin('provinces', 'provinces.provcode', '=', 'users.province')
+                                ->where('users.id', $temp->id)
+                                ->select([
+                                    'users.id',
+                                    'users.address',
+                                    'users.businessDescription',
+                                    'users.businessNature',
+                                    'users.companyName',
+                                    'users.fullName',
+                                    'users.years_in_operation',
+                                    'users.number_of_branches',
+                                    'users.working_hours',
+                                    'regions.regname',
+                                    'provinces.provname',
+                                    'cities.cityname',
+                                    'barangays.bgyname',
+                                ])
+                                ->first();
+
+                    $license = Document::where('user_id', $users->id)->where('type', 'DOLE_POEA_LISENCE')->first();
+                    return View::make('profile_clients')
+                        ->with('license', $license)
+                        ->with("users", $users);
                 }
-
-                $CLIENT_PROGRESSFLAG = (Auth::user()->total_profile_progress >= 50) ? true : false;
-
-                if($role == 'TASKMINATOR' && $CLIENTFLAG){
-                    $USERINCART =  Cart::where('worker_id', $temp->id)
-                        ->where('company_id', Auth::user()->id)
-                        ->count();
-
-                    $PURCHASED = Purchase::where('worker_id', $temp->id)
-                        ->where('company_id', Auth::user()->id)
-                        ->count();
-
-                    $MULTIJOB = Job::where('user_id', Auth::user()->id)
-                        ->whereIn('skill_code', User::getSkillsCODE_ARRAY($temp->id))
-                        ->whereNotIn('id', $this->WORKERGETINVITES_JOBID($temp->id))
-                        ->get();
-                }
-                // DETERMINE IF USER HAS CHECKEDOUT WORKER -- END by Jan Sarmiento
-                return View::make("profile_worker")
-                    ->with("users", User::where('username', '=', $username)->get()->first())
-                    ->with('roles', $role)
-                    ->with('mobile', $mobile)
-                    ->with('DOCS', $this->DOCUMENTS_GETEXISTINGLABELS($temp->id))
-                    ->with('CLIENT_PROGRESSFLAG', $CLIENT_PROGRESSFLAG)
-                    ->with('CLIENTFLAG', $CLIENTFLAG)
-                    ->with('USERINCART', $USERINCART)
-                    ->with('PURCHASED', $PURCHASED)
-                    ->with('MULTIJOB', $MULTIJOB);
             }else{
                 if($role == 'TASKMINATOR'){
                     return View::make("publicProfile")

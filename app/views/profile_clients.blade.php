@@ -1,71 +1,132 @@
-@extends('layouts.main')
+@extends('layouts.usermain')
 
-@section('head')
-{{ $user->fullName }}
+@section('title')
+    {{ $users->companyName }} | Profile Page
 @stop
 
-@section('user-name')
-{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}
-@stop
-
-@section('contents')
-<div class="page-title">
-    <!--        <h1>-->
-    <!--            Taskminator Profile-->
-    <!--        </h1>-->
-</div>
-<div class="row">
-    <div class="col-lg-12">
-        <ul class="breadcrumb">
-            <li>
-                <a href="/"><i class="icon-home"></i></a>
-            </li>
-            <li class="active">
-                {{ $user->username }}'s Profile
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-12">
-        <div class="widget-container fluid-height">
-            <div class="widget-content padded row" style="padding-bottom: 30px">
-                <div class="col-sm-3" style="text-align: center; align-content: center; align-items: center;">
-
-                    @if($user->profilePic)
-                        <img src="{{$user->profilePic}}" width="90%" style="border-radius: 0.6em; box-shadow: 0 0 10px 1px #7F8C8D;" />
+@section('content')
+    <!-- HEADER SEARCH SECTION -->
+    <header style="min-height:70%;">
+        <div class="vegas.overlay" style="width:100%; height:100%; background-color:rgba(0,0,0,.7);">
+            <div class="header-content">
+                <div class="header-content-inner wow fadeIn text-center" data-wow-delay="0s" > <!--style="background-color:rgba(0,0,0,.5); padding-top: 35px; padding-bottom:15px; border-radius: 8px;" -->
+                    @if($users->profilePic)
+                        <img class="userProfile" src="{{$users->profilePic}}" />
                     @else
-                        <img src="/images/default_profile_pic.png" width="90%" style="border-radius: 0.6em; box-shadow: 0 0 10px 1px #7F8C8D;" />
+                        <img class="userProfile" src="/images/default_profile_pic.png" />
                     @endif
-                    <h3 style="margin-top: 1em;">{{ $user->username }}</h3>
-                </div>
-                <div class="col-sm-9">
-                    <div class="heading">
-                        <i class="glyphicon glyphicon-map-marker"></i>Address Details
-                    </div>
-                    <div style="padding: 0 12px;">
-                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">City and Barangay</span>
-                        :
-                        <span style="margin-left: 5px">{{ City::where('citycode', $user->city)->pluck('cityname') }}, {{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }}</span><br/>
-                    </div>
-                    <hr/>
-                    @if($user->businessDescription)
-                    <div class="heading">
-                        <i class="glyphicon glyphicon-map-marker"></i>Business Description
-                    </div>
-                    <div style="padding: 0 12px;">
-                        {{ $user->businessDescription }}
-                    </div>
-                    <hr/>
-                    @endif
-                    @if($user->businessNature)
-                        <div class="heading">
-                            <i class="glyphicon glyphicon-map-marker"></i>Business Nature
-                        </div>
-                        <div style="padding: 0 12px;">
-                            {{ $user->businessNature }}
-                        </div>
-                        <hr/>
-                    @endif
+
+                    <h2 class="lato-text">
+                        {{ $users->companyName }}
+                    </h2>
+                    <p style="margin:auto;" class="btn btn-primary lato-text">
+                        {{ $users->businessNature }}
+                    </p>
                 </div>
             </div>
         </div>
-        @stop
+    </header>
+    <!-- END OF -->
+
+<!-- DESCRIPTION -->
+    <section id="next" style="border-bottom:1px solid #222; padding-top:40px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 text-center lato-text" style="word-wrap: break-word;">
+                    <i class="fa fa-4x fa-info-circle text-primary" aria-hidden="true"></i>
+                    <h2 class="section-heading">About Us</h2>
+                    <hr class="hrLine">
+                    <p style="font-size: 14pt;">
+                        {{ $users->businessDescription}}
+                    </p>
+                </div>
+
+                <div class="col-lg-4 text-center lato-text">
+                    <i class="fa fa-4x fa-leaf text-primary"></i>
+                    <h2 class="section-heading">Nature</h2>
+                    <hr class="hrLine">
+                    <p style="font-size: 14pt;">
+                        {{ $users->businessNature}}
+                    </p>
+                </div>
+
+                <div class="col-lg-4 text-center lato-text">
+                    <i class="fa fa-4x fa-map-marker text-primary"></i>
+                    <h2 class="section-heading">Business Address</h2>
+                    <hr class="hrLine">
+                    <p style="font-size: 14pt;">
+                        {{$users->address}}<br/>
+                        {{$users->regname}}<br/>
+                        {{$users->cityname}}, {{$users->bgyname}}
+                    </p>
+                </div>
+
+                <br/><br/><br/><br/>
+                <div class="col-lg-6 text-center">
+                    <i class="fa fa-4x fa-briefcase text-primary" aria-hidden="true"></i>
+                    <h2 class="section-heading">Company Snapshots</h2>
+                    {{--<hr class="hrLine">--}}
+                    <div class="col-12-lg lato-text">
+                        <table class="table table-hover table-striped">
+                            <tbody>
+                                <tr>
+                                    <td width="50%"><label>Years in operation</label></td>
+                                    <td>{{$users->years_in_operation}}</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%"><label>Number of branches</label></td>
+                                    <td>{{$users->number_of_branches}}</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%"><label>Working Hours</label></td>
+                                    <td>{{$users->working_hours}}</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%"><label>DOLE Lisence</label></td>
+                                    <td>
+                                        @if($license)
+                                            <i style="font-size: 1.3em; color: #2ECC71;" class="fa fa-check-circle"></i>
+                                        @else
+                                            <i style="font-size: 1.3em; color: #E74C3C;" class="fa fa-close"></i>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- All scripts and plugin should be placed here so the page can load -->
+
+@stop
+
+@section('body-scripts')
+<!-- FOR HEADER SLIDER -->
+    <script>
+        $('header').vegas({
+          overlay: true,
+          preload: true,
+          preloadImage: true,
+          transition: 'fade', 
+          transitionDuration: 4000,
+          delay: 10000,
+          animation: 'random',
+          shuffle: true,
+          timer:false,
+          animationDuration: 20000,
+          slides: [
+            { src: 'frontend/img/slideshow/10.jpg' }
+            //{ src: 'frontend/img/slideshow/03.jpg' },
+            //{ src: 'frontend/img/slideshow/05.jpg' },
+            //{ src: 'frontend/img/slideshow/07.jpg' },
+            //{ src: 'frontend/img/slideshow/02.jpg' },
+            //{ src: 'frontend/img/slideshow/04.jpg' },
+            //{ src: 'frontend/img/slideshow/06.jpg' }
+          ]
+        });
+    </script>
+    {{ HTML::script('frontend/js/creative.js') }}
+<!-- END OF HEADER SLIDER -->
+@stop
