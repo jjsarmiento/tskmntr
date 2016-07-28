@@ -257,7 +257,7 @@ class HomeController extends BaseController {
                 ]);
 
                 $data = array(
-                    'msg'   =>  'PLEASE VALIDATE YOUR EMAIL',
+                    'msg'   =>  'CLICK ON THE LINK OR COPY AND PASTE IT ON THE BROWSER TO VALIDATE YOUR PROVEEK ACCOUNT',
                     'url'   =>  URL::to('/').'/VRFYACCT='.$activationCode
                 );
 
@@ -907,7 +907,7 @@ class HomeController extends BaseController {
                 case 'VERIFY_EMAIL_REGISTRATION':
                     $userId = Auth::user()->id;
                     Auth::logout();
-                    return Redirect::back()->with('errorMsg', 'You must validate your account first.<br/>Validation link has been sent to your email upon registration.<br/> <a href="/RESENDVALIDATION='.$userId.'">Resend validation email</a>')->withInput();
+                    return Redirect::back()->with('errorMsg', 'You must validate your account first.<br/>Validation link has been sent to your email upon registration.<br/> <a href="/RESENDVALIDATION='.$userId.'">Resend validation email</a> or click <a href="/VERIFY_changeEmail_'.$userId.'">here</a> to change your email')->withInput();
                 case 'DEACTIVATED'          :
                 case 'ADMIN_DEACTIVATED'    :
                     Auth::logout();
@@ -1700,8 +1700,68 @@ class HomeController extends BaseController {
 
             Mail::send('emails.CONTACTUS', $data, function($message) use($email){
                 $message->from('admin@proveek.com', 'Inquiries - Proveek');
-                $message->from('admin@proveek.com', 'Inquiries - Proveek');
+                $message->to('service.proveek@gmail.com')->subject('Inquiries - Proveek');
+//                $message->from('admin@proveek.com', 'Inquiries - Proveek');
             });
+        }
+
+        return Redirect::back();
+    }
+
+    public function VERIFY_changeEmail($userID){
+        return View::make('VERIFY_changeEmail')
+                ->with('user', User::where('id', $userID)->first());
+    }
+
+    public function doVERIFY_changeEmail(){
+        if(Auth::attempt(['username' => Input::get('username'), 'password' =>  Input::get('password')])){
+            if(Auth::user()->status == 'VERIFY_EMAIL_REGISTRATION'){
+                if($this->emailValidate(Input::get('email'))){
+                    $userMail = Contact::where('user_id', Auth::user()->id)->where('ctype', 'email')->pluck('content');
+                    $flag = Contact::where('content', Input::get('email'))->whereNotIn('content', [$userMail])->count();
+                    if($flag == 0){
+                        // delete previous activation code
+                        ActivationCode::where('user_id', Auth::user()->id)->delete();
+
+                        $activationCode = uniqid().'_'.time();
+                        $codecreated_at = time(); //date("Y:m:d H:i:s");
+                        $duration = $codecreated_at+86400;
+                        ActivationCode::insert([
+                            'user_id'       =>  Auth::user()->id,
+                            'code'          =>  $activationCode,
+                            'created_at'    =>  date("Y:m:d H:i:s", $codecreated_at),
+                            'duration'      =>  date("Y:m:d H:i:s", $duration)
+                        ]);
+
+                        $data = array(
+                            'msg'   =>  'CLICK ON THE LINK OR COPY AND PASTE IT TO VALIDATE YOUR EMAIL',
+                            'url'   =>  URL::to('/').'/VRFYACCT='.$activationCode
+                        );
+
+                        $email = Input::get('email');
+
+                        Mail::send('emails.REGISTRATION_SUCCESS', $data, function($message) use($email){
+                            $message->from('admin@proveek.com', 'Proveek');
+                            $message->to($email)->subject('Proveek BETA - Validate Account');
+                        });
+
+                        Auth::logout();
+                        Session::flash('successMsg', 'We have sent a validation link to '.$email.' <br/> Please validate your account to start using Proveek');
+                        return Redirect::to('/login');
+                    }else{
+                        Auth::logout();
+                        Session::flash('errorMsg', 'This email is already taken by another user');
+                    }
+                }else{
+                    Auth::logout();
+                    Session::flash('errorMsg', 'Please input a valid email');
+                }
+            }else{
+                Session::flash('errorMsg', 'Account is already activated');
+                Auth::logout();
+            }
+        }else{
+            Session::flash('errorMsg', 'Account login failed');
         }
 
         return Redirect::back();

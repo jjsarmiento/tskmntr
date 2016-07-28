@@ -55,6 +55,8 @@ Route::post('/confirmReset', 'HomeController@confirmReset');
 Route::post('/confirmChange', 'HomeController@confirmChange');
 Route::post('/chainCategoryItems', 'HomeController@chainCategoryItems');
 // Route::get('/profile/{id}', 'HomeController@profile'); --- old profile page
+Route::get('/VERIFY_changeEmail_{userID}', 'HomeController@VERIFY_changeEmail');
+Route::post('/doVERIFY_changeEmail', 'HomeController@doVERIFY_changeEmail');
 
 
 
