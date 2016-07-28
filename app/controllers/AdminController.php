@@ -1162,6 +1162,39 @@ class AdminController extends \BaseController {
     }
 
     public function TERMS_AND_POLICY(){
-        return View::make('admin.TERMS_AND_POLICY');
+        return View::make('admin.TERMS_AND_POLICY')
+                ->with('content_es', SystemSetting::where('type', 'SYSSETTINGS_TOS_ES')->pluck('value'))
+                ->with('content_tg', SystemSetting::where('type', 'SYSSETTINGS_TOS_TG')->pluck('value'));
+    }
+
+    public function TOS_SAVE_ES(){
+        if(SystemSetting::where('type', 'SYSSETTINGS_TOS_ES')->count() == 0){
+            SystemSetting::insert([
+                'type'  =>  'SYSSETTINGS_TOS_ES',
+                'value' =>  Input::get('editor')
+            ]);
+        }else{
+            SystemSetting::where('type', 'SYSSETTINGS_TOS_ES')->update([
+                'value' =>  Input::get('editor')
+            ]);
+        }
+
+        return Redirect::back();
+    }
+
+    public function TOS_SAVE_TG(){
+        if(SystemSetting::where('type', 'SYSSETTINGS_TOS_TG')->count() == 0){
+            SystemSetting::insert([
+                'type'  =>  'SYSSETTINGS_TOS_TG',
+                'value' =>  Input::get('editor')
+            ]);
+        }else{
+            SystemSetting::where('type', 'SYSSETTINGS_TOS_TG')->update([
+                'value' =>  Input::get('editor')
+            ]);
+        }
+
+        return Redirect::back();
+
     }
 }

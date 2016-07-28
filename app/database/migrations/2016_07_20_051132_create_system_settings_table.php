@@ -12,11 +12,16 @@ class CreateSystemSettingsTable extends Migration {
 	 */
 	public function up()
 	{
+        //SYSSETTINGS_POINTSPERAD
+        //SYSSETTINGS_JOBADDURATION
+        //SYSSETTINGS_CHECKOUTPRICE
+        //SYSSETTINGS_TOS_ES
+        //SYSSETTINGS_TOS_TG
 		Schema::create('system_settings', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('type');
-			$table->string('value');
+			$table->longText('value');
 			$table->timestamps();
 		});
 	}
