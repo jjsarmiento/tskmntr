@@ -981,8 +981,12 @@ class TaskminatorController extends \BaseController {
         $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
                     ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
                     ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
-                    ->where('title', 'LIKE', '%'.$keyword.'%')
-                    ->where('expired', false);
+
+                    ->leftJoin('custom_skills', 'custom_skills.company_job_id', '=', 'jobs.id')
+                    ->orWhere('custom_skills.skill', 'LIKE', '%'.$keyword.'%')
+
+                    ->orWhere('jobs.title', 'LIKE', '%'.$keyword.'%')
+                    ->where('jobs.expired', false);
 
         if($workDuration != 'ALL'){     $jobs = $jobs->where('hiring_type', $workDuration);}
         if($regionFIELD != 'ALL'){      $jobs = $jobs->where('regcode', $regionFIELD);}
@@ -1006,6 +1010,7 @@ class TaskminatorController extends \BaseController {
                     'regions.regname',
 
                 ])
+                ->groupBy('jobs.id')
                 ->paginate(10);
 
         $regions = Region::orderBy('regname', 'ASC')->get();

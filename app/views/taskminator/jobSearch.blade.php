@@ -44,7 +44,7 @@
                 <div class="widget-container padded">
                     <div class="form-group">
                         <label>Keyword</label>
-                        <input value="{{$keyword}}" name="jobSearch_keyword" id="jobSearch_keyword" type="text" placeholder="Enter keyword for title" class="form-control" />
+                        <input value="{{$keyword}}" name="jobSearch_keyword" id="jobSearch_keyword" type="text" placeholder="Enter keyword for title / custom skill" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label>Work Duration</label>

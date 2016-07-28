@@ -153,7 +153,7 @@
                             {{--LOCATION DETAILS -- END--}}
                             <div class="col-md-4">Salary</div>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" value="{{$job->salary}}" required="required" name="salary" id="salary"/>
+                                <input type="text" class="form-control" value="{{$job->salary}}" name="salary" id="salary"/>
                             </div>
                             <br/><br/><br/>
                         </div>
