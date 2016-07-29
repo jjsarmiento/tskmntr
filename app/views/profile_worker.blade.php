@@ -176,10 +176,10 @@
                     <h2 class="section-heading">Contact Info</h2>
                     <hr class="hrLine">
                     @if($CLIENTFLAG && $roles == 'TASKMINATOR')
-                        @if(BaseController::IS_AN_APPLICANT_FOR_COMPANY($users->id, Auth::user()->id))
-                            @if($CLIENT_PROGRESSFLAG)
+                        @if($CLIENT_PROGRESSFLAG)
+                            @if(BaseController::IS_AN_APPLICANT_FOR_COMPANY($users->id, Auth::user()->id))
                                 @if($USERINCART > 0)
-                                        <a href="#" data-target="#CARTMODAL" data-toggle="modal" class="SHWCRT btn btn-lg btn-danger btn-block" style="border-radius: 0.3em;">Added to Cart</a>
+                                    <a href="#" data-target="#CARTMODAL" data-toggle="modal" class="SHWCRT btn btn-lg btn-danger btn-block" style="border-radius: 0.3em;">Added to Cart</a>
                                 @elseif($PURCHASED > 0)
                                     <div class="list-group" style="text-align:left;">
                                         <p class="list-group-item"><i class="fa fa-phone fa-fw"></i>&nbsp; {{ $mobile  }}</p>
@@ -189,6 +189,27 @@
                                     </div>
                                 @else
                                     <a href="/addToCart={{$users->id}}" class="btn btn-warning btn-lg btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
+                                @endif
+                            @else
+                                @if($HAS_INVITES)
+                                    <table class="table table-striped table-hover">
+                                        <tbody>
+                                            <thead>
+                                                <tr>
+                                                    <th>Job</th>
+                                                    <th>Invited at</th>
+                                                </tr>
+                                            </thead>
+                                            @foreach($HAS_INVITES as $jobs)
+                                                <tr>
+                                                    <td><a target="_tab" href="/SNDINVT:{{$users->id}}:{{$jobs->id}}">{{$jobs->title}}</a></td>
+                                                    <td>{{$jobs->created_at}}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <a href="#" data-toggle="modal" data-target="#INVITEMULTIJOB" style="border-radius: 0.3em" class="btn-block btn-lg btn btn-primary"><i class="fa fa-envelope"></i> SEND INVITE</a>
                                 @endif
                             @endif
                         @endif

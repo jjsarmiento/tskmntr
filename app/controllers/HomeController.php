@@ -87,8 +87,17 @@ class HomeController extends BaseController {
                             ->count();
 
                         $MULTIJOB = Job::where('user_id', Auth::user()->id)
-                            ->whereIn('skill_code', User::getSkillsCODE_ARRAY($temp->id))
+//                            ->whereIn('skill_code', User::getSkillsCODE_ARRAY($temp->id))
                             ->whereNotIn('id', $this->WORKERGETINVITES_JOBID($temp->id))
+                            ->get();
+
+                        $HAS_INVITES = Job::join('job_invites', 'job_invites.job_id', '=', 'jobs.id')
+                            ->whereIn('job_invites.job_id', BaseController::ALL_JOBS_STATIC(Auth::user()->id))
+                            ->select([
+                                'jobs.id',
+                                'jobs.title',
+                                'job_invites.created_at'
+                            ])
                             ->get();
                     }
                     // DETERMINE IF USER HAS CHECKEDOUT WORKER -- END by Jan Sarmiento
@@ -101,7 +110,8 @@ class HomeController extends BaseController {
                         ->with('CLIENTFLAG', $CLIENTFLAG)
                         ->with('USERINCART', $USERINCART)
                         ->with('PURCHASED', $PURCHASED)
-                        ->with('MULTIJOB', $MULTIJOB);
+                        ->with('MULTIJOB', $MULTIJOB)
+                        ->with('HAS_INVITES', $HAS_INVITES);
                 }else{
                     $users = User::leftJoin('regions', 'regions.regcode', '=', 'users.region')
                                 ->leftJoin('cities', 'cities.citycode', '=', 'users.city')

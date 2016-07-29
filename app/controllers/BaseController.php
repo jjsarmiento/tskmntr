@@ -415,5 +415,6 @@ class BaseController extends Controller {
         $flag = JobApplication::whereIn('job_id', $ALL_JOBS_OF_COMP)->where('applicant_id', $workerID)->count();
         return ($flag > 0);
     }
+
     // AUTHORED BY Jan Sarmiento -- END
 }
