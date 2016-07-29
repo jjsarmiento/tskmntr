@@ -187,19 +187,39 @@
                                         <a class="list-group-item" href="#"><i class="fa fa-twitter-square fa-fw"></i>&nbsp; Twitter</a>
                                         <a class="list-group-item" href="#"><i class="fa fa-instagram fa-fw"></i>&nbsp; Instagram</a>
                                     </div>
-                                @else
-                                    <a href="/addToCart={{$users->id}}" class="btn btn-warning btn-lg btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
-                                @endif
-                            @else
-                                @if($HAS_INVITES)
-                                    <table class="table table-striped table-hover">
-                                        <tbody>
+                                    @if($HAS_INVITES)
+                                        <table class="table table-striped table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>Job</th>
                                                     <th>Invited at</th>
                                                 </tr>
                                             </thead>
+                                            <tbody>
+                                                @foreach($HAS_INVITES as $jobs)
+                                                    <tr>
+                                                        <td><a target="_tab" href="/SNDINVT:{{$users->id}}:{{$jobs->id}}">{{$jobs->title}}</a></td>
+                                                        <td>{{$jobs->created_at}}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <a href="#" data-toggle="modal" data-target="#INVITEMULTIJOB" style="border-radius: 0.3em" class="btn-block btn-lg btn btn-primary"><i class="fa fa-envelope"></i> SEND INVITE</a>
+                                    @endif
+                                @else
+                                    <a href="/addToCart={{$users->id}}" class="btn btn-warning btn-lg btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
+                                @endif
+                            @else
+                                @if($HAS_INVITES)
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Job</th>
+                                                <th>Invited at</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             @foreach($HAS_INVITES as $jobs)
                                                 <tr>
                                                     <td><a target="_tab" href="/SNDINVT:{{$users->id}}:{{$jobs->id}}">{{$jobs->title}}</a></td>
@@ -208,9 +228,8 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                @else
-                                    <a href="#" data-toggle="modal" data-target="#INVITEMULTIJOB" style="border-radius: 0.3em" class="btn-block btn-lg btn btn-primary"><i class="fa fa-envelope"></i> SEND INVITE</a>
                                 @endif
+                                <a href="#" data-toggle="modal" data-target="#INVITEMULTIJOB" style="border-radius: 0.3em" class="btn-block btn-lg btn btn-primary"><i class="fa fa-envelope"></i> SEND INVITE</a>
                             @endif
                         @endif
                     @else
