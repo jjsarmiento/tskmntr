@@ -253,7 +253,6 @@
                 </div>
             </div>
 
-            <!--
             <div class="col-lg-12 padded" style=" margin-bottom: 0; padding-bottom: 0;">
                 <div class="col-lg-4"><hr class="hrLine"></div>
                 <div class="col-lg-4" style="padding-top: 10px; text-align: center"><p style="font-size:10pt;">Recommended Workers</p></div>
@@ -312,7 +311,6 @@
                     </div>
                 @endif
             </div>
-            -->
         </div>
         <div class="col-md-4">
             <div class="widget-container stats-container" style="display:block !important;">

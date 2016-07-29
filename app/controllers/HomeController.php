@@ -70,6 +70,10 @@ class HomeController extends BaseController {
             $MULTIJOB = false;
 
             if(Auth::check()){
+                if($temp->total_profile_progress < 50){
+                    return Redirect::to('/');
+                }
+
                 if($role == 'TASKMINATOR'){
                     if(User::GETROLE(Auth::user()->id) == 'CLIENT_IND' || User::GETROLE(Auth::user()->id) == 'CLIENT_CMP'){
                         $CLIENTFLAG = true;
@@ -87,7 +91,7 @@ class HomeController extends BaseController {
                             ->count();
 
                         $MULTIJOB = Job::where('user_id', Auth::user()->id)
-//                            ->whereIn('skill_code', User::getSkillsCODE_ARRAY($temp->id))
+                            ->whereIn('skill_code', User::getSkillsCODE_ARRAY($temp->id))
                             ->whereNotIn('id', $this->WORKERGETINVITES_JOBID($temp->id))
                             ->get();
 
