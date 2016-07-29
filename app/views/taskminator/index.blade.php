@@ -20,12 +20,14 @@
         animation-duration: 3s;
         height: 20px;
         border-radius: 10px;
-        max-width: 70%;
-        width:{{ $PROFILE_PROG['CALCULATED_PROG'] }}%;
+        /*max-width: 70%;*/
+        max-width: 100%;
+        width: {{Auth::user()->total_profile_progress}};
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
     }
 
+    /*
     #progressbar > #prog-meter-opt {
         background-color: orange;
         animation-name: optProgress;
@@ -36,16 +38,22 @@
         max-width: 30%;
         width:{{ $PROFILE_PROG['OPTIONAL_PROGRESS'] }}%;
     }
+    */
 
     @keyframes reqProgress {
     from {width:0%;}
+    /*
     to {width:{{ $PROFILE_PROG['CALCULATED_PROG'] }}%;}
+    */
+    to {width:{{Auth::user()->total_profile_progress}}%;}
+
     }
 
     @keyframes optProgress {
     from {width:0%;}
     to {width:{{ $PROFILE_PROG['OPTIONAL_PROGRESS'] }}%;}
     }
+
 
     body{background-color:#E9EAED;}
     .accordion-toggle
@@ -189,7 +197,8 @@
                     <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
                         <div class="widget-content">
                             <div class="padded" style="color:#2980b9; font-size:18pt;">
-                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $PROFILE_PROG['TOTAL_PROGRESS'] }}%
+{{--                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $PROFILE_PROG['TOTAL_PROGRESS'] }}%--}}
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ Auth::user()->total_profile_progress }}%
                                 @if($PROFILE_PROG['TOTAL_PROGRESS'] < 50)
                                     <p style="color: #000000;">
                                         <i style="color: red" class="fa fa-warning"></i> <b>You can start applying for jobs when you complete your profile above 50%. Click <a href="/editProfile">here</a> to edit your profile</b>

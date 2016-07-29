@@ -197,6 +197,17 @@
                                 </select><br/>
                             </div>
                             <div class="col-md-3">
+                                Marital Status :
+                            </div>
+                            <div class="col-md-9">
+                                <select name="marital_status" class="form-control">
+                                    <option value="">Please Select your marital status</option>
+                                    <option <?php if($user->marital_status == 'SINGLE'){ echo 'selected'; } ?> value="SINGLE">Single</option>
+                                    <option <?php if($user->marital_status == 'MARRIED'){ echo 'selected'; } ?> value="MARRIED">Married</option>
+                                    <option <?php if($user->marital_status == 'WIDOWED'){ echo 'selected'; } ?> value="WIDOWED">Widowed</option>
+                                </select><br/>
+                            </div>
+                            <div class="col-md-3">
                                 Educational Background
                             </div>
                             <div class="col-md-9">

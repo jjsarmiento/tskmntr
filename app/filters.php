@@ -95,6 +95,10 @@ Route::filter('ADMIN-ONLY', function(){
    }
 });
 
+Route::filter('WORKER-UPDATE-PROFILE-PROGRESS', function(){
+    BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
+});
+
 Route::filter('CLIENT-ONLY', function(){
     if(Auth::check()){
         switch(Auth::user()->status){

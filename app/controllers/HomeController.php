@@ -7,9 +7,7 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){
-        $created_at_date = date("Y:m:d H:i:s");
-        echo $created_at_date.'</br>';
-        echo $this->GET_JOBAD_EXPIRATION($created_at_date);
+        return $this->PROVEEK_PROFILE_PERCENTAGE_WORKER(3);
     }
 
     function generateConfirmationCode(){
@@ -821,17 +819,15 @@ class HomeController extends BaseController {
                         ->groupBy('jobs.id')
                         ->take('5')
                         ->get();
-
                     $applicationCount = JobApplication::where('applicant_id', Auth::user()->id)->count();
                     $invitesCount = JobInvite::where('invited_id', Auth::user()->id)->count();
-
                     // NEW JOB MODULE -- END by JAN SARMIENTO
-
                     return View::make('taskminator.index')
                             ->with('accountRole', $role)
                             ->with('tasks', $taskList)
                             ->with('jobs', $jobs)
-                            ->with('PROFILE_PROG', $this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id))
+//                            ->with('PROFILE_PROG', $this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id))
+                            ->with('PROFILE_PROG', $this->PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id))
                             ->with('applicationsCount', $applicationCount)
                             ->with('invitesCount', $invitesCount);
                     break;

@@ -67,9 +67,13 @@ class CreateUsersTable extends Migration {
             $table->string('skills')->nullable();
             // $table->integer('yearsOfExperience')->nullable();
             $table->longText('experience')->nullable();
-            $table->integer('maxRate')->nullable();
-            $table->integer('minRate')->nullable();
+            $table->string('marital_status')->nullable();
+
+//            $table->integer('maxRate')->nullable();
+//            $table->integer('minRate')->nullable();
+
             $table->float('total_profile_progress')->nullable();
+
             $table->string('remember_token')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->timestamps();

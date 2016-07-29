@@ -189,10 +189,23 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 });
 
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
-    // DOCUMENTS MODULE
-    Route::get('/editDocuments', 'TaskminatorController@editDocuments');
-    Route::get('/DELETE_DOC_{docID}', 'TaskminatorController@DELETE_DOC');
-    Route::post('/doUploadDocumentsWRKR', 'TaskminatorController@doUploadDocumentsWRKR');
+    Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){
+        // DOCUMENTS MODULE
+        Route::get('/editDocuments', 'TaskminatorController@editDocuments');
+        Route::get('/DELETE_DOC_{docID}', 'TaskminatorController@DELETE_DOC');
+        Route::post('/doUploadDocumentsWRKR', 'TaskminatorController@doUploadDocumentsWRKR');
+        Route::post('/doUploadDocuments', 'TaskminatorController@doUploadDocuments');
+
+        Route::get('/editPersonalInfo', 'TaskminatorController@editPersonalInfo');
+        Route::post('/doEditPersonalInfo', 'TaskminatorController@doEditPersonalInfo');
+        Route::get('/editContactInfo', 'TaskminatorController@editContactInfo');
+        Route::get('/editSkillInfo', 'TaskminatorController@editSkillInfo');
+        Route::post('/doEditContactInfo', 'TaskminatorController@doEditContactInfo');
+        Route::post('/doEditSkillInfo', 'TaskminatorController@doEditSkillInfo');
+        Route::get('/removeSkill={taskitemId}', 'TaskminatorController@removeSkill');
+        Route::get('/editPass', 'TaskminatorController@editPass');
+        Route::post('/doEditPass', 'TaskminatorController@doEditPass');
+    });
 
     // JOBS MODULE ROUTES -- START by JAN SARMIENTO
     Route::get('/jbdtls={jobId}', 'TaskminatorController@jbdtls');
@@ -213,11 +226,11 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
    // Route::post('/tskmntr/doTaskSearch', 'TaskminatorController@doTaskSearch');
    // Route::get('/tskmntr/doTaskSearch={workingTime}={searchField}={searchCity}={searchWord}={rateRange}={rangeValue}', 'TaskminatorController@doTaskSearch');
 
+    /*
     Route::get('/tskmntr/currentTask', 'TaskminatorController@currentTask');
     Route::get('/bidPTIME/{id}', 'TaskminatorController@bidPtime');
     Route::get('/bidFTIME/{id}', 'TaskminatorController@bidFtime');
     Route::post('/initBid', 'TaskminatorController@initBid');
-    Route::post('/doUploadDocuments', 'TaskminatorController@doUploadDocuments');
     Route::get('/taskDetails_{id}', 'TaskminatorController@taskDetails');
     Route::get('/tskmntr_taskOffers', 'TaskminatorController@tskmntr_taskOffers');
     Route::get('/tskmntr_taskBids', 'TaskminatorController@tskmntr_taskBids');
@@ -227,15 +240,7 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::get('/viewClient_{id}', 'TaskminatorController@viewClient');
     Route::get('/confirmOffer/{taskid}', 'TaskminatorController@confirmOffer');
     Route::get('/denyOffer/{taskid}', 'TaskminatorController@denyOffer');
-    Route::get('/editPersonalInfo', 'TaskminatorController@editPersonalInfo');
-    Route::get('/editContactInfo', 'TaskminatorController@editContactInfo');
-    Route::get('/editSkillInfo', 'TaskminatorController@editSkillInfo');
-    Route::post('/doEditPersonalInfo', 'TaskminatorController@doEditPersonalInfo');
-    Route::post('/doEditContactInfo', 'TaskminatorController@doEditContactInfo');
-    Route::post('/doEditSkillInfo', 'TaskminatorController@doEditSkillInfo');
-    Route::get('/removeSkill={taskitemId}', 'TaskminatorController@removeSkill');
-    Route::get('/editPass', 'TaskminatorController@editPass');
-    Route::post('/doEditPass', 'TaskminatorController@doEditPass');
+    */
 
     // sms verification
     Route::get('/doVerifyMobileNumber', 'TaskminatorController@doVerifyMobileNumber');
@@ -318,7 +323,7 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
     Route::get('/SKILLCATCHAIN={categoryId}', 'ClientIndiController@SKILLCATCHAIN');
 });
 
-Route::get('/TESTINGROUTE', 'HomeController@TESTINGROUTE'); // TESTING
+Route::get('/test', 'HomeController@TESTINGROUTE'); // TESTING
 
 Route::get('/{username}', 'HomeController@toProfile'); // new profile page viewer
 

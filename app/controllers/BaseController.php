@@ -416,5 +416,67 @@ class BaseController extends Controller {
         return ($flag > 0);
     }
 
+    public static function PROVEEK_PROFILE_PERCENTAGE_EMPLOYER($user_id){
+        // 1st 50%
+        // business name
+        // region
+        // city
+        // province
+        // barangay
+        // contact person's name
+        // business permit #
+        // short business description
+        // profile pic
+        // contact #
+        // email
+    }
+
+    public static function PROVEEK_PROFILE_PERCENTAGE_WORKER($user_id){
+        $user = User::where('id', $user_id)->first();
+        $mobile = Contact::where('user_id', $user->id)->where('ctype', 'mobileNum')->pluck('content');
+        $email = Contact::where('user_id', $user->id)->where('ctype', 'email')->pluck('content');
+        $doc = Document::where('user_id', $user->id)->count();
+
+        // 1st 50%
+        $base = 0; // INITIALIZE
+        $base = ($user->firstName       == null) ? $base : ++$base;
+        $base = ($user->lastName        == null) ? $base : ++$base;
+        $base = ($user->region          == null) ? $base : ++$base;
+        $base = ($user->province        == null) ? $base : ++$base;
+        $base = ($user->barangay        == null) ? $base : ++$base;
+        $base = ($user->city            == null) ? $base : ++$base;
+        $base = ($user->birthdate       == null) ? $base : ++$base;
+        $base = ($user->marital_status  == null) ? $base : ++$base;
+        $base = ($user->profilePic      == null) ? $base : ++$base;
+        $base = ($mobile                == null) ? $base : ++$base;
+        $base = ($email                 == null) ? $base : ++$base;
+        $base = ($doc                   == 0) ? $base : ++$base;
+        // skills and custom skills
+        if(TaskminatorHasSkill::where('user_id', $user->id)->count() > 0 || CustomSkill::where('user_id', $user->id)->count() > 0){
+            $base++;
+        }
+        $first50 = $base * (50/13);
+        $base = 0;
+
+        // 2nd 50%
+        $doc2nd = Document::where('user_id', $user->id)
+                    ->where('type' , 'TIN_ID')
+                    ->orWhere('type' , 'NBI')
+                    ->orWhere('type' , 'PASSPORT')
+                    ->orWhere('type' , 'VOTERS_ID')
+                    ->count();
+        $base = ($user->educationalBackground   == null) ? $base : ++$base;
+        $base = ($user->experience              == null) ? $base : ++$base;
+        $base = ($doc2nd                        > 0) ? $base : ++$base;
+        $FINAL_PERCENTAGE = $first50 + ($base * (50/3));
+
+        // UPDATE total_profile_progress column on users table
+        User::where('id', $user->id)->update([
+            'total_profile_progress' =>  $FINAL_PERCENTAGE
+        ]);
+
+        return $FINAL_PERCENTAGE;
+    }
+
     // AUTHORED BY Jan Sarmiento -- END
 }
