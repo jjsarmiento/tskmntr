@@ -7,7 +7,7 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){
-        return $this->PROVEEK_PROFILE_PERCENTAGE_WORKER(3);
+        return BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(2);
     }
 
     function generateConfirmationCode(){

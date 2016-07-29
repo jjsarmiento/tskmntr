@@ -417,6 +417,28 @@ class BaseController extends Controller {
     }
 
     public static function PROVEEK_PROFILE_PERCENTAGE_EMPLOYER($user_id){
+        $user = User::where('id', $user_id)->first();
+        $mobile = Contact::where('user_id', $user->id)->where('ctype', 'mobileNum')->pluck('content');
+        $businessMobile = Contact::where('user_id', $user->id)->where('ctype', 'businessNum')->pluck('content');
+        $email = Contact::where('user_id', $user->id)->where('ctype', 'email')->pluck('content');
+
+        $base = 0;
+        $base = ($user->fullName    == null) ? $base : ++$base;
+        $base = ($user->region      == null) ? $base : ++$base;
+        $base = ($user->province    == null) ? $base : ++$base;
+        $base = ($user->city        == null) ? $base : ++$base;
+        $base = ($user->barangay    == null) ? $base : ++$base;
+        $base = ($user->businessPermit          == null) ? $base : ++$base;
+        $base = ($user->businessDescription     == null) ? $base : ++$base;
+        $base = ($user->profilePic  == null) ? $base : ++$base;
+        $base = ($mobile            == null) ? $base : ++$base;
+        $base = ($businessMobile    == null) ? $base : ++$base;
+        $base = ($email             == null) ? $base : ++$base;
+//        $base += 4;
+
+        $first50 = $base * (50/11);
+        return $first50;
+
         // 1st 50%
         // business name
         // region
