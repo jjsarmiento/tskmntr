@@ -1029,7 +1029,7 @@ class ClientIndiController extends \BaseController {
                 ->with('regions', Region::all())
                 ->with('barangays', Barangay::where('citycode', '012801')->orderBy('bgyname', 'ASC')->get())
                 ->with('cities', City::where('regcode', '01')->orderBy('cityname', 'ASC')->get())
-                ->with('taskcategories',TaskCategory::orderBy('categoryname', 'ASC')->get())
+                ->with('taskcategories',TaskCategory::orderBy('categoryname', 'ASC')->whereNotIn('categorycode', ['999'])->get())
                 ->with('intiTaskitems', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get());
         }else{
             return Redirect::to('/');
