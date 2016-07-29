@@ -97,11 +97,11 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="title">Job Title</label>
+                                                <label for="title">Job Title <span style="color: #E74C3C">*</span></label>
                                                 {{ Form::text('title', Input::old('title'), array('class' => 'form-control', 'placeholder' => 'Enter job title', 'required' => 'true')) }}
                                             </div>
                                             <div class="form-group">
-                                                <label for="title">Skill Category</label>
+                                                <label for="title">Skill Category <span style="color: #E74C3C">*</span></label>
                                                 <select name="taskcategory" id="taskcategory" required="required" class="form-control">
                                                     @foreach($taskcategories as $taskcategory)
                                                         <option value="{{ $taskcategory->categorycode }}" <?php if(Input::old('taskcategory') == $taskcategory->categorycode){ echo('selected'); } ?>>{{ $taskcategory->categoryname }}</option>
@@ -109,7 +109,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="title">Skill needed</label>
+                                                <label for="title">Skill needed <span style="color: #E74C3C">*</span></label>
                                                 <select name="taskitems" id="taskitems" required="required" class="form-control">
                                                     @if(Input::old('taskcategory'))
                                                         @foreach(TaskItem::where('item_categorycode', Input::old('taskcategory'))->orderBy('itemname', 'ASC')->get() as $items)
@@ -123,7 +123,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="title">Work Duration</label>
+                                                <label for="title">Work Duration <span style="color: #E74C3C">*</span></label>
                                                 <select name="hireType" id="hireType" required="required" class="form-control">
                                                     <option value="LT6MOS" <?php if(Input::old('hireType') == 'LT6MOS'){ echo('selected'); } ?>>Less than 6 months</option>
                                                     <option value="GT6MOS" <?php if(Input::old('hireType') == 'GT6MOS'){ echo('selected'); } ?>>Greater than 6 months</option>
@@ -160,7 +160,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="title">Job Description</label>
+                                                <label for="title">Job Description <span style="color: #E74C3C">*</span></label>
                                                 <textarea rows="10" name="description" placeholder="Provide a short description of what the job is about" class="form-control" required="required">{{ Input::old('description') }}</textarea>
                                             </div>
                                             <div class="form-group">
@@ -170,7 +170,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="requirements">Requirements (What to bring)</label>
-                                                <textarea rows="10" name="requirements" class="form-control" required="required"></textarea>
+                                                <textarea rows="10" name="requirements" class="form-control"></textarea>
                                             </div>
                                         </div>
                                     </div>
