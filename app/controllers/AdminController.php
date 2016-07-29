@@ -904,17 +904,23 @@ class AdminController extends \BaseController {
 
     public function showJobAds(){
         $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
-                ->orderBy('created_at', 'DESC')
-                ->select([
-                    'users.id as USERID',
-                    'users.username',
-                    'users.fullName',
-                    'jobs.id as JOBID',
-                    'jobs.title',
-                    'jobs.description',
-                    'jobs.created_at',
-                ])
-                ->paginate(10);
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->select([
+                'users.fullName',
+                'users.id as user_id',
+                'jobs.title',
+                'jobs.id as job_id',
+                'jobs.expires_at',
+                'jobs.salary',
+                'jobs.created_at',
+                'jobs.description',
+                'jobs.hiring_type',
+                'cities.cityname',
+                'regions.regname',
+            ])
+            ->groupBy('jobs.id')
+            ->paginate(10);
 
         return View::make('admin.showJobAds')
                 ->with('jobs', $jobs);
