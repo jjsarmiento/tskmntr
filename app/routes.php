@@ -157,8 +157,8 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 //    Route::post('/userListTaskminators=search', 'AdminController@adminTskmntrSearch');
     Route::get('/searchWorker:{acctStatus}:{rating}:{hiring}:{orderBy}:{keyword}', 'AdminController@searchWorker');
 
-    Route::post('/userListClientIndi=search', 'AdminController@adminClientIndiSearch');
-    Route::post('/userListClientComp=search', 'AdminController@adminClientCompSearch');
+//    Route::post('/userListClientIndi=search', 'AdminController@adminClientIndiSearch');
+//    Route::post('/userListClientComp=search', 'AdminController@adminClientCompSearch');
     Route::post('/pendingTskmntr=search', 'AdminController@pendingTskmntrsSearch');
     Route::post('/pendingClientIndi=search', 'AdminController@pendingClientIndiSearch');
     Route::post('/pendingClientComp=search', 'AdminController@pendingClientCompSearch');
@@ -168,7 +168,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/viewUsersTasks/{clientid}', 'AdminController@viewUsersTasks');
     Route::post('/viewUsersTasks=search', 'AdminController@viewUsersTasksSearch');
     Route::get('/userListTaskminators=search={searchBy}={searchWord}', 'AdminController@userListTaskminatorsSearch');
-    Route::get('/userListClientIndi=search={searchBy}={searchWord}', 'AdminController@userListClientIndiSearch');
+    Route::get('/userListClientIndi=search={keyword}={acctStatus}={acctType}={orderBy}={searchBy}', 'AdminController@userListClientIndiSearch');
     Route::get('/userListClientComp=search={searchBy}={searchWord}', 'AdminController@userListClientCompSearch');
     Route::post('/newSkill', 'AdminController@newSkill');
     Route::post('/newCategory', 'AdminController@newCategory');

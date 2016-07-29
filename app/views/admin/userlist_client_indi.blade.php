@@ -119,30 +119,14 @@
     <script>
         $(document).ready(function(){
             $('#searchBtn').click(function(){
-                var searchBy = 0,
-                    searchWord = 0;
-                if($('#searchBy').val() != ''){
-                    searchBy = $('#searchBy').val()
-                }
+                var searchWord = ($('#searchWord').val() == '') ? false : $('#searchWord').val(),
+                    acctStatus = ($('#acct_status').val() == '') ? false : $('#acct_status').val(),
+                    accountType = ($('#acctType').val() == '') ? false :$('#acctType').val(),
+                    orderBy = $('#adminCMP_orderBy').val(),
+                    searchBy = $('#adminCMP_SrchBy').val();
 
-                if($('#searchWord').val() != ''){
-                    searchWord = $('#searchWord').val()
-                }
-
-                location.href = '/userListClientIndi=search='+searchBy+'='+searchWord;
+                location.href = '/userListClientIndi=search='+searchWord+'='+acctStatus+'='+accountType+'='+orderBy+'='+searchBy;
             });
-
-            $('#searchBy').change(function(){
-                if($(this).val() == '0'){
-                    $('#searchWord').prop('disabled', true);
-                }else{
-                    $('#searchWord').prop('disabled', false);
-                }
-            })
-
-            if($('#searchBy').val() == '0'){
-                $('#searchWord').prop('disabled', true);
-            }
 
             $('.ACT_DEAC').click(function(){
                 if(confirm($(this).data('msg'))){
@@ -297,17 +281,50 @@
                 <div class="well selected-filters">
                     <div class="row">
                         <div class="col-md-3">
-                            <select id="searchBy" name="searchBy" class="form-control">
-                                <option value="0">Display All</option>
-                                <option value="fullName" <?php if(@$searchBy == 'fullName'){ echo('selected'); } ?>>Name</option>
-                                <option value="username" <?php if(@$searchBy == 'username'){ echo('selected'); } ?>>Username</option>
-                            </select>
+                            <div class="form-group">
+                                <select class="form-control" name="adminCMP_SrchBy" id="adminCMP_SrchBy">
+                                    <option <?php if(@$adminCMP_SrchBy == 'username'){echo 'selected';} ?> value="username">Search by Username</option>
+                                    <option <?php if(@$adminCMP_SrchBy == 'fullName'){echo 'selected';} ?> value="fullName">Search by Name</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <input id="searchWord" value="<?php if(@$searchWord){ echo($searchWord); } ?>" type="text" name="searchWord" placeholder="search keyword" class="form-control"/>
+                            <div class="form-group">
+                                <input id="searchWord" value="{{@$keyword}}" type="text" name="searchWord" placeholder="search keyword name/username" class="form-control"/>
+                            </div>
                         </div>
                         <div class="col-md-3">
-                            <button id="searchBtn" type="submit" class="btn btn-block btn-primary" style="margin: 0">Search</button>
+                            <div class="form-group">
+                                <button id="searchBtn" type="submit" class="btn btn-block btn-primary" style="margin: 0">Search</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="acctType" id="acctType">
+                                    <option value="">All Account Type</option>
+                                    <option <?php if(@$adminCMP_accountType == 'FREE'){echo 'selected';} ?> value="FREE">Free</option>
+                                    <option <?php if(@$adminCMP_accountType == 'BASIC'){echo 'selected';} ?> value="BASIC">Basic</option>
+                                    <option <?php if(@$adminCMP_accountType == 'PREMIUM'){echo 'selected';} ?> value="PREMIUM">Premium</option>
+                                    <option <?php if(@$adminCMP_accountType == 'MASS_HIRING'){echo 'selected';} ?> value="MASS_HIRING">Mass Hiring</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="adminCMP_orderBy" id="adminCMP_orderBy">
+                                    <option <?php if(@$orderBy == 'ASC'){echo 'selected';} ?>  value="ASC">Oldest to Newest</option>
+                                    <option <?php if(@$orderBy == 'DESC'){echo 'selected';} ?> value="DESC">Newest to Oldest</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="acct_status" id="acct_status">
+                                    <option value="">All Account Status</option>
+                                    <option <?php if(@$acct_status == 'DEACTIVATED'){echo 'selected';} ?> value="DEACTIVATED">Deactivated</option>
+                                    <option <?php if(@$acct_status == 'ACTIVATED'){echo 'selected';} ?> value="ACTIVATED">Activated</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -333,8 +350,10 @@
                                     Registered at {{ date('D, M j, Y \a\t g:ia', strtotime($user->created_at)) }}<br/>
                                     @if($user->status == 'ACTIVATED')
                                         <a style="border-radius: 0.3em;" data-msg="Confirm account DEACTIVATION of {{$user->fullName}}" class="ACT_DEAC btn btn-danger btn-xs" data-href="/adminDeactivate/{{$user->id}}">DEACTIVATE</a>
-                                    @else
+                                    @elseif($user->Status == 'DEACTIVATED')
                                         <a style="border-radius: 0.3em;" data-msg="Confirm account ACTIVATION of {{$user->fullName}}" class="ACT_DEAC btn btn-success btn-xs" data-href="/adminActivate/{{$user->id}}">ACTIVATE</a>
+                                    @else
+                                        <a style="border-radius: 0.3em;" class="btn btn-warning btn-xs">{{$user->status}}</a>
                                     @endif
                                 </p>
                             </div>

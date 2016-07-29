@@ -659,20 +659,45 @@ class AdminController extends \BaseController {
             ->with('users', $query->orderBy('created_at', 'ASC')->paginate(10));
     }
 
-    public function userListClientIndiSearch($searchBy, $searchWord){
-        $query = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
-            ->where('users.status', 'ACTIVATED')
-            ->whereIn('user_has_role.role_id', ['3', '4']);
-//            ->where('user_has_role.role_id', '3');
+    public function userListClientIndiSearch($keyword, $status, $accountType, $orderBy, $searchBy){
+        $keyword = ($keyword == 'false') ? '' : $keyword;
 
-        if($searchBy != '0'){
-            $query = $query->where($searchBy, 'LIKE', '%'.$searchWord.'%');
+        $userList = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
+            ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
+            ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+            ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+            ->whereIn('user_has_role.role_id', ['3', '4'])
+            ->where($searchBy, 'LIKE', '%'.$keyword.'%');
+
+        if($status != 'false'){
+            $userList = $userList->where('users.status', $status);
         }
 
+        if($accountType != 'false'){
+            $userList = $userList->where('users.accountType', $accountType);
+        }
+
+        $userList = $userList->select([
+                'users.id',
+                'users.fullName',
+                'users.username',
+                'users.profilePic',
+                'users.status',
+                'users.created_at',
+                'cities.cityname',
+                'regions.regname',
+            ])
+            ->orderBy('users.created_at', $orderBy)
+            ->groupBy('users.id')
+            ->paginate(10);
+
         return View::make('admin.userlist_client_indi')
-            ->with('searchBy', $searchBy)
-            ->with('searchWord', $searchWord)
-            ->with('users', $query->orderBy('fullName', 'ASC')->paginate(10));
+            ->with('keyword', $keyword)
+            ->with('acct_status', $status)
+            ->with('adminCMP_accountType', $accountType)
+            ->with('orderBy', $orderBy)
+            ->with('adminCMP_SrchBy', $searchBy)
+            ->with('users', $userList);
     }
 
     public function userListClientCompSearch($searchBy, $searchWord){
