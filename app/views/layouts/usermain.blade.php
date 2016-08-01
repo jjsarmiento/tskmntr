@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8 w/o DOM">
 	<title>@yield('title')</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Bootstrap Core CSS -->
     <!-- <link rel="stylesheet" href="frontend/css/bootstrap.min.css" type="text/css"> -->
     
@@ -36,6 +37,18 @@
     <link rel="stylesheet" href="stylesheets/typeahead.css" type="text/css">
     <link rel="stylesheet" href="stylesheets/summernote.css" type="text/css">
     <link rel="stylesheet" href="stylesheets/pygments.css" type="text/css"> -->
+
+    <style type="text/css">
+        .navbar-header {
+            height: 60px;
+        }
+        a.navbar-brand.page-scroll.logoImg {
+            margin-top: 10px;
+        }   
+        .navbar-toggle {
+            margin-top: 16px;
+        }    
+    </style>
 
     {{ HTML::style('frontend/css/bootstrap.min.css') }}
     {{ HTML::style('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800') }}
