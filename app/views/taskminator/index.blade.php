@@ -64,39 +64,8 @@
     h5 {
         margin: 0;
     }
-    .thumbnail {
-        border: 1px solid #BDC3C7;
-        border-radius: 0.3em;
-        cursor: pointer;
-        position: relative;
-        width: 80px;
-        height: 80px;
-        overflow: hidden;
-        /*float: left;*/
-        margin-left: 20px;
-        margin-top: 15px;
-        margin-right: 1em;
-        margin-bottom: 0em;
-        /*-moz-box-shadow:    3px 3px 5px 6px #ccc;*/
-        /*-webkit-box-shadow: 3px 3px 5px 6px #ccc;*/
-        /*box-shadow: 0 8px 6px -6px black;*/
-    }
 
-    .thumbnail img {
-        display: inline;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        height: 100%;
-        width: auto;
-        /*-webkit-transform: translate(-50%,-50%);*/
-        /*-ms-transform: translate(-50%,-50%);*/
-        transform: translate(-50%,-50%);
-    }
-    .thumbnail img.portrait {
-        width: 100%;
-        height: auto;
-    }
+
     .link-btn
     {
         border:1px solid #2980b9;
@@ -118,6 +87,56 @@
         height:1px;
         max-height:1px;
     }
+    a.clickHere {
+        background: transparent;
+        border: 2px solid;
+        border-radius: 5px;
+        padding: 5px 15px;
+        font-size: 15px !important;
+        text-transform: uppercase;
+    }
+    a.clickHere:hover {
+        background-color: #2980b9;
+        border: 2px solid #226ea0;
+        transition : 0.3s;
+        color:white;
+        text-decoration: none;
+    }
+    .thumbnail {
+        border: 0px solid #ddd !important;
+        margin-bottom: 0;
+        padding:15px;
+        width: 120px;
+        height: 120px;
+        margin:auto;
+    }
+    .thumbnail img {
+        border-radius: 60px;
+        border: 1px solid #ddd;
+    }
+    @media (max-width: 768px) {
+        .padded {
+            padding: 0px 15px 15px;
+        }
+        .col-lg-6.lato-text.col-xs-12.id2 {
+            margin-top: 2px !important;
+            background: white;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+        }
+
+    }
+    @media (max-width: 320px) {
+        a.clickHere {
+            font-size: 12px !important;
+        }
+        .padded {
+            font-size: 19pt !important;
+        }
+    }
+    li {
+        font-size: 17px;
+        line-height: 1.7em;
+    }
 </style>
 
 @stop
@@ -133,25 +152,24 @@
         <div class="row">
 <!-- PROFILE PIC / INFO  -->
             <div class="col-lg-4"> 
-                <div class="widget-container" style="display:flex; min-height:125px; display:block !important;">
-                    <div class="col-lg-3 no-padding" style="">
+                <div class="widget-container" style="display:flex; min-height:120px; display:block !important;">
+                    <div class="col-md-4" style="">
                         <div class="thumbnail">
                             @if(Auth::user()->profilePic)
                                 <a href="/editProfile"><img src="{{ Auth::user()->profilePic }}" class="portrait"/></a>
                             @else
                                 <a href="/editProfile"><img src="/images/default_profile_pic.png" class="portrait"/></a><br>
                             @endif
-                        </div>
-                            
+                        </div>                            
                     </div>
-                    <div class="col-lg-9 padded">
-                        <div class="heading">
+                    <div class="col-md-8 padded">
+                        <div class="heading" style="padding: 10px 0; text-align:center;">
                             <a href="/editProfile" style="font-weight:bold; font-size:14pt;">{{ Auth::user()->fullName }}</a><br>
                         </div>
                     </div>
-                    <div class="col-lg-12" style="padding-left:24px;">
+                    <!-- <div class="col-lg-12" style="padding-left:24px;">
                         <a href="/editProfile">Edit Profile</a>
-                    </div>
+                    </div> -->
                 </div>
                 <br>
                 <div class="widget-container fluid-height">
@@ -161,12 +179,12 @@
                                 <div class="panel filter-categories">
                                     <div class="panel-body">
                                         <!-- <input name="searchWord" id="searchWord" type="text" class="form-control input-trans" placeholder="Search for workers" required> -->
-                                        <div class="col-lg-12">
+                                        <!-- <div class="col-lg-12">
                                             @if($PROFILE_PROG['TOTAL_PROGRESS'] >= 50)
                                                <a href="/jobSearch:NO_KW_INPT:ALL:ALL:ALL:ALL:ALL:DESC" class="btn btn-default btn-block" style="border-radius: 0.3em;">
                                                 <i class="fa fa-search"></i> Click here to search for jobs
                                                </a>
-                                                <!--
+                                                
                                                 <button name="searchBtn" id="searchBtn" class="lato-text btn btn-default btn-trans" style="text-transform: none; border:1px solid #2980b9; width:100%; border-radius: 4px;" type="button">
                                                     @if (Session::has('err_search'))
                                                         <i style="color: red" class="fa fa-warning"></i> {{ Session::get('err_search')  }}
@@ -174,14 +192,40 @@
                                                         Click here to search for jobs
                                                     @endif
                                                 </button>
-                                                -->
+                                                
                                             @else
                                                 <button disabled="true" class="lato-text btn btn-default btn-trans" style="text-transform: none; border:1px solid #2980b9; width:100%; border-radius: 4px;" type="button">Please complete atleast 50% of profile</button>
                                             @endif
-                                        </div>
+                                        </div> -->
                                         <!-- <div class="btn-group" data-toggle="buttons" style="width:100%;">
                                             <input value="<?php if(@$searchWord != 0){ echo($searchWord); } ?>" type="text" name="searchWord" id="searchWord" class="form-control" placeholder="Enter keyword" />
                                         </div> -->
+                                <div class="padded" style="color:#2980b9; font-size:20pt;">
+{{--                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $PROFILE_PROG['TOTAL_PROGRESS'] }}%--}}
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ Auth::user()->total_profile_progress }}%
+
+                                <div class="padded text-center" style="padding:10px 0 0; color:#2980b9; font-size:18pt;">
+                                    <div id="progressbar">
+                                        <div id="prog-meter-req"></div>
+                                        <div id="prog-meter-opt"></div>
+                                    </div>
+                                    <div style="text-align:left; font-size:12pt; display:flex;">
+                                        <div style="width:20%;">0%</div>
+                                        <div style="width:20%;">20%</div>
+                                        <div style="width:20%; text-align:center;">50%</div>
+                                        <div style="width:20%; text-align:right;">80%</div>
+                                        <div style="width:20%; text-align:right;">100%</div>
+                                    </div>
+                                    <span style="font-size:10pt;"></span>
+                                </div>
+
+                                @if($PROFILE_PROG['TOTAL_PROGRESS'] < 50)
+                                    <p style="color: #000000; margin-top: 5px;">
+                                        <i style="color: red" class="fa fa-warning"></i> <b>You can start applying for jobs when you complete your profile above 50%.</b><br><br>
+                                        <a class="clickHere" href="/editProfile"> Click here to edit your profile </a>
+                                    </p>
+                                @endif
+                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -190,49 +234,20 @@
                 </div>
             </div>
             <!-- ENF PROFILE PIC / INFO -->
-
             <!-- MAIN CONTENT STATISTICS / AVAILABLE JOBS -->
             <div class="col-lg-8">
-                <div class="col-lg-12">
+                <!-- <div class="col-lg-12">
                     <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
                         <div class="widget-content">
-                            <div class="padded" style="color:#2980b9; font-size:18pt;">
-{{--                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $PROFILE_PROG['TOTAL_PROGRESS'] }}%--}}
-                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ Auth::user()->total_profile_progress }}%
-                                @if($PROFILE_PROG['TOTAL_PROGRESS'] < 50)
-                                    <p style="color: #000000;">
-                                        <i style="color: red" class="fa fa-warning"></i> <b>You can start applying for jobs when you complete your profile above 50%. Click <a href="/editProfile">here</a> to edit your profile</b>
-                                    </p>
-                                @endif
-                            </div>
+
                         </div>
                     </div>
-                </div>
-                <!-- PROFILE OOMPLETENESS METER -->
-                <div class="col-lg-12">
-                    <div class="widget-container" style="min-height:30px; border-bottom:1px solid #e6e6e6">
-                        <div class="widget-content">
-                            <div class="padded text-center" style="color:#2980b9; font-size:18pt;">
-                                <div id="progressbar">
-                                    <div id="prog-meter-req"></div>
-                                    <div id="prog-meter-opt"></div>
-                                </div>
-                                <div style="text-align:left; font-size:12pt; display:flex;">
-                                    <div style="width:20%;">0%</div>
-                                    <div style="width:20%;">20%</div>
-                                    <div style="width:20%; text-align:center;">50%</div>
-                                    <div style="width:20%; text-align:right;">80%</div>
-                                    <div style="width:20%; text-align:right;">100%</div>
-                                </div>
-                                <span style="font-size:10pt;"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div> -->
+
                 <!-- END OF PROFILE  COMPLETENESS METER -->
-                <div class="col-lg-12">
+                <div class="col-lg-12 no-padding">
                     <div class="widget-container stats-container" style="display:block !important;">
-                        <div class="col-lg-6 lato-text">
+                        <div class="col-lg-6 lato-text col-xs-12 id1">
                             {{--<a href="/tskmntr_taskBids" style="text-decoration:none;">--}}
                             <a href="/WRKR_APPLCTNS" style="text-decoration:none;">
                                 <div class="number" style="color:#2980b9;">
@@ -244,7 +259,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-6 lato-text">
+                        <div class="col-lg-6 lato-text col-xs-12 id2">
                             {{--<a href="/tskmntr_taskOffers" style="text-decoration:none;">--}}
                             <a href="/WRKR_INVTS" style="text-decoration:none;">
                                 <div class="number" style="color:#2980b9;">
@@ -258,7 +273,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="col-lg-12">
@@ -320,6 +334,39 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-8" style="padding-top: 19px;">
+                <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
+                    <div class="widget-content">
+                        <div class="panel-body" style="color:#2980b9; font-size:20pt;">
+                            <i class="fa fa-search" aria-hidden="true"></i> Job Ads 
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li>
+                                    <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a>
+                                </li>
+                                <li>
+                                    <a href="#">Fusce efficitur augue ut velit aliquam, dictum scelerisque lectus lobortis.</a>
+                                </li>
+                                <li>
+                                    <a href="#">Aenean posuere eros ac lectus dapibus, quis luctus justo ultrices.</a>
+                                </li>
+                                <li>
+                                    <a href="#">Etiam ut mi convallis, gravida leo et, volutpat ex.</a>
+                                </li>
+                                <li>
+                                    <a href="#">Duis volutpat diam at lacus sollicitudin, ut mollis sapien vestibulum.</a>
+                                </li>
+                                <li>
+                                    <a href="#">Praesent interdum sem id dolor fringilla, non suscipit lectus fermentum.</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 <!-- END MAIN CONTENT -->
         </div>
     </div>
@@ -381,7 +428,7 @@
                 </div>
             </div>
         </div>
-    </section>
+</section>
 <!-- END OF FOOTER -->
 @stop
 
