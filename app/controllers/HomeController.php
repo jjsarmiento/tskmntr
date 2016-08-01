@@ -73,6 +73,7 @@ class HomeController extends BaseController {
                 }
 
                 if($role == 'TASKMINATOR'){
+                    $HAS_INVITES = null;
                     if(User::GETROLE(Auth::user()->id) == 'CLIENT_IND' || User::GETROLE(Auth::user()->id) == 'CLIENT_CMP'){
                         $CLIENTFLAG = true;
                     }
