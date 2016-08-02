@@ -259,7 +259,7 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
     Route::post('/doUploadDocumentsCMP', 'ClientIndiController@doUploadDocumentsCMP');
     Route::get('/DELDOCCMP_{docID}', 'ClientIndiController@DELDOCCMP');
 
-    Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){
+    Route::group(array('before' => 'EMPLOYER-UPDATE-PROFILE-PROGRESS'), function(){
         // JOBS
         Route::get('/createJob', 'ClientIndiController@createJob');
         Route::post('/doCreateJob', 'ClientIndiController@doCreateJob');

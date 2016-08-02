@@ -7,7 +7,7 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){
-        return BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(8);
+        return BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(5);
 //        return BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(2);
     }
 
@@ -70,7 +70,8 @@ class HomeController extends BaseController {
 
             if(Auth::check()){
                 if($temp->total_profile_progress < 50){
-                    return Redirect::to('/');
+//                    return Redirect::to('/');
+                    return View::make('ERRORPAGE');
                 }
 
                 if($role == 'TASKMINATOR'){

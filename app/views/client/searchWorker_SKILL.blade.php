@@ -212,15 +212,25 @@
                                 @endif
                             </a>
                             <div class="media-body update-card-body">
-                                <a href="/{{$user->username}}">
-                                    <h4 class="media-heading">
-                                        {{substr_replace($user->firstName, str_repeat('*', strlen($user->firstName)-1), 1)}}
-                                        &nbsp;
-                                        {{substr_replace($user->lastName, str_repeat('*', strlen($user->lastName)-1), 1)}}
-                                        <span style="color: #3498db">{{'@'.$user->username}}</span>
-                                    </h4>
-                                </a>
-                                <p>{{$user->region}}, {{$user->address}}, {{$user->regname}}, {{$user->cityname}}, {{$user->barngay}}</p>
+                                @if(in_array($user->id, $CHECKED_OUT_USERS))
+                                    <a href="/{{$user->username}}">
+                                        <h4 class="media-heading">
+                                            {{$user->fullName}}
+                                            <span style="color: #3498db">{{'@'.$user->username}}</span>
+                                            <i class="fa fa-check-circle" style="color: #1ABC9C"></i>
+                                        </h4>
+                                    </a>
+                                @else
+                                    <a href="/{{$user->username}}">
+                                        <h4 class="media-heading">
+                                            {{substr_replace($user->firstName, str_repeat('*', strlen($user->firstName)-1), 1)}}
+                                            &nbsp;
+                                            {{substr_replace($user->lastName, str_repeat('*', strlen($user->lastName)-1), 1)}}
+                                            <span style="color: #3498db">{{'@'.$user->username}}</span>
+                                        </h4>
+                                    </a>
+                                @endif
+                                <p>{{$user->address}}, {{$user->regname}}, {{$user->cityname}}, {{$user->bgyname}}</p>
                             </div>
                         </div>
                     @endforeach

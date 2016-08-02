@@ -993,27 +993,38 @@ class ClientIndiController extends \BaseController {
 
     public function SRCHWRKRSKLL($categoryId, $skillId){
         if(Auth::user()->status == 'ACTIVATED'){
-            if(Auth::user()->total_profile_progress >= 50){
-                $users = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
-                    ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
-                    ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
-                    ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
-                    ->where('taskminator_has_skills.taskitem_code', $skillId)
-                    ->where('users.total_profile_progress', '>=', '50')
-                    ->get();
+            $users = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
+                ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+                ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+                ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+                ->where('taskminator_has_skills.taskitem_code', $skillId)
+                ->where('users.total_profile_progress', '>=', '50')
+                ->select([
+                    'users.id',
+                    'users.address',
+                    'users.profilePic',
+                    'users.username',
+                    'users.fullName',
+                    'users.firstName',
+                    'users.lastName',
+                    'barangays.bgyname',
+                    'cities.cityname',
+                    'regions.regname'
+                ])
+                ->paginate(10);
 
-                return View::make('client.searchWorker_SKILL')
-                    ->with('categoryId', $categoryId)
-                    ->with('skillId', $skillId)
-                    ->with('users', $users)
-                    ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
+            return View::make('client.searchWorker_SKILL')
+                ->with('CHECKED_OUT_USERS', $this->GETCHECKEDOUTUSERS(Auth::user()->id))
+                ->with('categoryId', $categoryId)
+                ->with('skillId', $skillId)
+                ->with('users', $users)
+                ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
 //                ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get());
-                    ->with('categorySkills', TaskItem::where('item_categorycode', $categoryId)->orderBy('itemname', 'ASC')->get());
-            }
+                ->with('categorySkills', TaskItem::where('item_categorycode', $categoryId)->orderBy('itemname', 'ASC')->get());
+        }else{
+            Auth::logout();
+            return Redirect::to('/');
         }
-
-        Auth::logout();
-        return Redirect::to('/');
     }
 
     public function SKILLCATCHAIN($categoryId){
