@@ -678,9 +678,6 @@ class ClientIndiController extends \BaseController {
             $formUrl = '/doCltEditPersonalInfo';
         }
 
-        // compute completeness of user's profile and update total_profile_progress column
-        $this->PROFILE_PERCENTAGE_COMPANY(Auth::user()->id);
-
         return View::make('client.editPersonalInfo')
             ->with('user', Auth::user())
             ->with('prov', Province::orderBy('provname', 'ASC')->where('regcode', Auth::user()->region)->get())

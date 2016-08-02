@@ -251,75 +251,73 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
 });
 
 Route::group(array('before' => 'CLIENT-ONLY'), function(){
-    // DOCUMENTS
-    Route::get('/editDocumentsCMP', 'ClientIndiController@editDocumentsCMP');
-    Route::get('/DELDOCCMP_{docID}', 'ClientIndiController@DELDOCCMP');
-    Route::post('/doUploadDocumentsCMP', 'ClientIndiController@doUploadDocumentsCMP');
+    Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){
+        // DOCUMENTS
+        Route::get('/editDocumentsCMP', 'ClientIndiController@editDocumentsCMP');
+        Route::get('/DELDOCCMP_{docID}', 'ClientIndiController@DELDOCCMP');
+        Route::post('/doUploadDocumentsCMP', 'ClientIndiController@doUploadDocumentsCMP');
 
-    // MULTIPLE INVITE ROUTES
-    Route::post('/SENDMULTIPLEINVITE', 'ClientIndiController@SENDMULTIPLEINVITE');
+        // JOBS
+        Route::get('/SNDINVT:{invitedId}:{jobId}', 'ClientIndiController@SNDINVT');
+        Route::post('/DOSNDINVT', 'ClientIndiController@DOSNDINVT');
+        Route::get('/cancelInvite:{jobID}:{workerID}', 'ClientIndiController@cancelInvite');
+        Route::get('/ShowInvited:{jobId}', 'ClientIndiController@ShowInvited');
+        Route::get('/JOB_DELETECUSTSKILL={custom_skill_id}', 'ClientIndiController@JOB_DELETECUSTSKILL');
+        Route::get('/deleteJob={cartID}', 'ClientIndiController@deleteJob');
 
-    // BOOKMARK ROUTES
-    Route::get('/ADD_BOOKMARK:{worker_id}', 'ClientIndiController@ADD_BOOKMARK');
-    Route::get('/REMOVE_BOOKMARK:{book}', 'ClientIndiController@REMOVE_BOOKMARK');
-    Route::get('/bookmarkedUsers', 'ClientIndiController@bookmarkedUsers');
+        // MULTIPLE INVITE ROUTES
+        Route::post('/SENDMULTIPLEINVITE', 'ClientIndiController@SENDMULTIPLEINVITE');
 
-    // NEW PROVEEK MODEL ROUTES FOR JOBS -- START
-    Route::get('/createJob', 'ClientIndiController@createJob');
-    Route::post('/doCreateJob', 'ClientIndiController@doCreateJob');
-    Route::get('/jobDetails={jobId}', 'ClientIndiController@jobDetails');
-    Route::get('/jobs', 'ClientIndiController@jobs');
-    Route::get('/editJob={jobId}', 'ClientIndiController@editJob');
-    Route::post('/doEditJob', 'ClientIndiController@doEditJob');
-    Route::get('/WRKRSRCH:{jobId}:{categoryCode}:{skillCode}:{customSkill}', 'ClientIndiController@WRKRSRCH');
-    Route::get('/SNDINVT:{invitedId}:{jobId}', 'ClientIndiController@SNDINVT');
-    Route::post('/DOSNDINVT', 'ClientIndiController@DOSNDINVT');
-    Route::get('/cancelInvite:{jobID}:{workerID}', 'ClientIndiController@cancelInvite');
-    Route::get('/ShowInvited:{jobId}', 'ClientIndiController@ShowInvited');
-    Route::get('/addToCart={worker_id}', 'ClientIndiController@addToCart');
-    Route::get('/GET_CART_CONTENTS', 'ClientIndiController@GET_CART_CONTENTS');
-    Route::post('/doCheckout', 'ClientIndiController@doCheckout');
-    Route::get('/JOB_DELETECUSTSKILL={custom_skill_id}', 'ClientIndiController@JOB_DELETECUSTSKILL');
-    Route::get('/checkouts', 'ClientIndiController@checkouts');
-    Route::get('/removeCartItem:{cartID}', 'ClientIndiController@removeCartItem');
-    Route::get('/deleteJob={cartID}', 'ClientIndiController@deleteJob');
-    Route::post('/INVITEMULTIJOB', 'ClientIndiController@INVITEMULTIJOB');
-    // NEW PROVEEK MODEL ROUTES FOR JOBS -- END
+        // MULTIPLE JOB FOR SINGLE INVITE
+        Route::post('/INVITEMULTIJOB', 'ClientIndiController@INVITEMULTIJOB');
 
-    // THE ROLE BASED ROUTES FOR CLIENT GOES HERE
-    Route::get('/createTask', 'ClientIndiController@createTask');
-    Route::post('/createTask', 'ClientIndiController@doCreateTask');
-    Route::get('/editTask/{id}', 'ClientIndiController@editTask');
-    Route::get('/deleteTask/{id}', 'ClientIndiController@deleteTask'); // this is actually "CANCEL" task
-    Route::post('/doEditTask', 'ClientIndiController@doEditTask');
-    Route::get('/tasks', 'ClientIndiController@tasks');
-    Route::get('/taskDetails/{id}', 'ClientIndiController@taskDetails');
-    Route::get('/hireTskmntr/{userid}/{taskid}', 'ClientIndiController@hireTskmntr');
-    Route::get('/tskmntrSearch', 'ClientIndiController@tskmntrSearch');
-    Route::get('/doTskmntrSearch={searchField}={searchKeyword}={city}', 'ClientIndiController@doTskmntrSearch');
-    Route::get('/viewTaskminator_{id}', 'ClientIndiController@viewTaskminator');
-    Route::get('/directHire_{id}', 'ClientIndiController@directHire');
-    Route::get('/doDirectHire_{taskminatorid}.{taskid}', 'ClientIndiController@doDirectHire');
-    Route::get('/retractOffer/{taskId}/{tskmntrId}', 'ClientIndiController@retractOffer');
-    Route::get('/completeTask/taskid:{taskid}', 'ClientIndiController@completeTask');
-    Route::post('/rateTaskminator', 'ClientIndiController@rateTaskminator');
-    Route::get('/accomplishedTasks', 'ClientIndiController@accomplishedTasks');
-    Route::get('/cancelledTasks', 'ClientIndiController@cancelledTasks');
-    Route::get('/automaticSearch/{taskId}', 'ClientIndiController@automaticSearch');
-    Route::get('/automaticOffer/{taskId}={userid}', 'ClientIndiController@automaticOffer');
-    Route::get('/cltEditPersonalInfo', 'ClientIndiController@cltEditPersonalInfo');
-    Route::get('/cltEditContactInfo', 'ClientIndiController@cltEditContactInfo');
-    Route::get('/cltEditAcctInfo', 'ClientIndiController@cltEditAcctInfo');
-    Route::post('/doCltEditPersonalInfo', 'ClientIndiController@doCltEditPersonalInfo');
-    Route::post('/doCltEditContactInfo', 'ClientIndiController@doCltEditContactInfo');
-    Route::post('/doCltEditIndiContactInfo', 'ClientIndiController@doCltEditIndiContactInfo');
-    Route::post('/doCltEditPass', 'ClientIndiController@doCltEditPass');
-    Route::post('/doCltIndiEditPersonalInfo', 'ClientIndiController@doCltIndiEditPersonalInfo');
+        // CART
+        Route::get('/addToCart={worker_id}', 'ClientIndiController@addToCart');
+        Route::get('/GET_CART_CONTENTS', 'ClientIndiController@GET_CART_CONTENTS');
+        Route::post('/doCheckout', 'ClientIndiController@doCheckout');
+        Route::get('/checkouts', 'ClientIndiController@checkouts');
+        Route::get('/removeCartItem:{cartID}', 'ClientIndiController@removeCartItem');
+        Route::get('/cltEditPersonalInfo', 'ClientIndiController@cltEditPersonalInfo');
+        Route::get('/cltEditContactInfo', 'ClientIndiController@cltEditContactInfo');
+        Route::get('/cltEditAcctInfo', 'ClientIndiController@cltEditAcctInfo');
+        Route::post('/doCltEditPersonalInfo', 'ClientIndiController@doCltEditPersonalInfo');
+        Route::post('/doCltEditContactInfo', 'ClientIndiController@doCltEditContactInfo');
+        Route::post('/doCltEditIndiContactInfo', 'ClientIndiController@doCltEditIndiContactInfo');
+        Route::post('/doCltEditPass', 'ClientIndiController@doCltEditPass');
+        Route::post('/doCltIndiEditPersonalInfo', 'ClientIndiController@doCltIndiEditPersonalInfo');
 
-    Route::get('/compDoSearch', 'searchTestController@compDoSearch');
-    Route::get('/CISRCH/{prog}={keyword}', 'ClientIndiController@CISRCH');
+        Route::get('/compDoSearch', 'searchTestController@compDoSearch');
+        Route::get('/CISRCH/{prog}={keyword}', 'ClientIndiController@CISRCH');
 
-    Route::get('/SRCHWRKRSKLL={categoryId}={skillId}', 'ClientIndiController@SRCHWRKRSKLL');
+        Route::get('/SRCHWRKRSKLL={categoryId}={skillId}', 'ClientIndiController@SRCHWRKRSKLL');
+
+        // BOOKMARK ROUTES
+        Route::get('/ADD_BOOKMARK:{worker_id}', 'ClientIndiController@ADD_BOOKMARK');
+        Route::get('/REMOVE_BOOKMARK:{book}', 'ClientIndiController@REMOVE_BOOKMARK');
+        Route::get('/bookmarkedUsers', 'ClientIndiController@bookmarkedUsers');
+
+        Route::get('/WRKRSRCH:{jobId}:{categoryCode}:{skillCode}:{customSkill}', 'ClientIndiController@WRKRSRCH');
+    });
+//    Route::get('/createTask', 'ClientIndiController@createTask');
+//    Route::post('/createTask', 'ClientIndiController@doCreateTask');
+//    Route::get('/editTask/{id}', 'ClientIndiController@editTask');
+//    Route::get('/deleteTask/{id}', 'ClientIndiController@deleteTask'); // this is actually "CANCEL" task
+//    Route::post('/doEditTask', 'ClientIndiController@doEditTask');
+//    Route::get('/tasks', 'ClientIndiController@tasks');
+//    Route::get('/taskDetails/{id}', 'ClientIndiController@taskDetails');
+//    Route::get('/hireTskmntr/{userid}/{taskid}', 'ClientIndiController@hireTskmntr');
+//    Route::get('/tskmntrSearch', 'ClientIndiController@tskmntrSearch');
+//    Route::get('/doTskmntrSearch={searchField}={searchKeyword}={city}', 'ClientIndiController@doTskmntrSearch');
+//    Route::get('/viewTaskminator_{id}', 'ClientIndiController@viewTaskminator');
+//    Route::get('/directHire_{id}', 'ClientIndiController@directHire');
+//    Route::get('/doDirectHire_{taskminatorid}.{taskid}', 'ClientIndiController@doDirectHire');
+//    Route::get('/retractOffer/{taskId}/{tskmntrId}', 'ClientIndiController@retractOffer');
+//    Route::get('/completeTask/taskid:{taskid}', 'ClientIndiController@completeTask');
+//    Route::post('/rateTaskminator', 'ClientIndiController@rateTaskminator');
+//    Route::get('/accomplishedTasks', 'ClientIndiController@accomplishedTasks');
+//    Route::get('/cancelledTasks', 'ClientIndiController@cancelledTasks');
+//    Route::get('/automaticSearch/{taskId}', 'ClientIndiController@automaticSearch');
+//    Route::get('/automaticOffer/{taskId}={userid}', 'ClientIndiController@automaticOffer');
     Route::get('/SKILLCATCHAIN={categoryId}', 'ClientIndiController@SKILLCATCHAIN');
 });
 

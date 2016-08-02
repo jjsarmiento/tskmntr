@@ -421,8 +421,8 @@ class BaseController extends Controller {
         $mobile = Contact::where('user_id', $user->id)->where('ctype', 'mobileNum')->pluck('content');
         $businessMobile = Contact::where('user_id', $user->id)->where('ctype', 'businessNum')->pluck('content');
         $email = Contact::where('user_id', $user->id)->where('ctype', 'email')->pluck('content');
-        $POEA_LICENSE = Document::where('user_id', $user_id)->where('type', 'DOLE_POEA_LISENCE')->count();
-        $DOLE_LICENSE = Document::where('user_id', $user_id)->where('type', 'TIN_ID')->count();
+        $POEA_LICENSE = Document::where('user_id', $user_id)->where('type', 'DOLE_LICENSE')->count();
+        $DOLE_LICENSE = Document::where('user_id', $user_id)->where('type', 'POEA_LICENSE')->count();
 
         $base = 0;
         $base = ($user->fullName    == null) ? $base : ++$base;
@@ -500,7 +500,7 @@ class BaseController extends Controller {
         }
 
         // skills and custom skills
-        if(TaskminatorHasSkill::where('user_id', $user->id)->count() > 0 || CustomSkill::where('user_id', $user->id)->count() > 0){
+        if(TaskminatorHasSkill::where('user_id', $user->id)->count() > 0 || CustomSkill::where('created_by', $user->id)->count() > 0){
             $base++;
         }
         $first50 = $base * (50/13);
