@@ -20,7 +20,7 @@
             animation-duration: 3s;
             height: 20px;
             border-radius: 10px;
-            max-width: 70%;
+            max-width: 100%;
             width:{{ Auth::user()->total_profile_progress }}%;
             border-top-right-radius: 0px;
             border-bottom-right-radius: 0px;

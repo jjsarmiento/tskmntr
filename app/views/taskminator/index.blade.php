@@ -20,9 +20,8 @@
         animation-duration: 3s;
         height: 20px;
         border-radius: 10px;
-        /*max-width: 70%;*/
         max-width: 100%;
-        width: {{Auth::user()->total_profile_progress}};
+        width:{{ Auth::user()->total_profile_progress }}%;
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
     }
@@ -42,17 +41,14 @@
 
     @keyframes reqProgress {
     from {width:0%;}
-    /*
-    to {width:{{ $PROFILE_PROG['CALCULATED_PROG'] }}%;}
-    */
     to {width:{{Auth::user()->total_profile_progress}}%;}
 
     }
 
-    @keyframes optProgress {
-    from {width:0%;}
-    to {width:{{ $PROFILE_PROG['OPTIONAL_PROGRESS'] }}%;}
-    }
+    {{--@keyframes optProgress {--}}
+    {{--from {width:0%;}--}}
+    {{--to {width:{{ $PROFILE_PROG['OPTIONAL_PROGRESS'] }}%;}--}}
+    {{--}--}}
 
 
     body{background-color:#E9EAED;}
@@ -238,7 +234,7 @@
                                     <span style="font-size:10pt;"></span>
                                 </div>
 
-                                @if($PROFILE_PROG['TOTAL_PROGRESS'] < 50)
+                                @if(Auth::user()->total_profile_progress < 50)
                                     <p style="color: #000000; margin-top: 5px;">
                                         <i style="color: red" class="fa fa-warning"></i> <b>You can start applying for jobs when you complete your profile above 50%.</b><br><br>
                                         <a class="clickHere" href="/editProfile"> Click here to edit your profile </a>

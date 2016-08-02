@@ -1182,7 +1182,7 @@ class ClientIndiController extends \BaseController {
                 ->take(5)
                 ->get();
 
-            $invited = JobInvite::where('job_id', $jobId)->get();
+            $invited = JobInvite::where('job_id', $jobId)->whereNotIn('invited_id',[$APPLICANTS])->get();
 
             return View::make('client.jobDetails')
                 ->with('job', $job)
@@ -1502,6 +1502,7 @@ class ClientIndiController extends \BaseController {
             ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
             ->join('job_invites', 'job_invites.invited_id', '=', 'users.id')
             ->where('job_invites.job_id', $jobId)
+            ->whereNotIn('invited_id', [$this->GETAPPLICANTS($jobId)])
             ->select([
                 'users.id as userid',
                 'users.profilePic',

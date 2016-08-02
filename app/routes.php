@@ -261,12 +261,19 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
 
     Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){
         // JOBS
+        Route::get('/createJob', 'ClientIndiController@createJob');
+        Route::post('/doCreateJob', 'ClientIndiController@doCreateJob');
+        Route::get('/jobDetails={jobId}', 'ClientIndiController@jobDetails');
+        Route::get('/jobs', 'ClientIndiController@jobs');
+        Route::get('/editJob={jobId}', 'ClientIndiController@editJob');
+        Route::post('/doEditJob', 'ClientIndiController@doEditJob');
+
         Route::get('/SNDINVT:{invitedId}:{jobId}', 'ClientIndiController@SNDINVT');
         Route::post('/DOSNDINVT', 'ClientIndiController@DOSNDINVT');
         Route::get('/cancelInvite:{jobID}:{workerID}', 'ClientIndiController@cancelInvite');
         Route::get('/ShowInvited:{jobId}', 'ClientIndiController@ShowInvited');
         Route::get('/JOB_DELETECUSTSKILL={custom_skill_id}', 'ClientIndiController@JOB_DELETECUSTSKILL');
-        Route::get('/deleteJob={cartID}', 'ClientIndiController@deleteJob');
+        Route::get('/deleteJob={jobId}', 'ClientIndiController@deleteJob');
 
         // MULTIPLE INVITE ROUTES
         Route::post('/SENDMULTIPLEINVITE', 'ClientIndiController@SENDMULTIPLEINVITE');

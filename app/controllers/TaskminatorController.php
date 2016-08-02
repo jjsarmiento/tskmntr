@@ -935,16 +935,25 @@ class TaskminatorController extends \BaseController {
 
     public function WRKR_INVTS(){
         $invites = JobInvite::join('jobs', 'job_invites.job_id', '=', 'jobs.id')
+                    ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+                    ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
                     ->where('invited_id', Auth::user()->id)
                     ->select([
                         'jobs.title',
-                        'jobs.id as jobID',
-                        'job_invites.created_at as invited_at',
+                        'jobs.id as job_id',
+                        'jobs.expires_at',
+                        'jobs.salary',
+                        'jobs.created_at',
+                        'jobs.description',
+                        'jobs.hiring_type',
+                        'cities.cityname',
+                        'regions.regname',
                     ])
-                    ->get();
+                    ->groupBy('jobs.id')
+                    ->paginate(10);
 
         return View::make('taskminator.WRKR_INVTS')
-                ->with('invites', $invites);
+                ->with('jobs' , $invites);
     }
 
     public function ADDOWNSKILL(){
