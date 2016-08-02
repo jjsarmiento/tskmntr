@@ -1439,6 +1439,8 @@ class ClientIndiController extends \BaseController {
                 ->where('users.id', $invitedId)
                 ->select([
                     'users.id as userid',
+                    'users.firstName',
+                    'users.lastName',
                     'users.fullName',
                     'regions.regname',
                     'cities.cityname',
@@ -1449,11 +1451,14 @@ class ClientIndiController extends \BaseController {
                         ->where('job_id', $jobId)
                         ->first();
 
+        $isCheckedOut = (in_array($worker->userid, $this->GETCHECKEDOUTUSERS(Auth::user()->id))) ? true : false;
+
         return View::make('client.SNDINVT')
                 ->with('worker', $worker)
                 ->with('job', $job)
                 ->with('custom_skills', $custom_skills)
-                ->with('invitation', $invitation);
+                ->with('invitation', $invitation)
+                ->with('isCheckedOut', $isCheckedOut);
     }
 
     public function DOSNDINVT(){
