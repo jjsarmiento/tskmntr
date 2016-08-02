@@ -33,10 +33,10 @@ class DocumentTypesSeeder extends Seeder {
             'sys_doc_disabled'  =>  false,
         ]);
 
-        // DRIVER'S LISCENSE
+        // DRIVER'S LICENSE
         DocumentType::create([
-            'sys_doc_type'      =>  'DRIVERS_LISCENSE',
-            'sys_doc_label'     =>  "Driver's Liscense",
+            'sys_doc_type'      =>  'DRIVERS_LICENSE',
+            'sys_doc_label'     =>  "Driver's License",
             'sys_doc_role'      =>  'WORKER',
             'sys_doc_disabled'  =>  false,
         ]);
@@ -139,10 +139,18 @@ class DocumentTypesSeeder extends Seeder {
             'sys_doc_disabled'  =>  false,
         ]);
 
-        // DOLE / POEA LISENCE
+        // DOLE LISENCE
         DocumentType::create([
-            'sys_doc_type'      =>  'DOLE_POEA_LISENCE',
-            'sys_doc_label'     =>  "DOLE / POEA Lisence",
+            'sys_doc_type'      =>  'DOLE_LICENSE',
+            'sys_doc_label'     =>  "DOLE Lisence",
+            'sys_doc_role'      =>  'COMPANY',
+            'sys_doc_disabled'  =>  false,
+        ]);
+
+        // POEA LISENCE
+        DocumentType::create([
+            'sys_doc_type'      =>  'POEA_LICENSE',
+            'sys_doc_label'     =>  "POEA Lisence",
             'sys_doc_role'      =>  'COMPANY',
             'sys_doc_disabled'  =>  false,
         ]);

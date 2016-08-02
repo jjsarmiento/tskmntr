@@ -421,6 +421,8 @@ class BaseController extends Controller {
         $mobile = Contact::where('user_id', $user->id)->where('ctype', 'mobileNum')->pluck('content');
         $businessMobile = Contact::where('user_id', $user->id)->where('ctype', 'businessNum')->pluck('content');
         $email = Contact::where('user_id', $user->id)->where('ctype', 'email')->pluck('content');
+        $POEA_LICENSE = Document::where('user_id', $user_id)->where('type', 'DOLE_POEA_LISENCE')->count();
+        $DOLE_LICENSE = Document::where('user_id', $user_id)->where('type', 'TIN_ID')->count();
 
         $base = 0;
         $base = ($user->fullName    == null) ? $base : ++$base;
@@ -437,27 +439,41 @@ class BaseController extends Controller {
 //        $base += 4;
 
         $first50 = $base * (50/11);
-        return $first50;
 
-        // 1st 50%
-        // business name
-        // region
-        // city
-        // province
-        // barangay
-        // contact person's name
-        // business permit #
-        // short business description
-        // profile pic
-        // contact #
-        // email
+        // computation for 2nd 50%
+        $base = 0;
+        $base = ($user->businessNature          ==  null) ? $base : ++$base;
+        $base = ($user->years_in_opeartion      ==  null) ? $base : ++$base;
+        $base = ($user->number_of_branches      ==  null) ? $base : ++$base;
+        $base = ($user->contact_person_position ==  null) ? $base : ++$base;
+        $base = ($user->number_of_employees     ==  null) ? $base : ++$base;
+        $base = ($user->working_hours           ==  null) ? $base : ++$base;
+
+        if($POEA_LICENSE > 0){
+            $base++;
+        }elseif($DOLE_LICENSE > 0){
+            $base++;
+        }
+
+        $FINAL_PERCENTAGE = $first50 + ($base * (50/7));
+
+        // update total_profile_progress_column on users table
+        User::where('id', $user->id)->update([
+            'total_profile_progress' =>  $FINAL_PERCENTAGE
+        ]);
+
+        return $FINAL_PERCENTAGE;
     }
 
     public static function PROVEEK_PROFILE_PERCENTAGE_WORKER($user_id){
         $user = User::where('id', $user_id)->first();
         $mobile = Contact::where('user_id', $user->id)->where('ctype', 'mobileNum')->pluck('content');
         $email = Contact::where('user_id', $user->id)->where('ctype', 'email')->pluck('content');
-        $doc = Document::where('user_id', $user->id)->count();
+        // documents
+        $PASSPORT = Document::where('user_id', $user_id)->where('type', 'PASSPORT')->count();
+        $NBI = Document::where('user_id', $user_id)->where('type', 'NBI')->count();
+        $VOTERS_ID = Document::where('user_id', $user_id)->where('type', 'VOTERS_ID')->count();
+        $TIN = Document::where('user_id', $user_id)->where('type', 'TIN_ID')->count();
 
         // 1st 50%
         $base = 0; // INITIALIZE
@@ -472,7 +488,17 @@ class BaseController extends Controller {
         $base = ($user->profilePic      == null) ? $base : ++$base;
         $base = ($mobile                == null) ? $base : ++$base;
         $base = ($email                 == null) ? $base : ++$base;
-        $base = ($doc                   == 0) ? $base : ++$base;
+
+        if($PASSPORT > 0){
+            $base++;
+        }else if($NBI > 0){
+            $base++;
+        }else if($VOTERS_ID > 0){
+            $base++;
+        }else if($TIN > 0){
+            $base++;
+        }
+
         // skills and custom skills
         if(TaskminatorHasSkill::where('user_id', $user->id)->count() > 0 || CustomSkill::where('user_id', $user->id)->count() > 0){
             $base++;
