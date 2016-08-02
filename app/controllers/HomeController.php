@@ -7,8 +7,8 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){
-//        return BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(3);
-        return BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(2);
+        return BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(8);
+//        return BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(2);
     }
 
     function generateConfirmationCode(){
@@ -763,12 +763,8 @@ class HomeController extends BaseController {
     }
 
     public function dashboard(){
-
         return View::make('userdashboard');
-    }  
-
-    public function initWORKER(){}
-    public function initCOMPANY(){}
+    }
 
     public function index(){
         if(Auth::check()){
@@ -789,6 +785,7 @@ class HomeController extends BaseController {
                     return Redirect::to('/admin');
                     break;
                 case 'TASKMINATOR' :
+                    BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
                     $skillCodeArray = $this->GETTASKCODES(Auth::user()->id);
 
                     $taskList = Task::where('hiringType', 'BIDDING')
@@ -835,6 +832,7 @@ class HomeController extends BaseController {
                     break;
                 case 'CLIENT_IND' :
                 case 'CLIENT_CMP' :
+                    BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
                     // CHECKER FOR the first 3 FREE MONTHS SUBSCRIPTION
                     $tempDate = Auth::user()->created_at->addMonths(3);
                     $freeDuration = null;
@@ -870,7 +868,7 @@ class HomeController extends BaseController {
                     ->with('freeDuration', $freeDuration)
                     ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
                     ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get())
-                    ->with('TOTALPROG', $this->PROFILE_PERCENTAGE_COMPANY(Auth::user()->id))
+//                    ->with('TOTALPROG', $this->PROFILE_PERCENTAGE_COMPANY(Auth::user()->id))
                     ->with('tasks', Task::where('user_id', Auth::user()->id)->whereNotIn('status', ['CANCELLED', 'COMPLETE'])->orderBy('created_at', 'DESC')->paginate(10))
                     ->with('jobs', $jobs);
                     break;

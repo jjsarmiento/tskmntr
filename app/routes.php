@@ -251,12 +251,15 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
 });
 
 Route::group(array('before' => 'CLIENT-ONLY'), function(){
-    Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){
-        // DOCUMENTS
-        Route::get('/editDocumentsCMP', 'ClientIndiController@editDocumentsCMP');
-        Route::get('/DELDOCCMP_{docID}', 'ClientIndiController@DELDOCCMP');
-        Route::post('/doUploadDocumentsCMP', 'ClientIndiController@doUploadDocumentsCMP');
+    Route::get('/cltEditPersonalInfo', 'ClientIndiController@cltEditPersonalInfo');
+    Route::post('/doCltEditPersonalInfo', 'ClientIndiController@doCltEditPersonalInfo');
 
+    // DOCUMENTS
+    Route::get('/editDocumentsCMP', 'ClientIndiController@editDocumentsCMP');
+    Route::post('/doUploadDocumentsCMP', 'ClientIndiController@doUploadDocumentsCMP');
+    Route::get('/DELDOCCMP_{docID}', 'ClientIndiController@DELDOCCMP');
+
+    Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){
         // JOBS
         Route::get('/SNDINVT:{invitedId}:{jobId}', 'ClientIndiController@SNDINVT');
         Route::post('/DOSNDINVT', 'ClientIndiController@DOSNDINVT');
@@ -277,10 +280,8 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
         Route::post('/doCheckout', 'ClientIndiController@doCheckout');
         Route::get('/checkouts', 'ClientIndiController@checkouts');
         Route::get('/removeCartItem:{cartID}', 'ClientIndiController@removeCartItem');
-        Route::get('/cltEditPersonalInfo', 'ClientIndiController@cltEditPersonalInfo');
         Route::get('/cltEditContactInfo', 'ClientIndiController@cltEditContactInfo');
         Route::get('/cltEditAcctInfo', 'ClientIndiController@cltEditAcctInfo');
-        Route::post('/doCltEditPersonalInfo', 'ClientIndiController@doCltEditPersonalInfo');
         Route::post('/doCltEditContactInfo', 'ClientIndiController@doCltEditContactInfo');
         Route::post('/doCltEditIndiContactInfo', 'ClientIndiController@doCltEditIndiContactInfo');
         Route::post('/doCltEditPass', 'ClientIndiController@doCltEditPass');

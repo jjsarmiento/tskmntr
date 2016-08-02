@@ -96,13 +96,17 @@ Route::filter('ADMIN-ONLY', function(){
 });
 
 Route::filter('EMPLOYER-UPDATE-PROFILE-PROGRESS', function(){
-    if(BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id) < 50){
-        return Redirect::to('/');
-    };
+    BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
+//    if(BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id) < 50){
+//        return Redirect::to('/');
+//    };
 });
 
 Route::filter('WORKER-UPDATE-PROFILE-PROGRESS', function(){
     BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
+//    if(BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id) < 50){
+//        return Redirect::to('/');
+//    }
 });
 
 Route::filter('CLIENT-ONLY', function(){

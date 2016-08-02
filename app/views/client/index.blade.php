@@ -21,30 +21,14 @@
             height: 20px;
             border-radius: 10px;
             max-width: 70%;
-            width:{{ $TOTALPROG['CALCULATED_PROG'] }}%;
+            width:{{ Auth::user()->total_profile_progress }}%;
             border-top-right-radius: 0px;
             border-bottom-right-radius: 0px;
         }
 
-        #progressbar > #prog-meter-opt {
-            background-color: orange;
-            animation-name: optProgress;
-            animation-duration: 3s;
-            height: 20px;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-            max-width: 30%;
-            width:{{ $TOTALPROG['OPTIONAL_PROGRESS'] }}%;
-        }
-
         @keyframes reqProgress {
         from {width:0%;}
-        to {width:{{ $TOTALPROG['CALCULATED_PROG'] }}%;}
-        }
-
-        @keyframes optProgress {
-        from {width:0%;}
-        to {width:{{ $TOTALPROG['OPTIONAL_PROGRESS'] }}%;}
+        to {width:{{ Auth::user()->total_profile_progress }}%;}
         }
 
         body{background-color:#E9EAED;}
@@ -185,17 +169,12 @@
 
                 <div style="background-color: white; padding: 1em; margin-top: 2em;">
                         @if(Auth::user()->status == 'PRE_ACTIVATED')
-                            {{--<div class="heading">--}}
-                                {{--<i class="icon-signal"></i>Your Profile--}}
-                            {{--</div>--}}
-                            {{--<div style="margin: 0 15px;">--}}
-                                <b><i class="fa fa-warning" style="color: red;"></i>
-                                Your profile is being reviewed by our staff.<br/>
-                                After your profile has been activated, you can start posting job ads or look for workers!<br/>
-                                This could take 24 hours or less.</b>
-                            {{--</div>--}}
+                            <b><i class="fa fa-warning" style="color: red;"></i>
+                            Your profile is being reviewed by our staff.<br/>
+                            After your profile has been activated, you can start posting job ads or look for workers!<br/>
+                            This could take 24 hours or less.</b>
                         @else
-                            @if($TOTALPROG['TOTAL_PROGRESS'] >= 50)
+                            @if(Auth::user()->total_profile_progress >= 50)
                                 <!--
                                 OLD TASK/JOB MODULE LINKS
                                 <a style="border-radius: 0.3em;" href="/createTask" class="btn btn-success btn-block btn-lg">Create Task</a>
@@ -245,8 +224,8 @@
                 <div class="widget-container weather" style="min-height: 1em;">
                     <div class="widget-content">
                         <div class="padded text-center" style="min-height:30px; text-align:left; border-bottom:1px solid #e6e6e6; color:#2980b9; font-size:18pt;">
-                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $TOTALPROG['TOTAL_PROGRESS'] }}% | {{ $freeDuration }}
-                            @if($TOTALPROG['TOTAL_PROGRESS'] < 50)
+                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ Auth::user()->total_profile_progress }}% | {{ $freeDuration }}
+                            @if(Auth::user()->total_profile_progress < 50)
                                 <p style="color: #000000;">
                                     <i style="color: red" class="fa fa-warning"></i> <b>You can start posting jobs and look for workers when you complete your profile above 50%. Click <a href="/editProfile">here</a> to edit your profile</b>
                                 </p>
