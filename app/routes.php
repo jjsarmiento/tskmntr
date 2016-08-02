@@ -68,6 +68,9 @@ Route::post('/taskminator/notify', 'SMSAPIController@notify'); //http://yourserv
 // PLACE NON PROTECTED ROUTES HERE -- END
 
 Route::group(array('before' => 'auth'), function(){
+    // NOTIF -- 2016 Jan Sarmiento
+    Route::get('/n_{notifID}:/{destinationUrl}', 'HomeController@catchNotif');
+
     Route::get('/editProfile', 'HomeController@editProfile');
     Route::post('/uploadProfilePic', 'HomeController@uploadProfilePic');
     Route::get('/getNotification', 'HomeController@getNotification');

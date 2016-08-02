@@ -311,8 +311,8 @@
                                 <ul class="dropdown-msg">
                                 @if(User::getNotif()->count() > 0)
                                     @foreach(User::getNotif() as $notif)
-                                      <li onclick="location.href='{{$notif->notif_url}}'">
-                                          <a href="{{$notif->notif_url}}">
+                                      <li onclick="location.href='n_{{$notif->id}}:{{$notif->notif_url}}'">
+                                          <a href="n_{{$notif->id}}:{{$notif->notif_url}}">
                                               {{ $notif->content }}
                                           </a>
                                       </li>
@@ -460,7 +460,8 @@
 
     @if(@$MULTIJOB)
         <script>
-            $(document).ready(function(){ INVITE_MULTI_JOB_VALIDATION(); });
+            $(document).ready(function(){ INVITE_MULTI_JOB_VALIDATION();
+            })
         </script>
         <form method="POST" action="/INVITEMULTIJOB">
             <input type="hidden" value="{{$users->id}}" name="workerID">

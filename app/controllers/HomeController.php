@@ -1782,5 +1782,10 @@ class HomeController extends BaseController {
 
         return Redirect::back();
     }
+
+    public function catchNotif($notifID, $destination){
+        Notification::where('id', $notifID)->update(['status' => 'OLD']);
+        return Redirect::to('/'.$destination);
+    }
 }
 
