@@ -459,6 +459,9 @@
     @endif
 
     @if(@$MULTIJOB)
+        <script>
+            $(document).ready(function(){ INVITE_MULTI_JOB_VALIDATION(); });
+        </script>
         <form method="POST" action="/INVITEMULTIJOB">
             <input type="hidden" value="{{$users->id}}" name="workerID">
             <div class="modal modal-vcenter fade lato-text" id="INVITEMULTIJOB" role="dialog">
@@ -472,7 +475,7 @@
                                         @foreach($MULTIJOB as $job)
                                             <div class="col-md-12 JOB-BOX" style="padding: 0.4em;">
                                                 <div class="col-md-2">
-                                                    <input type="checkbox" name="INVITEMULTIJOB_jobID[]" class="form-control" value="{{$job->id}}" >
+                                                    <input type="checkbox" name="INVITEMULTIJOB_jobID[]" class="INVITEMULTIJOB_jobID_chkbx form-control" value="{{$job->id}}" >
                                                 </div>
                                                 <div class="col-md-10">
                                                     <h5 style="margin:0;"><a target="_tab" href="/jobDetails{{$job->id}}">{{$job->title}}</a></h5>
@@ -493,7 +496,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Send Invites</button>
+                            <button id="INVITEMULTIJOB_submitbtn" disabled type="submit" class="btn btn-success">Send Invites</button>
                         </div>
                     </div>
                 </div>

@@ -1129,6 +1129,7 @@ class ClientIndiController extends \BaseController {
                 'taskitems.itemcode'
             ])
             ->first();
+
         if($job->expired){
             return View::make('client.jobDetails_EXPIRED')
                     ->with('job', $job)
@@ -1170,6 +1171,7 @@ class ClientIndiController extends \BaseController {
                 ->where('taskminator_has_skills.taskitem_code', $job->itemcode)
                 ->where('users.total_profile_progress', '>=', '50')
                 ->whereNotIn('users.id', $APPLICANTS)
+                ->whereNotIn('users.id', $CHECKED_OUT_USERS)
                 ->select([
                     'users.username',
                     'users.fullName',
@@ -1193,7 +1195,7 @@ class ClientIndiController extends \BaseController {
                 ->take(5)
                 ->get();
 
-            $invited = JobInvite::where('job_id', $jobId)->whereNotIn('invited_id',[$APPLICANTS])->get();
+            $invited = JobInvite::where('job_id', $jobId)->whereNotIn('invited_id', $APPLICANTS)->get();
 
             return View::make('client.jobDetails')
                 ->with('job', $job)
@@ -1683,13 +1685,15 @@ class ClientIndiController extends \BaseController {
     }
 
     public function INVITEMULTIJOB(){
-        foreach(Input::get('INVITEMULTIJOB_jobID') as $j){
-            JobInvite::insert([
-                'invited_id'    =>  Input::get('workerID'),
-                'job_id'        =>  $j,
-                'message'       =>  Input::get('INVITEMULTIJOB_message'),
-                'created_at'    =>  date("Y:m:d H:i:s")
-            ]);
+        if(Input::has('INVITEMULTIJOB_jobID')){
+            foreach(Input::get('INVITEMULTIJOB_jobID') as $j){
+                JobInvite::insert([
+                    'invited_id'    =>  Input::get('workerID'),
+                    'job_id'        =>  $j,
+                    'message'       =>  Input::get('INVITEMULTIJOB_message'),
+                    'created_at'    =>  date("Y:m:d H:i:s")
+                ]);
+            }
         }
         return Redirect::back();
     }

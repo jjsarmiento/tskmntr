@@ -26,7 +26,6 @@ class HomeController extends BaseController {
         return preg_match('/^(([^<>()[\]\\.,;:\s@"\']+(\.[^<>()[\]\\.,;:\s@"\']+)*)|("[^"\']+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\d\-]+\.)+[a-zA-Z]{2,}))$/', $email);
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | Default Home Controller
@@ -76,6 +75,7 @@ class HomeController extends BaseController {
 
                 if($role == 'TASKMINATOR'){
                     $HAS_INVITES = null;
+                    $APPLICATIONS_OF_WORKER_FOR_COMPANY = null;
                     if(User::GETROLE(Auth::user()->id) == 'CLIENT_IND' || User::GETROLE(Auth::user()->id) == 'CLIENT_CMP'){
                         $CLIENTFLAG = true;
                     }
@@ -83,6 +83,8 @@ class HomeController extends BaseController {
                     $CLIENT_PROGRESSFLAG = (Auth::user()->total_profile_progress >= 50) ? true : false;
 
                     if($role == 'TASKMINATOR' && $CLIENTFLAG){
+                        $APPLICATIONS_OF_WORKER_FOR_COMPANY = $this->APPLICATIONS_OF_WORKER_FOR_COMPANY(Auth::user()->id, $temp->id);
+
                         $USERINCART =  Cart::where('worker_id', $temp->id)
                             ->where('company_id', Auth::user()->id)
                             ->count();
@@ -97,7 +99,9 @@ class HomeController extends BaseController {
                             ->get();
 
                         $HAS_INVITES = Job::join('job_invites', 'job_invites.job_id', '=', 'jobs.id')
+                            ->where('job_invites.invited_id', $temp->id)
                             ->whereIn('job_invites.job_id', BaseController::ALL_JOBS_STATIC(Auth::user()->id))
+                            ->whereNotIn('jobs.id', $this->GETAPPLICATIONS_ID($temp->id))
                             ->select([
                                 'jobs.id',
                                 'jobs.title',
@@ -105,7 +109,7 @@ class HomeController extends BaseController {
                             ])
                             ->get();
                     }
-                    // DETERMINE IF USER HAS CHECKEDOUT WORKER -- END by Jan Sarmiento
+
                     return View::make('profile_worker')
                         ->with("users", User::where('username', '=', $username)->get()->first())
                         ->with('roles', $role)
@@ -116,7 +120,8 @@ class HomeController extends BaseController {
                         ->with('USERINCART', $USERINCART)
                         ->with('PURCHASED', $PURCHASED)
                         ->with('MULTIJOB', $MULTIJOB)
-                        ->with('HAS_INVITES', $HAS_INVITES);
+                        ->with('HAS_INVITES', $HAS_INVITES)
+                        ->with('jobapps', $APPLICATIONS_OF_WORKER_FOR_COMPANY);
                 }else{
                     $users = User::leftJoin('regions', 'regions.regcode', '=', 'users.region')
                                 ->leftJoin('cities', 'cities.citycode', '=', 'users.city')

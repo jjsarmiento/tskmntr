@@ -187,6 +187,25 @@
                                         <a class="list-group-item" href="#"><i class="fa fa-twitter-square fa-fw"></i>&nbsp; Twitter</a>
                                         <a class="list-group-item" href="#"><i class="fa fa-instagram fa-fw"></i>&nbsp; Instagram</a>
                                     </div>
+                                    @if($jobapps->count() > 0)
+                                        <table class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Job</th>
+                                                    <th>Applied at</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($jobapps as $jobs)
+                                                    <tr>
+                                                        <td><a target="_tab" href="/jobDetails={{$jobs->id}}">{{$jobs->title}}</a></td>
+                                                        <td>{{$jobs->applied_at}}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    @endif
+
                                     @if($HAS_INVITES->count() > 0)
                                         <table class="table table-striped table-hover">
                                             <thead>

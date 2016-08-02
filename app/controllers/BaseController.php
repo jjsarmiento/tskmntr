@@ -526,5 +526,17 @@ class BaseController extends Controller {
         return $FINAL_PERCENTAGE;
     }
 
+    public function APPLICATIONS_OF_WORKER_FOR_COMPANY($companyID, $workerID){
+        return Job::join('job_applications', 'job_applications.job_id', '=', 'jobs.id')
+                ->where('jobs.user_id', $companyID)
+                ->where('job_applications.applicant_id', $workerID)
+                ->select([
+                    'jobs.id',
+                    'jobs.title',
+                    'job_applications.created_at as applied_at'
+                ])
+//                ->paginate(10);
+                ->get();
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

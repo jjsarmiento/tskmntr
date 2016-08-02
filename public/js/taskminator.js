@@ -117,3 +117,13 @@ function CHAINCATEGORYANDSKILL(CATEGORY, SKILL){
         })
     })
 }
+
+function INVITE_MULTI_JOB_VALIDATION(){
+    $('.INVITEMULTIJOB_jobID_chkbx').change(function(){
+        if($('.INVITEMULTIJOB_jobID_chkbx:checked').length > 0){
+            $('#INVITEMULTIJOB_submitbtn').prop('disabled', false);
+        }else{
+            $('#INVITEMULTIJOB_submitbtn').prop('disabled', true);
+        }
+    })
+}
