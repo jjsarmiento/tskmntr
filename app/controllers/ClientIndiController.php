@@ -1643,18 +1643,19 @@ class ClientIndiController extends \BaseController {
 
     public function bookmarkedUsers(){
         $bookmarks = User::join('bookmark_users', 'users.id', '=', 'bookmark_users.worker_id')
-                        ->where('bookmark_users.company_id', Auth::user()->id)
-                        ->select([
-                            'users.fullName',
-                            'users.firstName',
-                            'users.lastName',
-                            'users.id as userID',
-                            'bookmark_users.id as bmID',
-                            'bookmark_users.worker_id',
-                            'bookmark_users.company_id',
-                            'bookmark_users.created_at as bookmarked_at',
-                        ])
-                        ->get();
+            ->where('bookmark_users.company_id', Auth::user()->id)
+            ->select([
+                'users.username',
+                'users.fullName',
+                'users.firstName',
+                'users.lastName',
+                'users.id as userID',
+                'bookmark_users.id as bmID',
+                'bookmark_users.worker_id',
+                'bookmark_users.company_id',
+                'bookmark_users.created_at as bookmarked_at',
+            ])
+            ->get();
 
         $INCART = $this->GETINCART(Auth::user()->id);
         $CHECKED_OUT_USERS = $this->GETCHECKEDOUTUSERS(Auth::user()->id);

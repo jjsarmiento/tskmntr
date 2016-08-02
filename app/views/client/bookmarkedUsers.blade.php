@@ -35,13 +35,15 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
-                                            @if(in_array($bm->userID, $CHECKED_OUT_USERS))
-                                                {{$bm->firstName }} {{$bm->lastName}}
-                                            @else
-                                                {{substr_replace($bm->firstName, str_repeat('*', strlen($bm->firstName)-1), 1)}}
-                                                &nbsp;
-                                                {{substr_replace($bm->lastName, str_repeat('*', strlen($bm->lastName)-1), 1)}}
-                                            @endif
+                                            <a href="/{{$bm->username}}">
+                                                @if(in_array($bm->userID, $CHECKED_OUT_USERS))
+                                                    {{$bm->firstName }} {{$bm->lastName}}
+                                                @else
+                                                    {{substr_replace($bm->firstName, str_repeat('*', strlen($bm->firstName)-1), 1)}}
+                                                    &nbsp;
+                                                    {{substr_replace($bm->lastName, str_repeat('*', strlen($bm->lastName)-1), 1)}}
+                                                @endif
+                                            </a>
                                         </h3>
                                         <span class="text-right" style="padding:0;margin:0; color:#ccc;">
                                             Bookmarked at {{ date('m/d/y', strtotime($bm->bookmarked_at)) }}
