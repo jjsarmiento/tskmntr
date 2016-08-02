@@ -102,6 +102,20 @@
         color:white;
         text-decoration: none;
     }
+    a.viewSal{
+        background-color: #2980b9;
+        border: 2px solid #226ea0;
+        transition: 0.3s;
+        color: white; 
+        padding: 5px;      
+        text-transform: uppercase; 
+        font-size: 14px;
+    }
+    a.viewSal:hover{
+        background: transparent;
+        color: #2980b9;
+        text-decoration: none;
+    }
     .thumbnail {
         border: 0px solid #ddd !important;
         margin-bottom: 0;
@@ -137,6 +151,9 @@
         font-size: 17px;
         line-height: 1.7em;
     }
+    p.content{
+        margin-bottom: 10px !important;
+    }
 </style>
 
 @stop
@@ -166,6 +183,8 @@
                         <div class="heading" style="padding: 10px 0; text-align:center;">
                             <a href="/editProfile" style="font-weight:bold; font-size:14pt;">{{ Auth::user()->fullName }}</a><br>
                         </div>
+                        <span><b>Employment Status:</b> Not Hired</span><br>
+                        <span><b>Last Login:</b> 08/02/16</span>
                     </div>
                     <!-- <div class="col-lg-12" style="padding-left:24px;">
                         <a href="/editProfile">Edit Profile</a>
@@ -232,18 +251,68 @@
                         </div>
                     </div>
                 </div>
+
+                <!--GEN INFO-->
+
+                <div class="widget-container fluid-height">
+                    <div class="widget-content">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel">
+                                <div class="panel filter-categories">
+                                    <div class="panel-body">
+                                        <div class="heading" style="font-size:14pt; color:#2980b9">
+                                            <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Personal Information
+                                        </div>     
+                                        <div class="panel-body">
+                                            <span><b>Address:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</span><br>
+                                            <span><b>Birthdate:</b> 01/01/01</span><br>
+                                            <span><b>Gender:</b> Male</span><br>
+                                            <span><b>Marital Status:</b> Single</span><br>
+                                            <span><b>Age:</b> 42</span><br>
+                                            <span><b>Account Status:</b> Activated</span><br>
+                                            <span><b>Account Created:</b> 01/01/01</span><br>
+                                        </div>  
+                                        <div class="heading" style="font-size:14pt; color:#2980b9">
+                                            <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>&nbsp Contact Information
+                                        </div>     
+                                        <div class="panel-body">
+                                             <span><b>Email:</b> <a href="mailto:taskminator0@taskminator.com" target="_top">taskminator0@taskminator.com</a></span><br>
+                                             <span><b>Facebook:</b> <a href="facebook.com/januarystays" target="_blank">facebook.com/januarystays</a></span><br>
+                                             <span><b>Linkedin:</b> <a href="linkedin.com/sample" target="_blank">linkedin.com/sample</a></span><br>
+                                             <span><b>Mobile:</b> 639276274641</span><br>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CERT -->
+                <div class="widget-container fluid-height">
+                    <div class="widget-content">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel">
+                                <div class="panel filter-categories">
+                                    <div class="panel-body">
+                                        <div class="heading" style="font-size:14pt; color:#2980b9">
+                                            <i class="fa fa-certificate" style="font-size:14pt; color:#2980b9"></i>&nbsp Certification
+                                        </div> 
+                                        <div class="panel-body">
+                                            <span>N/A</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
             <!-- ENF PROFILE PIC / INFO -->
             <!-- MAIN CONTENT STATISTICS / AVAILABLE JOBS -->
             <div class="col-lg-8">
-                <!-- <div class="col-lg-12">
-                    <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
-                        <div class="widget-content">
-
-                        </div>
-                    </div>
-                </div> -->
-
                 <!-- END OF PROFILE  COMPLETENESS METER -->
                 <div class="col-lg-12 no-padding">
                     <div class="widget-container stats-container" style="display:block !important;">
@@ -335,38 +404,97 @@
                 </div>
             </div>
 
+            <!--PREFERED JOB -->
             <div class="col-lg-8" style="padding-top: 19px;">
                 <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
                     <div class="widget-content">
                         <div class="panel-body" style="color:#2980b9; font-size:20pt;">
-                            <i class="fa fa-search" aria-hidden="true"></i> Job Ads 
+                            <i class="fa fa-search" aria-hidden="true"></i> Prefered Job
                         </div>
-                        <div class="panel-body">
-                            <ul>
-                                <li>
-                                    <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a>
-                                </li>
-                                <li>
-                                    <a href="#">Fusce efficitur augue ut velit aliquam, dictum scelerisque lectus lobortis.</a>
-                                </li>
-                                <li>
-                                    <a href="#">Aenean posuere eros ac lectus dapibus, quis luctus justo ultrices.</a>
-                                </li>
-                                <li>
-                                    <a href="#">Etiam ut mi convallis, gravida leo et, volutpat ex.</a>
-                                </li>
-                                <li>
-                                    <a href="#">Duis volutpat diam at lacus sollicitudin, ut mollis sapien vestibulum.</a>
-                                </li>
-                                <li>
-                                    <a href="#">Praesent interdum sem id dolor fringilla, non suscipit lectus fermentum.</a>
-                                </li>
-                            </ul>
+                        <div class="panel-body" style="padding: 0 15px 15px;">
+                            <div class="col-md-12 no-padding">
+                                @for($i=0; $i<3; $i++)
+                                    <div class="col-md-4 padded">
+                                        <b class="title">Praesent volutpat dapibus mauris nec blandit.</b>
+                                        <p class="content">Vivamus metus nulla, tempor vel varius fermentum, molestie nec enim. Suspendisse eu ultricies lorem. </p>
+                                        <a href="#" class="viewSal">View full details</a>
+                                    </div>
+                                @endfor
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Education -->
+            <div class="col-lg-8" style="padding-top: 19px;">
+                <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
+                    <div class="widget-content">
+                        <div class="heading" style="font-size:14pt; color:#2980b9">
+                            <i class="fa fa-graduation-cap" style="font-size:14pt; color:#2980b9"></i>&nbsp Educational Background
+                        </div>                        
+                        <div class="panel-body" style="padding: 0 15px 15px;">
+                            <div class="col-md-12">
+                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</span> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experiences/ SKILLS -->
+            <div class="col-lg-8" style="padding-top: 19px;">
+                <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
+                    <div class="col-md-6">
+                        <div class="widget-content">
+                            <div class="heading" style="font-size:14pt; color:#2980b9">
+                                <i class="fa fa-lightbulb-o" style="font-size:14pt; color:#2980b9"></i>&nbsp Experience
+                            </div>                        
+                            <div class="panel-body" style="padding: 0 15px 15px;">
+                                <div class="col-md-12">
+                                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</span> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="widget-content">
+                            <div class="heading" style="font-size:14pt; color:#2980b9">
+                                <i class="glyphicon glyphicon-star" style="font-size:14pt; color:#2980b9"></i>&nbsp Skills
+                            </div>                        
+                            <div class="panel-body" style="padding: 0 15px 15px;">
+                                <div class="col-md-12">
+                                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span> 
+                                </div>
+                            </div>
+                        </div> 
+                    </div> 
+                    <div style="clear:both;"></div>             
+
+                </div>
+            </div>
+
+            <!-- Additional Info-->
+            <div class="col-lg-8" style="padding-top: 19px;">
+                <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
+                    <div class="widget-content">
+                        <div class="heading" style="font-size:14pt; color:#2980b9">
+                            <i class="fa fa-file" style="font-size:14pt; color:#2980b9"></i>&nbsp Supporting Documents
+                        </div>                        
+                        <div class="panel-body" style="padding: 0 15px 15px;">
+                            <div class="col-md-12">
+                                @for($i=0; $i<=3; $i++)
+                                    <div class="col-md-3">
+                                        <img style="width:100%;" src="../images/sample_doc.jpg">
+                                        <p style="text-align:center;">Sample Docx</p>
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
 <!-- END MAIN CONTENT -->
         </div>
     </div>
