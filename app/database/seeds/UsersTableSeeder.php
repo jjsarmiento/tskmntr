@@ -39,6 +39,7 @@ class UsersTableSeeder extends Seeder {
             'user_id'                   =>  1,
             'system_subscription_id'    =>  1,
             'expires_at'                =>  $total_duration,
+            'created_at'                =>  date("Y:m:d H:i:s")
         ]);
 
         // CLIENT - COMPANY
@@ -81,6 +82,7 @@ class UsersTableSeeder extends Seeder {
             'user_id'                   =>  2,
             'system_subscription_id'    =>  1,
             'expires_at'                =>  $total_duration,
+            'created_at'                =>  date("Y:m:d H:i:s")
         ]);
 
         // TASKMINATOR 1

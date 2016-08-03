@@ -571,7 +571,7 @@ class BaseController extends Controller {
         if($subscription){
             return 'Your '.$subscription->label.' Package will expire at '.date('m/d/y', strtotime($subscription->expires_at));
         }else{
-            return 'You are currently not subscribed to any Proveek Packages';
+            return '<i class="fa fa-warning"></i>&nbsp;&nbsp;You are currently not subscribed to any Proveek Packages';
         }
     }
 
@@ -600,6 +600,98 @@ class BaseController extends Controller {
                 BaseController::SUBSCRIPTION_EXPIRED($subscription_id);
             }
         }
+    }
+
+    public function SUBSCRIPTION_RESTRICTIONS($userID, $restrictionType){
+        // RETURNS TRUE IF RESTRICTIONS ARE VIOLATED
+        $subscription_id = User::where('id', $userID)->pluck('accountType');
+        $subscription_details = UserSubscription::where('id', $subscription_id)->first();
+        $system_subscription_details = SystemSubscription::where('id', $subscription_details->system_subscription_id)->first();
+        $subscription_start = $subscription_details->created_at;
+        $subscription_expiration = $subscription_details->expires_at;
+
+        switch($restrictionType){
+            case 'worker_browse' :
+                return ($system_subscription_details->worker_browse) ? 0 : 1;
+                break;
+            case 'worker_bookmark_limit' :
+                return $this->RSTRCTN_WORKER_BOOKMARK_LIMIT($userID, $subscription_start, $system_subscription_details->worker_bookmark_limit);
+                break;
+            case 'invite_limit' :
+                return $this->RSTRCTN_INVITE_LIMIT($userID, $subscription_start, $system_subscription_details->invite_limit);
+                break;
+            case 'job_ad_limit_week' :
+                return $this->RSTRCTN_JOBADLIMIT_WK($userID, $subscription_start, $system_subscription_details->job_ad_limit_week);
+                break;
+            case 'job_ad_limit_month' :
+                return $this->RSTRCTN_JOBADLIMIT_MNTH($userID, $subscription_start, $subscription_expiration, $system_subscription_details->job_ad_limit_month);
+                break;
+            default :
+                return 'DEFAULT';
+                break;
+        }
+    }
+
+    public function RSTRCTN_WORKER_BOOKMARK_LIMIT($userID, $start_date, $quantity){
+        $start_date = strtotime($start_date);
+        $end_date = $start_date + (7 * 24 * 60 * 60);
+
+        if(time() > $end_date){
+            $start_date = $end_date + (24 * 60 * 60);
+            $end_date = $start_date + (7 * 24 * 60 * 60);
+        }
+        $bookmarksOfTheWeek = User::leftJoin('bookmark_users', 'bookmark_users.company_id', '=', 'users.id')
+                ->where('users.id', $userID)
+                ->whereBetween('bookmark_users.created_at', array(date("Y:m:d H:i:s", $start_date), date("Y:m:d H:i:s", $end_date)))
+                ->groupBy('bookmark_users.id')
+                ->count();
+
+        return ($bookmarksOfTheWeek > $quantity) ? 1 : 0;
+    }
+
+    public function RSTRCTN_INVITE_LIMIT($userID, $start_date, $quantity){
+        $start_date = strtotime($start_date);
+        $end_date = $start_date + (7 * 24 * 60 * 60);
+
+        if(time() > $end_date){
+            $start_date = $end_date + (24 * 60 * 60);
+            $end_date = $start_date + (7 * 24 * 60 * 60);
+        }
+
+        $inviteOfTheWeek = JobInvite::join('jobs', 'jobs.id', '=', 'job_invites.job_id')
+            ->join('users', 'users.id', '=', 'jobs.user_id')
+            ->where('users.id', $userID)
+            ->whereBetween('job_invites.created_at', array(date("Y:m:d H:i:s", $start_date), date("Y:m:d H:i:s", $end_date)))
+            ->groupBy('job_invites.id')
+            ->count();
+
+        return ($inviteOfTheWeek > $quantity) ? 1 : 0;
+    }
+
+    public function RSTRCTN_JOBADLIMIT_WK($userID, $start_date, $quantity){
+        $start_date = strtotime($start_date);
+        $end_date = $start_date + (7 * 24 * 60 * 60);
+
+        if(time() > $end_date){
+            $start_date = $end_date + (24 * 60 * 60);
+            $end_date = $start_date + (7 * 24 * 60 * 60);
+        }
+
+        $jobAdsOfTheWeek = Job::join('users', 'users.id', '=', 'jobs.user_id')
+            ->where('users.id', $userID)
+            ->whereBetween('jobs.created_at', array(date("Y:m:d H:i:s", $start_date), date("Y:m:d H:i:s", $end_date)))
+            ->groupBy('jobs.id')
+            ->count();
+
+        return ($jobAdsOfTheWeek > $quantity) ? 1 : 0;
+    }
+
+    public function RSTRCTN_JOBADLIMIT_MNTH($userID, $start_date, $end_date, $quantity){
+        $jobsOfTheMonth = Job::join('users', 'users.id', '=', 'jobs.user_id')
+                ->where('users.id', $userID)
+                ->whereBetween('jobs.created_at', array($start_date, $end_date))
+                ->count();
+        return ($jobsOfTheMonth > $quantity) ? 1 : 0;
     }
     // AUTHORED BY Jan Sarmiento -- END
 }

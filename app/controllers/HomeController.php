@@ -7,7 +7,11 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){ // test()
-        return $this->SUBSCRIPTION_DURATION_MSG(2);
+//        return $this->SUBSCRIPTION_DURATION_MSG(2);
+//        return $this->SUBSCRIPTION_RESTRICTIONS(2, 'worker_bookmark_limit');
+//        return $this->SUBSCRIPTION_RESTRICTIONS(2, 'worker_browse');
+//        return $this->SUBSCRIPTION_RESTRICTIONS(2, 'job_ad_limit_week');
+        return $this->SUBSCRIPTION_RESTRICTIONS(2, 'job_ad_limit_month');
     }
 
     function generateConfirmationCode(){
