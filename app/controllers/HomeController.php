@@ -903,7 +903,6 @@ class HomeController extends BaseController {
 
     public function doLogin(){
         if(Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')))){
-
             date_default_timezone_set("Asia/Manila");
             AuditTrail::insert(array(
                 'user_id'   =>  Auth::user()->id,
@@ -911,6 +910,17 @@ class HomeController extends BaseController {
                 'created_at'    =>  date("Y:m:d H:i:s")
 //                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
             ));
+
+            // profile completeness
+            switch(User::GETROLE(Auth::user()->id)){
+                case 'CLIENT_IND' :
+                case 'CLIENT_CMP' :
+                    BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
+                    break;
+                case 'TASKMINATOR' :
+                    BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
+                    break;
+            }
 
             switch(Auth::user()->status){
                 case 'VERIFY_EMAIL_REGISTRATION':

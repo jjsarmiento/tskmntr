@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder {
             'country'           =>  'PHILIPPINES',
             'confirmationCode'  =>  md5(uniqid(rand(), true)),
             'status'            =>  'ACTIVATED',
-            'accountType'            =>  'BASIC',
+            'accountType'       =>  '1',
 //            'created_at'        =>  '2015-04-30 21:03:32',
 //            'updated_at'        =>  '2015-04-30 21:03:32',
             'points'            =>  '100',
@@ -31,6 +31,15 @@ class UsersTableSeeder extends Seeder {
             'user_id'           =>  1,
             'role_id'           =>  3,
         ));
+
+        $total_duration = time() + (30 * 24 * 60 * 60);
+        $total_duration = date("Y:m:d H:i:s", $total_duration);
+
+        UserSubscription::insert([
+            'user_id'                   =>  1,
+            'system_subscription_id'    =>  1,
+            'expires_at'                =>  $total_duration,
+        ]);
 
         // CLIENT - COMPANY
         User::create(array(
@@ -45,7 +54,7 @@ class UsersTableSeeder extends Seeder {
             'country'           =>  'PHILIPPINES',
             'confirmationCode'  =>  md5(uniqid(rand(), true)),
             'status'            =>  'ACTIVATED',
-            'accountType'            =>  'BASIC',
+            'accountType'       =>  '1',
             'businessPermit'    =>  'Client Company DTI/SEC',
             'businessDescription'    =>  'Client Company Description',
             'businessNature'    =>  'Client Company Nature',
@@ -67,6 +76,11 @@ class UsersTableSeeder extends Seeder {
             'position'          =>  'Client Keyperon Position',
             'country'           =>  'PHILIPPINES',
         ));
+        UserSubscription::insert([
+            'user_id'                   =>  2,
+            'system_subscription_id'    =>  1,
+            'expires_at'                =>  $total_duration,
+        ]);
 
         // TASKMINATOR 1
         User::create(array(

@@ -559,11 +559,25 @@ class BaseController extends Controller {
     }
 
     public function SUBSCRIPTION_DURATION_MSG($user_id){
-//        return 'SAMPLE DURATION';
-        $sub_details = SystemSubscription::where('id', User::where('id', $user_id)->pluck('accountType'))->first();
-        $sub_expiration = UserSubscription::where('user_id', Auth::user()->id)->pluck('expires_at');
-        $subscription = 'Your '.$sub_details->subscription_label.' Subscription will expire at '.date('m/d/y', strtotime($sub_expiration));
-        return $subscription;
+        if(in_array(User::where('id', $user_id)->pluck('accountType'), $this->ALL_SUBSCRIPTIONS_ARRAY())){
+            $sub_details = SystemSubscription::where('id', User::where('id', $user_id)->pluck('accountType'))->first();
+            $sub_expiration = UserSubscription::where('user_id', Auth::user()->id)->pluck('expires_at');
+            $subscription = 'Your '.$sub_details->subscription_label.' Subscription will expire at '.date('m/d/y', strtotime($sub_expiration));
+            return $subscription;
+        }else{
+            return 'You have no subscriptions to any Proveek Packages';
+        }
+    }
+
+    public function ALL_SUBSCRIPTIONS_ARRAY(){
+        $ox = SystemSubscription::get();
+
+        $myArr = array();
+        foreach($ox as $o){
+            array_push($myArr, $o->id);
+        }
+
+        return $myArr;
     }
     // AUTHORED BY Jan Sarmiento -- END
 }
