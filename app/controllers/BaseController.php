@@ -539,15 +539,15 @@ class BaseController extends Controller {
                 ->get();
     }
 
-    public function APPLY_SUBSCRIPTION_EMPLOYERS($subscription_id, $employer_id){
-        if($subscription_id != 0){
-            $sub_duration = SystemSubscription::where('id', $subscription_id)->pluck('subscription_duration');
+    public function APPLY_SUBSCRIPTION_EMPLOYERS($sys_subscription_id, $employer_id){
+        if($sys_subscription_id != 0){
+            $sub_duration = SystemSubscription::where('id', $sys_subscription_id)->pluck('subscription_duration');
             $total_duration = time() + ($sub_duration * 24 * 60 * 60);
             $total_duration = date("Y:m:d H:i:s", $total_duration);
 
-            UserSubscription::insert([
+            $subscription_id = UserSubscription::insertGetId([
                 'user_id'                   =>  $employer_id,
-                'system_subscription_id'    =>  $subscription_id,
+                'system_subscription_id'    =>  $sys_subscription_id,
                 'expires_at'                =>  $total_duration,
                 'created_at'                =>  date("Y:m:d H:i:s")
             ]);
@@ -559,13 +559,19 @@ class BaseController extends Controller {
     }
 
     public function SUBSCRIPTION_DURATION_MSG($user_id){
-        if(in_array(User::where('id', $user_id)->pluck('accountType'), $this->ALL_SUBSCRIPTIONS_ARRAY())){
-            $sub_details = SystemSubscription::where('id', User::where('id', $user_id)->pluck('accountType'))->first();
-            $sub_expiration = UserSubscription::where('user_id', Auth::user()->id)->pluck('expires_at');
-            $subscription = 'Your '.$sub_details->subscription_label.' Subscription will expire at '.date('m/d/y', strtotime($sub_expiration));
-            return $subscription;
+        $subscription = UserSubscription::join('system_subscriptions', 'user_subscriptions.system_subscription_id', '=', 'system_subscriptions.id')
+                        ->where('user_subscriptions.user_id', $user_id)
+                        ->where('user_subscriptions.expired', false)
+                        ->select([
+                            'system_subscriptions.subscription_label as label',
+                            'user_subscriptions.expires_at'
+                        ])
+                        ->first();
+
+        if($subscription){
+            return 'Your '.$subscription->label.' Package will expire at '.date('m/d/y', strtotime($subscription->expires_at));
         }else{
-            return 'You have no subscriptions to any Proveek Packages';
+            return 'You are currently not subscribed to any Proveek Packages';
         }
     }
 
@@ -578,6 +584,22 @@ class BaseController extends Controller {
         }
 
         return $myArr;
+    }
+
+    public static function SUBSCRIPTION_EXPIRED($sub_id){
+        UserSubscription::where('id', $sub_id)->update([
+            'expired'   =>  true
+        ]);
+    }
+
+    public static function SUBSCRIPTION_UPDATE($employerID){
+        $subscription_id = User::where('id', $employerID)->pluck('accountType');
+        $subscription_details = UserSubscription::where('id', $subscription_id)->first();
+        if(!$subscription_details->expired){
+            if(time() > strtotime($subscription_details->expirest_at)){
+                BaseController::SUBSCRIPTION_EXPIRED($subscription_id);
+            }
+        }
     }
     // AUTHORED BY Jan Sarmiento -- END
 }

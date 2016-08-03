@@ -17,6 +17,7 @@ class CreateUserSubscriptionsTable extends Migration {
 			$table->increments('id');
 			$table->string('user_id')->nullable();
 			$table->string('system_subscription_id')->nullable();
+			$table->boolean('expired')->default(false);
 			$table->string('expires_at')->nullable();
 			$table->timestamps();
 		});

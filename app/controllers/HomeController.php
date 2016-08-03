@@ -6,10 +6,8 @@ use Carbon\Carbon;
 
 class HomeController extends BaseController {
 
-    public function TESTINGROUTE(){
-//        return BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(5);
-//        return BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(2);
-        return $this->APPLY_SUBSCRIPTION_EMPLOYERS('1', '8');
+    public function TESTINGROUTE(){ // test()
+        return $this->SUBSCRIPTION_DURATION_MSG(2);
     }
 
     function generateConfirmationCode(){
@@ -863,6 +861,9 @@ class HomeController extends BaseController {
                             ->get();
 
                     // $freeDuration = $tempDate->diffInDays(Carbon::now());
+//                    return Auth::user()->id;
+//                    return SystemSubscription::where('id', 1)->get();
+//                    return UserSubscription::where('id', Auth::user()->accountType)->get();
                     return View::make('client.index')
                     ->with('subscription_msg', $this->SUBSCRIPTION_DURATION_MSG(Auth::user()->id))
                     ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())

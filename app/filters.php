@@ -127,6 +127,9 @@ Route::filter('CLIENT-ONLY', function(){
     }else{
         return Redirect::to('/');
     }
+
+    // check if subscription is expired
+    BaseController::SUBSCRIPTION_UPDATE(Auth::user()->id);
 });
 
 //Route::filter('CLIENTCOMP-ONLY', function(){

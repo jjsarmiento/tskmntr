@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder {
             'country'           =>  'PHILIPPINES',
             'confirmationCode'  =>  md5(uniqid(rand(), true)),
             'status'            =>  'ACTIVATED',
-            'accountType'       =>  '1',
+            'accountType'       =>  2,
             'businessPermit'    =>  'Client Company DTI/SEC',
             'businessDescription'    =>  'Client Company Description',
             'businessNature'    =>  'Client Company Nature',
@@ -76,6 +76,7 @@ class UsersTableSeeder extends Seeder {
             'position'          =>  'Client Keyperon Position',
             'country'           =>  'PHILIPPINES',
         ));
+
         UserSubscription::insert([
             'user_id'                   =>  2,
             'system_subscription_id'    =>  1,
