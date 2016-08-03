@@ -26,7 +26,7 @@ class SystemSettingsSeeder extends Seeder {
 
         SystemSetting::create(array(
             'type'          =>  "SYSSETTINGS_FREE_SUB_ON_REG",
-            'value'         =>  "10"
+            'value'         =>  "1"
         ));
     }
 }

@@ -7,8 +7,9 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){
-        return BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(5);
+//        return BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(5);
 //        return BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(2);
+        return $this->APPLY_SUBSCRIPTION_EMPLOYERS('1', '8');
     }
 
     function generateConfirmationCode(){
@@ -863,7 +864,7 @@ class HomeController extends BaseController {
 
                     // $freeDuration = $tempDate->diffInDays(Carbon::now());
                     return View::make('client.index')
-                    ->with('freeDuration', $freeDuration)
+                    ->with('subscription_msg', $this->SUBSCRIPTION_DURATION_MSG(Auth::user()->id))
                     ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
                     ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get())
 //                    ->with('TOTALPROG', $this->PROFILE_PERCENTAGE_COMPANY(Auth::user()->id))
@@ -1578,7 +1579,7 @@ class HomeController extends BaseController {
             return $msg;
         }else{
             if(User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_IND' || User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_CMP'){
-                $this->APPLY_SUBSCRIPTION('FREE', $CODE_DETAILS->user_id);
+                $this->APPLY_SUBSCRIPTION_EMPLOYERS(SystemSetting::where('type', 'SYSSETTINGS_FREE_SUB_ON_REG')->pluck('value'), $CODE_DETAILS->user_id);
             }
 
             User::where('id', $CODE_DETAILS->user_id)->update([

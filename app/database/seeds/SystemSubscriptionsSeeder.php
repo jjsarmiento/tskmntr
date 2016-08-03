@@ -12,7 +12,7 @@ class SystemSubscriptionsSeeder extends Seeder {
         SystemSubscription::create([
             'subscription_code'     => 'FREE',
             'subscription_label'    => 'Free',
-            'subscription_duration' => '1',
+            'subscription_duration' => '30',
             'subscription_price'    => 0,
             'worker_browse'         => true,
             'worker_bookmark_limit' => '5',
@@ -28,7 +28,7 @@ class SystemSubscriptionsSeeder extends Seeder {
         SystemSubscription::create([
             'subscription_code'     => 'BASIC',
             'subscription_label'    => 'Basic',
-            'subscription_duration' => '1',
+            'subscription_duration' => '30',
             'subscription_price'    => 2499.00,
             'worker_browse'         => true,
             'worker_bookmark_limit' => '100',
@@ -44,7 +44,7 @@ class SystemSubscriptionsSeeder extends Seeder {
         SystemSubscription::create([
             'subscription_code'     => 'PREMIUM',
             'subscription_label'    => 'Premium',
-            'subscription_duration' => '1',
+            'subscription_duration' => '30',
             'subscription_price'    => 4999.00,
             'worker_browse'         => true,
             'worker_bookmark_limit' => '200',

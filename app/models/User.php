@@ -26,7 +26,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
     static function GETROLE($id){
         return Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')
-            ->where('user_has_role.user_id', Auth::user()->id)
+            ->where('user_has_role.user_id', $id)
             ->pluck('role');
     }
 

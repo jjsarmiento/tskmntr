@@ -224,7 +224,7 @@
                 <div class="widget-container weather" style="min-height: 1em;">
                     <div class="widget-content">
                         <div class="padded text-center" style="min-height:30px; text-align:left; border-bottom:1px solid #e6e6e6; color:#2980b9; font-size:18pt;">
-                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ Auth::user()->total_profile_progress }}% | {{ $freeDuration }}
+                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ Auth::user()->total_profile_progress }}% | {{$subscription_msg}}
                             @if(Auth::user()->total_profile_progress < 50)
                                 <p style="color: #000000;">
                                     <i style="color: red" class="fa fa-warning"></i> <b>You can start posting jobs and look for workers when you complete your profile above 50%. Click <a href="/editProfile">here</a> to edit your profile</b>

@@ -539,8 +539,30 @@ class BaseController extends Controller {
                 ->get();
     }
 
-    public function APPLY_SUBSCRIPTION($subscription_id, $employer_id){
+    public function APPLY_SUBSCRIPTION_EMPLOYERS($subscription_id, $employer_id){
+        if($subscription_id != 0){
+            $sub_duration = SystemSubscription::where('id', $subscription_id)->pluck('subscription_duration');
+            $total_duration = time() + ($sub_duration * 24 * 60 * 60);
+            $total_duration = date("Y:m:d H:i:s", $total_duration);
 
+            UserSubscription::insert([
+                'user_id'                   =>  $employer_id,
+                'system_subscription_id'    =>  $subscription_id,
+                'expires_at'                =>  $total_duration,
+                'created_at'                =>  date("Y:m:d H:i:s")
+            ]);
+
+            User::where('id', $employer_id)->update([
+                'accountType'   =>  $subscription_id
+            ]);
+        }
+    }
+
+    public function SUBSCRIPTION_DURATION_MSG($user_id){
+        $sub_details = SystemSubscription::where('id', User::where('id', $user_id)->pluck('accountType'))->first();
+        $sub_expiration = UserSubscription::where('user_id', Auth::user()->id)->pluck('expires_at');
+        $subscription = 'Your '.$sub_details->subscription_label.' Subscription will expire at '.date('m/d/y', strtotime($sub_expiration));
+        return $subscription;
     }
     // AUTHORED BY Jan Sarmiento -- END
 }
