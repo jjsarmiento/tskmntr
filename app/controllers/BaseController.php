@@ -594,5 +594,13 @@ class BaseController extends Controller {
                 ->count();
         return ($jobsOfTheMonth > $quantity) ? 1 : 0;
     }
+
+    public function SUBSCRIPTION_DETAILS($userID){
+        return SystemSubscription::join('user_subscriptions', 'user_subscriptions.system_subscription_id', '=', 'system_subscriptions.id')
+                ->join('users', 'users.id', '=', 'user_subscriptions.user_id')
+                ->where('users.id', $userID)
+                ->groupBy('system_subscriptions.id')
+                ->first();
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

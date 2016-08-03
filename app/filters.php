@@ -112,7 +112,9 @@ Route::filter('WORKER-UPDATE-PROFILE-PROGRESS', function(){
 Route::filter('invite_limit', function(){
     $basecontroller = new BaseController;
     if($basecontroller->SUBSCRIPTION_RESTRICTIONS(Auth::user()->id, 'invite_limit')){
-        return View::make('ERRORPAGE');
+        return View::make('error.SUBSCRIPTION_ERROR')
+                ->with('msg', 'You have reached your subscriptions invite limit!')
+                ->with('sub', $basecontroller->SUBSCRIPTION_DETAILS(Auth::user()->id));
     }
 });
 
