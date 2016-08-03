@@ -487,7 +487,7 @@ class BaseController extends Controller {
         return $myArr;
     }
 
-    public static function SUBSCRIPTION_EXPIRED($sub_id){
+    public static function SUBSCRIPTION_EXPIRED($sub_id, $userID){
         UserSubscription::where('id', $sub_id)->update([
             'expired'   =>  true
         ]);
@@ -498,7 +498,14 @@ class BaseController extends Controller {
         $subscription_details = UserSubscription::where('id', $subscription_id)->first();
         if(!$subscription_details->expired){
             if(time() > strtotime($subscription_details->expires_at)){
-                BaseController::SUBSCRIPTION_EXPIRED($subscription_id);
+                $msg = 'Your subscription has expired';
+                $bc = new BaseController();
+                $bc->NOTIFICATION_INSERT($employerID, $msg, '/TOPTUP');
+                BaseController::SUBSCRIPTION_EXPIRED($subscription_id, $employerID);
+            }elseif(Carbon::parse($subscription_details->created_at)->diffInDays(Carbon::now()) >= 3){
+                $msg = 'Your subscription will expire in less than 3 days';
+                $bc = new BaseController();
+                $bc->NOTIFICATION_INSERT($employerID, $msg, '/TOPTUP');
             }
         }
     }
