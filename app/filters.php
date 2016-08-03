@@ -109,6 +109,13 @@ Route::filter('WORKER-UPDATE-PROFILE-PROGRESS', function(){
 //    }
 });
 
+Route::filter('invite_limit', function(){
+    $basecontroller = new BaseController;
+    if($basecontroller->SUBSCRIPTION_RESTRICTIONS(Auth::user()->id, 'invite_limit')){
+        return View::make('ERRORPAGE');
+    }
+});
+
 Route::filter('CLIENT-ONLY', function(){
     if(Auth::check()){
         switch(Auth::user()->status){
