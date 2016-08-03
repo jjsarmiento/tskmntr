@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder {
             'accountType'       =>  '1',
 //            'created_at'        =>  '2015-04-30 21:03:32',
 //            'updated_at'        =>  '2015-04-30 21:03:32',
-            'points'            =>  '100',
+            'points'            =>  '150',
         ));
         UserHasRole::create(array(
             'user_id'           =>  1,
@@ -61,7 +61,7 @@ class UsersTableSeeder extends Seeder {
             'businessNature'    =>  'Client Company Nature',
 //            'created_at'        =>  '2015-04-30 21:03:32',
 //            'updated_at'        =>  '2015-04-30 21:03:32',
-            'points'            =>  '100',
+            'points'            =>  '150',
         ));
         UserHasRole::create(array(
             'user_id'           =>  2,
