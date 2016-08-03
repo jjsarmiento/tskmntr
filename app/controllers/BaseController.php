@@ -559,6 +559,7 @@ class BaseController extends Controller {
     }
 
     public function SUBSCRIPTION_DURATION_MSG($user_id){
+        return 'SAMPLE DURATION';
         $sub_details = SystemSubscription::where('id', User::where('id', $user_id)->pluck('accountType'))->first();
         $sub_expiration = UserSubscription::where('user_id', Auth::user()->id)->pluck('expires_at');
         $subscription = 'Your '.$sub_details->subscription_label.' Subscription will expire at '.date('m/d/y', strtotime($sub_expiration));
