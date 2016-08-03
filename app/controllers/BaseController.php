@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 class BaseController extends Controller {
 
 	/**
@@ -62,118 +64,6 @@ class BaseController extends Controller {
 
 //        exit(0);
     }
-
-    // AUTHORED BY Jan Sarmiento -- START
-    // used to get profile percentage
-//    public function PROFILE_PERCENTAGE_COMPANY($userid){
-//        $user = User::where('id', $userid)->first();
-//        $reqMeter = 0;
-//        $optMeter = 0;
-//
-//        $intProgress = 0;
-//        $reqProgress = 0;
-//        $optProgress = 0;
-//
-//        // INITIAL REQUIRED
-//        if($user->firstName != ""){  $reqMeter++;}
-//        if($user->lastName != ""){   $reqMeter++;}
-//        if($user->companyName != ""){$reqMeter++;}
-//        if($user->username != ""){   $reqMeter++;}
-//        if($user->password != ""){   $reqMeter++;}
-//        if(Contact::where('user_id', $user->id)->get() != ""){   $reqMeter++;}
-//        // END OF INITIAL REQUIRED
-//
-//        $intProgress = ($reqMeter / 6) * 30;
-//        $reqMeter = 0; // to reset the value;
-//
-//        // REQUIRED
-//        if($user->profilePic != ""){                             $reqMeter++;}
-//        if(Contact::where('user_id', $user->id)->get() != ""){   $reqMeter++;}
-//        if($user->city != ""){                                   $reqMeter++;}
-//        if($user->address != ""){                                $reqMeter++;}
-//        if($user->businessPermit != ""){                         $reqMeter++;}
-//        if($user->businessDescription != ""){                    $reqMeter++;}
-//        if($user->businessNature != ""){                         $reqMeter++;}
-//
-//        // END OF REQUIRED
-//
-//        $reqProgress = ($reqMeter/7) * 50;
-//        // OPTIONAL PROGRESS
-//        if($user->midName != ""){            $optMeter++;}
-//        if($user->yearsOfExperience != ""){  $optMeter++;}
-//        if($user->barangay != ""){           $optMeter++;}
-//
-//        $optProgress = ($optMeter / 3) * 20;
-//        $calculated_prog = $intProgress + $reqProgress;
-//        $total_prog = number_format($calculated_prog + $optProgress);
-//
-//        User::where('id', $userid)->update([
-//            'total_profile_progress'    =>  $total_prog
-//        ]);
-//
-//        return array(
-//            'OPTIONAL_PROGRESS' =>  $optProgress,
-//            'TOTAL_PROGRESS'    =>  $total_prog,
-//            'CALCULATED_PROG'   =>  $calculated_prog,
-//        );
-//    }
-
-//    public function PROFILE_PERCENTAGE_WORKER($userid){
-//        $user = User::where('id', $userid)->first();
-//
-//        $reqMeter = 0;
-//        $optMeter = 0;
-//        $intProgress = 0;
-//        $reqProgress = 0;
-//        $optProgress = 0;
-//
-//        // INITIAL REQUIRED
-//        if($user->firstName != ""){ $reqMeter++;}
-//        if($user->lastName != ""){  $reqMeter++;}
-//        if($user->username != ""){  $reqMeter++;}
-//        if($user->password != ""){  $reqMeter++;}
-//        if(Contact::where('user_id', $user)->get() != ""){  $reqMeter++;}
-//        // END OF INITIAL REQUIRED
-//
-//        $intProgress = ($reqMeter / 5) * 30;
-//        $reqMeter = 0; // to reset the value;
-//
-//        // REQUIRED
-//        if($user->profilePic != ""){$reqMeter++;}
-//        if($user->birthdate != ""){ $reqMeter++;}
-//        if($user->gender != ""){    $reqMeter++;}
-//        if($user->preferredJob != ""){  $reqMeter++;}
-//        if(Contact::where('user_id', $user)->get() != ""){  $reqMeter++;}
-//        if($user->city != ""){      $reqMeter++;}
-//        if($user->address != ""){   $reqMeter++;}
-//        // END OF REQUIRED
-//
-//        $reqProgress = ($reqMeter/7) * 40;
-//
-//        // OPTIONAL PROGRESS
-//        if($user->midName != ""){       $optMeter++;}
-//        if($user->nationality != ""){   $optMeter++;}
-//        if($user->minRate != ""){       $optMeter++;}
-//        if($user->maxRate != ""){       $optMeter++;}
-//        if($user->tin != ""){           $optMeter++;}
-//        if($user->skills != ""){        $optMeter++;}
-//        if($user->yearsOfExperience != ""){ $optMeter++;}
-//        if($user->barangay != ""){      $optMeter++;}
-//
-//        $optProgress = ($optMeter / 7) * 30;
-//        $calculated_prog = $intProgress + $reqProgress;
-//        $total_prog = number_format($calculated_prog + $optProgress);
-//
-//        User::where('id', $userid)->update([
-//            'total_profile_progress'    =>  $total_prog
-//        ]);
-//
-//        return array(
-//            'OPTIONAL_PROGRESS' =>  $optProgress,
-//            'TOTAL_PROGRESS'    =>  $total_prog,
-//            'CALCULATED_PROG'   =>  $calculated_prog,
-//        );
-//    }
 
     // used to get user RATINGS
     // returns NULL of user has NO RATINGS
@@ -329,12 +219,22 @@ class BaseController extends Controller {
 
     public static function ROUTE_UPDATE_JOBADS($userID){
         $jobs = Job::where('user_id', $userID)->get();
-
         // CHECK FOR EXPIRATION
         // Updates `expired` column to TRUE if job is expired, else, FALSE
         foreach($jobs as $j){
+            $bc = new BaseController();
+            if(Carbon::now()->diffInDays(Carbon::parse($j->expires_at)) <= 3){
+                $msg = 'Your job ad - '.$j->title.' will expire in less than 3 days';
+                $url = '/jobDetails='.$j->id;
+                $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
+            }
+
             if(time($j->expires_at) > time($j->created_at)){
                 Job::where('id', $j->id)->update('expired', true);
+                $msg = 'Your job ad - '.$j->title.' has expired.';
+                $url = '/jobDetails='.$j->id;
+                // NOTIFICATION
+                $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
             }
         }
     }
@@ -571,7 +471,7 @@ class BaseController extends Controller {
         if($subscription){
             return 'Your '.$subscription->label.' Package will expire at '.date('m/d/y', strtotime($subscription->expires_at));
         }else{
-            return 'You are currently not subscribed to any Proveek Packages';
+            return '<i class="fa fa-warning"></i>&nbsp;&nbsp;You are currently not subscribed to any Proveek Packages';
         }
     }
 
@@ -586,7 +486,7 @@ class BaseController extends Controller {
         return $myArr;
     }
 
-    public static function SUBSCRIPTION_EXPIRED($sub_id){
+    public static function SUBSCRIPTION_EXPIRED($sub_id, $userID){
         UserSubscription::where('id', $sub_id)->update([
             'expired'   =>  true
         ]);
@@ -597,9 +497,116 @@ class BaseController extends Controller {
         $subscription_details = UserSubscription::where('id', $subscription_id)->first();
         if(!$subscription_details->expired){
             if(time() > strtotime($subscription_details->expires_at)){
-                BaseController::SUBSCRIPTION_EXPIRED($subscription_id);
+                $msg = 'Your subscription has expired';
+                $bc = new BaseController();
+                $bc->NOTIFICATION_INSERT($employerID, $msg, '/TOPTUP');
+                BaseController::SUBSCRIPTION_EXPIRED($subscription_id, $employerID);
+            }elseif(Carbon::now()->diffInDays(Carbon::parse($subscription_details->expires_at)) <= 3){
+                $msg = 'Your subscription will expire in less than 3 days';
+                $bc = new BaseController();
+                $bc->NOTIFICATION_INSERT($employerID, $msg, '/TOPTUP');
             }
         }
+    }
+
+    public function SUBSCRIPTION_RESTRICTIONS($userID, $restrictionType){
+        // RETURNS TRUE IF RESTRICTIONS ARE VIOLATED
+        $subscription_id = User::where('id', $userID)->pluck('accountType');
+        $subscription_details = UserSubscription::where('id', $subscription_id)->first();
+        $system_subscription_details = SystemSubscription::where('id', $subscription_details->system_subscription_id)->first();
+        $subscription_start = $subscription_details->created_at;
+        $subscription_expiration = $subscription_details->expires_at;
+
+        switch($restrictionType){
+            case 'worker_browse' :
+                return ($system_subscription_details->worker_browse) ? 0 : 1;
+                break;
+            case 'worker_bookmark_limit' :
+                return $this->RSTRCTN_WORKER_BOOKMARK_LIMIT($userID, $subscription_start, $system_subscription_details->worker_bookmark_limit);
+                break;
+            case 'invite_limit' :
+                return $this->RSTRCTN_INVITE_LIMIT($userID, $subscription_start, $system_subscription_details->invite_limit);
+                break;
+            case 'job_ad_limit_week' :
+                return $this->RSTRCTN_JOBADLIMIT_WK($userID, $subscription_start, $system_subscription_details->job_ad_limit_week);
+                break;
+            case 'job_ad_limit_month' :
+                return $this->RSTRCTN_JOBADLIMIT_MNTH($userID, $subscription_start, $subscription_expiration, $system_subscription_details->job_ad_limit_month);
+                break;
+            default :
+                return 'DEFAULT';
+                break;
+        }
+    }
+
+    public function RSTRCTN_WORKER_BOOKMARK_LIMIT($userID, $start_date, $quantity){
+        $start_date = strtotime($start_date);
+        $end_date = $start_date + (7 * 24 * 60 * 60);
+
+        if(time() > $end_date){
+            $start_date = $end_date + (24 * 60 * 60);
+            $end_date = $start_date + (7 * 24 * 60 * 60);
+        }
+        $bookmarksOfTheWeek = User::leftJoin('bookmark_users', 'bookmark_users.company_id', '=', 'users.id')
+                ->where('users.id', $userID)
+                ->whereBetween('bookmark_users.created_at', array(date("Y:m:d H:i:s", $start_date), date("Y:m:d H:i:s", $end_date)))
+                ->groupBy('bookmark_users.id')
+                ->count();
+
+        return ($bookmarksOfTheWeek > $quantity) ? 1 : 0;
+    }
+
+    public function RSTRCTN_INVITE_LIMIT($userID, $start_date, $quantity){
+        $start_date = strtotime($start_date);
+        $end_date = $start_date + (7 * 24 * 60 * 60);
+
+        if(time() > $end_date){
+            $start_date = $end_date + (24 * 60 * 60);
+            $end_date = $start_date + (7 * 24 * 60 * 60);
+        }
+
+        $inviteOfTheWeek = JobInvite::join('jobs', 'jobs.id', '=', 'job_invites.job_id')
+            ->join('users', 'users.id', '=', 'jobs.user_id')
+            ->where('users.id', $userID)
+            ->whereBetween('job_invites.created_at', array(date("Y:m:d H:i:s", $start_date), date("Y:m:d H:i:s", $end_date)))
+            ->groupBy('job_invites.id')
+            ->count();
+
+        return ($inviteOfTheWeek > $quantity) ? 1 : 0;
+    }
+
+    public function RSTRCTN_JOBADLIMIT_WK($userID, $start_date, $quantity){
+        $start_date = strtotime($start_date);
+        $end_date = $start_date + (7 * 24 * 60 * 60);
+
+        if(time() > $end_date){
+            $start_date = $end_date + (24 * 60 * 60);
+            $end_date = $start_date + (7 * 24 * 60 * 60);
+        }
+
+        $jobAdsOfTheWeek = Job::join('users', 'users.id', '=', 'jobs.user_id')
+            ->where('users.id', $userID)
+            ->whereBetween('jobs.created_at', array(date("Y:m:d H:i:s", $start_date), date("Y:m:d H:i:s", $end_date)))
+            ->groupBy('jobs.id')
+            ->count();
+
+        return ($jobAdsOfTheWeek > $quantity) ? 1 : 0;
+    }
+
+    public function RSTRCTN_JOBADLIMIT_MNTH($userID, $start_date, $end_date, $quantity){
+        $jobsOfTheMonth = Job::join('users', 'users.id', '=', 'jobs.user_id')
+                ->where('users.id', $userID)
+                ->whereBetween('jobs.created_at', array($start_date, $end_date))
+                ->count();
+        return ($jobsOfTheMonth > $quantity) ? 1 : 0;
+    }
+
+    public function SUBSCRIPTION_DETAILS($userID){
+        return SystemSubscription::join('user_subscriptions', 'user_subscriptions.system_subscription_id', '=', 'system_subscriptions.id')
+                ->join('users', 'users.id', '=', 'user_subscriptions.user_id')
+                ->where('users.id', $userID)
+                ->groupBy('system_subscriptions.id')
+                ->first();
     }
     // AUTHORED BY Jan Sarmiento -- END
 }

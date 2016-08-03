@@ -109,6 +109,15 @@ Route::filter('WORKER-UPDATE-PROFILE-PROGRESS', function(){
 //    }
 });
 
+Route::filter('invite_limit', function(){
+    $basecontroller = new BaseController;
+    if($basecontroller->SUBSCRIPTION_RESTRICTIONS(Auth::user()->id, 'invite_limit')){
+        return View::make('error.SUBSCRIPTION_ERROR')
+                ->with('msg', 'You have reached your subscriptions invite limit!')
+                ->with('sub', $basecontroller->SUBSCRIPTION_DETAILS(Auth::user()->id));
+    }
+});
+
 Route::filter('CLIENT-ONLY', function(){
     if(Auth::check()){
         switch(Auth::user()->status){
@@ -122,12 +131,12 @@ Route::filter('CLIENT-ONLY', function(){
         if(UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id') != 3 && UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id') != 4){
             return Redirect::to('/');
         }
-
-        BaseController::ROUTE_UPDATE_JOBADS(Auth::user()->id);
     }else{
         return Redirect::to('/');
     }
 
+    // check for expired job ads
+    BaseController::ROUTE_UPDATE_JOBADS(Auth::user()->id);
     // check if subscription is expired
     BaseController::SUBSCRIPTION_UPDATE(Auth::user()->id);
 });

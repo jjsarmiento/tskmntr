@@ -302,10 +302,15 @@
                             <div class="form-group">
                                 <select class="form-control" name="acctType" id="acctType">
                                     <option value="">All Account Type</option>
+                                    @foreach($subs as $s)
+                                        <option <?php if(@$adminCMP_accountType == $s->subscription_code){echo 'selected';} ?> value="{{$s->subscription_code}}">{{$s->subscription_label}}</option>
+                                    @endforeach
+                                    <!--
                                     <option <?php if(@$adminCMP_accountType == 'FREE'){echo 'selected';} ?> value="FREE">Free</option>
                                     <option <?php if(@$adminCMP_accountType == 'BASIC'){echo 'selected';} ?> value="BASIC">Basic</option>
                                     <option <?php if(@$adminCMP_accountType == 'PREMIUM'){echo 'selected';} ?> value="PREMIUM">Premium</option>
                                     <option <?php if(@$adminCMP_accountType == 'MASS_HIRING'){echo 'selected';} ?> value="MASS_HIRING">Mass Hiring</option>
+                                    -->
                                 </select>
                             </div>
                         </div>

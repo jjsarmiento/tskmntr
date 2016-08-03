@@ -275,18 +275,22 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
         Route::get('/editJob={jobId}', 'ClientIndiController@editJob');
         Route::post('/doEditJob', 'ClientIndiController@doEditJob');
 
-        Route::get('/SNDINVT:{invitedId}:{jobId}', 'ClientIndiController@SNDINVT');
-        Route::post('/DOSNDINVT', 'ClientIndiController@DOSNDINVT');
+        // ROUTE FILTER FOR INVITES
+        Route::group(array('before' => 'invite_limit'), function(){
+            // MULTIPLE INVITE ROUTES
+            Route::post('/SENDMULTIPLEINVITE', 'ClientIndiController@SENDMULTIPLEINVITE');
+            // MULTIPLE JOB FOR SINGLE INVITE
+            Route::post('/INVITEMULTIJOB', 'ClientIndiController@INVITEMULTIJOB');
+
+            Route::get('/SNDINVT:{invitedId}:{jobId}', 'ClientIndiController@SNDINVT');
+            Route::post('/DOSNDINVT', 'ClientIndiController@DOSNDINVT');
+        });
+
         Route::get('/cancelInvite:{jobID}:{workerID}', 'ClientIndiController@cancelInvite');
         Route::get('/ShowInvited:{jobId}', 'ClientIndiController@ShowInvited');
         Route::get('/JOB_DELETECUSTSKILL={custom_skill_id}', 'ClientIndiController@JOB_DELETECUSTSKILL');
         Route::get('/deleteJob={jobId}', 'ClientIndiController@deleteJob');
 
-        // MULTIPLE INVITE ROUTES
-        Route::post('/SENDMULTIPLEINVITE', 'ClientIndiController@SENDMULTIPLEINVITE');
-
-        // MULTIPLE JOB FOR SINGLE INVITE
-        Route::post('/INVITEMULTIJOB', 'ClientIndiController@INVITEMULTIJOB');
 
         // CART
         Route::get('/addToCart={worker_id}', 'ClientIndiController@addToCart');

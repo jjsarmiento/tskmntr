@@ -7,7 +7,8 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){ // test()
-        return $this->SUBSCRIPTION_DURATION_MSG(2);
+//        return BaseController::ROUTE_UPDATE_JOBADS(2);
+        return BaseController::SUBSCRIPTION_UPDATE(2);
     }
 
     function generateConfirmationCode(){
@@ -277,11 +278,9 @@ class HomeController extends BaseController {
                     $message->to($email)->subject('Proveek BETA - Validate Account');
                 });
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- END
-
-//                Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')));
+                BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER($userId);
                 Session::flash('successMsg', 'We have sent a validation link to your email! <br/> Please validate your account to start using Proveek');
                 return Redirect::to('/login');
-//            return Redirect::to('/')->with('successMsg', 'Registration Success. You may now login.');
             }
         }
     }
@@ -603,7 +602,7 @@ class HomeController extends BaseController {
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- END
 
                 Auth::attempt(array('username' => Input::get('uName'), 'password' => Input::get('pass')));
-
+                BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER($userId);
                 // return Redirect::to('/doVerifyMobileNumber');
                 return Redirect::to('/');
             }//end of inner if else
@@ -828,18 +827,6 @@ class HomeController extends BaseController {
                 case 'CLIENT_IND' :
                 case 'CLIENT_CMP' :
                     BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
-                    /*
-                    // CHECKER FOR the first 3 FREE MONTHS SUBSCRIPTION
-                    $tempDate = Auth::user()->created_at->addMonths(3);
-                    $freeDuration = null;
-                    if($tempDate->lte(Carbon::today())){
-                        $freeDuration = Carbon::now()->diffInDays($tempDate, false); // CALCULATION OF DAYS
-                        $freeDuration = "Your first free 3-Month Subscription is over";
-                    }
-                    else{
-                        $freeDuration = Carbon::now()->diffInDays($tempDate, false). " days until 3-Month Subscription expires";
-                    }
-                    */
 
                     $jobs = Job::where('user_id', Auth::user()->id)
                             ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
@@ -860,10 +847,6 @@ class HomeController extends BaseController {
                             ->take('5')
                             ->get();
 
-                    // $freeDuration = $tempDate->diffInDays(Carbon::now());
-//                    return Auth::user()->id;
-//                    return SystemSubscription::where('id', 1)->get();
-//                    return UserSubscription::where('id', Auth::user()->accountType)->get();
                     return View::make('client.index')
                     ->with('subscription_msg', $this->SUBSCRIPTION_DURATION_MSG(Auth::user()->id))
                     ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())

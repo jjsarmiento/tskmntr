@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder {
             'accountType'       =>  '1',
 //            'created_at'        =>  '2015-04-30 21:03:32',
 //            'updated_at'        =>  '2015-04-30 21:03:32',
-            'points'            =>  '100',
+            'points'            =>  '150',
         ));
         UserHasRole::create(array(
             'user_id'           =>  1,
@@ -39,6 +39,7 @@ class UsersTableSeeder extends Seeder {
             'user_id'                   =>  1,
             'system_subscription_id'    =>  1,
             'expires_at'                =>  $total_duration,
+            'created_at'                =>  date("Y:m:d H:i:s")
         ]);
 
         // CLIENT - COMPANY
@@ -60,7 +61,7 @@ class UsersTableSeeder extends Seeder {
             'businessNature'    =>  'Client Company Nature',
 //            'created_at'        =>  '2015-04-30 21:03:32',
 //            'updated_at'        =>  '2015-04-30 21:03:32',
-            'points'            =>  '100',
+            'points'            =>  '150',
         ));
         UserHasRole::create(array(
             'user_id'           =>  2,
@@ -81,6 +82,7 @@ class UsersTableSeeder extends Seeder {
             'user_id'                   =>  2,
             'system_subscription_id'    =>  1,
             'expires_at'                =>  $total_duration,
+            'created_at'                =>  date("Y:m:d H:i:s")
         ]);
 
         // TASKMINATOR 1

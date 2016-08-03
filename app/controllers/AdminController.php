@@ -666,15 +666,18 @@ class AdminController extends \BaseController {
             ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
             ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
             ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+            ->leftJoin('user_subscriptions', 'user_subscriptions.id', '=', 'users.accountType')
+            ->join('system_subscriptions', 'system_subscriptions.id', '=', 'user_subscriptions.system_subscription_id')
             ->whereIn('user_has_role.role_id', ['3', '4'])
-            ->where($searchBy, 'LIKE', '%'.$keyword.'%');
+            ->where($searchBy, 'LIKE', '%'.$keyword.'%')
+            ->where('users.status', 'ACTIVATED');
 
         if($status != 'false'){
             $userList = $userList->where('users.status', $status);
         }
 
         if($accountType != 'false'){
-            $userList = $userList->where('users.accountType', $accountType);
+            $userList = $userList->where('system_subscriptions.subscription_label', $accountType);
         }
 
         $userList = $userList->select([
@@ -692,6 +695,7 @@ class AdminController extends \BaseController {
             ->paginate(10);
 
         return View::make('admin.userlist_client_indi')
+            ->with('subs', SystemSubscription::orderBy('id', 'ASC')->get())
             ->with('keyword', $keyword)
             ->with('acct_status', $status)
             ->with('adminCMP_accountType', $accountType)
@@ -1080,7 +1084,10 @@ class AdminController extends \BaseController {
             ])
             ->paginate(10);
 
+        $subscriptions = SystemSubscription::orderBy('id', 'ASC')->get();
+
         return View::make('admin.userlist_client_indi')
+            ->with('subs', $subscriptions)
             ->with('users', $userList);
 
     }
