@@ -223,8 +223,7 @@ class BaseController extends Controller {
         // Updates `expired` column to TRUE if job is expired, else, FALSE
         foreach($jobs as $j){
             $bc = new BaseController();
-
-            if(Carbon::parse($j->created_at)->diffInDays(Carbon::now()) >= 3){
+            if(Carbon::now()->diffInDays(Carbon::parse($j->expires_at)) <= 3){
                 $msg = 'Your job ad - '.$j->title.' will expire in less than 3 days';
                 $url = '/jobDetails='.$j->id;
                 $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
@@ -502,7 +501,7 @@ class BaseController extends Controller {
                 $bc = new BaseController();
                 $bc->NOTIFICATION_INSERT($employerID, $msg, '/TOPTUP');
                 BaseController::SUBSCRIPTION_EXPIRED($subscription_id, $employerID);
-            }elseif(Carbon::parse($subscription_details->created_at)->diffInDays(Carbon::now()) >= 3){
+            }elseif(Carbon::now()->diffInDays(Carbon::parse($subscription_details->expires_at)) <= 3){
                 $msg = 'Your subscription will expire in less than 3 days';
                 $bc = new BaseController();
                 $bc->NOTIFICATION_INSERT($employerID, $msg, '/TOPTUP');
