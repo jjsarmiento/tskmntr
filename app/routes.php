@@ -111,6 +111,10 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::post('/POLICY_SAVE_ES', 'AdminController@POLICY_SAVE_ES');
     Route::post('/POLICY_SAVE_TG', 'AdminController@POLICY_SAVE_TG');
 
+    //SUBSCRIPTIONS
+    Route::get('/subscriptions:{subsID}', 'AdminController@subscriptions');
+    Route::post('/UPDATESUBSCRIPTION', 'AdminController@UPDATESUBSCRIPTION');
+
     // SKILLS ROUTE
     Route::get('/customSkills', 'AdminController@customSkills');
     Route::get('/DELCSTSKLL={skillID}', 'AdminController@DELCSTSKLL');

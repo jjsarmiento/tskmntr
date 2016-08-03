@@ -1117,7 +1117,8 @@ class AdminController extends \BaseController {
     public function SYSTEMSETTINGS(){
         return View::make('admin.SYSTEMSETTINGS')
                 ->with('doc_types', DocumentType::orderBy('created_at', 'DESC')->get())
-                ->with('SYS_SETTINGS', SystemSetting::get());
+                ->with('SYS_SETTINGS', SystemSetting::get())
+                ->with('subscriptions', SystemSubscription::get());
     }
 
     public function doSYSTEMSETTINGS(){
@@ -1260,6 +1261,33 @@ class AdminController extends \BaseController {
                 'value' =>  Input::get('editor')
             ]);
         }
+
+        return Redirect::back();
+    }
+
+    public function subscriptions($subID){
+        return View::make('admin.subscriptions')
+                ->with('sub', SystemSubscription::where('id', $subID)->first());
+    }
+
+    public function UPDATESUBSCRIPTION(){
+//        return Input::all();
+        SystemSubscription::where('id', Input::get('subID'))
+            ->update([
+                'subscription_code'     => Input::get('subscription_code'),
+                'subscription_label'    => Input::get('subscription_label'),
+                'subscription_duration' => Input::get('subscription_duration'),
+                'subscription_price'    => Input::get('subscription_price'),
+                'worker_browse'         => Input::get('worker_browse'),
+                'worker_bookmark_limit' => Input::get('worker_bookmark_limit'),
+                'invite_limit'          => Input::get('invite_limit'),
+                'job_ad_limit_week'     => Input::get('job_ad_limit_week'),
+                'job_ad_limit_month'    => Input::get('job_ad_limit_month'),
+                'featured_job_ads'      => Input::get('featured_job_ads'),
+                'sms_notif'             => Input::get('sms_notif'),
+                'free_resume'           => Input::get('free_resume'),
+                'updated_at'            => date("Y:m:d H:i:s")
+            ]);
 
         return Redirect::back();
     }

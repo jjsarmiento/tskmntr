@@ -16,7 +16,8 @@ class CreateSystemSubscriptionsTable extends Migration {
 		{
 			$table->increments('id');
             // subscription details
-            $table->string('subscription_type')->unique();        // type of subscription
+            $table->string('subscription_code')->unique();        // type of subscription
+            $table->string('subscription_label')->unique();        // type of subscription
             $table->string('subscription_duration')->nullable();    // duration of subscription
             $table->float('subscription_price')->nullable();       // price of subscription
             // info

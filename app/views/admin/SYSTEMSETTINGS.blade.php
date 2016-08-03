@@ -127,6 +127,16 @@
                         </a>
                     </div>
                 </div>
+                <br/>
+
+                <div class="widget-container" style="min-height: 1em;">
+                    <div class="widget-content padded">
+                        <h3>Subscriptions</h3>
+                        @foreach($subscriptions as $s)
+                            <a href="/subscriptions:{{$s->id}}">{{$s->subscription_label}}</a><Br/>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </div>
