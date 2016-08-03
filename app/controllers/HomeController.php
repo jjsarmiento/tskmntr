@@ -191,8 +191,6 @@ class HomeController extends BaseController {
 
                 Input::merge(array_map('trim', Input::all()));
 
-                $points = 300;
-
                 date_default_timezone_set("Asia/Manila");
                 $userId = User::insertGetId(array(
                     'companyName'           =>  Input::get('compName'),
@@ -204,7 +202,7 @@ class HomeController extends BaseController {
                     'country'               =>  'PHILIPPINES',
                     'created_at'            =>  date("Y:m:d H:i:s"),
                     'updated_at'            =>  date("Y:m:d H:i:s"),
-                    'points'                =>  $points,
+                    'points'                =>  150,
                     'accountType'           =>  'BASIC',
                 ));
 
@@ -254,14 +252,6 @@ class HomeController extends BaseController {
                         'ctype'         =>  'linkedin',
                         'content'       =>  NULL,
                     )
-                ));
-
-                AuditTrail::insert(array(
-                    'user_id'   =>  $userId,
-                    'content'   =>  'Created a Client Company account at '.date('D, M j, Y \a\t g:ia'),
-                    'created_at'    =>  date("Y:m:d H:i:s"),
-                    'at_url'        =>  '/viewUserProfile/'.$userId
-//                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
                 ));
 
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- START
@@ -839,6 +829,7 @@ class HomeController extends BaseController {
                 case 'CLIENT_IND' :
                 case 'CLIENT_CMP' :
                     BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
+                    /*
                     // CHECKER FOR the first 3 FREE MONTHS SUBSCRIPTION
                     $tempDate = Auth::user()->created_at->addMonths(3);
                     $freeDuration = null;
@@ -849,6 +840,7 @@ class HomeController extends BaseController {
                     else{
                         $freeDuration = Carbon::now()->diffInDays($tempDate, false). " days until 3-Month Subscription expires";
                     }
+                    */
 
                     $jobs = Job::where('user_id', Auth::user()->id)
                             ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
@@ -1585,6 +1577,10 @@ class HomeController extends BaseController {
             $msg = 'Activation code has expired. Click <a href="/RESENDVALIDATION='.$CODE_DETAILS->user_id.'">here</a> to request for another activation code';
             return $msg;
         }else{
+            if(User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_IND' || User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_CMP'){
+                $this->APPLY_SUBSCRIPTION('FREE', $CODE_DETAILS->user_id);
+            }
+
             User::where('id', $CODE_DETAILS->user_id)->update([
                 'status'    =>  'PRE_ACTIVATED'
             ]);

@@ -69,6 +69,18 @@
                                                             <input value="{{$sys->value}}" required="required" name="SYSSETTINGS_CHECKOUTPRICE" id="SYSSETTINGS_CHECKOUTPRICE" type="text" class="form-control" placeholder="Job ad duration" />
                                                         </div>
                                                     </div>
+                                                @elseif($sys->type == 'SYSSETTINGS_FREE_SUB_ON_REG')
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Free package upon registration (Employers)</label>
+                                                            <select class="form-control" name="SYSSETTINGS_FREE_SUB_ON_REG">
+                                                                <option value="0">None</option>
+                                                                @foreach($subs as $s)
+                                                                    <option <?php if($sys->value == $s->id){echo 'selected';} ?> value="{{$s->id}}">{{$s->subscription_label}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 @endif
                                             @endforeach
                                         </div>

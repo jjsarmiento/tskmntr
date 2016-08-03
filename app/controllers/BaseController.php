@@ -538,5 +538,9 @@ class BaseController extends Controller {
 //                ->paginate(10);
                 ->get();
     }
+
+    public function APPLY_SUBSCRIPTION($subscription_id, $employer_id){
+
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

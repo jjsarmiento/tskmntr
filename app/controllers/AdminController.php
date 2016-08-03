@@ -1118,6 +1118,7 @@ class AdminController extends \BaseController {
         return View::make('admin.SYSTEMSETTINGS')
                 ->with('doc_types', DocumentType::orderBy('created_at', 'DESC')->get())
                 ->with('SYS_SETTINGS', SystemSetting::get())
+                ->with('subs', SystemSubscription::get())
                 ->with('subscriptions', SystemSubscription::get());
     }
 
@@ -1139,6 +1140,11 @@ class AdminController extends \BaseController {
             SystemSetting::where('type', 'SYSSETTINGS_CHECKOUTPRICE')
                 ->update([
                     'value'     =>  Input::get('SYSSETTINGS_CHECKOUTPRICE')
+                ]);
+
+            SystemSetting::where('type', 'SYSSETTINGS_FREE_SUB_ON_REG')
+                ->update([
+                    'value'     =>  Input::get('SYSSETTINGS_FREE_SUB_ON_REG')
                 ]);
         }
 

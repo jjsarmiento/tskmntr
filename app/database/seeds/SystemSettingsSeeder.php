@@ -23,5 +23,10 @@ class SystemSettingsSeeder extends Seeder {
             'type'          =>  "SYSSETTINGS_CHECKOUTPRICE",
             'value'         =>  "10"
         ));
+
+        SystemSetting::create(array(
+            'type'          =>  "SYSSETTINGS_FREE_SUB_ON_REG",
+            'value'         =>  "10"
+        ));
     }
 }
