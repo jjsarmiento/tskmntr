@@ -596,7 +596,7 @@ class BaseController extends Controller {
         $subscription_id = User::where('id', $employerID)->pluck('accountType');
         $subscription_details = UserSubscription::where('id', $subscription_id)->first();
         if(!$subscription_details->expired){
-            if(time() > strtotime($subscription_details->expirest_at)){
+            if(time() > strtotime($subscription_details->expires_at)){
                 BaseController::SUBSCRIPTION_EXPIRED($subscription_id);
             }
         }
