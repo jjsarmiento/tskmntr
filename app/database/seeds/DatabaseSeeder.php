@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder {
 		 $this->call('TaskTypesTableSeeder');
 		 $this->call('SystemSettingsSeeder');
 		 $this->call('DocumentTypesSeeder');
+		 $this->call('SystemSubscriptionsSeeder');
 	}
 }
