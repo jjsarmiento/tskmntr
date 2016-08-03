@@ -88,6 +88,48 @@
             height:1px;
             max-height:1px;
         }
+        a.clickHere {
+            background: transparent;
+            border: 2px solid;
+            border-radius: 5px;
+            padding: 5px 15px;
+            font-size: 15px !important;
+            text-transform: uppercase;
+        }
+        a.clickHere:hover {
+            background-color: #2980b9;
+            border: 2px solid #226ea0;
+            transition : 0.3s;
+            color:white;
+            text-decoration: none;
+        }
+        a.viewSal{
+            background-color: #2980b9;
+            border: 2px solid #226ea0;
+            transition: 0.3s;
+            color: white; 
+            padding: 5px;      
+            text-transform: uppercase; 
+            font-size: 14px;
+        }
+        a.viewSal:hover{
+            background: transparent;
+            color: #2980b9;
+            text-decoration: none;
+        }      
+        @media (max-width: 768px){
+            .job-post{
+                margin-top: 2em;
+            }
+            .widget-container {
+                min-height: 100% !important;
+            }
+        }  
+        @media (max-width: 320px) {
+            a.clickHere {
+                font-size: 12px !important;
+            }
+        }        
         </style>
     <script>
         $(document).ready(function() {
@@ -151,20 +193,27 @@
         <!-- PROFILE PIC / INFO  -->
             <div class="col-lg-4"> 
                 <div class="widget-container" style="display: flex; min-height:125px; display:block !important;">
-                    <div class="col-lg-3 no-padding" style="">
-                        <div class="thumbnail">
+                    <div class="col-md-12" style="padding:15px">
+                        <div class="thumbnails" style="margin:auto; display:table;">
                             @if(Auth::user()->profilePic)
-                                <a href="/editProfile"><img src="{{ Auth::user()->profilePic }}" class="portrait"/></a>
+                                <a href="/editProfile"><img src="{{ Auth::user()->profilePic }}" class="portrait padded" style="width: 250px;"/></a>
                             @else
-                                <a href="/editProfile"><img src="/images/default_profile_pic.png" class="portrait"/></a>
+                                <a href="/editProfile"><img src="/images/yourlogohere.jpg" class="portrait padded" style="width: 250px;"/></a>
                             @endif
                         </div>
                     </div>
-                    <div class="col-lg-9 padded">
-                        <div class="heading">
-                            <a href="/editProfile" style="font-size:14pt;">{{ Auth::user()->companyName }}</a><br>
+                    <div class="col-md-12 padded" style="margin-top: -25px;">
+                        <div class="heading" style="text-align:center;">
+                            <a href="/editProfile" style="font-weight:bold; font-size:14pt;">{{ Auth::user()->companyName }}</a><br>
                         </div>
+                        <div class="col-md-6">
+                            <span><b>Nature of Employer :</b> Company</span><br>
+                        </div>
+                        <div class="col-md-6">
+                            <span><b>Last Login :</b> 08/03/16</span> 
+                        </div>             
                     </div>
+                    <div style="clear:both;"></div>
                 </div>
 
                 <div style="background-color: white; padding: 1em; margin-top: 2em;">
@@ -217,46 +266,101 @@
                         <button class="btn btn-primary btn-block" id="SRCHBTN_SKILL"><i class="fa fa-search"></i> Search for workers</button>
                     </div>
                 @endif
+
+                <!-- STATUS -->
+                <div style="background-color: white; padding: 1em; margin-top: 2em;">
+                    <div class="widget-container weather" style="min-height: 1em; box-shadow:none;">
+                        <div class="widget-content">
+                            <div class="padded text-center" style="min-height:30px; text-align:left; color:#2980b9; font-size:18pt;">
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ Auth::user()->total_profile_progress }}% | {{$subscription_msg}}
+                                <div class="widget-content">
+                                    <div class="padded text-center" style="font-size:18pt; padding: 10px 0 0;">
+                                        <div id="progressbar">
+                                            <div id="prog-meter-req"></div>
+                                            <div id="prog-meter-opt"></div>
+                                        </div>
+                                        <div style="text-align:left; font-size:12pt; display:flex;">
+                                            <div style="width:20%;">0%</div>
+                                            <div style="width:20%;">20%</div>
+                                            <div style="width:20%; text-align:center;">50%</div>
+                                            <div style="width:20%; text-align:right;">80%</div>
+                                            <div style="width:20%; text-align:right;">100%</div>
+                                        </div>
+                                        {{--<span style="font-size:10pt;">Please complete your profile to be able to apply for jobs.</span>--}}
+                                    </div>
+                                </div>                                
+                                @if(Auth::user()->total_profile_progress < 50)
+                                    <p style="color: #000000; margin-top: 5px;">
+                                        <i style="color: red" class="fa fa-warning"></i> <b>You can start applying for jobs when you complete your profile above 50%.</b><br><br>
+                                        <a class="clickHere" href="/editProfile"> Click here to edit your profile </a>
+                                    </p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<!-- CONTACT INFo -->
+                <div class="col-lg-12 no-padding">
+                    <div class="widget-container" style="min-height:30px; margin-top:2em;">
+                        <div class="widget-content">
+                            <div class="heading" style="font-size:14pt; color:#2980b9">
+                                <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>&nbsp Contact Information
+                            </div>     
+                            <div class="panel-body">
+                                <span><b>Business Number: </b>000-123-452</span><br>
+                                <span><b>Business Email: </b><a herf="mailto:sample@mail.com">sample@mail.com</a></span>
+                            </div>                             
+                        </div>
+                        <div class="widget-content">
+                            <div class="heading" style="font-size:14pt; color:#2980b9">
+                                <i class="fa fa-user" style="font-size:14pt; color:#2980b9"></i>&nbsp Key Contact Person
+                            </div>     
+                            <div class="panel-body">
+                                <span><b>Name: </b>Lorem Ipsum</span><br>
+                                <span><b>Position: </b>Human Resource</span><br>
+                                <span><b>Contact Number: </b>000-222-333</span><br>
+                                <span><b>Email: </b><a herf="mailto:sample@mail.com">sample@mail.com</a></span>
+                            </div>                             
+                        </div>
+                    </div>
+                </div>
+
             </div>
-<!-- ENF PROFILE PIC / INFO -->
+<!-- ENF PROFILE PIC / INFO / SIDEBAR-->
 
-            <div class="col-md-8">
-                <div class="widget-container weather" style="min-height: 1em;">
-                    <div class="widget-content">
-                        <div class="padded text-center" style="min-height:30px; text-align:left; border-bottom:1px solid #e6e6e6; color:#2980b9; font-size:18pt;">
-                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ Auth::user()->total_profile_progress }}% | {{$subscription_msg}}
-                            @if(Auth::user()->total_profile_progress < 50)
-                                <p style="color: #000000;">
-                                    <i style="color: red" class="fa fa-warning"></i> <b>You can start posting jobs and look for workers when you complete your profile above 50%. Click <a href="/editProfile">here</a> to edit your profile</b>
-                                </p>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="widget-content">
-                        <div class="padded text-center" style="border-bottom:1px solid #e6e6e6;color:#2980b9; font-size:18pt;">
-                            <div id="progressbar">
-                                <div id="prog-meter-req"></div>
-                                <div id="prog-meter-opt"></div>
+            <div class="col-lg-8 job-post">
+                <div class="col-lg-12 no-padding">
+                    <div class="widget-container" style="min-height:30px;">
+                        <div class="widget-content">
+                            <div class="panel-body" style="color:#2980b9; font-size:20pt;">
+                                <i class="fa fa-search" aria-hidden="true"></i> Job Posts
                             </div>
-                            <div style="text-align:left; font-size:12pt; display:flex;">
-                                <div style="width:20%;">0%</div>
-                                <div style="width:20%;">20%</div>
-                                <div style="width:20%; text-align:center;">50%</div>
-                                <div style="width:20%; text-align:right;">80%</div>
-                                <div style="width:20%; text-align:right;">100%</div>
-                            </div>
-                            {{--<span style="font-size:10pt;">Please complete your profile to be able to apply for jobs.</span>--}}
-                        </div>
-                    </div>
-                    <div class="widget-content padded">
+                            <div class="panel-body" style="padding: 0 15px 15px;">
+                                <div class="col-md-12 no-padding">
+                                    @for($i=0; $i<6; $i++)
+                                        <div class="col-md-4 padded">
+                                            <b class="title">Praesent volutpat dapibus mauris nec blandit.</b>
+                                            <p class="content">Vivamus metus nulla, tempor vel varius fermentum, molestie nec enim. Suspendisse eu ultricies lorem. </p>
+                                            <a href="#" class="viewSal">View full details</a>
+                                        </div>
+                                    @endfor
+                                </div>
 
+                                <!-- NOTE: IF Job post greater than 6 display this-->
+                                @if($i > 6)
+                                <div class="col-md-12 padded" style="margin-top: 2em; text-align:center;">
+                                    <a href="#" class="clickHere" style="padding: 5px 100px;">SEE MORE</a>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br/>
-                {{--<div class="col-md-2 col-md-offset-5"><p>My Jobs</p></div>--}}
 
                 <!-- NEW JOBS MODULE -- START : Authored by Jan Sarmiento -->
-                @if($jobs->count() == 0)
+                <!-- @if($jobs->count() == 0)
                     <br/>
                     <center><i>No jobs posted yet</i></center>
                 @else
@@ -298,10 +402,64 @@
                         </div>
                         <br>
                     @endforeach
-                @endif
+                @endif -->
                 <!-- NEW JOBS MODULE -- END : Authored by Jan Sarmiento -->
             </div>
-        </div>
+
+            <div class="col-lg-8" style="margin-top: 2em;">
+                <div class="col-lg-12 no-padding">
+                    <div class="widget-container col-md-6" style="">
+                        <div class="widget-content">
+                            <div class="panel-body" style="color:#2980b9; font-size:14pt;">
+                                <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp General Information
+                            </div>
+                            <div class="panel-body">
+                                <span><b>Business Description: </b>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</span><br>
+                                <span><b>Business Nature:</b> Ipsum Sit dolor</span><br>
+                                <span><b>Business Permit:</b> Client Company DTI/SEC</span><br>
+                                <span><b>Business Address:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</span><br>
+                                <span><b>Years in Operation:</b> 5</span><br>
+                                <span><b>Company Size:</b> 50</span><br>
+                                <span><b>Description:</b> Client Company Description</span><br>
+                            </div>                             
+                        </div>
+                    </div>
+                    <div class="widget-container col-md-6" style="box-shadow:none;">
+                        <div class="widget-content">
+                            <div class="panel-body" style="color:#2980b9; font-size:14pt;">
+                                <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Account Information
+                            </div>
+                            <div class="panel-body">
+                                <span><b>Date Created: </b>01/01/02</span><br>
+                                <span><b>Account Status: </b>Activated</span>
+                            </div>                             
+                        </div>
+
+                        <div class="widget-content">
+                            <div class="panel-body" style="color:#2980b9; font-size:14pt;">
+                                <i class="fa fa-file-text-o" style="font-size:14pt; color:#2980b9"></i>&nbsp Licensed
+                            </div>
+                            <div class="panel-body">
+                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</span>
+                            </div>                             
+                        </div>
+                    </div>
+                </div>            
+            </div> 
+
+            <div class="col-lg-8 job-post" style="margin-top: 2em;">
+                <div class="col-lg-12 no-padding">
+                    <div class="widget-container" style="min-height:30px;">
+                        <div class="widget-content">
+                            <div class="panel-body" style="color:#2980b9; font-size:14pt;">
+                                <i class="fa fa-sticky-note" aria-hidden="true"></i> Other notes
+                            </div>
+                            <div class="panel-body">
+                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquet viverra libero, tempor pretium diam placerat non. Sed eget sollicitudin sem. Maecenas sagittis mattis lacus eget commodo. Suspendisse quis risus ac neque luctus dapibus non sit amet ligula. Sed imperdiet sapien orci, at dignissim ipsum aliquet id. Quisque porttitor neque elit, vitae volutpat ante pretium non. Aliquam quam risus, varius sit amet ante quis, eleifend blandit purus. Donec condimentum neque sed nunc lobortis congue at vulputate enim. Integer eu nulla commodo, sollicitudin nulla non, convallis metus. Vivamus accumsan orci eget ex suscipit consequat. Vivamus nec nibh urna. Vivamus elementum id libero nec dignissim.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </div>
 </section>
 @stop
