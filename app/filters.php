@@ -10,21 +10,13 @@
 | application. Here you may also register your custom route filters.
 |
 */
-//App::after(function($request, $response)
-//{
-//    // THIS CODE PREVENTS BACKING UP TO PAGES (WITH THE USE OF "BACK BUTTON") AFTER LOGGING OUT - JAN SARMIENTO
-////    $response->headers->set("Cache-Control","no-cache, no-store, must-revalidate");
-//});
 
-App::before(function($request)
-{
-	//
+App::before(function($request){
+    
 });
 
 
-App::after(function($request, $response)
-{
-	//
+App::after(function($request, $response){
     // THIS CODE PREVENTS BACKING UP TO PAGES (WITH THE USE OF "BACK BUTTON") AFTER LOGGING OUT - JAN SARMIENTO
     $response->headers->set("Cache-Control","no-cache, no-store, must-revalidate");
 });
