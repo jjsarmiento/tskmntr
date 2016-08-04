@@ -218,7 +218,7 @@
                             <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".3s" data-wow-offset="0" data-wow-delay="0" style="border-radius: 0.3em; word-wrap: break-word; padding-left:1em; padding-right:10px; min-height: 1em; max-height: 10">
                                 <div style="display:flex;padding-bottom:5px;">
                                     <div style="flex:11;">
-                                        <a href="/jobDetails={{$job->job_id}}" style="text-decoration:none;">
+                                        <a href="/login" style="text-decoration:none;">
                                             <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
                                                 {{ $job->title}}
                                             </h3>
