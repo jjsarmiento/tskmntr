@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 class ClientIndiController extends \BaseController {
 
     function emailValidate($email){
@@ -1040,7 +1041,7 @@ class ClientIndiController extends \BaseController {
                 ->with('taskcategories',TaskCategory::orderBy('categoryname', 'ASC')->whereNotIn('categorycode', ['999'])->get())
                 ->with('intiTaskitems', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get());
         }else{
-            return Redirect::to('/');
+            return View::make('client.CLIENT_ERROR');
         }
     }
 
@@ -1781,5 +1782,24 @@ class ClientIndiController extends \BaseController {
     public function DELDOCCMP($docID){
         Document::where('id', $docID)->delete();
         return Redirect::back();
+    }
+
+    public function REPOST_JOB($jobID){
+        if($this->POINT_CHECK(Auth::user()->points, 'CREATE_JOB')){
+            Job::where('id', $jobID)->update([
+                'expired'       =>  false,
+                'expires_at'    =>  Carbon::now()->addWeek()
+            ]);
+
+            // POINT DEDUCTION FOR JOB ADS
+            User::where('id', Auth::user()->id)
+                ->update([
+                    'points'    =>  (Auth::user()->points - SystemSetting::where('type', 'SYSSETTINGS_POINTSPERAD')->pluck('value'))
+                ]);
+            return Redirect::back();
+        }else{
+            return View::make('error.CLIENT_ERROR')
+                    ->with('msg', "You do not have enough points to repost this job ad!");
+        }
     }
 }

@@ -252,11 +252,16 @@
                     @endif
                 </div>
             </div>
-
-            <div class="col-lg-12 padded" style=" margin-bottom: 0; padding-bottom: 0;">
-                <div class="col-lg-4"><hr class="hrLine"></div>
-                <div class="col-lg-4" style="padding-top: 10px; text-align: center"><p style="font-size:10pt;">Recommended Workers</p></div>
-                <div class="col-lg-4"><hr class="hrLine"></div>
+        </div>
+        <div class="col-md-4">
+            <div class="widget-container padded">
+                <div class="widget-content">
+                    <a href="/REPOST_JOB:{{$job->id}}" class="btn-block btn btn-success">Repost Job Ad</a>
+                    <br/>
+                    You currently have {{Auth::user()->points}} points.
+                    <br/>
+                    <i style="font-weight: bold;"><span style="color: #E74C3C;">*</span> You need {{SystemSetting::where('type', 'SYSSETTINGS_POINTSPERAD')->pluck('value');}} points to repost this job.</i>
+                </div>
             </div>
         </div>
     </div>

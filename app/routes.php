@@ -260,17 +260,25 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
 Route::group(array('before' => 'CLIENT-ONLY'), function(){
     Route::get('/cltEditPersonalInfo', 'ClientIndiController@cltEditPersonalInfo');
     Route::post('/doCltEditPersonalInfo', 'ClientIndiController@doCltEditPersonalInfo');
+    Route::get('/cltEditContactInfo', 'ClientIndiController@cltEditContactInfo');
+    Route::get('/cltEditAcctInfo', 'ClientIndiController@cltEditAcctInfo');
+    Route::post('/doCltEditContactInfo', 'ClientIndiController@doCltEditContactInfo');
+    Route::post('/doCltEditIndiContactInfo', 'ClientIndiController@doCltEditIndiContactInfo');
+    Route::post('/doCltEditPass', 'ClientIndiController@doCltEditPass');
+    Route::post('/doCltIndiEditPersonalInfo', 'ClientIndiController@doCltIndiEditPersonalInfo');
 
     // DOCUMENTS
     Route::get('/editDocumentsCMP', 'ClientIndiController@editDocumentsCMP');
     Route::post('/doUploadDocumentsCMP', 'ClientIndiController@doUploadDocumentsCMP');
     Route::get('/DELDOCCMP_{docID}', 'ClientIndiController@DELDOCCMP');
 
+    // EMPLOYER MUST HAVE ATLEAST 50% PROFILE PROGRESS TO ACCESS THESE ROUTES -- JAN SARMIENTO
     Route::group(array('before' => 'EMPLOYER-UPDATE-PROFILE-PROGRESS'), function(){
 
         // SUBSCRIPTION RESTRICTION - JOB LIMITS
         Route::group(array('before' => 'JOB_LIMITS'), function(){
             Route::get('/createJob', 'ClientIndiController@createJob');
+            Route::get('/REPOST_JOB:{jobID}', 'ClientIndiController@REPOST_JOB');
             Route::post('/doCreateJob', 'ClientIndiController@doCreateJob');
         });
 
@@ -302,13 +310,6 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
         Route::post('/doCheckout', 'ClientIndiController@doCheckout');
         Route::get('/checkouts', 'ClientIndiController@checkouts');
         Route::get('/removeCartItem:{cartID}', 'ClientIndiController@removeCartItem');
-        Route::get('/cltEditContactInfo', 'ClientIndiController@cltEditContactInfo');
-        Route::get('/cltEditAcctInfo', 'ClientIndiController@cltEditAcctInfo');
-        Route::post('/doCltEditContactInfo', 'ClientIndiController@doCltEditContactInfo');
-        Route::post('/doCltEditIndiContactInfo', 'ClientIndiController@doCltEditIndiContactInfo');
-        Route::post('/doCltEditPass', 'ClientIndiController@doCltEditPass');
-        Route::post('/doCltIndiEditPersonalInfo', 'ClientIndiController@doCltIndiEditPersonalInfo');
-
         Route::get('/compDoSearch', 'searchTestController@compDoSearch');
         Route::get('/CISRCH/{prog}={keyword}', 'ClientIndiController@CISRCH');
 
