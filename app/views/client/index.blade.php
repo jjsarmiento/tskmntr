@@ -363,21 +363,10 @@
                                             <a href="/jobDetails={{$j->job_id}}" class="viewSal">View full details</a>
                                         </div>
                                     @endforeach
-                                    <!--
-                                    @for($i=0; $i<6; $i++)
-                                        <div class="col-md-4 padded">
-                                            <b class="title">Praesent volutpat dapibus mauris nec blandit.</b>
-                                            <p class="content">Vivamus metus nulla, tempor vel varius fermentum, molestie nec enim. Suspendisse eu ultricies lorem. </p>
-                                            <a href="#" class="viewSal">View full details</a>
-                                        </div>
-                                    @endfor
-                                    -->
                                 </div>
-
-                                <!-- NOTE: IF Job post greater than 6 display this-->
                                 @if($jobs->count() == 6)
                                 <div class="col-md-12 padded" style="margin-top: 2em; text-align:center;">
-                                    <a href="#" class="clickHere" style="padding: 5px 100px;">SEE MORE</a>
+                                    <a href="/jobs" class="clickHere" style="padding: 5px 100px;">SEE MORE</a>
                                 </div>
                                 @endif
                             </div>
@@ -441,13 +430,13 @@
                                 <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp General Information
                             </div>
                             <div class="panel-body">
-                                <span><b>Business Description: </b>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</span><br>
-                                <span><b>Business Nature:</b> Ipsum Sit dolor</span><br>
-                                <span><b>Business Permit:</b> Client Company DTI/SEC</span><br>
-                                <span><b>Business Address:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</span><br>
-                                <span><b>Years in Operation:</b> 5</span><br>
-                                <span><b>Company Size:</b> 50</span><br>
-                                <span><b>Description:</b> Client Company Description</span><br>
+                                <span><b>Business Description: </b>{{Auth::user()->businessDescription}}</span><br>
+                                <span><b>Business Nature:</b> {{Auth::user()->businessNature}}</span><br>
+                                <span><b>Business Permit:</b> {{Auth::user()->businessPermit}}</span><br>
+                                <span><b>Business Address:</b> {{Auth::user()->address}}</span><br>
+                                <span><b>Years in Operation:</b> {{Auth::user()->years_in_operation}}</span><br>
+                                <span><b>Company Size:</b> {{Auth::user()->number_of_branches}}</span><br>
+                                {{--<span><b>Description:</b> Client Company Description</span><br>--}}
                             </div>                             
                         </div>
                     </div>
@@ -457,8 +446,8 @@
                                 <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Account Information
                             </div>
                             <div class="panel-body">
-                                <span><b>Date Created: </b>01/01/02</span><br>
-                                <span><b>Account Status: </b>Activated</span>
+                                <span><b>Date Created: </b>{{Auth::user()->created_at}}</span><br>
+                                <span><b>Account Status: </b>{{Auth::user()->status}}</span>
                             </div>                             
                         </div>
 

@@ -845,7 +845,7 @@ class HomeController extends BaseController {
                                 'regions.regname',
                             ])
                             ->groupBy('jobs.id')
-                            ->take('5')
+                            ->take('6')
                             ->get();
 
                     return View::make('client.index')
