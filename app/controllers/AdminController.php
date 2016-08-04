@@ -378,7 +378,7 @@ class AdminController extends \BaseController {
         return View::make('admin.taskList')
             ->with('pendingCount', $this->countPendingUsers())
             ->with('pendingUsers', $users)
-            ->with('pageName', 'Proveek Admin | Dashbooard')
+            ->with('pageName', 'Proveek Admin | Dashboard')
             ->with('formUrl', '/pendingUserSearch');
     }
 
@@ -834,7 +834,7 @@ class AdminController extends \BaseController {
             ->with('searchWord', $searchWord)
             ->with('searchUserType', $searchUserType)
             ->with('pendingUsers', $userList)
-            ->with('pageName', 'Proveek Admin | Dashbooard')
+            ->with('pageName', 'Proveek Admin | Dashboard')
             ->with('formUrl', '/pendingUserSearch');
 
 //            ->with('users', $userList)
@@ -878,7 +878,7 @@ class AdminController extends \BaseController {
             ->with('search_keyword', $keyword)
             ->with('search_acctType', $acctType)
             ->with('search_orderBy', $orderBy)
-            ->with('pageName', 'Proveek Admin | Dashbooard');
+            ->with('pageName', 'Proveek Admin | Dashboard');
     }
 
     public function adminSearchChatUser(){
