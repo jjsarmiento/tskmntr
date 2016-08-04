@@ -993,26 +993,19 @@ class AdminController extends \BaseController {
                 ->with('custom_skills', $custom_skills);
     }
 
-    public function ADMINJbSrch($keyword, $regcode, $citycode, $hiringType, $orderBy, $categoryID, $skillID, $customSkill){
-        if($keyword == 'NONE'){ $keyword = ''; }
-        if($customSkill == 'NONE'){ $customSkill = ''; }
-
-
+    public function ADMINJbSrch($keyword, $regcode, $citycode, $hiringType, $orderBy, $categoryID, $skillID){
         $QUERY = Job::join('users', 'users.id', '=', 'jobs.user_id')
             ->join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
             ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
-            ->leftJoin('custom_skills', 'custom_skills.company_job_id', '=', 'jobs.id')
-            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
-            ->where('jobs.title', 'LIKE', '%'.$keyword.'%')
-            ->where('custom_skills.skill', 'LIKE', '%'.$customSkill.'%');
+            ->join('cities', 'cities.citycode', '=', 'jobs.citycode');
 
         if($regcode != 'ALL'){
-            $QUERY = $QUERY->where('regions.regcode', $regcode);
+            $QUERY = $QUERY->where('jobs.regcode', $regcode);
         }
-//
+
         if($citycode != 'ALL'){
-            $QUERY = $QUERY->where('cities.citycode', $citycode);
+            $QUERY = $QUERY->where('jobs.citycode', $citycode);
         }
 
         if($hiringType != 'ALL'){
@@ -1020,39 +1013,47 @@ class AdminController extends \BaseController {
         }
 
         if($categoryID != 'ALL'){
-            $QUERY = $QUERY->where('taskcategory.categorycode', $categoryID);
+            $QUERY = $QUERY->where('jobs.skill_category_code', $categoryID);
         }
 
         if($skillID != 'ALL'){
-            $QUERY = $QUERY->where('taskitems.itemcode', $skillID);
+            $QUERY = $QUERY->where('jobs.skill_code', $skillID);
+        }
+
+        if($keyword != 'NONE'){
+            $QUERY = $QUERY->leftJoin('custom_skills', 'custom_skills.company_job_id', '=', 'jobs.id')
+                ->orWhere('custom_skills.skill', 'LIKE', '%'.$keyword.'%')
+                ->orWhere('jobs.title', 'LIKE', '%'.$keyword.'%');
+        }else{
+            $keyword = '';
         }
 
         $QUERY = $QUERY->orderBy('jobs.created_at', $orderBy)
             ->select([
-                'users.username',
-                'users.id as USERID',
                 'users.fullName',
-                'jobs.id as JOBID',
+                'users.id as user_id',
                 'jobs.title',
+                'jobs.id as job_id',
+                'jobs.expires_at',
+                'jobs.salary',
                 'jobs.created_at',
                 'jobs.description',
-                'jobs.requirements',
-                'jobs.salary',
                 'jobs.hiring_type',
-                'regions.regname',
-                'regions.regcode',
                 'cities.cityname',
-                'cities.citycode',
-                'taskcategory.categoryname',
-                'taskcategory.categorycode',
-                'taskitems.itemname',
-                'taskitems.itemcode'
+                'regions.regname',
             ])
             ->groupBy('jobs.id')
             ->paginate(10);
 
         return View::make('admin.showJobAds')
-                ->with('jobs', $QUERY);
+                ->with('jobs', $QUERY)
+                ->with('AS_keyword', $keyword)
+                ->with('AS_regcode', $regcode)
+                ->with('AS_citycode', $citycode)
+                ->with('AS_hiringType', $hiringType)
+                ->with('AS_orderBy', $orderBy)
+                ->with('AS_categoryID', $categoryID)
+                ->with('AS_skillID', $skillID);
     }
 
     public function ADMIN_DELETEJOB($jobId){

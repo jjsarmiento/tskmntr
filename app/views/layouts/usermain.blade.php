@@ -104,10 +104,9 @@
                     duration = $('#adSearch_DUR').val(),
                     orderBy = $('#orderBy').val(),
                     category = $('#adSearch_CATEGORY').val(),
-                    skill = $('#adSearch_SKILL').val(),
-                    customSkill = ($('#adSearch_CUSTSKILL').val() ? $('#adSearch_CUSTSKILL').val() : "NONE");
+                    skill = $('#adSearch_SKILL').val();
 
-                location.href = "/ADMINJbSrch:"+keyword+":"+region+":"+city+":"+duration+":"+orderBy+":"+category+":"+skill+":"+customSkill;
+                location.href = "/ADMINJbSrch:"+keyword+":"+region+":"+city+":"+duration+":"+orderBy+":"+category+":"+skill;
             });
 
             $('.srchAnim').keyup(function(e){
@@ -598,8 +597,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Title keyword</label>
-                                        <input type="text" class="form-control" placeholder="Enter keyword for job ad title" id="adSearch_KEYWORD" name="jobsrch_keyword" />
+                                        <label>Title / Custom skill keyword</label>
+                                        <input type="text" value="{{@$AS_keyword}}" class="form-control" placeholder="Enter keyword for job ad title / custom skill" id="adSearch_KEYWORD" name="jobsrch_keyword" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -608,7 +607,7 @@
                                         <select id="adSearch_REG" data-loctype="REGION_TO_CITY" class="form-control">
                                             <option value="ALL" selected>Display from all regions</option>
                                             @foreach(Region::get() as $reg)
-                                                <option value="{{ $reg->regcode }}">{{ $reg->regname }}</option>
+                                                <option <?php if(@$AS_regcode == $reg->regcode){ echo 'selected'; } ?> value="{{ $reg->regcode }}">{{ $reg->regname }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -617,7 +616,7 @@
                                         <select id="adSearch_CITY" data-loctype="REGION_TO_CITY" class="form-control">
                                             <option value="ALL" selected>Display from all cities</option>
                                             @foreach(City::get() as $city)
-                                                <option value="{{$city->citycode }}">{{ $city->cityname }}</option>
+                                                <option <?php if(@$AS_citycode == $city->citycode){ echo 'selected'; } ?> value="{{$city->citycode }}">{{ $city->cityname }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -627,25 +626,18 @@
                                         <label>Duration</label>
                                         <select id="adSearch_DUR" class="form-control">
                                             <option value="ALL">Display all duration</option>
-                                            <option value="LT6MOS">Less Than 6 months</option>
-                                            <option value="GT6MOS">Greater Than 6 months</option>
+                                            <option <?php if(@$AS_hiringType == 'LT6MOS'){ echo 'selected'; } ?> value="LT6MOS">Less Than 6 months</option>
+                                            <option <?php if(@$AS_hiringType == 'GT6MOS'){ echo 'selected'; } ?> value="GT6MOS">Greater Than 6 months</option>
                                         </select>
                                     </div>
-                                    {{--<center><h4><i class="fa fa-map-marker"></i> Job Status</h4></center>--}}
-                                    {{--<div class="form-group">--}}
-                                        {{--<select id="adSearch_STAT" class="form-control">--}}
-                                            {{--<option>Open</option>--}}
-                                            {{--<option>Closed</option>--}}
-                                        {{--</select>--}}
-                                    {{--</div>--}}
                                 </div>
                             </div>
                             <hr/>
                             <div class="row">
                                 <div class="col-md-12">
                                     <select class="form-control" id="orderBy" name="orderBy">
-                                        <option value="ASC">Oldest ads first</option>
-                                        <option value="DESC">Newest ads first</option>
+                                        <option <?php if(@$AS_orderBy == 'ASC'){ echo 'selected'; } ?> value="ASC">Oldest ads first</option>
+                                        <option <?php if(@$AS_orderBy == 'DESC'){ echo 'selected'; } ?> value="DESC">Newest ads first</option>
                                     </select>
                                 </div>
                             </div>
@@ -658,7 +650,7 @@
                                         <select class="form-control" id="adSearch_CATEGORY" name="adSearch_CATEGORY">
                                             <option value="ALL">Display from all category</option>
                                             @foreach(TaskCategory::orderBy('categoryname', 'ASC')->get() as $c)
-                                                <option value="{{$c->categorycode}}">{{$c->categoryname}}</option>
+                                                <option <?php if(@$AS_categoryID == $c->categorycode){ echo 'selected'; } ?> value="{{$c->categorycode}}">{{$c->categoryname}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -667,13 +659,9 @@
                                         <select class="form-control" id="adSearch_SKILL" name="adSearch_SKILL">
                                             <option value="ALL">Display from all skills</option>
                                             @foreach(TaskItem::get() as $skill)
-                                                <option value="{{$skill->itemcode}}">{{$skill->itemname}}</option>
+                                                <option <?php if(@$AS_skillID == $skill->itemcode){ echo 'selected'; } ?> value="{{$skill->itemcode}}">{{$skill->itemname}}</option>
                                             @endforeach
                                         </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Search by custom skill</label>
-                                        <input type="text" placeholder="Enter keyword for custom skill search" class="form-control" name="adSearch_CUSTSKILL" id="adSearch_CUSTSKILL"/>
                                     </div>
                                 </div>
                             </div>
