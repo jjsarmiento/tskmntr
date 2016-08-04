@@ -267,15 +267,20 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
     Route::get('/DELDOCCMP_{docID}', 'ClientIndiController@DELDOCCMP');
 
     Route::group(array('before' => 'EMPLOYER-UPDATE-PROFILE-PROGRESS'), function(){
-        // JOBS
-        Route::get('/createJob', 'ClientIndiController@createJob');
-        Route::post('/doCreateJob', 'ClientIndiController@doCreateJob');
+
+        // SUBSCRIPTION RESTRICTION - JOB LIMITS
+        Route::group(array('before' => 'JOB_LIMITS'), function(){
+            Route::get('/createJob', 'ClientIndiController@createJob');
+            Route::post('/doCreateJob', 'ClientIndiController@doCreateJob');
+        });
+
+        Route::post('/doEditJob', 'ClientIndiController@doEditJob');
+        Route::get('/editJob={jobId}', 'ClientIndiController@editJob');
+        Route::get('/deleteJob={jobId}', 'ClientIndiController@deleteJob');
         Route::get('/jobDetails={jobId}', 'ClientIndiController@jobDetails');
         Route::get('/jobs', 'ClientIndiController@jobs');
-        Route::get('/editJob={jobId}', 'ClientIndiController@editJob');
-        Route::post('/doEditJob', 'ClientIndiController@doEditJob');
 
-        // ROUTE FILTER FOR INVITES
+        // SUBSCRIPTION RESTRICTION - INVITATION LIMITS
         Route::group(array('before' => 'invite_limit'), function(){
             // MULTIPLE INVITE ROUTES
             Route::post('/SENDMULTIPLEINVITE', 'ClientIndiController@SENDMULTIPLEINVITE');
@@ -289,7 +294,6 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
         Route::get('/cancelInvite:{jobID}:{workerID}', 'ClientIndiController@cancelInvite');
         Route::get('/ShowInvited:{jobId}', 'ClientIndiController@ShowInvited');
         Route::get('/JOB_DELETECUSTSKILL={custom_skill_id}', 'ClientIndiController@JOB_DELETECUSTSKILL');
-        Route::get('/deleteJob={jobId}', 'ClientIndiController@deleteJob');
 
 
         // CART

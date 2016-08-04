@@ -85,11 +85,11 @@
                                 <label class="radio-inline"><input required="required" <?php if(!$sub->worker_browse){echo 'checked';} ?> type="radio" name="worker_browse">False</label>
                             </div>
                             <div class="form-group">
-                                <label>Invitation Limit per week</label>
+                                <label>Job Ad Limit per week</label>
                                 <input required="required" type="text" value="{{$sub->job_ad_limit_week}}" name="job_ad_limit_week" class="form-control" />
                             </div>
                             <div class="form-group">
-                                <label>Invitation Limit per month</label>
+                                <label>Job Ad Limit per month</label>
                                 <input required="required" type="text" value="{{$sub->job_ad_limit_month}}" name="job_ad_limit_month" class="form-control" />
                             </div>
                             <div class="form-group">

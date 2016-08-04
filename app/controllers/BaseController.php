@@ -211,8 +211,8 @@ class BaseController extends Controller {
         // CHECK FOR EXPIRATION
         // Updates `expired` column to TRUE if job is expired, else, FALSE
         foreach($jobs as $j){
-            if(time($j->expires_at) > time($j->created_at)){
-                Job::where('id', $j->id)->update('expired', true);
+            if(Carbon::now()->gt(Carbon::parse($j->expires_at))){
+                Job::where('id', $j->id)->update(['expired' => true]);
             }
         }
     }
@@ -223,17 +223,15 @@ class BaseController extends Controller {
         // Updates `expired` column to TRUE if job is expired, else, FALSE
         foreach($jobs as $j){
             $bc = new BaseController();
-            if(Carbon::now()->diffInDays(Carbon::parse($j->expires_at)) <= 3){
-                $msg = 'Your job ad - '.$j->title.' will expire in less than 3 days';
-                $url = '/jobDetails='.$j->id;
-                $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
-            }
-
-            if(time($j->expires_at) > time($j->created_at)){
-                Job::where('id', $j->id)->update('expired', true);
+            if(Carbon::now()->gt(Carbon::parse($j->expires_at))){
+                Job::where('id', $j->id)->update(['expired' => true]);
                 $msg = 'Your job ad - '.$j->title.' has expired.';
                 $url = '/jobDetails='.$j->id;
                 // NOTIFICATION
+                $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
+            }elseif(Carbon::now()->diffInDays(Carbon::parse($j->expires_at)) <= 3){
+                $msg = 'Your job ad - '.$j->title.' will expire in less than 3 days';
+                $url = '/jobDetails='.$j->id;
                 $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
             }
         }
@@ -251,13 +249,20 @@ class BaseController extends Controller {
     }
 
     public function NOTIFICATION_INSERT($receiverID, $msg, $url){
-        Notification::insert([
-            'user_id'   =>  $receiverID,
-            'content'   =>  $msg,
-            'notif_url' =>  $url,
-            'status'    =>  'NEW',
-            'created_at'=>  date("Y:m:d H:i:s")
-        ]);
+        $notifExists = Notification::where('user_id', $receiverID)
+                        ->where('content', $msg)
+                        ->where('notif_url', $url)
+                        ->count();
+
+        if($notifExists == 0){
+            Notification::insert([
+                'user_id'   =>  $receiverID,
+                'content'   =>  $msg,
+                'notif_url' =>  $url,
+                'status'    =>  'NEW',
+                'created_at'=>  date("Y:m:d H:i:s")
+            ]);
+        }
     }
 
     public function DOCUMENTS_GETEXISTINGTYPES($userID){
@@ -587,10 +592,10 @@ class BaseController extends Controller {
         $jobAdsOfTheWeek = Job::join('users', 'users.id', '=', 'jobs.user_id')
             ->where('users.id', $userID)
             ->whereBetween('jobs.created_at', array(date("Y:m:d H:i:s", $start_date), date("Y:m:d H:i:s", $end_date)))
-            ->groupBy('jobs.id')
+//            ->groupBy('jobs.id')
             ->count();
 
-        return ($jobAdsOfTheWeek > $quantity) ? 1 : 0;
+        return ($jobAdsOfTheWeek >= $quantity) ? 1 : 0;
     }
 
     public function RSTRCTN_JOBADLIMIT_MNTH($userID, $start_date, $end_date, $quantity){
@@ -598,7 +603,8 @@ class BaseController extends Controller {
                 ->where('users.id', $userID)
                 ->whereBetween('jobs.created_at', array($start_date, $end_date))
                 ->count();
-        return ($jobsOfTheMonth > $quantity) ? 1 : 0;
+
+        return ($jobsOfTheMonth >= $quantity) ? 1 : 0;
     }
 
     public function SUBSCRIPTION_DETAILS($userID){

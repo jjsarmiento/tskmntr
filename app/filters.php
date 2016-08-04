@@ -118,6 +118,19 @@ Route::filter('invite_limit', function(){
     }
 });
 
+Route::filter('JOB_LIMITS', function(){
+    $basecontroller = new BaseController;
+    if($basecontroller->SUBSCRIPTION_RESTRICTIONS(Auth::user()->id, 'job_ad_limit_month')){
+        return View::make('error.SUBSCRIPTION_ERROR')
+            ->with('msg', "You have reached your subscription's monthly job ad limit!")
+            ->with('sub', $basecontroller->SUBSCRIPTION_DETAILS(Auth::user()->id));
+    }elseif($basecontroller->SUBSCRIPTION_RESTRICTIONS(Auth::user()->id, 'job_ad_limit_week')){
+        return View::make('error.SUBSCRIPTION_ERROR')
+            ->with('msg', "You have reached your subscription's weekly job ad limit!")
+            ->with('sub', $basecontroller->SUBSCRIPTION_DETAILS(Auth::user()->id));
+    }
+});
+
 Route::filter('CLIENT-ONLY', function(){
     if(Auth::check()){
         switch(Auth::user()->status){
@@ -140,16 +153,6 @@ Route::filter('CLIENT-ONLY', function(){
     // check if subscription is expired
     BaseController::SUBSCRIPTION_UPDATE(Auth::user()->id);
 });
-
-//Route::filter('CLIENTCOMP-ONLY', function(){
-//    if(Auth::check()){
-//        if(UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id') != 4){
-//            return Redirect::to('/');
-//        }
-//    }else{
-//        return Redirect::to('/');
-//    }
-//});
 
 Route::filter('TASKMINATOR-ONLY', function(){
     if(Auth::check()){

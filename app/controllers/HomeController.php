@@ -8,7 +8,7 @@ class HomeController extends BaseController {
 
     public function TESTINGROUTE(){ // test()
 //        return BaseController::ROUTE_UPDATE_JOBADS(2);
-        return BaseController::SUBSCRIPTION_UPDATE(2);
+        return BaseController::SUBSCRIPTION_RESTRICTIONS(Auth::user()->id, 'job_ad_limit_week');
     }
 
     function generateConfirmationCode(){

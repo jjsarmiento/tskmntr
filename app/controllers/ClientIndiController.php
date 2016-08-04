@@ -1217,6 +1217,7 @@ class ClientIndiController extends \BaseController {
                 'jobs.title',
                 'jobs.id as job_id',
                 'jobs.expires_at',
+                'jobs.expired',
                 'jobs.salary',
                 'jobs.created_at',
                 'jobs.description',
