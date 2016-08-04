@@ -315,7 +315,10 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
         Route::get('/SRCHWRKRSKLL={categoryId}={skillId}', 'ClientIndiController@SRCHWRKRSKLL');
 
         // BOOKMARK ROUTES
-        Route::get('/ADD_BOOKMARK:{worker_id}', 'ClientIndiController@ADD_BOOKMARK');
+        Route::group(array('before' => 'worker_bookmark_limit'), function(){
+            Route::get('/ADD_BOOKMARK:{worker_id}', 'ClientIndiController@ADD_BOOKMARK');
+        });
+
         Route::get('/REMOVE_BOOKMARK:{book}', 'ClientIndiController@REMOVE_BOOKMARK');
         Route::get('/bookmarkedUsers', 'ClientIndiController@bookmarkedUsers');
 

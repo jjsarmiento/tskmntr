@@ -549,13 +549,12 @@ class BaseController extends Controller {
             $start_date = $end_date + (24 * 60 * 60);
             $end_date = $start_date + (7 * 24 * 60 * 60);
         }
-        $bookmarksOfTheWeek = User::leftJoin('bookmark_users', 'bookmark_users.company_id', '=', 'users.id')
-                ->where('users.id', $userID)
-                ->whereBetween('bookmark_users.created_at', array(date("Y:m:d H:i:s", $start_date), date("Y:m:d H:i:s", $end_date)))
-                ->groupBy('bookmark_users.id')
-                ->count();
 
-        return ($bookmarksOfTheWeek > $quantity) ? 1 : 0;
+        $bookmarksOfTheWeek = BookmarkUser::where('company_id', $userID)
+            ->whereBetween('created_at', array(date("Y:m:d H:i:s", $start_date), date("Y:m:d H:i:s", $end_date)))
+            ->count();
+
+        return ($bookmarksOfTheWeek >= $quantity) ? 1 : 0;
     }
 
     public function RSTRCTN_INVITE_LIMIT($userID, $start_date, $quantity){

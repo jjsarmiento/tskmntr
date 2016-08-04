@@ -97,6 +97,7 @@ Route::filter('ADMIN-ONLY', function(){
 
 Route::filter('EMPLOYER-UPDATE-PROFILE-PROGRESS', function(){
     if(BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id) < 50){
+        Session::flash('errorMsg', 'You must first complete at least 50% of your profile to complete this action');
         return Redirect::to('/');
     };
 });
@@ -106,6 +107,15 @@ Route::filter('WORKER-UPDATE-PROFILE-PROGRESS', function(){
 //    if(BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id) < 50){
 //        return Redirect::to('/');
 //    }
+});
+
+Route::filter('worker_bookmark_limit', function(){
+    $basecontroller = new BaseController;
+    if($basecontroller->SUBSCRIPTION_RESTRICTIONS(Auth::user()->id, 'worker_bookmark_limit')){
+        return View::make('error.SUBSCRIPTION_ERROR')
+            ->with('msg', 'You have reached your subscriptions bookmark limit!')
+            ->with('sub', $basecontroller->SUBSCRIPTION_DETAILS(Auth::user()->id));
+    }
 });
 
 Route::filter('invite_limit', function(){

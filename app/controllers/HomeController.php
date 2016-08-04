@@ -7,9 +7,7 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){ // test()
-        foreach (Route::getRoutes() as $value) {
-            echo $value->getPath().'<br/>';
-        }
+        return BaseController::SUBSCRIPTION_RESTRICTIONS(2, 'worker_bookmark_limit');
     }
 
     function generateConfirmationCode(){

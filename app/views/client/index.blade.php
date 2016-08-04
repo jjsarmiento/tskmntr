@@ -331,6 +331,12 @@
 
             <div class="col-lg-8 job-post">
                 <div class="col-lg-12 no-padding">
+                    @if(Session::has('errorMsg'))
+                        <div class="widget-container padded" style="font-weight: bold; text-align: center; min-height: 1em;">
+                            <i class="fa fa-warning" style="color: #E74C3C;"></i> {{Session::get('errorMsg')}}
+                        </div>
+                        <br/>
+                    @endif
                     <div class="widget-container" style="min-height:30px;">
                         <div class="widget-content">
                             <div class="panel-body" style="color:#2980b9; font-size:20pt;">
