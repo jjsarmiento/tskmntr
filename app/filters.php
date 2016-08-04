@@ -96,7 +96,6 @@ Route::filter('ADMIN-ONLY', function(){
 });
 
 Route::filter('EMPLOYER-UPDATE-PROFILE-PROGRESS', function(){
-//    BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
     if(BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id) < 50){
         return Redirect::to('/');
     };

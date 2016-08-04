@@ -223,16 +223,20 @@ class BaseController extends Controller {
         // Updates `expired` column to TRUE if job is expired, else, FALSE
         foreach($jobs as $j){
             $bc = new BaseController();
+            $url = '/jobDetails='.$j->id;
             if(Carbon::now()->gt(Carbon::parse($j->expires_at))){
                 Job::where('id', $j->id)->update(['expired' => true]);
                 $msg = 'Your job ad - '.$j->title.' has expired.';
-                $url = '/jobDetails='.$j->id;
-                // NOTIFICATION
-                $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
+                $NOTIF_EXISTS = Notification::where('user_id', $j->user_id)->where('content', $msg)->where('notif_url', $url)->count();
+                if($NOTIF_EXISTS == 0){
+                    $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
+                }
             }elseif(Carbon::now()->diffInDays(Carbon::parse($j->expires_at)) <= 3){
                 $msg = 'Your job ad - '.$j->title.' will expire in less than 3 days';
-                $url = '/jobDetails='.$j->id;
-                $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
+                $NOTIF_EXISTS = Notification::where('user_id', $j->user_id)->where('content', $msg)->where('notif_url', $url)->count();
+                if($NOTIF_EXISTS == 0){
+                    $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
+                }
             }
         }
     }
@@ -498,23 +502,11 @@ class BaseController extends Controller {
         if(!$subscription_details->expired){
             if(time() > strtotime($subscription_details->expires_at)){
                 $msg = 'Your subscription has expired';
-                $notifExists = Notification::where('user_id', $employerID)
-                    ->where('content', $msg)
-                    ->where('notif_url', $url)
-                    ->count();
-                if($notifExists == 0){
-                    $bc->NOTIFICATION_INSERT($employerID, $msg, $url);
-                }
+                $bc->NOTIFICATION_INSERT($employerID, $msg, $url);
                 BaseController::SUBSCRIPTION_EXPIRED($subscription_id, $employerID);
             }elseif(Carbon::now()->diffInDays(Carbon::parse($subscription_details->expires_at)) <= 3){
                 $msg = 'Your subscription will expire in less than 3 days';
-                $notifExists = Notification::where('user_id', $employerID)
-                    ->where('content', $msg)
-                    ->where('notif_url', $url)
-                    ->count();
-                if($notifExists == 0){
-                    $bc->NOTIFICATION_INSERT($employerID, $msg, $url);
-                }
+                $bc->NOTIFICATION_INSERT($employerID, $msg, $url);
             }
         }
     }
@@ -579,9 +571,8 @@ class BaseController extends Controller {
             ->join('users', 'users.id', '=', 'jobs.user_id')
             ->where('users.id', $userID)
             ->whereBetween('job_invites.created_at', array(date("Y:m:d H:i:s", $start_date), date("Y:m:d H:i:s", $end_date)))
-//            ->groupBy('job_invites.id')
             ->count();
-        return $quantity;
+
         return ($inviteOfTheWeek >= $quantity) ? 1 : 0;
     }
 
