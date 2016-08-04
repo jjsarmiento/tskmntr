@@ -192,7 +192,7 @@
                         <br/>
                         <div class="col-md-12">
                             <label>Skill Category : </label>{{ $job->categoryname }}<br/>
-                            <label>Skills Needed : </label>
+                            <label>Skills Needed : </label>{{$job->itemname}}
                             @foreach($custom_skills as $cs)
                                 {{$cs->skill}} <br/>
                             @endforeach
