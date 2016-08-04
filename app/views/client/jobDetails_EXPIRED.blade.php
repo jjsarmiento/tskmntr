@@ -6,15 +6,15 @@
 
 @section('head-content')
     <style type="text/css">
-        body{background-color:#E9EAED;}
         .badge {
-            background-color: #1ABC9C;
+            background-color: #E74C3C;
             width: auto;
             max-width: 10em;
             overflow:hidden;
             white-space:nowrap;
             text-overflow:ellipsis;
         }
+        body{background-color:#E9EAED;}
         .accordion-toggle
         {
             text-decoration: none !important;
@@ -139,10 +139,6 @@
               cursor: pointer;
               margin-left: 10px;
             }
-
-            .INVITE-BOOKMARK-WORKERS:hover {
-                background-color: #cce6ff;
-            }
     </style>
     <script>
         $(document).ready(function(){
@@ -164,15 +160,17 @@
                 <a href="#" data-href="/deleteJob={{$job->id}}" id="DELETE_AD" type="button" class="close" style="opacity: 0.5;">
                     <i class="fa fa-trash"></i>
                 </a>
-                <h3 style="margin: 0;">{{$job->title}}</h3>
-                <span class="badge" style="background-color: #E74C3C;">EXPIRED</span>
-                Created at {{ date('D, M j, Y \a\t g:ia', strtotime($job->created_at)) }}
+                <a href="/editJob={{$job->id}}" type="button" class="close" style="opacity: 0.5;  margin-right: 0.4em;">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <h3 style="margin: 0;">{{$job->title}} <span class="badge">EXPIRED</span></h3>
+                <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>
                 <br/>
                 <br/>
                 <div class="row" style="text-align: left">
                     <div class="col-md-6">
                         <div class="col-md-12">
-                            <i class="fa fa-clock-o"></i>&nbsp;
+                            <label>Work Duration : </label>
                             @if($job->hiring_type == 'LT6MOS')
                                 Less than 6 months
                             @else
@@ -180,25 +178,33 @@
                             @endif
                         </div>
                         <div class="col-md-12">
-                            <i class="fa fa-map-marker"></i>&nbsp;&nbsp;&nbsp;{{ $job->cityname }}, {{ $job->regname }}
+                            <label>Work Location : </label>{{ $job->cityname }}, {{ $job->regname }}
                         </div>
                         @if($job->salary != 0)
-                            <div class="col-md-12">P{{ $job->salary }}</div>
+                            <div class="col-md-12">
+                                <label>Salary : </label>
+                                P{{ $job->salary }}
+                            </div>
                         @endif
                         <br/>
                         <br/>
                         <br/>
                         <br/>
                         <div class="col-md-12">
-                            <span style="background-color: #1ABC9C;" title="{{$job->categoryname}}" class="badge">
-                                {{ $job->categoryname }}
-                            </span>
-                            <span style="background-color: #3498DB;" title="{{ $job->itemname }}" class="badge">
-                                {{ $job->itemname }}
-                            </span>
+                            <label>Skill Category : </label>{{ $job->categoryname }}<br/>
+                            <label>Skills Needed : </label>{{$job->itemname}}
                             @foreach($custom_skills as $cs)
-                                <span style="background-color: #3498DB;" title="{{$cs->skill}}" class="badge">{{$cs->skill}}</span>
+                                {{$cs->skill}} <br/>
                             @endforeach
+                            {{--<span style="background-color: #1ABC9C;" title="{{$job->categoryname}}" class="badge">--}}
+                                {{--{{ $job->categoryname }}--}}
+                            {{--</span>--}}
+                            {{--<span style="background-color: #3498DB;" title="{{ $job->itemname }}" class="badge">--}}
+                                {{--{{ $job->itemname }}--}}
+                            {{--</span>--}}
+                            {{--@foreach($custom_skills as $cs)--}}
+                                {{--<span style="background-color: #3498DB;" title="{{$cs->skill}}" class="badge">{{$cs->skill}}</span>--}}
+                            {{--@endforeach--}}
                         </div>
                         <br/><br/><br/>
                     </div>
@@ -246,9 +252,11 @@
                     @endif
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="widget-container" style="display:block !important; word-wrap: break-word; min-height: 1em;">
+
+            <div class="col-lg-12 padded" style=" margin-bottom: 0; padding-bottom: 0;">
+                <div class="col-lg-4"><hr class="hrLine"></div>
+                <div class="col-lg-4" style="padding-top: 10px; text-align: center"><p style="font-size:10pt;">Recommended Workers</p></div>
+                <div class="col-lg-4"><hr class="hrLine"></div>
             </div>
         </div>
     </div>
