@@ -112,11 +112,11 @@
                         <div style="display:flex;padding-bottom:5px;">
                             <div style="flex:11;">
                                     <h3 class="lato-text" style="font-weight: bold; margin:0 !important;">
-                                        <a href="/jobDetails={{$job->job_id}}">
+                                        <a href="/ADMIN_jobDetails={{$job->job_id}}">
                                             {{ $job->title}}
                                         </a>
                                         by
-                                        <a href="#">{{$job->fullName}}</a>
+                                        <a href="/viewUserProfile/{{$job->user_id}}">{{$job->fullName}}</a>
                                     </h3>
 
                                     <div class="row" style="color:#95A5A6;">

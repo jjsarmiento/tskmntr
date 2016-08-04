@@ -123,7 +123,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/showJobAds', 'AdminController@showJobAds');
     Route::get('/ADMIN_jobDetails={job_id}', 'AdminController@ADMIN_jobDetails');
     Route::get('/ADMINJbSrch:{keyword}:{regcode}:{citycode}:{hiringType}:{orderBy}:{category}:{skill}:{customSkill}', 'AdminController@ADMINJbSrch');
-    Route::get('/ADMIN_DELETEJOB={jobId}', 'AdminController@ADMINJbSrch');
+    Route::get('/ADMIN_DELETEJOB={jobId}', 'AdminController@ADMIN_DELETEJOB');
 
     // SKILLS ROUTE
     Route::get('/skills', 'AdminController@skills');
