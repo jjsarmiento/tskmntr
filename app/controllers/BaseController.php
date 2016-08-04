@@ -249,20 +249,13 @@ class BaseController extends Controller {
     }
 
     public function NOTIFICATION_INSERT($receiverID, $msg, $url){
-        $notifExists = Notification::where('user_id', $receiverID)
-                        ->where('content', $msg)
-                        ->where('notif_url', $url)
-                        ->count();
-
-        if($notifExists == 0){
-            Notification::insert([
-                'user_id'   =>  $receiverID,
-                'content'   =>  $msg,
-                'notif_url' =>  $url,
-                'status'    =>  'NEW',
-                'created_at'=>  date("Y:m:d H:i:s")
-            ]);
-        }
+        Notification::insert([
+            'user_id'   =>  $receiverID,
+            'content'   =>  $msg,
+            'notif_url' =>  $url,
+            'status'    =>  'NEW',
+            'created_at'=>  date("Y:m:d H:i:s")
+        ]);
     }
 
     public function DOCUMENTS_GETEXISTINGTYPES($userID){
@@ -498,18 +491,30 @@ class BaseController extends Controller {
     }
 
     public static function SUBSCRIPTION_UPDATE($employerID){
+        $url = '/TOPTUP';
+        $bc = new BaseController();
         $subscription_id = User::where('id', $employerID)->pluck('accountType');
         $subscription_details = UserSubscription::where('id', $subscription_id)->first();
         if(!$subscription_details->expired){
             if(time() > strtotime($subscription_details->expires_at)){
                 $msg = 'Your subscription has expired';
-                $bc = new BaseController();
-                $bc->NOTIFICATION_INSERT($employerID, $msg, '/TOPTUP');
+                $notifExists = Notification::where('user_id', $employerID)
+                    ->where('content', $msg)
+                    ->where('notif_url', $url)
+                    ->count();
+                if($notifExists == 0){
+                    $bc->NOTIFICATION_INSERT($employerID, $msg, $url);
+                }
                 BaseController::SUBSCRIPTION_EXPIRED($subscription_id, $employerID);
             }elseif(Carbon::now()->diffInDays(Carbon::parse($subscription_details->expires_at)) <= 3){
                 $msg = 'Your subscription will expire in less than 3 days';
-                $bc = new BaseController();
-                $bc->NOTIFICATION_INSERT($employerID, $msg, '/TOPTUP');
+                $notifExists = Notification::where('user_id', $employerID)
+                    ->where('content', $msg)
+                    ->where('notif_url', $url)
+                    ->count();
+                if($notifExists == 0){
+                    $bc->NOTIFICATION_INSERT($employerID, $msg, $url);
+                }
             }
         }
     }
@@ -613,6 +618,15 @@ class BaseController extends Controller {
                 ->where('users.id', $userID)
                 ->groupBy('system_subscriptions.id')
                 ->first();
+    }
+
+    public function USERNAME_EXIST_AS_ROUTE($username){
+        foreach (Route::getRoutes() as $value) {
+            if($value->getPath() == $username){
+                return true;
+            }
+        }
+        return false;
     }
     // AUTHORED BY Jan Sarmiento -- END
 }

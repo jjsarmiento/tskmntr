@@ -7,8 +7,9 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){ // test()
-//        return BaseController::ROUTE_UPDATE_JOBADS(2);
-        return BaseController::SUBSCRIPTION_RESTRICTIONS(Auth::user()->id, 'invite_limit');
+        foreach (Route::getRoutes() as $value) {
+            echo $value->getPath().'<br/>';
+        }
     }
 
     function generateConfirmationCode(){
@@ -1631,6 +1632,8 @@ class HomeController extends BaseController {
         if(!ctype_alnum(Input::get('uName')) || strlen(Input::get('uName')) < 5){
             array_push($registrationErrors, 'Username is alphanumeric only and must contain at least 5 characters');
         }elseif(User::where('username', Input::get('uName'))->count() > 0){
+            array_push($registrationErrors, 'Username already exists');
+        }elseif($this->USERNAME_EXIST_AS_ROUTE(Input::get('uName'))){
             array_push($registrationErrors, 'Username already exists');
         }
 
