@@ -11,6 +11,33 @@
         {
             text-decoration: none !important; 
         }
+        /* Added by Jups */
+        section{
+            background: url("../frontend/img/slideshow/10admin.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        h1.lato-text{
+            color: white;
+        }
+        .widget-container{
+            background-color: rgba(245,245,245,0.3);
+        }
+        .breadcrumb, .panel-heading{
+            background-color: rgba(245,245,245,0.7);
+        }
+        .breadcrumb>li{
+            color: white !important;
+        }
+        a.sidemenu {
+            color: white;
+        }
+        a.sidemenu:hover {
+            transition: 0.3s;
+            color: #d9d9d9;
+            text-decoration: none;
+        }
+        /*-----------------*/
     </style>
 @stop
 

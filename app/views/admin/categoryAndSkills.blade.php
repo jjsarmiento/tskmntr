@@ -4,6 +4,36 @@
 @section('head-content')
     <style type="text/css">
         body{background-color:#E9EAED;}
+        /* Added by Jups */
+        section{
+            background: url("../frontend/img/slideshow/10admin.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        h1.lato-text{
+            color: white;
+        }
+        .widget-container{
+            background-color: rgba(245,245,245,0.3);
+        }
+        .breadcrumb, .panel-heading{
+            background-color: rgba(245,245,245,0.7);
+        }
+        .breadcrumb>li{
+            color: white !important;
+        }
+        a.sidemenu {
+            color: white;
+        }
+        a.sidemenu:hover {
+            transition: 0.3s;
+            color: #d9d9d9;
+            text-decoration: none;
+        }
+        .col-md-7, .col-md-5{
+            color: white;
+        }
+        /*-----------------*/
     </style>
 @stop
 
@@ -15,7 +45,7 @@
 <section>
     <div class="container lato-text">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 no-padding">
                 <ul class="breadcrumb">
                     <li>
                         <a href="/" style="cursor: pointer;"><i class="fa fa-home"></i></a>

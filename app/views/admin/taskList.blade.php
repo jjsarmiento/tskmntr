@@ -26,6 +26,9 @@
         .breadcrumb, .panel-heading{
             background-color: rgba(245,245,245,0.7);
         }
+        .breadcrumb>li{
+            color: white !important;
+        }
         a.sidemenu {
             color: white;
         }
