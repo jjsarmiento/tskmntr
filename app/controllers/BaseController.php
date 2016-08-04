@@ -574,10 +574,10 @@ class BaseController extends Controller {
             ->join('users', 'users.id', '=', 'jobs.user_id')
             ->where('users.id', $userID)
             ->whereBetween('job_invites.created_at', array(date("Y:m:d H:i:s", $start_date), date("Y:m:d H:i:s", $end_date)))
-            ->groupBy('job_invites.id')
+//            ->groupBy('job_invites.id')
             ->count();
-
-        return ($inviteOfTheWeek > $quantity) ? 1 : 0;
+        return $quantity;
+        return ($inviteOfTheWeek >= $quantity) ? 1 : 0;
     }
 
     public function RSTRCTN_JOBADLIMIT_WK($userID, $start_date, $quantity){
