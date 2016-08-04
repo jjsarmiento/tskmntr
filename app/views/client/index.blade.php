@@ -338,6 +338,32 @@
                             </div>
                             <div class="panel-body" style="padding: 0 15px 15px;">
                                 <div class="col-md-12 no-padding">
+                                    @foreach($jobs as $j)
+                                        <div class="col-md-4 padded">
+                                            <b class="title">{{$j->title}}</b>
+                                            <p class="content">
+                                                <i class="fa fa-briefcase"></i>
+                                                @if($j->hiring_type == 'LT6MOS')
+                                                    Less than 6 months
+                                                @else
+                                                    Greater than 6 months
+                                                @endif<br/>
+
+                                                @if($j->expired)
+                                                    <span class="badge" style="background-color: #E74C3C">EXPIRED</span>
+                                                @else
+                                                    <i class="fa fa-clock-o"></i> Expires at {{ date('m/d/y', strtotime($j->expires_at)) }}
+                                                @endif<br/>
+
+                                                <span class="text-right" style="padding:0;margin:0;"><i class="fa fa-map-marker"></i> {{$j->regname}}, {{$j->cityname}}</span><br/>
+                                                @if($j->salary)
+                                                <span class="text-right" style="padding:0;margin:0;"><b>P</b>{{$j->salary}}</span>
+                                                @endif
+                                            </p>
+                                            <a href="/jobDetails={{$j->job_id}}" class="viewSal">View full details</a>
+                                        </div>
+                                    @endforeach
+                                    <!--
                                     @for($i=0; $i<6; $i++)
                                         <div class="col-md-4 padded">
                                             <b class="title">Praesent volutpat dapibus mauris nec blandit.</b>
@@ -345,10 +371,11 @@
                                             <a href="#" class="viewSal">View full details</a>
                                         </div>
                                     @endfor
+                                    -->
                                 </div>
 
                                 <!-- NOTE: IF Job post greater than 6 display this-->
-                                @if($i > 6)
+                                @if($jobs->count() == 6)
                                 <div class="col-md-12 padded" style="margin-top: 2em; text-align:center;">
                                     <a href="#" class="clickHere" style="padding: 5px 100px;">SEE MORE</a>
                                 </div>
