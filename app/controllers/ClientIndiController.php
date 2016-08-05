@@ -1879,6 +1879,15 @@ class ClientIndiController extends \BaseController {
                             ->get();
         $sched_rev = User::join('worker_feedback_schedules', 'worker_feedback_schedules.worker_id', '=', 'users.id')
                         ->where('worker_feedback_schedules.employer_id', Auth::user()->id)
+                        ->select([
+                            'worker_feedback_schedules.id',
+                            'worker_feedback_schedules.start_date',
+                            'users.firstName',
+                            'users.lastName',
+                            'users.fullName',
+                            'users.username',
+                            'users.id as user_id'
+                        ])
                         ->get();
 
         return View::make('client.reviews')

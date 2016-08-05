@@ -31,7 +31,7 @@ class SystemSettingsSeeder extends Seeder {
 
         SystemSetting::create(array(
             'type'          =>  "SYSSETTINGS_FDBACK_INIT",
-            'value'         =>  "1"
+            'value'         =>  "7"
         ));
     }
 }

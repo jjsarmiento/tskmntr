@@ -56,7 +56,36 @@
             <div class="widget-container padded fluid-height">
                 <h3 style="margin: 0;">Scheduled Reviews</h3>
                 <br/>
-                <table class="table table-hover"></table>
+                @if($sched_rev->count() > 0)
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date to review</th>
+                            </tr>
+                            <tbody>
+                                @foreach($sched_rev as $r)
+                                    <tr>
+                                        <td>
+                                            <a href="/{{$r->username}}">
+                                            @if(in_array($r->user_id, BaseController::GETCHECKEDOUTUSERS_STATIC(Auth::user()->id)))
+                                                {{$r->fullName}}
+                                            @else
+                                                {{substr_replace($r->firstName, str_repeat('*', strlen($r->firstName)-1), 1)}}
+                                                &nbsp;
+                                                {{substr_replace($r->lastName, str_repeat('*', strlen($r->lastName)-1), 1)}}
+                                            @endif
+                                            </a>
+                                        </td>
+                                        <td>{{ date("m/d/y", strtotime($r->start_date)) }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </thead>
+                    </table>
+                @else
+                    <center><i>No feedbacks scheduled.</i></center>
+                @endif
             </div>
         </div>
     </div>
