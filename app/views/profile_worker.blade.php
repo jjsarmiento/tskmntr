@@ -13,7 +13,24 @@
         {{ $users->fullName }} | Profile Page
     @endif
 @stop
-
+<style type="text/css">
+    .btn.btn-warning{
+        padding: 10px 30px;
+    }
+    @media(max-width: 320px){
+        .btn.btn-warning{
+            width: 100%;
+        }
+    }
+    span.skills {
+        background-color: #2980b9;
+        padding: 10px 20px;
+        margin: 5px;
+        color: white;
+        font-size: 18px;
+        line-height: 3em;
+    }
+</style>
 @section('content')
     <!-- HEADER SEARCH SECTION -->
     <header style="min-height:70%;">
@@ -45,7 +62,7 @@
                             {{ $users->fullName }}
                         @endif
                     </h2>
-                    <p style="margin:auto;" class="btn btn-primary lato-text">
+<!--                     <p style="margin:auto;" class="btn btn-primary lato-text">
                         @if ( $roles == 'TASKMINATOR')
                             {{ $users->skills }}
                         @elseif ( $roles == 'CLIENT_INDI' || $roles == 'CLIENT_CMP')
@@ -53,26 +70,43 @@
                         @elseif ( $roles == 'ADMIN')
                              Administrator
                         @endif
-                    </p>
+                    </p> -->
                     <br/>
-                    <br/>
-                    @if($roles == 'TASKMINATOR')
-                        @if($CLIENTFLAG)
-                            @if(User::IS_BOOKMARKED(Auth::user()->id, $users->id))
-                                <a class="btn btn-warning" href="/REMOVE_BOOKMARK:{{BookmarkUser::where('worker_id', $users->id)->where('company_id', Auth::user()->id)->pluck('id')}}"><i class="BOOKMARK_USER fa fa-bookmark" style="color: #2ECC71;"></i> Worker is bookmarked</a>
-                            @else
-                                <a class="btn btn-warning" href="/ADD_BOOKMARK:{{$users->id}}"><i class="BOOKMARK_USER fa fa-bookmark-o" style="color: #2ECC71;"></i> Bookmark this worker</a>
-                            @endif
 
-                            @if(BaseController::IS_PURCHASED(Auth::user()->id, $users->id))
-                                &nbsp;&nbsp;&nbsp;
-                                <a href="#" data-toggle="modal" data-target="#INVITEMULTIJOB"><i class="fa fa-envelope" style="color: #F1C40F; font-size: 2em;"></i></a>
+                    <!-- Jups -->
+                    <div class="lato-text">
+                        <div class="centered">
+                            <span style="font-size:18px;"><em>" To be successful in my field, Proin porta nibh non dui ullamcorper pretium. Ut nunc augue, aliquet vitae luctus sit amet, molestie vitae ante. "</em></span>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="col-md-12">
+                        <div class="col-md-6 padded">
+                            <a class="btn btn-warning" href="#"><i class="fa fa-envelope-o" style="color: #2ECC71;"></i> Invite to apply</a>
+                        </div>
+
+                        <div class="col-md-6 padded">
+                            @if($roles == 'TASKMINATOR')
+                                @if($CLIENTFLAG)
+                                    @if(User::IS_BOOKMARKED(Auth::user()->id, $users->id))
+                                        <a class="btn btn-warning" href="/REMOVE_BOOKMARK:{{BookmarkUser::where('worker_id', $users->id)->where('company_id', Auth::user()->id)->pluck('id')}}"><i class="BOOKMARK_USER fa fa-bookmark" style="color: #2ECC71;"></i> Worker is  bookmarked</a>
+                                    @else
+                                        <a class="btn btn-warning" href="/ADD_BOOKMARK:{{$users->id}}"><i class="BOOKMARK_USER fa fa-bookmark-o" style="color: #2ECC71;"></i> Bookmark this worker</a>
+                                    @endif
+
+                                    @if(BaseController::IS_PURCHASED(Auth::user()->id, $users->id))
+                                        &nbsp;&nbsp;&nbsp;
+                                        <a href="#" data-toggle="modal" data-target="#INVITEMULTIJOB"><i class="fa fa-envelope" style="color: #F1C40F; font-size: 2em;"></i></a>
+                                    @endif
+                                @endif
                             @endif
-                        @endif
-                    @endif
+                        </div>
+
+                    </div>
+
                     <!-- <div class="text-center div_header">
                     <a href="#next" class="page-scroll">
-                        <i class="fa fa-4x fa-angle-down"></i>
+                        <i class="fa fa-3x fa-angle-down"></i>
                     </a>
                     </div> -->
                 </div>
@@ -85,9 +119,103 @@
     <section id="next" style="border-bottom:1px solid #222; padding-top:40px;">
         <div class="container">
             <div class="row">
+                <div class="col-md-12" style="padding-bottom: 20px;">
+                    <div class="col-md-6">
+                        <!-- GEN INFO -->
+                        <div class="lato-text">
+                            <i class="fa fa-3x fa-info-circle text-primary">
+                            <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Information</span></i>
+                            <hr class="hrLine">
+                            <div class="content">
+                                <span><b>Address: </b>Lorem ipsum sit dolor amet, consectetur nam perosa</span><br>
+                                <span><b>Gender: </b>Female</span><br>
+                                <span><b>Birthdate: </b>01/01/01 (55 years old)</span><br>
+                                <span><b>Martial Status: </b>Widowed</span><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- CONTACT INFO -->
+                        <div class="lato-text">
+                            <i class="fa fa-3x fa-phone text-primary">
+                            <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Contact Info</span></i>
+                            <hr class="hrLine">
+                            <div class="ConInfo">
+                                <span><b>Mobile #: </b>09123456789</span><br>
+                                <span><b>Email: </b><a href="mailto:fakeemail@gmail.com">fakeemail@gmail.com</a></span><br>
+                                <span><b>FB: </b><a href="facebook.com" target="_Blank">Facebook.com</a></span><br>
+                                <span><b>Twitter: </b><a href="twitter.com" target="_Blank">Twitter.com</a></span><br>
+                                <span><b>Linkedin: </b><a href="linkedin.com" target="_Blank">Linkedin.com</a></span> 
+                            </div>
+                        </div>
+                     </div>
+                </div>
+                <!--=========================-->
+                <div class="col-md-12" style="padding-bottom: 20px;">
+                    <div class="col-md-6">
+                        <!-- SKILL INFO -->
+                        <div class="lato-text">
+                            <i class="fa fa-3x fa-star text-primary">
+                            <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Skill & Competencies</span></i>
+                            <hr class="hrLine">
+                            <div class="content">
+                                <span class="skills">Mason</span>
+                                <span class="skills">Mason</span>
+                                <span class="skills">Mason</span>
+                                <span class="skills">Mason</span>
+                                <span class="skills">Mason</span>
+                                <span class="skills">Mason</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- EDUCATIONAL BACKGROUND -->
+                        <div class="lato-text">
+                            <i class="fa fa-3x fa-book text-primary">
+                            <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Educational Background</span></i>
+                            <hr class="hrLine">
+                            <div class="content">
+                                <span><b>College :</b>N/A</span><br>
+                                <span><b>Highschool :</b>N/A</span><br>
+                                <span><b>Elementary :</b>N/A</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--=========================-->
+                <div class="col-md-12" style="padding-bottom: 20px;">
+                    <div class="col-md-6">
+                        <!-- RELEVANT EXP INFO -->
+                        <div class="lato-text">
+                            <i class="fa fa-3x fa-lightbulb-o text-primary">
+                            <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Relevant Experiences</span></i>
+                            <hr class="hrLine">
+                            <div class="content">
+                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Supporting Documents -->
+                        <div class="lato-text">
+                            <i class="fa fa-3x fa-file text-primary">
+                            <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Supporting Documents</span></i>
+                            <hr class="hrLine">
+                            <div class="content">
+                                <span><b>NBI</b></span>,
+                                <span><b>PASSPORT</b></span>,
+                                <span><b>SSS</b></span>,
+                                <span><b>GSIS</b></span>,
+                                <span><b>Driver's License</b></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--             <div class="row">
                 @if($roles == 'TASKMINATOR' || $roles == 'ADMIN')
                     <div class="col-lg-8 text-center">
-                        <i class="fa fa-4x fa-info-circle text-primary"></i>
+                        <i class="fa fa-3x fa-info-circle text-primary"></i>
                         <h2 class="section-heading">Information</h2>
                         <hr class="hrLine">
                         <div class="col-lg-12 lato-text" style="font-size:14pt; text-align: left;">
@@ -162,7 +290,7 @@
                     </div>
                     @elseif ( $roles == 'CLIENT_INDI' || $roles == 'CLIENT_CMP')
                         <div class="col-lg-8 text-center lato-text" style="word-wrap: break-word;">
-                            <i class="fa fa-4x fa-info-circle text-primary" aria-hidden="true"></i>
+                            <i class="fa fa-3x fa-info-circle text-primary" aria-hidden="true"></i>
                             <h2 class="section-heading">About Us</h2>
                             <hr class="hrLine">
                             <p style="font-size: 14pt;">
@@ -172,7 +300,7 @@
                     @endif
 
                 <div class="col-lg-4 text-center lato-text">
-                    <i class="fa fa-4x fa-phone text-primary"></i>
+                    <i class="fa fa-3x fa-phone text-primary"></i>
                     <h2 class="section-heading">Contact Info</h2>
                     <hr class="hrLine">
                     @if($CLIENTFLAG && $roles == 'TASKMINATOR')
@@ -263,7 +391,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="col-lg-12 text-center">
-                            <i class="fa fa-4x fa-briefcase text-primary" aria-hidden="true"></i>
+                            <i class="fa fa-3x fa-briefcase text-primary" aria-hidden="true"></i>
                             <h2 class="section-heading">Documents</h2>
                             <hr class="hrLine">
                             <div class="col-12-lg lato-text" style="text-align: left;">
@@ -276,7 +404,7 @@
                     @if($roles == 'TASKMINATOR')
                         <div class="col-md-6">
                             <div class="col-lg-12 text-center">
-                                <i class="fa fa-4x fa-star text-primary" aria-hidden="true"></i>
+                                <i class="fa fa-3x fa-star text-primary" aria-hidden="true"></i>
                                 <h2 class="section-heading">Skills</h2>
                                 <hr class="hrLine">
                                 <div class="col-12-lg lato-text" style="text-align: left;">
@@ -291,12 +419,10 @@
                         </div>
                     @endif
                 </div>
-
-
-
+ -->
 <!-- ABOUT US DIV -->
 <!--                 <div class="col-lg-12 text-center">
-                    <i class="fa fa-4x fa-info-circle text-primary"></i>
+                    <i class="fa fa-3x fa-info-circle text-primary"></i>
                     <h2 class="section-heading">About Us</h2>
                     <hr style="border:none; max-height:1px; background:none; border-bottom:1px solid #2980b9">
                     <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -304,7 +430,7 @@
 
 <!-- OFFERED JOBS -->
 <!--                 <div class="col-lg-6 text-center">
-                    <i class="fa fa-4x fa-flag text-primary"></i>
+                    <i class="fa fa-3x fa-flag text-primary"></i>
                     <h2 class="section-heading">Offered Jobs</h2>
                     <hr style="border:none; max-height:1px; background:none; border-bottom:1px solid #2980b9">
                     <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -312,7 +438,7 @@
 
 <!-- CONTACT -->
                 <!-- <div class="col-lg-6 text-center">
-                    <i class="fa fa-4x fa-phone text-primary"></i>
+                    <i class="fa fa-3x fa-phone text-primary"></i>
                     <h2 class="section-heading">Contact Info</h2>
                     <hr style="border:none; max-height:1px; background:none; border-bottom:1px solid #2980b9">
                     <div class="list-group" style="text-align:left;">

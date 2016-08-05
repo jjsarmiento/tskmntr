@@ -108,9 +108,10 @@
             border: 2px solid #226ea0;
             transition: 0.3s;
             color: white; 
-            padding: 5px;      
+            padding: 5px 10px;      
             text-transform: uppercase; 
-            font-size: 14px;
+            font-size: 12px;
+            margin:auto; display:table; margin-top:5px;
         }
         a.viewSal:hover{
             background: transparent;
@@ -129,7 +130,20 @@
             a.clickHere {
                 font-size: 12px !important;
             }
-        }        
+        }       
+        img.media-object.update-card-MDimentions {
+            border: 1px solid #eee;
+            display: table;
+            margin:auto;
+        }
+        .workers{
+            text-align: center;
+        }
+        a img:hover, a.user:hover {
+            transition: 0.3s;
+            opacity: 0.7;
+            text-decoration: none;
+        }
         </style>
     <script>
         $(document).ready(function() {
@@ -345,10 +359,10 @@
                     @endif
                     <div class="widget-container" style="min-height:30px;">
                         <div class="widget-content">
-                            <div class="panel-body" style="color:#2980b9; font-size:20pt;">
-                                <i class="fa fa-search" aria-hidden="true"></i> Job Posts
+                            <div class="panel-body" style="color:#2980b9; font-size:20pt; margin-bottom: -10px;">
+                                <i class="fa fa-search" aria-hidden="true"></i> Recommended workers
                             </div>
-                            <div class="panel-body" style="padding: 0 15px 15px;">
+                            <!-- <div class="panel-body" style="padding: 0 15px 15px;">
                                 <div class="col-md-12 no-padding">
                                     @foreach($jobs as $j)
                                         <div class="col-md-4 padded">
@@ -381,7 +395,22 @@
                                     <a href="/jobs" class="clickHere" style="padding: 5px 100px;">SEE MORE</a>
                                 </div>
                                 @endif
-                            </div>
+                            </div> -->
+                            @for($i=0; $i<=2; $i++)
+                                    <div class="col-md-4">
+                                        <div class="workers">
+                                            <a href="" style="padding: 5px;">
+                                                <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png" width="80" height="80">
+                                            </a>
+                                            <span><b>J*** D********</b> <a href="#" class="user">@username</a></span><br>
+                                            <span>Address Lorem ipsum sit dolor amet</span><br>
+                                            <span><b>Profile Rating: </b> 23%</span><br>
+                                            <span><b>Last Login: </b> 2 Days ago</span>
+                                        </div>
+                                        <a href="" class="viewSal">VIEW FULL PROFILE<a>
+                                    </div>
+                            @endfor
+                            <div style="clear:both; padding-bottom:20px;"></div>
                         </div>
                     </div>
                 </div>
