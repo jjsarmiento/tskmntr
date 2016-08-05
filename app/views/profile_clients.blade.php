@@ -53,9 +53,6 @@
                     </hr>
 
                     <span><b>Business Address: </b>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar accumsan arcu, a interdum eros sollicitudin porta. Nulla facilisi. Nunc feugiat venenatis nulla, non fringilla ante</span><br>
-                    <span><b>Website: </b><a href="" target="_blank">www.Companywebsite.com</a></span><br>
-                    <span><b>Facebook: </b><a href="" target="_blank">www.Facebook.com</a></span><br>
-                    <span><b>Twitter: </b><a href="" target="_blank">www.Twitter.com</a></span><br>
                 </div>
                 <div stlye="clear:both;"></div>
                 <div class="col-md-6">
