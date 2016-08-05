@@ -1863,4 +1863,23 @@ class ClientIndiController extends \BaseController {
         Session::flash('successMsg', 'You have successfully submitted your review!');
         return Redirect::to('/');
     }
+
+    public function reviews(){
+        $rvwd_workers = User::join('worker_feedbacks', 'worker_feedbacks.worker_id', '=', 'users.id')
+                            ->where('worker_feedbacks.employer_id', Auth::user()->id)
+                            ->select([
+                                'worker_feedbacks.id',
+                                'worker_feedbacks.created_at',
+                                'users.fullName',
+                                'users.username'
+                            ])
+                            ->get();
+        $sched_rev = User::join('worker_feedback_schedules', 'worker_feedback_schedules.worker_id', '=', 'users.id')
+                        ->where('worker_feedback_schedules.employer_id', Auth::user()->id)
+                        ->get();
+
+        return View::make('client.reviews')
+                ->with('rvwd_workers', $rvwd_workers)
+                ->with('sched_rev', $sched_rev);
+    }
 }

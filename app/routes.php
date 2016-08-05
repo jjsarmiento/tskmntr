@@ -266,9 +266,6 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
     Route::post('/doCltEditIndiContactInfo', 'ClientIndiController@doCltEditIndiContactInfo');
     Route::post('/doCltEditPass', 'ClientIndiController@doCltEditPass');
     Route::post('/doCltIndiEditPersonalInfo', 'ClientIndiController@doCltIndiEditPersonalInfo');
-    Route::get('/initFeedback:{sched_id}', 'ClientIndiController@initFeedback');
-    Route::get('/initFeedback:{worker_id}:{job_id}', 'ClientIndiController@initFeedback');
-    Route::post('/doFeedback', 'ClientIndiController@doFeedback');
 
     // DOCUMENTS
     Route::get('/editDocumentsCMP', 'ClientIndiController@editDocumentsCMP');
@@ -277,6 +274,9 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
 
     // EMPLOYER MUST HAVE ATLEAST 50% PROFILE PROGRESS TO ACCESS THESE ROUTES -- JAN SARMIENTO
     Route::group(array('before' => 'EMPLOYER-UPDATE-PROFILE-PROGRESS'), function(){
+        Route::get('/initFeedback:{sched_id}', 'ClientIndiController@initFeedback');
+        Route::post('/doFeedback', 'ClientIndiController@doFeedback');
+        Route::get('/reviews', 'ClientIndiController@reviews');
 
         // SUBSCRIPTION RESTRICTION - JOB LIMITS
         Route::group(array('before' => 'JOB_LIMITS'), function(){

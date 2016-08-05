@@ -349,6 +349,11 @@
                                 <i class="fa fa-bookmark fa-fw"></i>
                             </a>
                         </li>
+                        <li>
+                            <a href="/reviews" style="background:transparent; font-size: 14pt;">
+                                <i class="fa fa-star fa-fw"></i>
+                            </a>
+                        </li>
                     @endif
                     <li>
                         <a href="{{ url('/')."/".Auth::user()->username }}" class="user lato-text" style="display:inline-block; padding-right:0;">
