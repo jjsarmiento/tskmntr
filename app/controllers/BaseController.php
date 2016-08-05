@@ -141,6 +141,23 @@ class BaseController extends Controller {
         return $myArr;
     }
 
+    public static  function GETCHECKEDOUTUSERS_STATIC($companyID){
+        $P = User::join('purchases', 'purchases.worker_id', '=', 'users.id')
+            ->where('purchases.company_id', $companyID)
+            ->select([
+                'users.id'
+            ])
+            ->get();
+
+
+        $myArr = array();
+        foreach($P as $o){
+            array_push($myArr, $o->id);
+        }
+
+        return $myArr;
+    }
+
     public function GETCHECKEDOUTUSERS($companyID){
         $P = User::join('purchases', 'purchases.worker_id', '=', 'users.id')
                 ->where('purchases.company_id', $companyID)

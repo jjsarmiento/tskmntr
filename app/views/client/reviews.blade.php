@@ -29,7 +29,17 @@
                             <tbody>
                                 @foreach($rvwd_workers as $r)
                                     <tr>
-                                        <td><a href="/{{$r->username}}">{{$r->fullName}}</a></td>
+                                        <td>
+                                            <a href="/{{$r->username}}">
+                                            @if(in_array($r->user_id, BaseController::GETCHECKEDOUTUSERS_STATIC(Auth::user()->id)))
+                                                {{$r->fullName}}
+                                            @else
+                                                {{substr_replace($r->firstName, str_repeat('*', strlen($r->firstName)-1), 1)}}
+                                                &nbsp;
+                                                {{substr_replace($r->lastName, str_repeat('*', strlen($r->lastName)-1), 1)}}
+                                            @endif
+                                            </a>
+                                        </td>
                                         <td>{{ date("m/d/y", strtotime($r->created_at)) }}</td>
                                         <td><a href="/dispReview/{{$r->id}}"><i class="fa fa-eye"></i></a></td>
                                     </tr>

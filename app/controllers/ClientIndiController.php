@@ -1870,8 +1870,11 @@ class ClientIndiController extends \BaseController {
                             ->select([
                                 'worker_feedbacks.id',
                                 'worker_feedbacks.created_at',
+                                'users.firstName',
+                                'users.lastName',
                                 'users.fullName',
-                                'users.username'
+                                'users.username',
+                                'users.id as user_id'
                             ])
                             ->get();
         $sched_rev = User::join('worker_feedback_schedules', 'worker_feedback_schedules.worker_id', '=', 'users.id')
@@ -1881,5 +1884,49 @@ class ClientIndiController extends \BaseController {
         return View::make('client.reviews')
                 ->with('rvwd_workers', $rvwd_workers)
                 ->with('sched_rev', $sched_rev);
+    }
+
+    public function dispReview($review_id){
+        $review = WorkerFeedback::where('id', $review_id)->first();
+        $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
+            ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->where('jobs.id', $review->job_id)
+            ->select([
+                'jobs.id',
+                'jobs.title',
+                'jobs.created_at',
+                'jobs.description',
+                'jobs.requirements',
+                'jobs.salary',
+                'jobs.hiring_type',
+                'jobs.Industry',
+                'jobs.AverageProcessingTime',
+                'jobs.CompanySize',
+                'jobs.WorkingHours',
+                'jobs.DressCode',
+                'jobs.expired',
+                'jobs.expires_at',
+                'regions.regname',
+                'regions.regcode',
+                'barangays.bgyname',
+                'barangays.bgycode',
+                'cities.cityname',
+                'cities.citycode',
+                'taskcategory.categoryname',
+                'taskcategory.categorycode',
+                'taskitems.itemname',
+                'taskitems.itemcode'
+            ])
+            ->first();
+        $isCheckedOut = (in_array($review->worker_id, $this->GETCHECKEDOUTUSERS(Auth::user()->id))) ? true : false;
+        return View::make('client.dispReview')
+            ->with('isCheckedOut', $isCheckedOut)
+            ->with('custom_skills', CustomSkill::where('company_job_id', $review->job_id)->get())
+            ->with('worker', User::where('id', $review->worker_id)->first())
+            ->with('job', $job)
+            ->with('fb', $review);
     }
 }

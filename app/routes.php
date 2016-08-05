@@ -277,6 +277,7 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
         Route::get('/initFeedback:{sched_id}', 'ClientIndiController@initFeedback');
         Route::post('/doFeedback', 'ClientIndiController@doFeedback');
         Route::get('/reviews', 'ClientIndiController@reviews');
+        Route::get('/dispReview/{review_id}', 'ClientIndiController@dispReview');
 
         // SUBSCRIPTION RESTRICTION - JOB LIMITS
         Route::group(array('before' => 'JOB_LIMITS'), function(){
