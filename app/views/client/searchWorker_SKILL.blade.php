@@ -230,7 +230,9 @@
                                         </h4>
                                     </a>
                                 @endif
-                                <p>{{$user->address}}, {{$user->regname}}, {{$user->cityname}}, {{$user->bgyname}}</p>
+                                <span>{{$user->address}}, {{$user->regname}}, {{$user->cityname}}, {{$user->bgyname}}</span><br>
+                                <span><b>Profile Rating: </b>70%</span><br>
+                                <span><b>Last login: </b>2 Days ago</span>
                             </div>
                         </div>
                     @endforeach

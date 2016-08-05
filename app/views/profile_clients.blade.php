@@ -3,7 +3,16 @@
 @section('title')
     {{ $users->companyName }} | Profile Page
 @stop
-
+<style type="text/css">
+    .col-md-12{
+        display: table;
+        margin: auto;
+        text-align: center;
+    }
+    span {
+        font-size: 16px;
+    }
+</style>
 @section('content')
     <!-- HEADER SEARCH SECTION -->
     <header style="min-height:70%;">
@@ -28,8 +37,70 @@
     </header>
     <!-- END OF -->
 
-<!-- DESCRIPTION -->
     <section id="next" style="border-bottom:1px solid #222; padding-top:40px;">
+        <div class="container lato-text">
+            <div class="row">
+                <div class="col-md-6"> 
+                    <i class="fa fa-3x fa-info-circle text-primary">
+                    <span class="section-heading lato-text" style="font-size: 30px; color:#333;">General Info</span></i>
+                    <hr class="hrLine">                    
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar accumsan arcu, a interdum eros sollicitudin porta. Nulla facilisi. Nunc feugiat venenatis nulla, non fringilla ante. Pellentesque vestibulum turpis at posuere pellentesque. Donec leo risus, dignissim at nisi at, congue dignissim dolor. Nullam ac feugiat massa. Nunc vel justo sem. Ut vestibulum congue est sit amet malesuada. Maecenas leo dui, bibendum vitae leo eget, tempor elementum ante.
+                    </p>    
+                    <p>
+                        Cras nisl arcu, mollis id nisi et, facilisis viverra augue. Mauris ullamcorper enim quis sapien tristique, ornare dictum diam faucibus. Vivamus pharetra sit amet metus sit amet consectetur. Donec dictum eros vel augue lobortis lobortis. In interdum nisi turpis, non rhoncus lacus semper sit amet. Donec rutrum dolor libero, at commodo erat placerat nec. Proin cursus vulputate nibh et laoreet. Mauris ultrices nulla at velit euismod, ut dapibus purus aliquam.
+                    </p>     
+                    </hr>
+
+                    <span><b>Business Address: </b>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar accumsan arcu, a interdum eros sollicitudin porta. Nulla facilisi. Nunc feugiat venenatis nulla, non fringilla ante</span><br>
+                    <span><b>Website: </b><a href="" target="_blank">www.Companywebsite.com</a></span><br>
+                    <span><b>Facebook: </b><a href="" target="_blank">www.Facebook.com</a></span><br>
+                    <span><b>Twitter: </b><a href="" target="_blank">www.Twitter.com</a></span><br>
+                </div>
+                <div stlye="clear:both;"></div>
+                <div class="col-md-6">
+                    <i class="fa fa-3x fa-briefcase text-primary">
+                    <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Company Snapshots</span></i>
+                    {{--<hr class="hrLine">--}}
+                    <div class="col-12-lg lato-text" style="padding-top: 20px;">
+                        <table class="table table-hover table-striped">
+                            <tbody>
+                                <tr>
+                                    <td width="50%"><label>Years in operation</label></td>
+                                    <td>{{$users->years_in_operation}}</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%"><label>Number of branches</label></td>
+                                    <td>{{$users->number_of_branches}}</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%"><label>Number of Employees</label></td>
+                                    <td>39</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%"><label>Working Hours</label></td>
+                                    <td>{{$users->working_hours}}</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%"><label>DOLE Lisence</label></td>
+                                    <td>
+                                        @if($license)
+                                            <i style="font-size: 1.3em; color: #2ECC71;" class="fa fa-check-circle"></i>
+                                        @else
+                                            <i style="font-size: 1.3em; color: #E74C3C;" class="fa fa-close"></i>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- DESCRIPTION -->
+<!--     <section id="next" style="border-bottom:1px solid #222; padding-top:40px;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 text-center lato-text" style="word-wrap: break-word;">
@@ -56,11 +127,11 @@
                     <hr class="hrLine">
                     <p style="font-size: 14pt;">
                         {{$users->regname}}, {{$users->provname}}
-                        <!--
+                        
                         {{$users->address}}<br/>
                         {{$users->regname}}<br/>
                         {{$users->cityname}}, {{$users->bgyname}}
-                        -->
+                        
                     </p>
                 </div>
 
@@ -100,7 +171,8 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
+
 <!-- All scripts and plugin should be placed here so the page can load -->
 
 @stop
