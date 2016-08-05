@@ -791,7 +791,7 @@ class HomeController extends BaseController {
                         ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
                         ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
                         ->whereIn('jobs.skill_code', $skillCodeArray)
-                        ->where('expired', false)
+                        ->where('jobs.expired', false)
                         ->orderBy('jobs.created_at', 'DESC')
                         ->select([
                             'users.id as user_id',
@@ -808,7 +808,7 @@ class HomeController extends BaseController {
                             'cities.cityname',
                             'regions.regname',
                         ])
-                        ->groupBy('jobs.id')
+//                        ->groupBy('jobs.id')
                         ->take('5')
                         ->get();
                     $applicationCount = JobApplication::where('applicant_id', Auth::user()->id)->count();

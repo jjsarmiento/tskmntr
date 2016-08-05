@@ -338,11 +338,11 @@
                         </div>
                     </div>
                 </div>
+                <!--
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="col-lg-12">
-                        <!-- NEW JOBS MODULE LOOP -- START by Jan Sarmiento -->
-                        @if($PROFILE_PROG['TOTAL_PROGRESS'] >= 50)
+                        @if(Auth::user()->total_profile_progress >= 50)
                             @if($jobs->count() != 0)
                                 <div class="col-lg-12 padded" style="padding-top: 25px;">
                                     <div class="col-lg-5"><hr class="hrLine"></div>
@@ -394,10 +394,10 @@
                                 <center><i>No jobs available.</i></center>
                             @endif
                         @endif
-                        <!-- NEW JOBS MODULE LOOP -- END by Jan Sarmiento -->
                         </div>
                     </div>
                 </div>
+                -->
             </div>
 
             <!--PREFERED JOB -->
@@ -405,10 +405,38 @@
                 <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
                     <div class="widget-content">
                         <div class="panel-body" style="color:#2980b9; font-size:20pt;">
-                            <i class="fa fa-search" aria-hidden="true"></i> Prefered Job
+                            <i class="fa fa-search" aria-hidden="true"></i> Preferred Job
                         </div>
                         <div class="panel-body" style="padding: 0 15px 15px;">
                             <div class="col-md-12 no-padding">
+                                @if($jobs->count() > 0)
+                                    @foreach($jobs as $job)
+                                        <div class="col-md-4 padded">
+                                            <b class="title">{{$job->title}}</b>
+                                            <p class="content">
+                                                <span style="padding:0;margin:0;">
+                                                    <i class="fa fa-user"></i> {{$job->fullName}}
+                                                </span><br/>
+                                                <span style="padding:0;margin:0;">
+                                                    <i class="fa fa-briefcase"></i>
+                                                    @if($job->hiring_type == 'LT6MOS')
+                                                        Less than 6 months
+                                                    @else
+                                                        Greater than 6 months
+                                                    @endif
+                                                </span><br>
+                                                <span class="text-right" style="padding:0;margin:0;"><i class="fa fa-map-marker"></i> {{$job->regname}}, {{$job->cityname}}</span><br/>
+                                                @if($job->salary)
+                                                    <span class="text-right" style="padding:0;margin:0;"><b>P</b>{{$job->salary}}</span>
+                                                @endif
+                                            </p>
+                                            <a href="/jbdtls={{$job->job_id}}" class="viewSal">View full details</a>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <center><i>No jobs applicable to your skills!</i></center>
+                                @endif
+                                <!--
                                 @for($i=0; $i<3; $i++)
                                     <div class="col-md-4 padded">
                                         <b class="title">Praesent volutpat dapibus mauris nec blandit.</b>
@@ -416,6 +444,7 @@
                                         <a href="#" class="viewSal">View full details</a>
                                     </div>
                                 @endfor
+                                -->
                             </div>
                         </div>
                     </div>
