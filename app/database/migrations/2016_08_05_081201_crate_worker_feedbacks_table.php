@@ -19,7 +19,7 @@ class CrateWorkerFeedbacksTable extends Migration {
             $table->string('job_id');
             $table->string('worker_id');
             $table->float('stars');
-            $table->string('review');
+            $table->longText('review');
 			$table->timestamps();
 		});
 	}

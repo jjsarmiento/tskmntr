@@ -1803,9 +1803,64 @@ class ClientIndiController extends \BaseController {
         }
     }
 
-    public function initFeedback($worker_id, $job_id){
+    public function initFeedback($sched_id){
+        $sched = WorkerFeedbackSchedule::where('id', $sched_id)->first();
+
+        $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
+            ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->where('jobs.id', $sched->job_id)
+            ->select([
+                'jobs.id',
+                'jobs.title',
+                'jobs.created_at',
+                'jobs.description',
+                'jobs.requirements',
+                'jobs.salary',
+                'jobs.hiring_type',
+                'jobs.Industry',
+                'jobs.AverageProcessingTime',
+                'jobs.CompanySize',
+                'jobs.WorkingHours',
+                'jobs.DressCode',
+                'jobs.expired',
+                'jobs.expires_at',
+                'regions.regname',
+                'regions.regcode',
+                'barangays.bgyname',
+                'barangays.bgycode',
+                'cities.cityname',
+                'cities.citycode',
+                'taskcategory.categoryname',
+                'taskcategory.categorycode',
+                'taskitems.itemname',
+                'taskitems.itemcode'
+            ])
+            ->first();
+        $isCheckedOut = (in_array($sched->worker_id, $this->GETCHECKEDOUTUSERS(Auth::user()->id))) ? true : false;
         return View::make('client.initFeedback')
-                ->with('w', User::where('id', $worker_id)->first())
-                ->with('job', Job::where('id', $job_id)->first());
+                ->with('schedule_id', $sched_id)
+                ->with('isCheckedOut', $isCheckedOut)
+                ->with('custom_skills', CustomSkill::where('company_job_id', $sched->job_id)->get())
+                ->with('worker', User::where('id', $sched->worker_id)->first())
+                ->with('job', $job);
+    }
+
+    public function doFeedback(){
+        WorkerFeedback::insert([
+            'employer_id'   =>  Auth::user()->id,
+            'job_id'        =>  Input::get('job_id'),
+            'worker_id'     =>  Input::get('worker_id'),
+            'stars'         =>  Input::get('stars'),
+            'review'        =>  Input::get('review'),
+            'created_at'    =>  Carbon::now()
+        ]);
+
+        // delete schedule
+        WorkerFeedbackSchedule::where('id', Input::get('schedule_id'))->delete();
+        Session::flash('successMsg', 'You have successfully submitted your review!');
+        return Redirect::to('/');
     }
 }

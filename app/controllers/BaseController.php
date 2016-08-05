@@ -627,7 +627,7 @@ class BaseController extends Controller {
                 $worker = User::where('id', $s->worker_id)->first();
                 $job = Job::where('id', $s->job_id)->first();
                 $msg = 'Please fill out feedback form for your applicant from your job ad - '.$job->title;
-                $url = '/initFeedback:'.$worker->id.':'.$job->id;
+                $url = '/initFeedback:'.$s->id;
                 $NOTIF_EXISTS = Notification::where('user_id', $s->employer_id)->where('content', $msg)->where('notif_url', $url)->count();
                 if($NOTIF_EXISTS == 0){
                     $bc = new BaseController();

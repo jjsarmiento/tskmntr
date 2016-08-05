@@ -266,7 +266,10 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
     Route::post('/doCltEditIndiContactInfo', 'ClientIndiController@doCltEditIndiContactInfo');
     Route::post('/doCltEditPass', 'ClientIndiController@doCltEditPass');
     Route::post('/doCltIndiEditPersonalInfo', 'ClientIndiController@doCltIndiEditPersonalInfo');
+    Route::get('/initFeedback:{sched_id}', 'ClientIndiController@initFeedback');
     Route::get('/initFeedback:{worker_id}:{job_id}', 'ClientIndiController@initFeedback');
+    Route::post('/doFeedback', 'ClientIndiController@doFeedback');
+
     // DOCUMENTS
     Route::get('/editDocumentsCMP', 'ClientIndiController@editDocumentsCMP');
     Route::post('/doUploadDocumentsCMP', 'ClientIndiController@doUploadDocumentsCMP');
