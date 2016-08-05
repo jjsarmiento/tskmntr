@@ -152,6 +152,20 @@
     }
 </style>
 
+<script>
+    $(document).ready(function(){
+        CHAINLOCATION($('#reg-task'), $('#edt_prov'));
+        CHAINLOCATION($('#reg-task'), $('#city-task'));
+        CHAINLOCATION($('#city-task'), $('#barangay-task'));
+
+        // DELETE DOCUMENT LISTENER
+        $('.ANCHOR_DELETE_DOC').click(function() {
+            if(confirm('Do you really want to delete '+$(this).data('docname'))){
+                location.href = $(this).data('href');
+            }
+        })
+    });
+</script>
 @stop
 
 
@@ -272,10 +286,29 @@
                                             <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>&nbsp Contact Information
                                         </div>     
                                         <div class="panel-body">
+                                            @foreach(Contact::where('user_id', Auth::user()->id)->get() as $con)
+                                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">
+                                                    @if($con->ctype == "mobileNum") Mobile No.
+                                                    @elseif($con->ctype == "businessNum") Business No.
+                                                    @else {{ $con->ctype }} @endif
+                                                </span>
+                                                 :
+                                                <span style="margin-left: 5px">{{ $con->content }}</span>
+                                                @if($con->ctype == "mobileNum")
+                                                    @if(Contact::where('user_id',  Auth::user()->id)->pluck('pincode')!='verified')
+                                                        {{--<button class="btn btn-xs btn-primary" onclick="location.href='/doVerifyMobileNumber'" style="padding: 2px 10px 2px 10px; margin: 5px; text-transform: none;">Verify</button>--}}
+                                                    @else
+                                                        {{--<span class="btn btn-xs btn-default" style=" margin: 5px;">Verified</span>--}}
+                                                    @endif
+                                                @endif
+                                                <br/>
+                                            @endforeach
+                                            <!--
                                              <span><b>Email:</b> <a href="mailto:taskminator0@taskminator.com" target="_top">taskminator0@taskminator.com</a></span><br>
-                                             <span><b>Facebook:</b> <a href="facebook.com/januarystays" target="_blank">facebook.com/januarystays</a></span><br>
-                                             <span><b>Linkedin:</b> <a href="linkedin.com/sample" target="_blank">linkedin.com/sample</a></span><br>
+                                             <span><b>Facebook:</b> <a href="//facebook.com/januarystays" target="_blank">facebook.com/januarystays</a></span><br>
+                                             <span><b>Linkedin:</b> <a href="//linkedin.com/sample" target="_blank">linkedin.com/sample</a></span><br>
                                              <span><b>Mobile:</b> 639276274641</span><br>
+                                             -->
                                         </div>  
                                     </div>
                                 </div>
@@ -401,55 +434,48 @@
             </div>
 
             <!--PREFERED JOB -->
-            <div class="col-lg-8" style="padding-top: 19px;">
-                <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
-                    <div class="widget-content">
-                        <div class="panel-body" style="color:#2980b9; font-size:20pt;">
-                            <i class="fa fa-search" aria-hidden="true"></i> Preferred Job
-                        </div>
-                        <div class="panel-body" style="padding: 0 15px 15px;">
-                            <div class="col-md-12 no-padding">
-                                @if($jobs->count() > 0)
-                                    @foreach($jobs as $job)
-                                        <div class="col-md-4 padded">
-                                            <b class="title">{{$job->title}}</b>
-                                            <p class="content">
-                                                <span style="padding:0;margin:0;">
-                                                    <i class="fa fa-user"></i> {{$job->fullName}}
-                                                </span><br/>
-                                                <span style="padding:0;margin:0;">
-                                                    <i class="fa fa-briefcase"></i>
-                                                    @if($job->hiring_type == 'LT6MOS')
-                                                        Less than 6 months
-                                                    @else
-                                                        Greater than 6 months
+            @if(Auth::user()->total_profile_progress >= 50)
+                <div class="col-lg-8" style="padding-top: 19px;">
+                    <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
+                        <div class="widget-content">
+                            <div class="panel-body" style="color:#2980b9; font-size:20pt;">
+                                <i class="fa fa-search" aria-hidden="true"></i> Preferred Job
+                            </div>
+                            <div class="panel-body" style="padding: 0 15px 15px;">
+                                <div class="col-md-12 no-padding">
+                                    @if($jobs->count() > 0)
+                                        @foreach($jobs as $job)
+                                            <div class="col-md-4 padded">
+                                                <b class="title">{{$job->title}}</b>
+                                                <p class="content">
+                                                    <span style="padding:0;margin:0;">
+                                                        <i class="fa fa-user"></i> {{$job->fullName}}
+                                                    </span><br/>
+                                                    <span style="padding:0;margin:0;">
+                                                        <i class="fa fa-briefcase"></i>
+                                                        @if($job->hiring_type == 'LT6MOS')
+                                                            Less than 6 months
+                                                        @else
+                                                            Greater than 6 months
+                                                        @endif
+                                                    </span><br>
+                                                    <span class="text-right" style="padding:0;margin:0;"><i class="fa fa-map-marker"></i> {{$job->regname}}, {{$job->cityname}}</span><br/>
+                                                    @if($job->salary)
+                                                        <span class="text-right" style="padding:0;margin:0;"><b>P</b>{{$job->salary}}</span>
                                                     @endif
-                                                </span><br>
-                                                <span class="text-right" style="padding:0;margin:0;"><i class="fa fa-map-marker"></i> {{$job->regname}}, {{$job->cityname}}</span><br/>
-                                                @if($job->salary)
-                                                    <span class="text-right" style="padding:0;margin:0;"><b>P</b>{{$job->salary}}</span>
-                                                @endif
-                                            </p>
-                                            <a href="/jbdtls={{$job->job_id}}" class="viewSal">View full details</a>
-                                        </div>
-                                    @endforeach
-                                @else
-                                    <center><i>No jobs applicable to your skills!</i></center>
-                                @endif
-                                <!--
-                                @for($i=0; $i<3; $i++)
-                                    <div class="col-md-4 padded">
-                                        <b class="title">Praesent volutpat dapibus mauris nec blandit.</b>
-                                        <p class="content">Vivamus metus nulla, tempor vel varius fermentum, molestie nec enim. Suspendisse eu ultricies lorem. </p>
-                                        <a href="#" class="viewSal">View full details</a>
-                                    </div>
-                                @endfor
-                                -->
+                                                </p>
+                                                <a href="/jbdtls={{$job->job_id}}" class="viewSal">View full details</a>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <center><i>No jobs applicable to your skills!</i></center>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
 
             <!-- Education -->
             <div class="col-lg-8" style="padding-top: 19px;">
@@ -460,7 +486,7 @@
                         </div>                        
                         <div class="panel-body" style="padding: 0 15px 15px;">
                             <div class="col-md-12">
-                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</span> 
+                                <span>{{Auth::user()->educationalBackground}}</span>
                             </div>
                         </div>
                     </div>
@@ -477,7 +503,7 @@
                             </div>                        
                             <div class="panel-body" style="padding: 0 15px 15px;">
                                 <div class="col-md-12">
-                                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</span> 
+                                    <span>{{Auth::user()->experience}}</span>
                                 </div>
                             </div>
                         </div>
@@ -490,7 +516,14 @@
                             </div>                        
                             <div class="panel-body" style="padding: 0 15px 15px;">
                                 <div class="col-md-12">
-                                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span> 
+                                    <span>
+                                        @foreach(User::getSkills(Auth::user()->id) as $skill)
+                                            <span style="border:2px solid white; padding:8px; background-color: #BDC3C7; display:inline-block; color: white; border-radius: 0.2em; font-size: 12pt;">{{ $skill->itemname }}</span>
+                                        @endforeach
+                                        @foreach($customSkills as $cs)
+                                            <span style="border:2px solid white; padding:8px; background-color: #BDC3C7; display:inline-block; color: white; border-radius: 0.2em; font-size: 12pt;">{{ $cs->skill }}</span>
+                                        @endforeach
+                                    </span>
                                 </div>
                             </div>
                         </div> 
@@ -505,16 +538,40 @@
                 <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
                     <div class="widget-content">
                         <div class="heading" style="font-size:14pt; color:#2980b9">
-                            <i class="fa fa-file" style="font-size:14pt; color:#2980b9"></i>&nbsp Supporting Documents
+                            <i class="fa fa-file" style="font-size:14pt; color:#2980b9"></i>&nbsp <a href="/editDocuments">Supporting Documents</a>
                         </div>                        
                         <div class="panel-body" style="padding: 0 15px 15px;">
                             <div class="col-md-12">
-                                @for($i=0; $i<=3; $i++)
-                                    <div class="col-md-3">
-                                        <img style="width:100%;" src="../images/sample_doc.jpg">
-                                        <p style="text-align:center;">Sample Docx</p>
-                                    </div>
-                                @endfor
+                                @if($user_docs->count() == 0)
+                                    <center><i><label>No supporting documents uploaded</label></i></center>
+                                @else
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <th width="50%">File</th>
+                                            <th width="35%">Document Type</th>
+                                            <th>Actions</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($user_docs as $ud)
+                                                <tr>
+                                                    <td><a target="_tab" href="{{$ud->path}}">{{$ud->label}}</a></td>
+                                                    <td>{{$ud->sys_doc_label}}</td>
+                                                    <td style="text-align: right; font-size: 1.3em;">
+                                                        <a data-docname="{{$ud->label}}" title="Delete {{$ud->label}}" href="#" class="ANCHOR_DELETE_DOC" data-href="/DELETE_DOC_{{$ud->id}}" style="padding-right: 0.8em;"><i class="fa fa-trash"></i></a>
+                                                        <a title="Download {{$ud->label}}" download href="{{$ud->path}}" style="padding-right: 0.8em;"><i class="fa fa-download"></i></a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    {{$user_docs->links()}}
+                                @endif
+                                {{--@for($i=0; $i<=3; $i++)--}}
+                                    {{--<div class="col-md-3">--}}
+                                        {{--<img style="width:100%;" src="../images/sample_doc.jpg">--}}
+                                        {{--<p style="text-align:center;">Sample Docx</p>--}}
+                                    {{--</div>--}}
+                                {{--@endfor--}}
                             </div>
                         </div>
                     </div>

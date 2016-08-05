@@ -811,6 +811,22 @@ class HomeController extends BaseController {
 //                        ->groupBy('jobs.id')
                         ->take('5')
                         ->get();
+
+                    $user_docs = Document::leftJoin('document_types', 'document_types.sys_doc_type', '=', 'documents.type')
+                        ->where('documents.user_id', Auth::user()->id)
+                        ->select([
+                            'documents.id',
+                            'documents.user_id',
+                            'documents.created_at',
+                            'documents.path',
+                            'documents.docname',
+                            'documents.type',
+                            'documents.label',
+                            'document_types.sys_doc_label'
+                        ])
+                        ->orderBy('documents.created_at')
+                        ->paginate(10);
+
                     $applicationCount = JobApplication::where('applicant_id', Auth::user()->id)->count();
                     $invitesCount = JobInvite::where('invited_id', Auth::user()->id)->count();
                     // NEW JOB MODULE -- END by JAN SARMIENTO
@@ -818,7 +834,8 @@ class HomeController extends BaseController {
                             ->with('accountRole', $role)
                             ->with('tasks', $taskList)
                             ->with('jobs', $jobs)
-//                            ->with('PROFILE_PROG', $this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id))
+                            ->with('user_docs', $user_docs)
+                            ->with('customSkills', CustomSkill::where('created_by', Auth::user()->id)->get())
                             ->with('PROFILE_PROG', $this->PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id))
                             ->with('applicationsCount', $applicationCount)
                             ->with('invitesCount', $invitesCount);

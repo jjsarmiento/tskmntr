@@ -216,6 +216,7 @@ class ComposerStaticInit953d5428e89260dd4741ae6cbf12205e
         'ClientIndiController' => __DIR__ . '/../..' . '/app/controllers/ClientIndiController.php',
         'Contact' => __DIR__ . '/../..' . '/app/models/Contact.php',
         'ContactPerson' => __DIR__ . '/../..' . '/app/models/ContactPerson.php',
+        'CrateWorkerFeedbacksTable' => __DIR__ . '/../..' . '/app/database/migrations/2016_08_05_081201_crate_worker_feedbacks_table.php',
         'CreateActivationCodesTable' => __DIR__ . '/../..' . '/app/database/migrations/2016_07_01_023845_create_activation_codes_table.php',
         'CreateAdminMessagesTable' => __DIR__ . '/../..' . '/app/database/migrations/2016_06_24_103418_create_admin_messages_table.php',
         'CreateAuditTrailTable' => __DIR__ . '/../..' . '/app/database/migrations/2015_05_08_031408_create_audit_trail_table.php',
@@ -253,6 +254,7 @@ class ComposerStaticInit953d5428e89260dd4741ae6cbf12205e
         'CreateUserHasRoleTable' => __DIR__ . '/../..' . '/app/database/migrations/2015_04_26_040949_create_user_has_role_table.php',
         'CreateUserSubscriptionsTable' => __DIR__ . '/../..' . '/app/database/migrations/2016_08_03_073002_create_user_subscriptions_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/app/database/migrations/2015_04_22_080521_create_users_table.php',
+        'CreateWorkerFeedbackSchedulesTable' => __DIR__ . '/../..' . '/app/database/migrations/2016_08_05_081032_create_worker_feedback_schedules_table.php',
         'CustomSkill' => __DIR__ . '/../..' . '/app/models/CustomSkill.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/app/database/seeds/DatabaseSeeder.php',
         'Document' => __DIR__ . '/../..' . '/app/models/Document.php',
@@ -293,6 +295,7 @@ class ComposerStaticInit953d5428e89260dd4741ae6cbf12205e
         'TaskminatorHasOffer' => __DIR__ . '/../..' . '/app/models/TaskminatorHasOffer.php',
         'TaskminatorHasSkill' => __DIR__ . '/../..' . '/app/models/TaskminatorHasSkill.php',
         'TestCase' => __DIR__ . '/../..' . '/app/tests/TestCase.php',
+        'TestSeeder' => __DIR__ . '/../..' . '/app/database/seeds/TestSeeder.php',
         'Thread' => __DIR__ . '/../..' . '/app/models/Thread.php',
         'User' => __DIR__ . '/../..' . '/app/models/User.php',
         'UserHasRole' => __DIR__ . '/../..' . '/app/models/UserHasRole.php',
@@ -301,6 +304,8 @@ class ComposerStaticInit953d5428e89260dd4741ae6cbf12205e
         'Whoops\\Module' => __DIR__ . '/..' . '/filp/whoops/src/deprecated/Zend/Module.php',
         'Whoops\\Provider\\Zend\\ExceptionStrategy' => __DIR__ . '/..' . '/filp/whoops/src/deprecated/Zend/ExceptionStrategy.php',
         'Whoops\\Provider\\Zend\\RouteNotFoundStrategy' => __DIR__ . '/..' . '/filp/whoops/src/deprecated/Zend/RouteNotFoundStrategy.php',
+        'WorkerFeedback' => __DIR__ . '/../..' . '/app/models/WorkerFeedback.php',
+        'WorkerFeedbackSchedule' => __DIR__ . '/../..' . '/app/models/WorkerFeedbackSchedule.php',
         'searchTestController' => __DIR__ . '/../..' . '/app/controllers/searchTestController.php',
     );
 
