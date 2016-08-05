@@ -202,6 +202,7 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
         Route::get('/jbdtls={jobId}', 'TaskminatorController@jbdtls');
 //    Route::get('/APPLYFRJB:{jobId}', 'TaskminatorController@APPLYFRJB');
         Route::post('/APPLYFRJB', 'TaskminatorController@APPLYFRJB');
+        Route::get('/jobSearch:{keyword}:{workDuration}:{region}:{city}:{category}:{skill}:{orderBy}', 'TaskminatorController@jobSearch');
     });
 
     // DOCUMENTS MODULE
@@ -226,11 +227,9 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::get('/RMVCSTMSKLL={custom_skill_id}', 'TaskminatorController@RMVCSTMSKLL');
     // JOBS MODULE ROUTES -- END by JAN SARMIENTO
 
-    // THE ROLE BASED ROUTES FOR TASKMINATORS GOES HERE
-    Route::get('/tskmntr/taskSearch', 'TaskminatorController@taskSearch');
+//    Route::get('/tskmntr/taskSearch', 'TaskminatorController@taskSearch');
 
     // SEARCH ROUTES by Jan Sarmiento
-    Route::get('/jobSearch:{keyword}:{workDuration}:{region}:{city}:{category}:{skill}:{orderBy}', 'TaskminatorController@jobSearch');
    // Route::post('/tskmntr/doTaskSearch', 'TaskminatorController@doTaskSearch');
    // Route::get('/tskmntr/doTaskSearch={workingTime}={searchField}={searchCity}={searchWord}={rateRange}={rangeValue}', 'TaskminatorController@doTaskSearch');
 
@@ -267,7 +266,7 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
     Route::post('/doCltEditIndiContactInfo', 'ClientIndiController@doCltEditIndiContactInfo');
     Route::post('/doCltEditPass', 'ClientIndiController@doCltEditPass');
     Route::post('/doCltIndiEditPersonalInfo', 'ClientIndiController@doCltIndiEditPersonalInfo');
-
+    Route::get('/initFeedback:{worker_id}:{job_id}', 'ClientIndiController@initFeedback');
     // DOCUMENTS
     Route::get('/editDocumentsCMP', 'ClientIndiController@editDocumentsCMP');
     Route::post('/doUploadDocumentsCMP', 'ClientIndiController@doUploadDocumentsCMP');

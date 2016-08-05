@@ -7,7 +7,7 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){ // test()
-        return BaseController::SUBSCRIPTION_RESTRICTIONS(2, 'invite_limit');
+//        return BaseController::ROUTE_UPDATE_FEEDBACKS(2);
     }
 
     function generateConfirmationCode(){

@@ -146,9 +146,10 @@ Route::filter('CLIENT-ONLY', function(){
             return Redirect::to('/');
         }
 
-
         // check for expired job ads
         BaseController::ROUTE_UPDATE_JOBADS(Auth::user()->id);
+        // check for feedbacks
+        BaseController::ROUTE_UPDATE_FEEDBACKS(Auth::user()->id);
         // check if subscription is expired
         BaseController::SUBSCRIPTION_UPDATE(Auth::user()->id);
     }else{

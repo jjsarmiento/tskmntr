@@ -1802,4 +1802,10 @@ class ClientIndiController extends \BaseController {
                     ->with('msg', "You do not have enough points to repost this job ad!");
         }
     }
+
+    public function initFeedback($worker_id, $job_id){
+        return View::make('client.initFeedback')
+                ->with('w', User::where('id', $worker_id)->first())
+                ->with('job', Job::where('id', $job_id)->first());
+    }
 }

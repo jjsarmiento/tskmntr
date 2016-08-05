@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 class TaskminatorController extends \BaseController {
 
     function generateUniqueId(){
@@ -817,14 +818,16 @@ class TaskminatorController extends \BaseController {
 
         $job = Job::where('id', Input::get('application_jobID'))->first();
         $client = User::where('id', $job->user_id)->first();
+        $start_date = Carbon::now()->addDays(SystemSetting::where('type', 'SYSSETTINGS_FDBACK_INIT')->pluck('value'));
 
         // Create schedule for feedback
-//        WorkerFeedbackSchedule::insert([
-//            'employer_id'   => $client->id,
-//            'worker_id'     => Auth::user()->id,
-//            'job_id'        => Input::get('application_jobID'),
-//            'start_date'    => SystemSetting::where()
-//        ]);
+        WorkerFeedbackSchedule::insert([
+            'employer_id'   => $client->id,
+            'worker_id'     => Auth::user()->id,
+            'job_id'        => Input::get('application_jobID'),
+            'start_date'    => $start_date,
+            'created_at'    => Carbon::now()
+        ]);
 
         // NOTIFICATION
         $this->NOTIFICATION_INSERT($client->id, 'Worker has applied for <b>'.$job->title.'</b>', '/jobDetails='.$job->id);
@@ -837,6 +840,8 @@ class TaskminatorController extends \BaseController {
         Cart::where('worker_id', Auth::user()->id)
             ->where('company_id', $job->user_id)
             ->delete();
+
+        WorkerFeedbackSchedule::where('job_id', $jobId)->where('worker_id', Auth::user()->id)->delete();
 
         JobApplication::where('job_id', $jobId)
             ->where('applicant_id', Auth::user()->id)
