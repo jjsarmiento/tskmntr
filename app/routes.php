@@ -197,30 +197,31 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){
-        // DOCUMENTS MODULE
-        Route::get('/editDocuments', 'TaskminatorController@editDocuments');
-        Route::get('/DELETE_DOC_{docID}', 'TaskminatorController@DELETE_DOC');
-        Route::post('/doUploadDocumentsWRKR', 'TaskminatorController@doUploadDocumentsWRKR');
-        Route::post('/doUploadDocuments', 'TaskminatorController@doUploadDocuments');
-
-        Route::get('/editPersonalInfo', 'TaskminatorController@editPersonalInfo');
-        Route::post('/doEditPersonalInfo', 'TaskminatorController@doEditPersonalInfo');
-        Route::get('/editContactInfo', 'TaskminatorController@editContactInfo');
-        Route::get('/editSkillInfo', 'TaskminatorController@editSkillInfo');
-        Route::post('/doEditContactInfo', 'TaskminatorController@doEditContactInfo');
-        Route::post('/doEditSkillInfo', 'TaskminatorController@doEditSkillInfo');
-        Route::get('/removeSkill={taskitemId}', 'TaskminatorController@removeSkill');
-        Route::get('/editPass', 'TaskminatorController@editPass');
-        Route::post('/doEditPass', 'TaskminatorController@doEditPass');
+        Route::get('/WRKR_INVTS', 'TaskminatorController@WRKR_INVTS');
+        Route::get('/WRKR_APPLCTNS', 'TaskminatorController@WRKR_APPLCTNS');
+        Route::get('/jbdtls={jobId}', 'TaskminatorController@jbdtls');
+//    Route::get('/APPLYFRJB:{jobId}', 'TaskminatorController@APPLYFRJB');
+        Route::post('/APPLYFRJB', 'TaskminatorController@APPLYFRJB');
     });
 
+    // DOCUMENTS MODULE
+    Route::get('/editDocuments', 'TaskminatorController@editDocuments');
+    Route::get('/DELETE_DOC_{docID}', 'TaskminatorController@DELETE_DOC');
+    Route::post('/doUploadDocumentsWRKR', 'TaskminatorController@doUploadDocumentsWRKR');
+    Route::post('/doUploadDocuments', 'TaskminatorController@doUploadDocuments');
+
+    Route::get('/editPersonalInfo', 'TaskminatorController@editPersonalInfo');
+    Route::post('/doEditPersonalInfo', 'TaskminatorController@doEditPersonalInfo');
+    Route::get('/editContactInfo', 'TaskminatorController@editContactInfo');
+    Route::get('/editSkillInfo', 'TaskminatorController@editSkillInfo');
+    Route::post('/doEditContactInfo', 'TaskminatorController@doEditContactInfo');
+    Route::post('/doEditSkillInfo', 'TaskminatorController@doEditSkillInfo');
+    Route::get('/removeSkill={taskitemId}', 'TaskminatorController@removeSkill');
+    Route::get('/editPass', 'TaskminatorController@editPass');
+    Route::post('/doEditPass', 'TaskminatorController@doEditPass');
+
     // JOBS MODULE ROUTES -- START by JAN SARMIENTO
-    Route::get('/jbdtls={jobId}', 'TaskminatorController@jbdtls');
-//    Route::get('/APPLYFRJB:{jobId}', 'TaskminatorController@APPLYFRJB');
-    Route::post('/APPLYFRJB', 'TaskminatorController@APPLYFRJB');
     Route::get('/CNCLAPPLCTN:{jobId}', 'TaskminatorController@CNCLAPPLCTN');
-    Route::get('/WRKR_APPLCTNS', 'TaskminatorController@WRKR_APPLCTNS');
-    Route::get('/WRKR_INVTS', 'TaskminatorController@WRKR_INVTS');
     Route::post('/ADDOWNSKILL', 'TaskminatorController@ADDOWNSKILL');
     Route::get('/RMVCSTMSKLL={custom_skill_id}', 'TaskminatorController@RMVCSTMSKLL');
     // JOBS MODULE ROUTES -- END by JAN SARMIENTO

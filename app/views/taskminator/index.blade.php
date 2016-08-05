@@ -173,9 +173,6 @@
 <section>
     <div class="container main-content lato-text">
         <!-- Statistics -->
-        @if(Session::has('error'))
-            <center><h4> <i class="fa fa-warning" style="color: red;"></i> {{ Session::get('error') }}</h4></center>
-        @endif
         <div class="row">
 <!-- PROFILE PIC / INFO  -->
             <div class="col-lg-4"> 
@@ -193,13 +190,24 @@
                         <div class="heading" style="padding: 10px 0; text-align:center;">
                             <a href="/editProfile" style="font-weight:bold; font-size:14pt;">{{ Auth::user()->fullName }}</a><br>
                         </div>
-                        <span><b>Employment Status:</b> Not Hired</span><br>
+                        {{--<span><b>Employment Status:</b> Not Hired</span><br>--}}
                         <span><b>Last Login:</b> 08/02/16</span>
                     </div>
                     <!-- <div class="col-lg-12" style="padding-left:24px;">
                         <a href="/editProfile">Edit Profile</a>
                     </div> -->
                 </div>
+                <br/>
+                <div class="widget-container fluid-height">
+                    @if(Auth::user()->total_profile_progress >= 50)
+                        <a href="/jobSearch:NO_KW_INPT:ALL:ALL:ALL:ALL:ALL:DESC" class="btn btn-primary btn-block" style="border-radius: 0.3em;">
+                            <i class="fa fa-search"></i> Click here to search for jobs
+                        </a>
+                    @else
+                        <button disabled="true" class="lato-text btn btn-default btn-trans" style="text-transform: none; border:1px solid #2980b9; width:100%; border-radius: 4px;" type="button">Please complete atleast 50% of profile</button>
+                    @endif
+                </div>
+
                 <br>
                 <div class="widget-container fluid-height">
                     <div class="widget-content">
@@ -207,54 +215,31 @@
                             <div class="panel">
                                 <div class="panel filter-categories">
                                     <div class="panel-body">
-                                        <!-- <input name="searchWord" id="searchWord" type="text" class="form-control input-trans" placeholder="Search for workers" required> -->
-                                        <!-- <div class="col-lg-12">
-                                            @if($PROFILE_PROG['TOTAL_PROGRESS'] >= 50)
-                                               <a href="/jobSearch:NO_KW_INPT:ALL:ALL:ALL:ALL:ALL:DESC" class="btn btn-default btn-block" style="border-radius: 0.3em;">
-                                                <i class="fa fa-search"></i> Click here to search for jobs
-                                               </a>
-                                                
-                                                <button name="searchBtn" id="searchBtn" class="lato-text btn btn-default btn-trans" style="text-transform: none; border:1px solid #2980b9; width:100%; border-radius: 4px;" type="button">
-                                                    @if (Session::has('err_search'))
-                                                        <i style="color: red" class="fa fa-warning"></i> {{ Session::get('err_search')  }}
-                                                    @else
-                                                        Click here to search for jobs
-                                                    @endif
-                                                </button>
-                                                
-                                            @else
-                                                <button disabled="true" class="lato-text btn btn-default btn-trans" style="text-transform: none; border:1px solid #2980b9; width:100%; border-radius: 4px;" type="button">Please complete atleast 50% of profile</button>
+                                        <div class="padded" style="color:#2980b9; font-size:20pt;">
+                                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ Auth::user()->total_profile_progress }}%
+
+                                            <div class="padded text-center" style="padding:10px 0 0; color:#2980b9; font-size:18pt;">
+                                                <div id="progressbar">
+                                                    <div id="prog-meter-req"></div>
+                                                    <div id="prog-meter-opt"></div>
+                                                </div>
+                                                <div style="text-align:left; font-size:12pt; display:flex;">
+                                                    <div style="width:20%;">0%</div>
+                                                    <div style="width:20%;">20%</div>
+                                                    <div style="width:20%; text-align:center;">50%</div>
+                                                    <div style="width:20%; text-align:right;">80%</div>
+                                                    <div style="width:20%; text-align:right;">100%</div>
+                                                </div>
+                                                <span style="font-size:10pt;"></span>
+                                            </div>
+
+                                            @if(Auth::user()->total_profile_progress < 50)
+                                                <p style="color: #000000; margin-top: 5px;">
+                                                    <i style="color: red" class="fa fa-warning"></i> <b>You can start applying for jobs when you complete your profile above 50%.</b><br><br>
+                                                    <a class="clickHere" href="/editProfile"> Click here to edit your profile </a>
+                                                </p>
                                             @endif
-                                        </div> -->
-                                        <!-- <div class="btn-group" data-toggle="buttons" style="width:100%;">
-                                            <input value="<?php if(@$searchWord != 0){ echo($searchWord); } ?>" type="text" name="searchWord" id="searchWord" class="form-control" placeholder="Enter keyword" />
-                                        </div> -->
-                                <div class="padded" style="color:#2980b9; font-size:20pt;">
-{{--                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ $PROFILE_PROG['TOTAL_PROGRESS'] }}%--}}
-                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ Auth::user()->total_profile_progress }}%
-
-                                <div class="padded text-center" style="padding:10px 0 0; color:#2980b9; font-size:18pt;">
-                                    <div id="progressbar">
-                                        <div id="prog-meter-req"></div>
-                                        <div id="prog-meter-opt"></div>
-                                    </div>
-                                    <div style="text-align:left; font-size:12pt; display:flex;">
-                                        <div style="width:20%;">0%</div>
-                                        <div style="width:20%;">20%</div>
-                                        <div style="width:20%; text-align:center;">50%</div>
-                                        <div style="width:20%; text-align:right;">80%</div>
-                                        <div style="width:20%; text-align:right;">100%</div>
-                                    </div>
-                                    <span style="font-size:10pt;"></span>
-                                </div>
-
-                                @if(Auth::user()->total_profile_progress < 50)
-                                    <p style="color: #000000; margin-top: 5px;">
-                                        <i style="color: red" class="fa fa-warning"></i> <b>You can start applying for jobs when you complete your profile above 50%.</b><br><br>
-                                        <a class="clickHere" href="/editProfile"> Click here to edit your profile </a>
-                                    </p>
-                                @endif
-                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -274,13 +259,13 @@
                                             <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Personal Information
                                         </div>     
                                         <div class="panel-body">
-                                            <span><b>Address:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</span><br>
+                                            <span><b>Address:</b> {{Auth::user()->address}}</span><br>
                                             <span><b>Birthdate:</b> 01/01/01</span><br>
-                                            <span><b>Gender:</b> Male</span><br>
-                                            <span><b>Marital Status:</b> Single</span><br>
+                                            <span><b>Gender:</b> {{Auth::user()->gender}}</span><br>
+                                            <span><b>Marital Status:</b> {{Auth::user()->marital_status}}</span><br>
                                             <span><b>Age:</b> 42</span><br>
-                                            <span><b>Account Status:</b> Activated</span><br>
-                                            <span><b>Account Created:</b> 01/01/01</span><br>
+                                            <span><b>Account Status:</b> {{Auth::user()->status}}</span><br>
+                                            <span><b>Account Created:</b> {{date('m/d/y', strtotime(Auth::user()->created_at))}}</span><br>
                                         </div>  
                                         <div class="heading" style="font-size:14pt; color:#2980b9">
                                             <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>&nbsp Contact Information
@@ -342,6 +327,15 @@
             <!-- ENF PROFILE PIC / INFO -->
             <!-- MAIN CONTENT STATISTICS / AVAILABLE JOBS -->
             <div class="col-lg-8">
+                @if(Session::has('errorMsg'))
+                    <div class="col-lg-12 no-padding" style="margin-bottom: 1em;">
+                        <div class="widget-container padded" style="min-height: 1em;">
+                            <div class="widget-content">
+                                    <center><h4> <i class="fa fa-warning" style="color: red;"></i> {{ Session::get('errorMsg') }}</h4></center>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 <!-- END OF PROFILE  COMPLETENESS METER -->
                 <div class="col-lg-12 no-padding">
                     <div class="widget-container stats-container" style="display:block !important;">
@@ -649,25 +643,6 @@
             $('#uploadBtn').empty().append('Uploading..');
 
         });
-
-        
-
-        $('#searchBtn').click(function(){
-                var workingTime = 'PTIME',
-                    searchField = 'name',
-                    searchCity  = '175301',
-                    searchWord  = '0',
-                    rateRange   = '0',
-                    rangeValue  = '0';
-
-                if($('#searchWord').val() != ''){
-                    searchWord = $('#searchWord').val();
-                }
-
-                location.href = '/tskmntr/doTaskSearch='+workingTime+'='+searchField+'='+searchCity+'='+searchWord+'='+rateRange+'='+rangeValue;
-            });
-
-        
     })
 </script>
 @stop

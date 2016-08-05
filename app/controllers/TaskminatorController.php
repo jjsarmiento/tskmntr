@@ -980,7 +980,7 @@ class TaskminatorController extends \BaseController {
 
         $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
                     ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
-                    ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+                    ->join('regions', 'regions.regcode', '=', 'jobs.regcode')
 
                     ->leftJoin('custom_skills', 'custom_skills.company_job_id', '=', 'jobs.id')
                     ->orWhere('custom_skills.skill', 'LIKE', '%'.$keyword.'%')
@@ -988,11 +988,11 @@ class TaskminatorController extends \BaseController {
                     ->orWhere('jobs.title', 'LIKE', '%'.$keyword.'%')
                     ->where('jobs.expired', false);
 
-        if($workDuration != 'ALL'){     $jobs = $jobs->where('hiring_type', $workDuration);}
-        if($regionFIELD != 'ALL'){      $jobs = $jobs->where('regcode', $regionFIELD);}
-        if($city != 'ALL'){             $jobs = $jobs->where('citycode', $city);}
-        if($categoryFIELD != 'ALL'){    $jobs = $jobs->where('skill_category_code', $categoryFIELD);}
-        if($skill != 'ALL'){            $jobs = $jobs->where('skill_code', $skill);}
+        if($workDuration != 'ALL'){     $jobs = $jobs->where('jobs.hiring_type', $workDuration);}
+        if($regionFIELD != 'ALL'){      $jobs = $jobs->where('jobs.regcode', $regionFIELD);}
+        if($city != 'ALL'){             $jobs = $jobs->where('jobs.citycode', $city);}
+        if($categoryFIELD != 'ALL'){    $jobs = $jobs->where('jobs.skill_category_code', $categoryFIELD);}
+        if($skill != 'ALL'){            $jobs = $jobs->where('jobs.skill_code', $skill);}
 
         $jobs = $jobs->orderBy('created_at', $orderBy)
                 ->select([

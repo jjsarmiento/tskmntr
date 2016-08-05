@@ -95,10 +95,10 @@ Route::filter('EMPLOYER-UPDATE-PROFILE-PROGRESS', function(){
 });
 
 Route::filter('WORKER-UPDATE-PROFILE-PROGRESS', function(){
-    BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
-//    if(BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id) < 50){
-//        return Redirect::to('/');
-//    }
+    if(BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id) < 50){
+        Session::flash('errorMsg', 'You must first complete at least 50% of your profile to complete this action');
+        return Redirect::to('/');
+    }
 });
 
 Route::filter('worker_bookmark_limit', function(){
@@ -145,14 +145,15 @@ Route::filter('CLIENT-ONLY', function(){
         if(UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id') != 3 && UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id') != 4){
             return Redirect::to('/');
         }
+
+
+        // check for expired job ads
+        BaseController::ROUTE_UPDATE_JOBADS(Auth::user()->id);
+        // check if subscription is expired
+        BaseController::SUBSCRIPTION_UPDATE(Auth::user()->id);
     }else{
         return Redirect::to('/');
     }
-
-    // check for expired job ads
-    BaseController::ROUTE_UPDATE_JOBADS(Auth::user()->id);
-    // check if subscription is expired
-    BaseController::SUBSCRIPTION_UPDATE(Auth::user()->id);
 });
 
 Route::filter('TASKMINATOR-ONLY', function(){
@@ -168,6 +169,8 @@ Route::filter('TASKMINATOR-ONLY', function(){
         if(UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id') != 2){
             return Redirect::to('/');
         }
+
+        BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
     }else{
         return Redirect::to('/');
     }
