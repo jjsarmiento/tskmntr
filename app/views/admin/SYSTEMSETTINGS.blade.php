@@ -81,6 +81,13 @@
                                                             </select>
                                                         </div>
                                                     </div>
+                                                @elseif($sys->type == 'SYSSETTINGS_FDBACK_INIT')
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Days before initializing feedback</label>
+                                                            <input value="{{$sys->value}}" required="required" name="SYSSETTINGS_FDBACK_INIT" id="SYSSETTINGS_FDBACK_INIT" type="text" class="form-control" placeholder="Feedback delay (days)" />
+                                                        </div>
+                                                    </div>
                                                 @endif
                                             @endforeach
                                         </div>

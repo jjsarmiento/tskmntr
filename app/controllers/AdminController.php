@@ -1154,6 +1154,11 @@ class AdminController extends \BaseController {
                 ->update([
                     'value'     =>  Input::get('SYSSETTINGS_FREE_SUB_ON_REG')
                 ]);
+
+            SystemSetting::where('type', 'SYSSETTINGS_FDBACK_INIT')
+                ->update([
+                    'value'     =>  Input::get('SYSSETTINGS_FDBACK_INIT')
+                ]);
         }
 
         return Redirect::back();

@@ -815,9 +815,18 @@ class TaskminatorController extends \BaseController {
             ]);
         }
 
-        // NOTIFICATION
         $job = Job::where('id', Input::get('application_jobID'))->first();
         $client = User::where('id', $job->user_id)->first();
+
+        // Create schedule for feedback
+//        WorkerFeedbackSchedule::insert([
+//            'employer_id'   => $client->id,
+//            'worker_id'     => Auth::user()->id,
+//            'job_id'        => Input::get('application_jobID'),
+//            'start_date'    => SystemSetting::where()
+//        ]);
+
+        // NOTIFICATION
         $this->NOTIFICATION_INSERT($client->id, 'Worker has applied for <b>'.$job->title.'</b>', '/jobDetails='.$job->id);
 
         return Redirect::back();

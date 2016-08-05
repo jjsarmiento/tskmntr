@@ -28,5 +28,10 @@ class SystemSettingsSeeder extends Seeder {
             'type'          =>  "SYSSETTINGS_FREE_SUB_ON_REG",
             'value'         =>  "1"
         ));
+
+        SystemSetting::create(array(
+            'type'          =>  "SYSSETTINGS_FDBACK_INIT",
+            'value'         =>  "1"
+        ));
     }
 }
