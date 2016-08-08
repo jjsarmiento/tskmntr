@@ -38,7 +38,56 @@
             width: 100%;
             height: auto;
         }
+        .form-control {
+            padding:5px !important;
+        }
+        .btn {
+            border-radius:3px;
+            transition: 0.3s;
+        }
+        .btn-default {
+            border-color: #ededed;
+            color: #fff;
+            background-color: #2980b9;
+        }
+        button.btn.btn-xs.btn-default.pull-right {
+            border: 1px solid;
+        }        
+        .btn-default:hover{
+            color: #2980b9;
+            background-color:#fff;
+            border-color: none !important;
+        }
+        a.btn.btn-danger.btn-xs:hover {
+            color: #c9302c;
+            background-color: transparent;          
+        }
+        .thumbnail{
+            border-radius: 360px;
+            width: 150px;
+            height: 150px;
+            margin: auto;     
+        }
+        button.btn.btn-success:hover{
+            background: transparent;
+            color: #5cb85c;
+        }
         hr{max-width:100%; max-height:1px;border:none;border-bottom:1px solid #ccc; padding:0;}
+        @media (max-width: 768px) {
+            .col-md-9.bord{
+                border: none !important;
+            }
+            .row.padded.bord{
+                border-bottom: 1px solid #cdcdcd;
+            }
+        } 
+        span#picNotice {
+            margin-top: 55px;
+            position: absolute;
+            left: 0%;
+            top: 0%;
+        }   
+        /*margin-top: 1em; border-radius: 0.3em; padding : 0.3em; color: #ECF0F1; background-color: #2C3E50;*/
     </style>
 @stop
 
@@ -49,13 +98,13 @@
 @section('content')
 <section style="padding-top:50px;">
     <div class="container lato-text">
-        <div class="page-title">
+        <div class="page-title" style="border-radius: 3px;">
             <h1 class="lato-text">
                 Edit Profile
             </h1>
         </div>
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-md-12">
                 <ul class="breadcrumb">
                     <li style="cursor:pointer !important;">
                         <a href="/" ><i class="fa fa-home"></i></a>
@@ -92,12 +141,13 @@
                 </div>
             </div>
             @endif
+        </div>
 
-            <div class="col-lg-12">
-                <div class="widget-container fluid-height">
-                    <div class="widget-content padded row" style="padding-bottom: 30px">
-                        <div class="col-sm-3" style="align-items: center; align-content: center; text-align: center;">
-                            <h3 class="lato-text">{{ $user->companyName }}</h3>
+            <div class="col-md-12" style="background-color:white; border-radius:3px;">
+
+                <div class="col-md-3 container lato-text padded">
+                    <div class="row padded" style="border-bottom: 1px solid #cdcdcd; text-align: center;">
+                        <div class="thumbnail">
                             @if($user->profilePic == null)
                                 <div style="border: 1px solid #333333; padding: 0.4em; margin-top: 0.8em;">
                                     {{ Form::open(array('url' => '/uploadProfilePic', 'id' => 'uploadProfilePicForm', 'files' => 'true')) }}
@@ -109,115 +159,115 @@
                             @else
                                 <div style="width:100%; overflow:hidden; border-radius: 100%;" id="profilePicDiv">
                                     <a href="#" data-toggle="modal" data-target="#newProfilePic"><img src="{{ Auth::user()->profilePic }}" class="portrait" style="width: 100%" /></a>
+                                    <span style="display:none;" id="picNotice">Click to change profile picture</span>
                                 </div>
-                                <span style="margin-top: 1em; border-radius: 0.3em; padding : 0.3em; color: #ECF0F1; display: none; background-color: #2C3E50;" id="picNotice">Click to change profile picture</span>
                             @endif
                         </div>
-                        <div class="col-lg-9">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="heading" style="font-size:14pt; color:#2980b9; word-wrap: break-word;">
-                                        <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>Personal Information <button onclick="location.href='/cltEditPersonalInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
-                                    </div>
-                                    <div style="padding-left: 42px; word-wrap: break-word;">
-                                        @if(UserHasRole::where('user_id', $user->id)->pluck('role_id') == 3)
-                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">First Name</span>
-                                             :
-                                            <span style="margin-left: 5px">{{ $user->firstName }}</span><br/>
-                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Middle Name</span>
-                                             :
-                                            <span style="margin-left: 5px">{{ $user->midName }}</span><br/>
-                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Last Name</span>
-                                             :
-                                            <span style="margin-left: 5px">{{ $user->lastName }}</span><br/>
-                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Gender</span>
-                                             :
-                                            <span style="margin-left: 5px">{{ Auth::user()->gender }}</span><br/>
-                                        @else
-                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Company Name</span>
-                                             :
-                                            <span style="margin-left: 5px">{{ $user->companyName }}</span><br/>
-                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Business Description</span>
-                                             :
-                                            <div style="overflow-y: hidden; text-overflow: ellipsis; max-height: 7em; margin-left: 5px">{{ $user->businessDescription }}</div><br/>
-                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Business Nature</span>
-                                             :
-                                            <span style="margin-left: 5px">{{ $user->businessNature }}</span><br/>
-                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Business Permit</span>
-                                             :
-                                            <span style="margin-left: 5px">{{ $user->businessPermit }}</span><br/>
-                                        @endif
-                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Street</span>
-                                         :
-                                        <span style="margin-left: 5px">{{ $user->address }}</span><br/>
-                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">City</span>
-                                         :
-                                        <span style="margin-left: 5px">{{ City::where('citycode', $user->city)->pluck('cityname') }}</span><br/>
-                                        <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Barangay</span>
-                                         :
-                                        <span style="margin-left: 5px">{{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }}</span><br/>
-                                    </div>
+                        <h3 class="lato-text">{{ $user->companyName }}</h3>
+                    </div>
+                    <div class="row padded bord">
+                        <div class="heading" style="font-size:14pt; color:#2980b9">
+                           <i class="fa fa-file-text-o" style="font-size:14pt; color:#2980b9"></i>&nbsp License <button class="btn btn-xs btn-default pull-right" onclick="#" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                        </div>  
+                        <span>N/A</span>
+                    </div>
+
+                </div>
+
+                <div class="col-md-9 bord" style="border-left: 1px solid #cdcdcd;">
+                    <div class="row" style="border-bottom: 1px solid #cdcdcd;">
+                        <div class="col-md-12 padded">
+                            <div class="col-md-6">
+                                <div class="heading" style="font-size:14pt; color:#2980b9; word-wrap: break-word;">
+                                    <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>Personal Information <button onclick="location.href='/cltEditPersonalInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
                                 </div>
-                                <div class="col-md-6 well" style="margin-bottom:0;">
-                                    <div class="heading" style="font-size:14pt; color:#2980b9; background:none;">
+                                <div style="padding-left: 19px; word-wrap: break-word;">
+                                    <span><b>Company Name: </b>{{ $user->companyName }}</span><br>
+                                    <span><b>Business Description: </b>{{ $user->businessDescription }}</span><br>
+                                    <span><b>Business Nature: </b>{{ $user->businessNature }}</span><br>
+                                    <span><b>Business Permit: </b>{{ $user->businessPermit }}</span><br>
+                                    <span><b>Address: </b>{{ $user->address }} {{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }} {{ City::where('citycode', $user->city)->pluck('cityname') }}</span><br>
+                                    <span><b>Years in Operation: </b></span><br>
+                                    <span><b>Company Size: </b></span>
+                                </div>
+                            </div>  
+                            <div class="col-md-6 well">
+                                <div class="heading" style="font-size:14pt; color:#2980b9; background:none;">
                                         <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>Account Information
+                                </div>
+                                <div style="padding-left: 30px;" style="display:table">
+                                    <div style="display:table-row;">
+                                        <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
+                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                        <span style="display:table-cell">{{ Auth::user()->username }}</span>
                                     </div>
-                                    <div style="padding-left: 30px;" style="display:table">
-                                        <div style="display:table-row;">
-                                            <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Username</span>
-                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
-                                            <span style="display:table-cell">{{ Auth::user()->username }}</span>
-                                        </div>
-                                        <div style="display:table-row;">
-                                            <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Password</span>
-                                            <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
-                                            <span style="display:table-cell">******</span>
-                                        </div>
-                                        <br/>
-                                        <a href="#" data-target="#CHNGPSS-MODAL" data-toggle="modal" class="btn btn-primary btn-xs" style="border-radius: 4px; border:1px solid #2980b9">Change password</a><Br/>
-                                        <a href="#" data-target="#DEACTIVATE-MODAL" data-toggle="modal" class="btn btn-danger btn-xs" style="border-radius: 4px;">Deactivate Account</a>
+                                    <div style="display:table-row;">
+                                        <span style="display:table-cell; text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Password</span>
+                                        <span style="display:table-cell; padding-right:10px; padding-left:10px;"> : </span>
+                                        <span style="display:table-cell">******</span>
                                     </div>
+                                    <br/>
+                                    <a href="#" data-target="#CHNGPSS-MODAL" data-toggle="modal" class="btn btn-primary btn-xs" style="border-radius: 4px; border:1px solid #2980b9">Change password</a><Br/>
+                                    <a href="#" data-target="#DEACTIVATE-MODAL" data-toggle="modal" class="btn btn-danger btn-xs" style="border-radius: 4px; border: 1px solid #d9534f;">Deactivate Account</a>
                                 </div>
                             </div>
-                            <hr/>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="heading" style="font-size:14pt; color:#2980b9">
-                                        <i class="fa fa-briefcase" style="font-size:14pt; color:#2980b9"></i>
-                                        Supporting Documents
-                                        <a href="/editDocumentsCMP" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</a>
-                                    </div>
-                                    <div style="">
+                        </div>
+                    </div>
 
-                                    @foreach($docs as $d)
-                                        <i class="fa fa-check" style="color: #2ECC71;"></i>&nbsp;<span style="color: rgb(72, 157, 179); font-size: 1em;">{{$d->sys_doc_label}}</span><br/>
-                                    @endforeach
-                                    </div>
+                    <div class="row">
+                        <div class="col-md-12 padded">
+                            <div class="col-md-6 padded">
+                                <div class="heading" style="font-size:14pt; color:#2980b9">
+                                    <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>
+                                    Contact Information
+                                    <button onclick="location.href='/cltEditContactInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="heading" style="font-size:14pt; color:#2980b9">
-                                        <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>
-                                        Contact Information
-                                        <button onclick="location.href='/cltEditContactInfo'" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
-                                    </div>
-                                    <div style="padding-left: 42px">
-                                        @foreach($contacts as $contact)
-                                            <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">
-                                                @if($contact->ctype == "mobileNum") Mobile No.
-                                                @elseif($contact->ctype == "businessNum") Business No.
-                                                @else {{ $contact->ctype }} @endif
-                                            </span>
-                                             :
-                                            <span style="margin-left: 5px">{{ $contact->content }}</span><br/>
-                                        @endforeach
-                                    </div>
+                                <div style="padding-left: 23px">
+                                    @foreach($contacts as $contact)
+                                        <span style="text-transform: capitalize; font-weight: 600; margin-right: 5px;">
+                                            @if($contact->ctype == "businessNum") Business No
+                                            @else {{ $contact->ctype }} @endif
+                                        </span>
+                                         :
+                                        <span style="margin-left: 5px">{{ $contact->content }}</span><br/>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 padded">
+                                <div class="heading" style="font-size:14pt; color:#2980b9">
+                                    <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>
+                                    Key Contact Person
+                                    <button onclick="#" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                                </div>
+                                <div style="padding-left: 23px">
+                                    <span><b>Name: </b></span><br>
+                                    <span><b>Position: </b></span><br>
+                                    <span style="text-transform: capitalize; font-weight: 600; margin-right: 5px;">
+                                         @if($contact->ctype == "mobileNum") Contact No :
+                                         @endif
+                                    </span>
+                                    <span style="margin-left: 5px">{{ $contact->content }}</span><br/>
+                                    <span><b>Email: </b></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 padded">
+                            <div class="col-md-12">
+                                <div class="heading" style="font-size:14pt; color:#2980b9; word-wrap: break-word;">
+                                    <i class="fa fa-sticky-note" style="font-size:14pt; color:#2980b9"></i>&nbsp Other Notes <button onclick="#" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                                </div>
+                                <div style="padding-left: 19px; word-wrap: break-word;">
+                                    <span></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </section>
 <!--    MODAL-->

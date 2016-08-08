@@ -45,6 +45,9 @@
             border-radius:3px;
             transition: 0.3s;
         }
+        button.btn.btn-xs.btn-default.pull-right {
+            border: 1px solid;
+        }          
         .btn-default {
             border-color: #ededed;
             color: #fff;
