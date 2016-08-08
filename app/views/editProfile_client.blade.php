@@ -215,7 +215,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12 padded">
+                        <div class="col-md-12 padded" style="border-bottom: 1px solid #cdcdcd;">
                             <div class="col-md-6 padded">
                                 <div class="heading" style="font-size:14pt; color:#2980b9">
                                     <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>
