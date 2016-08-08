@@ -180,7 +180,7 @@
                     <div class="col-md-4" style="">
                         <div class="thumbnail">
                             @if(Auth::user()->profilePic)
-                                <a href="/editProfile"><img src="{{ Auth::user()->profilePic }}" class="portrait"/></a>
+                                <a href="/editProfile"><img src="{{ Auth::user()->profilePic }}" class="portrait"/></a><br>
                             @else
                                 <a href="/editProfile"><img src="/images/default_profile_pic.png" class="portrait"/></a><br>
                             @endif
