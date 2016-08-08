@@ -70,6 +70,14 @@
             color: #5cb85c;
         }
         hr{max-width:100%; max-height:1px;border:none;border-bottom:1px solid #ccc; padding:0;}
+        @media (max-width: 768px) {
+            .col-md-9.bord{
+                border: none !important;
+            }
+            .row.padded.bord{
+                border-bottom: 1px solid #cdcdcd;
+            }
+        }
     </style>
 @stop
 
@@ -144,18 +152,18 @@
                             </div>
                         @endif
                     </div>
-                    <div class="row padded">
+                    <div class="row padded bord">
                         <div class="heading" style="font-size:14pt; color:#2980b9">
                            <i class="fa fa-certificate" style="font-size:14pt; color:#2980b9"></i>&nbsp Certification <button class="btn btn-xs btn-default pull-right" onclick="#" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
                         </div>  
                         <span>N/A</span>
                     </div>
-
+ 
                 </div>
 
-                <div class="col-md-9" style="border-left: 1px solid #cdcdcd;">
+                <div class="col-md-9 bord" style="border-left: 1px solid #cdcdcd;">
                     <div class="row" style="border-bottom: 1px solid #cdcdcd;">
-                        <div class="col-md-6 padded">
+                        <div class="col-sm-6 padded">
                             <div class="heading" style="font-size:14pt; color:#2980b9">
                                 <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Personal Information <button onclick="location.href='/editPersonalInfo'" class="btn btn-xs btn-default pull-right border: 1px solid #2980b9;" style="padding: 2px 10px 2px 10px; text-transform: none; border: 1px solid #2980b9;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
                             </div>   
@@ -174,7 +182,7 @@
                                 <span><b>Account Created: </b></span>
                             </div>     
                         </div>
-                        <div class="col-md-6 padded">
+                        <div class="col-sm-6 padded">
                             <div class="col-md-12 well" style="margin-bottom:0;">
                                 <div class="heading" style="font-size:14pt; color:#2980b9">
                                     <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Account Information
