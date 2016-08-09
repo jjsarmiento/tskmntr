@@ -51,9 +51,9 @@
     </style>
 
     {{ HTML::style('frontend/css/bootstrap.min.css') }}
-    {{ HTML::style('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800') }}
-    {{ HTML::style('http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic') }}
-    {{ HTML::style('https://fonts.googleapis.com/css?family=Lato:300') }}
+    {{ HTML::style('frontend/css/Lato.css') }}
+    {{ HTML::style('frontend/css/Open_Sans.css') }}
+    {{ HTML::style('frontend/css/Merriweather.css') }}
 
     {{ HTML::style('frontend/font-awesome/css/font-awesome.min.css') }}
     {{ HTML::style('frontend/css/animate.min.css') }}
