@@ -7,7 +7,7 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){ // test()
-//        return BaseController::ROUTE_UPDATE_FEEDBACKS(2);
+        return BaseController::ROUTE_UPDATE_FEEDBACKS(2);
     }
 
     function generateConfirmationCode(){

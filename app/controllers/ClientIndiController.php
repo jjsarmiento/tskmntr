@@ -1849,12 +1849,15 @@ class ClientIndiController extends \BaseController {
     }
 
     public function doFeedback(){
+        $hired = (Input::get('hired') == 'true') ? true : false;
         WorkerFeedback::insert([
             'employer_id'   =>  Auth::user()->id,
             'job_id'        =>  Input::get('job_id'),
             'worker_id'     =>  Input::get('worker_id'),
+            'hired'         =>  $hired,
             'stars'         =>  Input::get('stars'),
             'review'        =>  Input::get('review'),
+            'suggestion'    =>  Input::get('suggestion'),
             'created_at'    =>  Carbon::now()
         ]);
 
