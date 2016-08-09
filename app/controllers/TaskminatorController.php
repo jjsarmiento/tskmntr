@@ -806,8 +806,6 @@ class TaskminatorController extends \BaseController {
             ->where('invited_id', Auth::user()->id)
             ->first();
 
-
-        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Viewed <a href="/ADMIN_jobDetails='.$jobId.'">job</a> ad');
         return View::make('taskminator.jbdtls')
             ->with('HIRED', $HIRED)
             ->with('job', $job)
@@ -831,7 +829,7 @@ class TaskminatorController extends \BaseController {
 
         // NOTIFICATION
         $this->NOTIFICATION_INSERT($client->id, 'Worker has applied for <b>'.$job->title.'</b>', '/jobDetails='.$job->id);
-        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Applied for a <a href="/ADMIN_jobDetails='.Input::get('application_jobID').'">job</a>');
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Sent application for a <a href="/ADMIN_jobDetails='.Input::get('application_jobID').'">job</a>');
 
         return Redirect::back();
     }
@@ -854,14 +852,14 @@ class TaskminatorController extends \BaseController {
     public function WRKR_APPLCTNS(){
         $JOB_APPLICATIONS = $this->GETAPPLICATIONS_ID(Auth::user()->id);
         $JOB_HIRED = $this->GET_HIRED_JOBSID(Auth::user()->id);
-        $EXCLUDED_JOBS = array_unique(array_merge($JOB_APPLICATIONS, $JOB_HIRED));
+        $JOB_INVITES = $this->WORKERGETINVITES_JOBID(Auth::user()->id);
         $skillCodeArray = $this->GETTASKCODES(Auth::user()->id);
 
         $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
             ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
             ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
             ->whereIn('jobs.skill_code', $skillCodeArray)
-            ->whereNotIn('jobs.id', $EXCLUDED_JOBS)
+            ->whereNotIn('jobs.id', array_merge($JOB_APPLICATIONS, $JOB_HIRED, $JOB_INVITES))
 //            ->whereNotIn('jobs.id', $this->GETAPPLICATIONS_ID(Auth::user()->id))
 //            ->whereNotIn('jobs.id', $this->GET_HIRED_JOBSID(Auth::user()->id))
             ->where('expired', false)
@@ -887,7 +885,7 @@ class TaskminatorController extends \BaseController {
                         ->join('users', 'users.id', '=', 'jobs.user_id')
                         ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
                         ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
-                        ->whereNotIn('jobs.id', $EXCLUDED_JOBS)
+                        ->whereNotIn('jobs.id', array_merge($JOB_HIRED))
                         ->where('job_applications.applicant_id', Auth::user()->id)
                         ->select([
                             'users.id as user_id',
@@ -916,10 +914,12 @@ class TaskminatorController extends \BaseController {
     }
 
     public function WRKR_INVTS(){
+        $APPLICATIONS = $this->GETAPPLICATIONS_ID(Auth::user()->id);
         $invites = JobInvite::join('jobs', 'job_invites.job_id', '=', 'jobs.id')
                     ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
                     ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
                     ->where('invited_id', Auth::user()->id)
+                    ->whereNotIn('jobs.id', $APPLICATIONS)
                     ->select([
                         'jobs.title',
                         'jobs.id as job_id',

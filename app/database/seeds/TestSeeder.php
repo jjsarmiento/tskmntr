@@ -55,32 +55,5 @@ class TestSeeder extends Seeder {
             'expires_at'            =>  $ThreeDaysFromToday,
             'created_at'            =>  $today
         ]);
-
-        // BOOKMARKS
-        BookmarkUser::create([
-            'company_id'        => 2,
-            'worker_id'         => 3,
-            'created_at'        => $today
-        ]);
-        BookmarkUser::create([
-            'company_id'        => 2,
-            'worker_id'         => 3,
-            'created_at'        => $today
-        ]);
-        BookmarkUser::create([
-            'company_id'        => 2,
-            'worker_id'         => 3,
-            'created_at'        => $today
-        ]);
-        BookmarkUser::create([
-            'company_id'        => 2,
-            'worker_id'         => 3,
-            'created_at'        => $nextWeek
-        ]);
-        BookmarkUser::create([
-            'company_id'        => 2,
-            'worker_id'         => 3,
-            'created_at'        => $nextWeek
-        ]);
     }
 }

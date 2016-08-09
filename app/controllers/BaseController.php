@@ -690,6 +690,7 @@ class BaseController extends Controller {
             'user_id'   => $user_id,
             'content'   => $msg,
             'at_url'    => Request::url(),
+            'ip_address'=> Request::getClientIp(),
             'created_at'=> Carbon::now()
         ]);
     }

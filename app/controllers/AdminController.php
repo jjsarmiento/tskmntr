@@ -298,7 +298,7 @@ class AdminController extends \BaseController {
 
     public function auditTrail($user_id){
         return View::make('admin.auditTrail')
-                ->with('trails', AuditTrail::where('user_id', $user_id)->paginate(20))
+                ->with('trails', AuditTrail::where('user_id', $user_id)->orderBy('created_at', 'DESC')->paginate(30))
                 ->with('user', User::where('id', $user_id)->first());
     }
     /*

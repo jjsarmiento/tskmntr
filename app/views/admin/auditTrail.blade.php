@@ -232,26 +232,31 @@
                         </div>
                     </div>
 
-                    <div class="col-md-9" style="background-color: white; padding: 0;">
-                        <h3 style="text-align: center;">Audit Trail for {{$user->fullName}}</h3>
-                        @if($trails->count() > 0)
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <th>Action</th>
-                                    <th>Date of Action</th>
-                                    <th>URL</th>
-                                </thead>
-                                @foreach($trails as $t)
-                                    <tr>
-                                        <td>{{$t->content}}</td>
-                                        <td>{{date('D, M j, Y \a\t g:ia', strtotime($t->created_at))}}</td>
-                                        <td><a href="{{$t->at_url}}">{{$t->at_url}}</a></td>
-                                    </tr>
-                                @endforeach
-                            </table>
-                        @else
-                            <center><i>No data available.</i></center>
-                        @endif
+                    <div class="col-md-9" style="padding: 0;">
+                        <div style="background-color: #ffffff;">
+                            <h3 style="text-align: center;">Audit Trail for {{$user->fullName}}</h3>
+                            @if($trails->count() > 0)
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <th>Action</th>
+                                        <th>Date of Action</th>
+                                        <th>URL</th>
+                                        <th>IP Address</th>
+                                    </thead>
+                                    @foreach($trails as $t)
+                                        <tr>
+                                            <td>{{$t->content}}</td>
+                                            <td>{{date('D, M j, Y \a\t g:ia', strtotime($t->created_at))}}</td>
+                                            <td><a href="{{$t->at_url}}">{{$t->at_url}}</a></td>
+                                            <td>{{$t->ip_address}}</td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            @else
+                                <center><i>No data available.</i></center>
+                            @endif
+                        </div>
+                        <center>{{$trails->links()}}</center>
                     </div>
                 </div>
             </div>

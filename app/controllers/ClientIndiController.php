@@ -1483,7 +1483,8 @@ class ClientIndiController extends \BaseController {
         // NOTIFICATION
         $job = Job::where('id', Input::get('JBID'))->first();
         $this->NOTIFICATION_INSERT(Input::get('USRID'), '<b>'.Auth::user()->fullName.'</b> has sent you an invitation to apply for <b>'.$job->title.'</b>', '/jbdtls='.$job->id);
-        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Sent and invitation to <a href="/viewUserProfile/'.Input::get('USRID').'">worker</a>');
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Sent a job invitation to <a href="/viewUserProfile/'.Input::get('USRID').'">worker</a> for job ad - <a href="/ADMIN_jobDetails='.$job->id.'">'.$job->title.'</a>');
+        $this->INSERT_AUDIT_TRAIL(Input::get('USRID'), 'Received a <a href="/ADMIN_jobDetails='.$job->id.'">job</a> invite');
         return Redirect::back();
     }
 
@@ -1597,6 +1598,7 @@ class ClientIndiController extends \BaseController {
     }
 
     public function doCheckout(){
+        $Points_Per_Checkout = SystemSetting::where('type', 'SYSSETTINGS_CHECKOUTPRICE')->pluck('value');
         foreach(Input::get('WORKERID') as $w){
             Purchase::insert([
                 'company_id'    =>  Auth::user()->id,
@@ -1608,14 +1610,13 @@ class ClientIndiController extends \BaseController {
             Cart::where('worker_id', $w)
                 ->where('company_id', Auth::user()->id)
                 ->delete();
-        }
-        $TOTAL_PTS = Auth::user()->points - (count(Input::get('WORKERID')) * 20);
 
+            $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Checked out <a href="/viewUserProfile/'.$w.'">worker</a> for '.$Points_Per_Checkout.' point(s)');
+        }
+        $TOTAL_PTS = Auth::user()->points - (count(Input::get('WORKERID')) * $Points_Per_Checkout);
         User::where('id', Auth::user()->id)->update([
             'points'    =>  $TOTAL_PTS,
         ]);
-
-        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Proceeded to checkout cart items. Total Cost : '.(count(Input::get('WORKERID')) * 20));
         return Redirect::back();
     }
 
@@ -1690,7 +1691,7 @@ class ClientIndiController extends \BaseController {
                     'message'       =>  Input::get('INVITATIONMSG'),
                     'created_at'    =>  date("Y:m:d H:i:s")
                 ]);
-                $msg = 'MULTIPLE INVITE sent to <a href="/viewUserProfile/'.$w.'">worker</a>';
+                $msg = 'MULTIPLE INVITE | <a href="/ADMIN_jobDetails='.Input::get('JOBID').'">Job</a> invitation sent to <a href="/viewUserProfile/'.$w.'">worker</a>';
                 $this->INSERT_AUDIT_TRAIL(Auth::user()->id, $msg);
             }
         }
@@ -1818,7 +1819,7 @@ class ClientIndiController extends \BaseController {
                     'points'    =>  (Auth::user()->points - SystemSetting::where('type', 'SYSSETTINGS_POINTSPERAD')->pluck('value'))
                 ]);
 
-            $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Reposted expired <a hre="ADMIN_jobDetails='.$jobID.'">job</a>');
+            $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Reposted expired <a href="ADMIN_jobDetails='.$jobID.'">job</a>');
             return Redirect::back();
         }else{
             return View::make('error.CLIENT_ERROR')

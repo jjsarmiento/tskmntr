@@ -277,34 +277,38 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="row">
-                        @if($bookmarks->count() > 0)
-                            <center><h3 style="margin: 0; margin-bottom: 1em;">Bookmarked Workers</h3></center>
-                            @foreach($bookmarks as $bm)
-                                @if(in_array($bm->userID, $CHECKED_OUT_USERS))
-                                    <div class="col-md-12 INVITE-BOOKMARK-WORKERS" style="padding: 0.4em;">
-                                        <div class="col-md-7">
-                                            <a target="_tab" href="/{{$bm->username}}">{{$bm->fullName}}</a>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <input type="checkbox" class="MULTI_INVITE_CHECKBOX" name="WORKERS[]" value="{{$bm->userID}}">
-                                        </div>
-                                    </div>
+                            <div class="col-md-12">
+                                @if($bookmarks->count() > 0)
+                                    <center><h3 style="margin: 0; margin-bottom: 1em;">Bookmarked Workers</h3></center>
+                                    @foreach($bookmarks as $bm)
+                                        @if(in_array($bm->userID, $CHECKED_OUT_USERS))
+                                            <div class="col-md-12 INVITE-BOOKMARK-WORKERS" style="padding: 0.4em;">
+                                                <div class="col-md-7">
+                                                    <a target="_tab" href="/{{$bm->username}}">{{$bm->fullName}}</a>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <input type="checkbox" class="MULTI_INVITE_CHECKBOX" name="WORKERS[]" value="{{$bm->userID}}">
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="col-md-12 INVITE-BOOKMARK-WORKERS" style="padding: 0.4em;">
+                                                <div class="col-md-7">
+                                                    <a href="/{{$bm->username}}">
+                                                        {{substr_replace($bm->firstName, str_repeat('*', strlen($bm->firstName)-1), 1)}}
+                                                        &nbsp;
+                                                        {{substr_replace($bm->lastName, str_repeat('*', strlen($bm->lastName)-1), 1)}}
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <input type="checkbox" class="MULTI_INVITE_CHECKBOX" name="WORKERS[]" value="{{$bm->userID}}">
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
                                 @else
-                                    <div class="col-md-12 INVITE-BOOKMARK-WORKERS" style="padding: 0.4em;">
-                                        <div class="col-md-7">
-                                            <a href="/{{$bm->username}}">
-                                                {{substr_replace($bm->firstName, str_repeat('*', strlen($bm->firstName)-1), 1)}}
-                                                &nbsp;
-                                                {{substr_replace($bm->lastName, str_repeat('*', strlen($bm->lastName)-1), 1)}}
-                                            </a>
-                                        </div>
-                                        <div class="col-md-5"></div>
-                                    </div>
+                                    <center><i>No bookmarked users available for this job.</i></center>
                                 @endif
-                            @endforeach
-                        @else
-                            <center><i>No bookmarked users available for this job.</i></center>
-                        @endif
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">

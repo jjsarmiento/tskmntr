@@ -743,7 +743,6 @@ class HomeController extends BaseController {
 
     public function index(){
         if(Auth::check()){
-            $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Logged in.');
             switch(Auth::user()->status){
                 case 'DEACTIVATED'      :
                 case 'SELF_DEACTIVATED' :
@@ -811,7 +810,8 @@ class HomeController extends BaseController {
                         ->paginate(10);
 
                     $applicationCount = JobApplication::where('applicant_id', Auth::user()->id)->whereNotIn('job_id', $this->GET_HIRED_JOBSID(Auth::user()->id))->count();
-                    $invitesCount = JobInvite::where('invited_id', Auth::user()->id)->count();
+                    $invitesCount = JobInvite::where('invited_id', Auth::user()->id)
+                                        ->whereNotIn('job_id', $this->GETAPPLICATIONS_ID(Auth::user()->id))->count();
                     $hired = JobHiredWorker::where('worker_id', Auth::user()->id)->count();
                     // NEW JOB MODULE -- END by JAN SARMIENTO
                     return View::make('taskminator.index')
@@ -915,7 +915,7 @@ class HomeController extends BaseController {
                     Auth::logout();
                     return Redirect::to('/SLFACTVT='.time().'='.$user);
             }
-
+            $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Logged in.');
             return Redirect::to('/');
         }else if(User::where('username', Input::get('username'))->count() == 0){
             return Redirect::back()->with('successMsg', 'This account has not been registered. Click <a href="/">here</a> to register.');
