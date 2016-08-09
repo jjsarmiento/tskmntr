@@ -127,10 +127,12 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Information</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                <span><b>Address: </b>Lorem ipsum sit dolor amet, consectetur nam perosa</span><br>
-                                <span><b>Gender: </b>Female</span><br>
+                                <span><b>Address: </b>{{$users->address}}</span><br>
+                                <span><b>Gender: </b>{{{$users->gender}}}</span><br>
                                 <span><b>Birthdate: </b>01/01/01 (55 years old)</span><br>
-                                <span><b>Martial Status: </b>Widowed</span><br>
+                                @if($users->marital_status)
+                                    <span><b>Martial Status: </b>{{$users->marital_status}}</span><br>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -159,12 +161,12 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Skill & Competencies</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                <span class="skills">Mason</span>
-                                <span class="skills">Mason</span>
-                                <span class="skills">Mason</span>
-                                <span class="skills">Mason</span>
-                                <span class="skills">Mason</span>
-                                <span class="skills">Mason</span>
+                                @foreach(User::getSkills($users->id) as $skill)
+                                    <span class="skills">{{ $skill->itemname }}</span>
+                                @endforeach
+                                @foreach(User::GET_CUSTOM_SKILLS($users->id) as $skill)
+                                    <span class="skills">{{ $skill->skill }}</span>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -175,9 +177,7 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Educational Background</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                <span><b>College :</b>N/A</span><br>
-                                <span><b>Highschool :</b>N/A</span><br>
-                                <span><b>Elementary :</b>N/A</span>
+                                {{$users->educationalBackground}}
                             </div>
                         </div>
                     </div>
@@ -191,7 +191,7 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Relevant Experiences</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</span>
+                                <span>{{$users->experience}}</span>
                             </div>
                         </div>
                     </div>
@@ -202,11 +202,9 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Supporting Documents</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                <span><b>NBI</b></span>,
-                                <span><b>PASSPORT</b></span>,
-                                <span><b>SSS</b></span>,
-                                <span><b>GSIS</b></span>,
-                                <span><b>Driver's License</b></span>
+                                @foreach($DOCS as $d)
+                                    <span><i class="fa fa-check-circle" style="color: #1ABC9C; font-size: 1.3em;"></i> {{$d}}</span>&nbsp;&nbsp;
+                                @endforeach
                             </div>
                         </div>
                     </div>
