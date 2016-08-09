@@ -23,43 +23,44 @@ class TaskminatorController extends \BaseController {
             ->with('threads', Thread::where('user_id', Auth::user()->id)->where('status', 'OPEN')->orderBy('created_at', 'ASC')->get());
     }
 
-//    public function bidPtime($id){
-//        if($this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id) < 50){
-//            Session::flash('err_search', 'Please fill out your profile atleast 50%');
-//            return Redirect::to('/');
-//        }else{
-//            if(TaskHasBidder::where('task_id', $id)->where('taskminator_id', Auth::user()->id)->count() > 0){
-//                Session::flash('error', 'You have already placed a bid for this task');
-//                return Redirect::back();
-//            }
-//
-//            if(Auth::user()->status == 'PRE_ACTIVATED'){
-//                Session::flash('error', 'Your account must first be fully activated by admin before you can apply for jobs');
-//                return Redirect::back();
-//            }else{
-//                return View::make('taskminator.bid')->with('hiringType', 'PART')->with('task_id', $id)->with('task', Task::where('id', $id)->first());
-//            }
-//        }
-//    }
-//
-//    public function bidFtime($id){
-//        if($this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id) < 50){
-//            Session::flash('err_search', 'Please fill out your profile atleast 50%');
-//            return Redirect::to('/');
-//        }else{
-//            if(TaskHasBidder::where('task_id', $id)->where('taskminator_id', Auth::user()->id)->count() > 0){
-//                Session::flash('error', 'You have already placed a bid for this task');
-//                return Redirect::back();
-//            }
-//
-//            if(Auth::user()->status == 'PRE_ACTIVATED'){
-//                Session::flash('error', 'Your account must first be fully activated by admin before you can apply for jobs');
-//                return Redirect::back();
-//            }else{
-//                return View::make('taskminator.bid')->with('hiringType', 'FULL')->with('task_id', $id)->with('task', Task::where('id', $id)->first());
-//            }
-//        }
-//    }
+    /*
+    public function bidPtime($id){
+        if($this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id) < 50){
+            Session::flash('err_search', 'Please fill out your profile atleast 50%');
+            return Redirect::to('/');
+        }else{
+            if(TaskHasBidder::where('task_id', $id)->where('taskminator_id', Auth::user()->id)->count() > 0){
+                Session::flash('error', 'You have already placed a bid for this task');
+                return Redirect::back();
+            }
+
+            if(Auth::user()->status == 'PRE_ACTIVATED'){
+                Session::flash('error', 'Your account must first be fully activated by admin before you can apply for jobs');
+                return Redirect::back();
+            }else{
+                return View::make('taskminator.bid')->with('hiringType', 'PART')->with('task_id', $id)->with('task', Task::where('id', $id)->first());
+            }
+        }
+    }
+
+    public function bidFtime($id){
+        if($this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id) < 50){
+            Session::flash('err_search', 'Please fill out your profile atleast 50%');
+            return Redirect::to('/');
+        }else{
+            if(TaskHasBidder::where('task_id', $id)->where('taskminator_id', Auth::user()->id)->count() > 0){
+                Session::flash('error', 'You have already placed a bid for this task');
+                return Redirect::back();
+            }
+
+            if(Auth::user()->status == 'PRE_ACTIVATED'){
+                Session::flash('error', 'Your account must first be fully activated by admin before you can apply for jobs');
+                return Redirect::back();
+            }else{
+                return View::make('taskminator.bid')->with('hiringType', 'FULL')->with('task_id', $id)->with('task', Task::where('id', $id)->first());
+            }
+        }
+    }
 
     public function initBid(){
         date_default_timezone_set("Asia/Manila");
@@ -119,76 +120,75 @@ class TaskminatorController extends \BaseController {
         return Redirect::to('/tskmntr_taskBids');
     }
 
-//    public function doUploadDocuments(){
-//        date_default_timezone_set("Asia/Manila");
-//        $document = Input::file('document');
-//        $keySkills = Input::file('keySkills');
-//        $destinationPath = 'public/upload/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
-//
-//        if(!isset($document)){
-//            return Redirect::back()->with('errorMsg', 'Please attach a document before submitting');
-//        }
-//
-//        if(!isset($keySkills)){
-//            return Redirect::back()->with('errorMsg', 'Please attach at least 2 (Two) certification of skill before submitting');
-//        }else if(count($keySkills) < 2){
-//            return Redirect::back()->with('errorMsg', 'Please attach at least 2 (Two) certification of skill before submitting');
-//        }
-//
-//        // UPLOADING DOCUMENT
-//        $rules = array('file' => 'required|mimes:pdf,doc,docx');
-//        $validator = Validator::make(array('file'=> $document), $rules);
-//        if($validator->passes()){
-//            $filename   =   $document->getClientOriginalName();
-//            $upload_success =   $document->move($destinationPath, $filename);
-//
-//            Document::insert(array(
-//                'user_id'       =>  Auth::user()->id,
-//                'docname'       =>  $filename,
-//                'path'          =>  '/upload/'.Auth::user()->confirmationCode.'_'.Auth::user()->id.'/'.$filename,
-//                'type'          =>  'DOCUMENT',
-//                'created_at'    =>  date("Y:m:d H:i:s"),
-//                'updated_at'    =>  date("Y:m:d H:i:s"),
-//            ));
-//        }else{
-//            return Redirect::back()->with('errorMsg', $validator);
-//        }
-//
-//        // UPLOADING KEYSKILLS (IMAGES)
-//
-//        $rules = array('file' => 'required|mimes:png,jpeg,jpg');
-//
-//        foreach($keySkills as $ks){
-//            $newFileName = md5(uniqid(rand(), true));
-//            $validator = Validator::make(array('file'=> $ks), $rules);
-//            if($validator->passes()){
-//                $filename = $newFileName.'.'.$ks->getClientOriginalExtension();
-//                $upload_success = $ks->move($destinationPath, $filename);
-//
-//                Photo::insert(array(
-//                    'user_id'       =>  Auth::user()->id,
-//                    'imgname'       =>  $filename,
-//                    'path'          =>  '/upload/'.Auth::user()->confirmationCode.'_'.Auth::user()->id.'/'.$filename,
-//                    'type'          =>  'KEYSKILLS',
-//                    'created_at'    =>  date("Y:m:d H:i:s"),
-//                    'updated_at'    =>  date("Y:m:d H:i:s"),
-//                ));
-//            }else{
-//                return Redirect::back()->with('errorMsg', $validator);
-//            }
-//        }
-//
-//        AuditTrail::insert(array(
-//            'user_id'   =>  Auth::user()->id,
-//            'content'   =>  'Uploaded files for full activation at '.date('D, M j, Y \a\t g:ia'),
-//            'created_at'    =>  date("Y:m:d H:i:s"),
-//            'at_url'        =>  '/viewUserProfile/'.Auth::user()->id
-////                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
-//        ));
-//
-//        return Redirect::back()->with('errorMsg', 'Upload successful. Please while your profile is being reviewed. This might take more or less than (24) hours.');
-//    }
+    public function doUploadDocuments(){
+        date_default_timezone_set("Asia/Manila");
+        $document = Input::file('document');
+        $keySkills = Input::file('keySkills');
+        $destinationPath = 'public/upload/'.Auth::user()->confirmationCode.'_'.Auth::user()->id;
 
+        if(!isset($document)){
+            return Redirect::back()->with('errorMsg', 'Please attach a document before submitting');
+        }
+
+        if(!isset($keySkills)){
+            return Redirect::back()->with('errorMsg', 'Please attach at least 2 (Two) certification of skill before submitting');
+        }else if(count($keySkills) < 2){
+            return Redirect::back()->with('errorMsg', 'Please attach at least 2 (Two) certification of skill before submitting');
+        }
+
+        // UPLOADING DOCUMENT
+        $rules = array('file' => 'required|mimes:pdf,doc,docx');
+        $validator = Validator::make(array('file'=> $document), $rules);
+        if($validator->passes()){
+            $filename   =   $document->getClientOriginalName();
+            $upload_success =   $document->move($destinationPath, $filename);
+
+            Document::insert(array(
+                'user_id'       =>  Auth::user()->id,
+                'docname'       =>  $filename,
+                'path'          =>  '/upload/'.Auth::user()->confirmationCode.'_'.Auth::user()->id.'/'.$filename,
+                'type'          =>  'DOCUMENT',
+                'created_at'    =>  date("Y:m:d H:i:s"),
+                'updated_at'    =>  date("Y:m:d H:i:s"),
+            ));
+        }else{
+            return Redirect::back()->with('errorMsg', $validator);
+        }
+
+        // UPLOADING KEYSKILLS (IMAGES)
+
+        $rules = array('file' => 'required|mimes:png,jpeg,jpg');
+
+        foreach($keySkills as $ks){
+            $newFileName = md5(uniqid(rand(), true));
+            $validator = Validator::make(array('file'=> $ks), $rules);
+            if($validator->passes()){
+                $filename = $newFileName.'.'.$ks->getClientOriginalExtension();
+                $upload_success = $ks->move($destinationPath, $filename);
+
+                Photo::insert(array(
+                    'user_id'       =>  Auth::user()->id,
+                    'imgname'       =>  $filename,
+                    'path'          =>  '/upload/'.Auth::user()->confirmationCode.'_'.Auth::user()->id.'/'.$filename,
+                    'type'          =>  'KEYSKILLS',
+                    'created_at'    =>  date("Y:m:d H:i:s"),
+                    'updated_at'    =>  date("Y:m:d H:i:s"),
+                ));
+            }else{
+                return Redirect::back()->with('errorMsg', $validator);
+            }
+        }
+
+        AuditTrail::insert(array(
+            'user_id'   =>  Auth::user()->id,
+            'content'   =>  'Uploaded files for full activation at '.date('D, M j, Y \a\t g:ia'),
+            'created_at'    =>  date("Y:m:d H:i:s"),
+            'at_url'        =>  '/viewUserProfile/'.Auth::user()->id
+//                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
+        ));
+
+        return Redirect::back()->with('errorMsg', 'Upload successful. Please while your profile is being reviewed. This might take more or less than (24) hours.');
+    }
     public function taskDetails($id){
         $taskType = Task::where('id', $id)->pluck('hiringType');
 
@@ -418,6 +418,8 @@ class TaskminatorController extends \BaseController {
         return Redirect::back()->with('successMsg', 'Offer has been denied');
     }
 
+    */
+
     public function editPersonalInfo(){
         return View::make('taskminator.editPersonalInfo')
                 ->with('user', Auth::user())
@@ -483,6 +485,7 @@ class TaskminatorController extends \BaseController {
             'experience'        =>  Input::get('experience'),
             'marital_status'    =>  Input::get('marital_status'),
         ));
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Edited personal information');
         return Redirect::back()
                 ->with('successMsg', 'Personal Information has been successfully edited.');
     }
@@ -524,6 +527,7 @@ class TaskminatorController extends \BaseController {
         Contact::where('user_id', Auth::user()->id)->where('ctype', 'twitter')->update(['content' => Input::get('twitter')]);
         Contact::where('user_id', Auth::user()->id)->where('ctype', 'mobileNum')->update(['content' => Input::get('mobileNum')]);
 
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Edited contact information');
         return Redirect::back()->with('successMsg', 'Successfully edited contact information.');
     }
 
@@ -542,7 +546,6 @@ class TaskminatorController extends \BaseController {
 
         $custom_skills = CustomSkill::get();
         $worker_cust_skills = CustomSkill::where('created_by', Auth::user()->id)->get();
-
         return View::make('taskminator.editSkillInfo')
                 ->with('skills', $query)
                 ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
@@ -562,6 +565,7 @@ class TaskminatorController extends \BaseController {
                 'taskcategory_code' =>  Input::get('taskcategory')
             ));
 
+            $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Edited custom skills information');
             return Redirect::back()->with('successMsg', 'Skill successfully added');
         }
     }
@@ -570,6 +574,7 @@ class TaskminatorController extends \BaseController {
         TaskminatorHasSkill::where('user_id', Auth::user()->id)
             ->where('taskitem_code', $taskitemId)->delete();
 
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Removed system skill information');
         return Redirect::back()->with('successMsg', 'Skill successfully deleted');
     }
 
@@ -597,6 +602,7 @@ class TaskminatorController extends \BaseController {
             'password'  =>  Hash::make(Input::get('newPass'))
         ));
 
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Changed password');
         return Redirect::back()->with('successMsg', 'Password successfully changed');
     }
 
@@ -800,6 +806,8 @@ class TaskminatorController extends \BaseController {
             ->where('invited_id', Auth::user()->id)
             ->first();
 
+
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Viewed <a href="/ADMIN_jobDetails='.$jobId.'">job</a> ad');
         return View::make('taskminator.jbdtls')
             ->with('HIRED', $HIRED)
             ->with('job', $job)
@@ -823,6 +831,7 @@ class TaskminatorController extends \BaseController {
 
         // NOTIFICATION
         $this->NOTIFICATION_INSERT($client->id, 'Worker has applied for <b>'.$job->title.'</b>', '/jobDetails='.$job->id);
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Applied for a <a href="/ADMIN_jobDetails='.Input::get('application_jobID').'">job</a>');
 
         return Redirect::back();
     }
@@ -838,6 +847,7 @@ class TaskminatorController extends \BaseController {
         JobApplication::where('job_id', $jobId)
             ->where('applicant_id', Auth::user()->id)
             ->delete();
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Cancelled application for a <a href="/ADMIN_jobDetails='.$jobId.'">job</a>');
         return Redirect::back();
     }
 
@@ -937,13 +947,17 @@ class TaskminatorController extends \BaseController {
                     'skill'             =>  strip_tags($os),
                     'created_at'        =>  date("Y:m:d H:i:s")
                 ]);
+
+                $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Added custom skill - '.strip_tags($os));
             }
         }
         return Redirect::back();
     }
 
     public function RMVCSTMSKLL($custom_skill_id){
+        $skillName = CustomSkill::where('id', $custom_skill_id)->pluck('skill');
         CustomSkill::where('id', $custom_skill_id)->delete();
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Removed custom skill - '.$skillName);
         return Redirect::back();
     }
 
@@ -1074,6 +1088,7 @@ class TaskminatorController extends \BaseController {
                 ]);
 
                 Session::flash('successMsg', 'Document has been uploaded!');
+                $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Uploaded document - '.$doc_label);
                 return Redirect::back();
             }else{
                 Session::flash('errorMsg', 'Document failed to upload. Accepted file types are .PDF, .DOC and .DOCX');
@@ -1083,7 +1098,9 @@ class TaskminatorController extends \BaseController {
     }
 
     public function DELETE_DOC($docID){
+        $docName = Document::where('id', $docID)->pluck('label');
         Document::where('id', $docID)->delete();
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Deleted document - '.$docName);
         return Redirect::back();
     }
 
