@@ -296,6 +296,12 @@ class AdminController extends \BaseController {
         return View::make('admin.categoryAndSkills')->with('taskCategory', TaskCategory::orderBy('categoryCode', 'ASC')->get());
     }
 
+    public function auditTrail($user_id){
+        return View::make('admin.auditTrail')
+                ->with('trails', AuditTrail::where('user_id', $user_id)->paginate(20))
+                ->with('user', User::where('id', $user_id)->first());
+    }
+    /*
     public function auditTrail($role){
         $query = User::join('user_has_role', 'user_has_role.user_id', '=', 'users.id')
                      ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
@@ -330,6 +336,7 @@ class AdminController extends \BaseController {
             ->with('user', User::where('id', $id)->first())
             ->with('trails', AuditTrail::where('user_id', $id)->paginate(10));
     }
+    */
 
     public function taskDetails($taskid){
         $taskQuery = Task::where('id', $taskid)->first();

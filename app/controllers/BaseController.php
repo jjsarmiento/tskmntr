@@ -684,5 +684,14 @@ class BaseController extends Controller {
             return false;
         }
     }
+
+    public function INSERT_AUDIT_TRAIL($user_id, $msg){
+        AuditTrail::insert([
+            'user_id'   => $user_id,
+            'content'   => $msg,
+            'at_url'    => Request::url(),
+            'created_at'=> Carbon::now()
+        ]);
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

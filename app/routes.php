@@ -128,8 +128,8 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     // SKILLS ROUTE
     Route::get('/skills', 'AdminController@skills');
 
-    // CMS ROUTE
-    Route::get('/cms', 'AdminController@cms');
+    // AUDIT TRAIL NEW -- Jan Sarmiento
+    Route::get('/auditTrail={user_id}', 'AdminController@auditTrail');
 
     // THE ROLE BASED ROUTES FOR ADMINISTRATORS GOES HERE
     Route::get('/admin', 'AdminController@index');
@@ -150,8 +150,8 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 
 //    Route::get('/categoryAndSkills', 'AdminController@categoryAndSkills');
     Route::get('/adminDeactivate/{id}', 'AdminController@adminDeactivate');
-    Route::get('/AT_{role}', 'AdminController@auditTrail');
-    Route::get('/userAuditTrail_{id}', 'AdminController@userAuditTrail');
+//    Route::get('/AT_{role}', 'AdminController@auditTrail');
+//    Route::get('/userAuditTrail_{id}', 'AdminController@userAuditTrail');
     Route::get('/admin/taskDetails/{taskid}', 'AdminController@taskDetails');
     Route::get('/viewRatings={tskmntrId}', 'AdminController@viewRatings');
     Route::get('/taskListBidding', 'AdminController@taskListBidding');

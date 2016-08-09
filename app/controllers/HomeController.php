@@ -39,6 +39,9 @@ class HomeController extends BaseController {
     */
 
     public function logout(){
+        if(Auth::check()){
+            $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Logged out');
+        }
         Auth::logout();
         return Redirect::to('/');
     }
@@ -373,13 +376,7 @@ class HomeController extends BaseController {
             )
         ));
 
-        AuditTrail::insert(array(
-            'user_id'   =>  $userId,
-            'content'   =>  'Created a Client Company account at '.date('D, M j, Y \a\t g:ia'),
-            'created_at'    =>  date("Y:m:d H:i:s"),
-            'at_url'        =>  '/viewUserProfile/'.$userId
-//                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
-        ));
+        $this->INSERT_AUDIT_TRAIL($userId, 'Created employer account.');
 
         // send email verification for registration - jan sarmiento
 
@@ -411,6 +408,7 @@ class HomeController extends BaseController {
         }
     }
 
+    /*
     public function doRegisterIndi(){
         Input::merge(array_map('trim', Input::all()));
         $check = SimpleCaptcha::check($_POST['captcha']);
@@ -511,7 +509,7 @@ class HomeController extends BaseController {
         Auth::attempt(array('username' => Input::get('uName'), 'password' => Input::get('primary_pass')));
         return Redirect::to('/')->with('successMsg', 'Registration Success. You may now login.');
     }
-
+    */
 
 //  NEW REGISTRATION REGISTER WORKER 
     public function regWorker()
@@ -579,12 +577,7 @@ class HomeController extends BaseController {
                     )
                 ));
 
-                AuditTrail::insert(array(
-                    'user_id'   =>  $userId,
-                    'content'   =>  'Created a Worker account at '.date('D, M j, Y \a\t g:ia'),
-                    'created_at'    =>  date("Y:m:d H:i:s"),
-                    'at_url'        =>  '/viewUserProfile/'.$userId
-                ));
+                $this->INSERT_AUDIT_TRAIL($userId, 'Created Worker Account.');
 
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- START
                 $data = array(
@@ -609,6 +602,7 @@ class HomeController extends BaseController {
 
     }//end regWorker
 
+    /*
     public function  doRegisterTaskminator(){
         Input::merge(array_map('trim', Input::all()));
         
@@ -695,19 +689,6 @@ class HomeController extends BaseController {
                 'content'       =>  Input::get('email'),
             )
         ));
-/*
-        if(Input::get('skills') !== null){
-            foreach(Input::get('skills') as $skill){
-                $skillCode = TaskCategory::where('categorycode', TaskItem::where('itemcode', $skill)->pluck('item_categorycode'))->pluck('categorycode');
-
-                TaskminatorHasSkill::insert(array(
-                    'user_id'           =>  $userId,
-                    'taskitem_code'     =>  $skill,
-                    'taskcategory_code' =>  $skillCode
-                ));
-            }
-        }
-*/
         AuditTrail::insert(array(
             'user_id'   =>  $userId,
             'content'   =>  'Created a Worker account at '.date('D, M j, Y \a\t g:ia'),
@@ -721,6 +702,7 @@ class HomeController extends BaseController {
         return Redirect::to('/');
 
     }
+    */
 
     public function login(){
         if(Auth::check()){
@@ -761,6 +743,7 @@ class HomeController extends BaseController {
 
     public function index(){
         if(Auth::check()){
+            $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Logged in.');
             switch(Auth::user()->status){
                 case 'DEACTIVATED'      :
                 case 'SELF_DEACTIVATED' :
@@ -906,14 +889,6 @@ class HomeController extends BaseController {
 
     public function doLogin(){
         if(Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')))){
-            date_default_timezone_set("Asia/Manila");
-            AuditTrail::insert(array(
-                'user_id'   =>  Auth::user()->id,
-                'content'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
-                'created_at'    =>  date("Y:m:d H:i:s")
-//                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
-            ));
-
             // profile completeness
             switch(User::GETROLE(Auth::user()->id)){
                 case 'CLIENT_IND' :
