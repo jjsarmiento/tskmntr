@@ -886,7 +886,7 @@ class TaskminatorController extends \BaseController {
                         ->join('users', 'users.id', '=', 'jobs.user_id')
                         ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
                         ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
-                        ->whereNotIn('jobs.id', array_merge($JOB_HIRED))
+//                        ->whereNotIn('jobs.id', array_merge($JOB_INVITES))
                         ->where('job_applications.applicant_id', Auth::user()->id)
                         ->select([
                             'users.id as user_id',
@@ -907,6 +907,7 @@ class TaskminatorController extends \BaseController {
                             'job_applications.id as jobAppID',
                             'job_applications.created_at'
                         ])
+                        ->orderBy('job_applications.created_at', 'desc')
                         ->get();
 
         return View::make('taskminator.WRKR_APPLCTNS')

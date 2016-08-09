@@ -1718,7 +1718,7 @@ class ClientIndiController extends \BaseController {
                     'message'       =>  Input::get('INVITEMULTIJOB_message'),
                     'created_at'    =>  date("Y:m:d H:i:s")
                 ]);
-                $this->INSERT_AUDIT_TRAIL(Auth::user()->id, '<a href="ADMIN_jobDetails='.$j.'">MULTIPLE JOB INVITE</a> sent to <a href="/viewUserProfile/'.Input::get('workerID').'">worker</a>');
+                $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'MULTI-JOB-INVITE <a href="ADMIN_jobDetails='.$j.'">job invite</a> sent to <a href="/viewUserProfile/'.Input::get('workerID').'">worker</a>');
             }
         }
         return Redirect::back();

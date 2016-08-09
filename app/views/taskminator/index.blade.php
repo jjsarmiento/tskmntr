@@ -339,7 +339,7 @@
                 <!-- END OF PROFILE  COMPLETENESS METER -->
                 <div class="col-lg-12 no-padding">
                     <div class="widget-container stats-container" style="display:block !important;">
-                        <div class="col-lg-4 lato-text col-xs-12 id1">
+                        <div class="col-lg-6 lato-text col-xs-12 id1">
                             {{--<a href="/tskmntr_taskBids" style="text-decoration:none;">--}}
                             <a href="/WRKR_APPLCTNS" style="text-decoration:none;">
                                 <div class="number" style="color:#2980b9;">
@@ -351,7 +351,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-4 lato-text col-xs-12 id2">
+                        <div class="col-lg-6 lato-text col-xs-12 id2">
                             {{--<a href="/tskmntr_taskOffers" style="text-decoration:none;">--}}
                             <a href="/WRKR_INVTS" style="text-decoration:none;">
                                 <div class="number" style="color:#2980b9;">
@@ -360,18 +360,6 @@
                                 </div>
                                 <div class="text" style="color:#2980b9;">
                                     Invites
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 lato-text col-xs-12 id2">
-                            {{--<a href="/tskmntr_taskOffers" style="text-decoration:none;">--}}
-                            <a href="/WRKR_HIRED" style="text-decoration:none;">
-                                <div class="number" style="color:#2980b9;">
-                                    <i class="fa fa-briefcase"></i>
-                                    {{ $hired }}
-                                </div>
-                                <div class="text" style="color:#2980b9;">
-                                    Hired
                                 </div>
                             </a>
                         </div>

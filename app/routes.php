@@ -198,7 +198,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){
         Route::get('/WRKR_INVTS', 'TaskminatorController@WRKR_INVTS');
-        Route::get('/WRKR_HIRED', 'TaskminatorController@WRKR_HIRED');
+//        Route::get('/WRKR_HIRED', 'TaskminatorController@WRKR_HIRED');
         Route::get('/WRKR_APPLCTNS', 'TaskminatorController@WRKR_APPLCTNS');
         Route::get('/jbdtls={jobId}', 'TaskminatorController@jbdtls');
 //    Route::get('/APPLYFRJB:{jobId}', 'TaskminatorController@APPLYFRJB');
