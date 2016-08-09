@@ -845,6 +845,7 @@ class HomeController extends BaseController {
                 case 'CLIENT_IND' :
                 case 'CLIENT_CMP' :
                     BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
+                    BaseController::CHECK_EMPLOYER_POINTS(Auth::user()->id);
 
                     $jobs = Job::where('user_id', Auth::user()->id)
                             ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')

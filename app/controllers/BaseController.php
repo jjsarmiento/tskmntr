@@ -668,5 +668,21 @@ class BaseController extends Controller {
         foreach($ox as $o){ array_push($myArr, $o->worker_id); }
         return $myArr;
     }
+
+    public static function CHECK_EMPLOYER_POINTS($user_id){
+        $points = User::where('id', $user_id)->pluck('points');
+        if($points <= 50){
+            $url = '/TOPUP';
+            $msg = 'You have '.$points.' points left. Click here to reload.';
+            $NOTIF_EXISTS = Notification::where('user_id', $user_id)->where('content', $msg)->where('notif_url', $url)->count();
+            if($NOTIF_EXISTS == 0){
+                $bc = new BaseController();
+                $bc->NOTIFICATION_INSERT($user_id, $msg, $url);
+            }
+            return true;
+        }else{
+            return false;
+        }
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

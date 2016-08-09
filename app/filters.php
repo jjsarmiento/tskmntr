@@ -158,6 +158,8 @@ Route::filter('CLIENT-ONLY', function(){
         BaseController::ROUTE_UPDATE_FEEDBACKS(Auth::user()->id);
         // check if subscription is expired
         BaseController::SUBSCRIPTION_UPDATE(Auth::user()->id);
+        // check if empoyer has less than 50 points
+        BaseController::CHECK_EMPLOYER_POINTS(Auth::user()->id);
     }else{
         return Redirect::to('/');
     }
