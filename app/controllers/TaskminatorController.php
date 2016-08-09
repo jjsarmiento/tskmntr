@@ -753,6 +753,7 @@ class TaskminatorController extends \BaseController {
     }
 
     public function jbdtls($jobId){
+        $HIRED = JobHiredWorker::where('job_id', $jobId)->where('worker_id', Auth::user()->id)->first();
         $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
             ->join('users', 'users.id', '=', 'jobs.user_id')
@@ -800,6 +801,7 @@ class TaskminatorController extends \BaseController {
             ->first();
 
         return View::make('taskminator.jbdtls')
+            ->with('HIRED', $HIRED)
             ->with('job', $job)
             ->with('custom_skills', $custom_skills)
             ->with('application', $application)
