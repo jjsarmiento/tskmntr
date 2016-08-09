@@ -818,17 +818,6 @@ class TaskminatorController extends \BaseController {
 
         $job = Job::where('id', Input::get('application_jobID'))->first();
         $client = User::where('id', $job->user_id)->first();
-        $SYSSETTINGS_FDBACK_INIT = SystemSetting::where('type', 'SYSSETTINGS_FDBACK_INIT')->pluck('value');
-        $start_date = ($SYSSETTINGS_FDBACK_INIT == 0) ? Carbon::now() : Carbon::now()->addDays($SYSSETTINGS_FDBACK_INIT);
-
-        // Create schedule for feedback
-        WorkerFeedbackSchedule::insert([
-            'employer_id'   => $client->id,
-            'worker_id'     => Auth::user()->id,
-            'job_id'        => Input::get('application_jobID'),
-            'start_date'    => $start_date,
-            'created_at'    => Carbon::now()
-        ]);
 
         // NOTIFICATION
         $this->NOTIFICATION_INSERT($client->id, 'Worker has applied for <b>'.$job->title.'</b>', '/jobDetails='.$job->id);

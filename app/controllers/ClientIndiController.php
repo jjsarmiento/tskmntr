@@ -1096,6 +1096,26 @@ class ClientIndiController extends \BaseController {
     }
 
     public function jobDetails($jobId){
+        $HIRED_WORKERS = $this->GET_HIRED_WORKERSID_JOB($jobId);
+        $hiredWorkers = User::join('job_hired_workers', 'job_hired_workers.worker_id', '=', 'users.id')
+                        ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+                        ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+                        ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+                        ->where('job_hired_workers.job_id', $jobId)
+                        ->select([
+                            'job_hired_workers.created_at as hired_at',
+                            'users.username',
+                            'users.fullName',
+                            'users.id as worker_id',
+                            'regions.regname',
+                            'regions.regcode',
+                            'barangays.bgyname',
+                            'barangays.bgycode',
+                            'cities.cityname',
+                            'cities.citycode',
+                        ])
+                        ->get();
+
         $custom_skills = CustomSkill::where('company_job_id', $jobId)->get();
         $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
             ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
@@ -1143,6 +1163,7 @@ class ClientIndiController extends \BaseController {
                 ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
                 ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
                 ->where('job_applications.job_id', $jobId)
+                ->whereNotIn('users.id', $HIRED_WORKERS)
                 ->select([
                     'users.username',
                     'users.fullName',
@@ -1199,6 +1220,7 @@ class ClientIndiController extends \BaseController {
             $invited = JobInvite::where('job_id', $jobId)->whereNotIn('invited_id', $APPLICANTS)->get();
 
             return View::make('client.jobDetails')
+                ->with('hiredWorkers', $hiredWorkers)
                 ->with('job', $job)
                 ->with('workers', $workers)
                 ->with('applications', $applications)
@@ -1940,5 +1962,75 @@ class ClientIndiController extends \BaseController {
             ->with('worker', User::where('id', $review->worker_id)->first())
             ->with('job', $job)
             ->with('fb', $review);
+    }
+
+    public function hireWorker($worker_id, $job_id){
+        $custom_skills = CustomSkill::where('company_job_id', $job_id)->get();
+        $job = Job::join('taskcategory', 'jobs.skill_category_code', '=', 'taskcategory.categorycode')
+            ->join('taskitems', 'jobs.skill_code', '=', 'taskitems.itemcode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('barangays', 'barangays.bgycode', '=', 'jobs.bgycode')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->where('jobs.id', $job_id)
+            ->select([
+                'jobs.id',
+                'jobs.title',
+                'jobs.created_at',
+                'jobs.description',
+                'jobs.requirements',
+                'jobs.salary',
+                'jobs.hiring_type',
+                'jobs.Industry',
+                'jobs.AverageProcessingTime',
+                'jobs.CompanySize',
+                'jobs.WorkingHours',
+                'jobs.DressCode',
+                'jobs.expired',
+                'jobs.expires_at',
+                'regions.regname',
+                'regions.regcode',
+                'barangays.bgyname',
+                'barangays.bgycode',
+                'cities.cityname',
+                'cities.citycode',
+                'taskcategory.categoryname',
+                'taskcategory.categorycode',
+                'taskitems.itemname',
+                'taskitems.itemcode'
+            ])
+            ->first();
+        $worker = User::where('id', $worker_id)->first();
+        $hired = JobHiredWorker::where('job_id', $job_id)->where('worker_id', $worker_id)->first();
+
+        return View::make('client.hireWorker')
+            ->with('hired', $hired)
+            ->with('job', $job)
+            ->with('worker', $worker)
+            ->with('custom_skills', $custom_skills);
+    }
+
+    public function doHireWorker($worker_id, $job_id){
+        $job = Job::where('id', $job_id)->first();
+        JobHiredWorker::insert([
+            'worker_id'     =>  $worker_id,
+            'job_id'        =>  $job_id,
+            'created_at'    =>  Carbon::now()
+        ]);
+
+        // Create schedule for feedback
+        $SYSSETTINGS_FDBACK_INIT = SystemSetting::where('type', 'SYSSETTINGS_FDBACK_INIT')->pluck('value');
+        $start_date = ($SYSSETTINGS_FDBACK_INIT == 0) ? Carbon::now() : Carbon::now()->addDays($SYSSETTINGS_FDBACK_INIT);
+        WorkerFeedbackSchedule::insert([
+            'employer_id'   => Auth::user()->id,
+            'worker_id'     => $worker_id,
+            'job_id'        => $job_id,
+            'start_date'    => $start_date,
+            'created_at'    => Carbon::now()
+        ]);
+
+        // notify worker of hiring
+        $this->NOTIFICATION_INSERT($worker_id, 'You have been hired for <b>'.$job->title.'</b>', '/jobDetails='.$job->id);
+
+        return Redirect::back();
     }
 }

@@ -302,11 +302,14 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
             Route::post('/DOSNDINVT', 'ClientIndiController@DOSNDINVT');
         });
 
+        // HIRE WORKER
+        Route::get('/hireWorker={worker_id}={job_id}', 'ClientIndiController@hireWorker');
+        Route::get('/doHireWorker={worker_id}={job_id}', 'ClientIndiController@doHireWorker');
+
         Route::get('/SNDINVT:{invitedId}:{jobId}', 'ClientIndiController@SNDINVT');
         Route::get('/cancelInvite:{jobID}:{workerID}', 'ClientIndiController@cancelInvite');
         Route::get('/ShowInvited:{jobId}', 'ClientIndiController@ShowInvited');
         Route::get('/JOB_DELETECUSTSKILL={custom_skill_id}', 'ClientIndiController@JOB_DELETECUSTSKILL');
-
 
         // CART
         Route::get('/addToCart={worker_id}', 'ClientIndiController@addToCart');

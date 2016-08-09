@@ -334,10 +334,29 @@
                 </div>
             </div><br/>
 
+            <div id="HIRED_WORKERS" style="margin-bottom: 1em;">
+                @if($hiredWorkers->count() != 0)
+                    <div class="padded text-center">Hired Workers</div>
+                    @foreach($hiredWorkers as $w)
+                        <div class="media block-update-card">
+                            <a class="pull-left" href="/{{$w->username}}" target="_tab">
+                                @if($w->profilePic != "")
+                                    <img class="media-object update-card-MDimentions" src="{{$w->profilePic}}">
+                                @else
+                                    <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                                @endif
+                            </a>
+                            <div class="media-body update-card-body">
+                                <a href="/{{$w->username}}" target="_tab">
+                                    <h4 class="media-heading">{{ $w->fullName }}</h4>
+                                </a>
+                                <p>{{ $w->regname }}, {{ $w->cityname }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
             <div id="APPLICANTS">
-                {{--<div class="widget-container padded applicant-container" style="">--}}
-                    {{--<h4 style="margin: 0;">J** S********</h4>--}}
-                {{--</div>--}}
                 @if($applications->count() != 0)
                     <div class="padded text-center">Applicants</div>
                     @foreach($applications as $a)
@@ -371,6 +390,8 @@
                                 @else
                                     <a href="/addToCart={{$a->id}}" class="btn btn-warning btn-xs btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
                                 @endif
+                            @else
+                                <a href="/hireWorker={{$a->id}}={{$job->id}}" class="btn btn-xs btn-success btn-block">Hire Worker</a>
                             @endif
                         </div>
                     @endforeach

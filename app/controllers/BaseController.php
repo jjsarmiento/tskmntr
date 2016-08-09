@@ -653,5 +653,12 @@ class BaseController extends Controller {
             }
         }
     }
+
+    public function GET_HIRED_WORKERSID_JOB($jobId){
+        $ox = JobHiredWorker::where('job_id', $jobId)->get();
+        $myArr = array();
+        foreach($ox as $o){ array_push($myArr, $o->worker_id); }
+        return $myArr;
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }
