@@ -171,18 +171,13 @@
                                 <i class="glyphicon glyphicon-map-marker" style="font-size:14pt; color:#2980b9"></i>&nbsp Personal Information <button onclick="location.href='/editPersonalInfo'" class="btn btn-xs btn-default pull-right border: 1px solid #2980b9;" style="padding: 2px 10px 2px 10px; text-transform: none; border: 1px solid #2980b9;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
                             </div>   
                             <div class="col-md-12" style="padding-left: 27px;">
-                                <span><b>Name: </b>{{ $user->firstName }} {{ $user->midName }} {{ $user->lastName }}</span><br>
-                                <!-- <span><b>Region: </b>{{ Region::where('regcode', $user->region)->pluck('regname') }}</span><br>
-                                <span><b>Province: </b>{{ Province::where('provcode', $user->province)->pluck('provname') }}</span><br>
-                                <span><b>City: </b>{{ City::where('citycode', $user->city)->pluck('cityname') }}</span><br>
-                                <span><b>Barangay: </b>{{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }}</span> -->
-
-                                <span><b>Birthdate: </b></span><br>
-                                <span><b>Age: </b></span><br>
+                                <span><b>Name: </b>{{ $user->fullName }}</span><br>
+                                <span><b>Birthdate: </b> {{Auth::user()->birthdate}}</span><br>
+                                <span><b>Age: </b> {{ \Carbon\Carbon::now()->diffInYears(\Carbon\Carbon::parse(Auth::user()->birthdate)) }} y/o</span><br>
                                 <span><b>Gender: </b>{{ Auth::user()->gender }}</span><br>
-                                <span><b>Marital Status: </b></span><br>
-                                <span ><b>Address: </b>Blk # Lt # Streetname Subdname{{ Region::where('regcode', $user->region)->pluck('regname') }} {{ Province::where('provcode', $user->province)->pluck('provname') }} {{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }} {{ City::where('citycode', $user->city)->pluck('cityname') }}</span><br>
-                                <span><b>Account Created: </b></span>
+                                <span><b>Marital Status: </b> {{ Auth::user()->marital_status }}</span><br>
+                                <span ><b>Address: </b>{{Auth::user()->address}}{{ Region::where('regcode', $user->region)->pluck('regname') }} {{ Province::where('provcode', $user->province)->pluck('provname') }} {{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }} {{ City::where('citycode', $user->city)->pluck('cityname') }}</span><br>
+                                <span><b>Account Created: </b>{{Auth::user()->created_at}}</span>
                             </div>     
                         </div>
                         <div class="col-sm-6 padded">
@@ -215,7 +210,9 @@
                                 <i class="fa fa-graduation-cap" style="font-size:14pt; color:#2980b9"></i>&nbsp Educational Background <button class="btn btn-xs btn-default pull-right" onclick="#" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
                             </div> 
                             <div style="padding-left:27px;">
-                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</span>
+                                <span>
+                                    {{Auth::user()->educationalBackground}}
+                                </span>
                             </div>      
                         </div>
 
@@ -250,8 +247,12 @@
                         <div class="col-md-6 padded">
                             <div class="heading" style="font-size:14pt; color:#2980b9">
                                <i class="fa fa-lightbulb-o" style="font-size:14pt; color:#2980b9"></i>&nbsp Experience <button class="btn btn-xs btn-default pull-right" onclick="#'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
-                            </div>                                   
-                            N/A
+                            </div>
+                            @if(Auth::user()->experience)
+                                {{Auth::user()->experience}}
+                            @else
+                                N/A
+                            @endif
                         </div>
                     </div>
 
@@ -278,10 +279,13 @@
                                 <button class="btn btn-xs btn-default pull-right" onclick="location.href='/editDocuments'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
                             </div> 
                             <div style="padding-left:27px;">
-                                <span>N/A</span>
-                                @foreach($docs as $d)
-                                    <i class="fa fa-check" style="color: #2ECC71;"></i>&nbsp;<span style="color: rgb(72, 157, 179); font-size: 0.8em;">{{$d->sys_doc_label}}</span><br/>
-                                @endforeach
+                                @if($docs->count() > 0)
+                                    @foreach($docs as $d)
+                                        <i class="fa fa-check-circle" style="color: #2ECC71;"></i>&nbsp;<span style="color: rgb(72, 157, 179);">{{$d->sys_doc_label}}</span><br/>
+                                    @endforeach
+                                @else
+                                    <span>N/A</span>
+                                @endif
                             </div>      
                         </div>
                     </div>                    

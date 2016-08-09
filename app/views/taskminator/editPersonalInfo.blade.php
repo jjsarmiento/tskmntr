@@ -5,6 +5,8 @@
 @stop
 
 @section('head-content')
+{{ HTML::script('frontend/datepicker/bootstrap-datepicker.min.js') }}
+
 <style type="text/css">
     body{background-color:#E9EAED;}
     hr{max-width:100%; max-height:1px;border:none;border-bottom:1px solid #ccc; padding:0;}
@@ -67,7 +69,18 @@
 //                    options.show();
 //                    citydropdown.prop('disabled', false);
 //                });
+                var date_input=$('input[name="date"]'); //our date input has the name "date"
+                var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+                var options={
+//                    format: 'mm/dd/yyyy',
+                    format: 'yyyy-mm-dd',
+                    container: container,
+                    todayHighlight: true,
+                    autoclose: true
+                };
+                date_input.datepicker(options);
             });
+
         </script>
 @stop
 
@@ -134,6 +147,12 @@
                             </div>
                             <div class="col-md-9">
                                 <input type="text"  class="form-control"value="{{ $user->lastName }}" name="lastName" required="required"/><br/>
+                            </div>
+                            <div class="col-md-3">
+                                Birth Date :
+                            </div>
+                            <div class="col-md-9">
+                                <input class="form-control" value="{{$user->birthdate}}" id="date" name="date" placeholder="MM/DD/YYY" type="text"/><br/>
                             </div>
                             <div class="col-md-3">
                                 Street :
