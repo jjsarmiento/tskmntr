@@ -842,53 +842,18 @@ class TaskminatorController extends \BaseController {
     }
 
     public function WRKR_APPLCTNS(){
+        $JOB_APPLICATIONS = $this->GETAPPLICATIONS_ID(Auth::user()->id);
+        $JOB_HIRED = $this->GET_HIRED_JOBSID(Auth::user()->id);
+        $EXCLUDED_JOBS = array_unique(array_merge($JOB_APPLICATIONS, $JOB_HIRED));
         $skillCodeArray = $this->GETTASKCODES(Auth::user()->id);
+
         $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
             ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
             ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
             ->whereIn('jobs.skill_code', $skillCodeArray)
-            ->whereNotIn('jobs.id', $this->GETAPPLICATIONS_ID(Auth::user()->id))
-            ->where('expired', false)
-            ->orderBy('jobs.created_at', 'DESC')
-            ->select([
-                'users.id as user_id',
-                'users.fullName',
-                'users.profilePic',
-                'jobs.title',
-                'jobs.id as job_id',
-                'jobs.expires_at',
-                'jobs.expired',
-                'jobs.salary',
-                'jobs.created_at',
-                'jobs.description',
-                'jobs.hiring_type',
-                'cities.cityname',
-                'regions.regname',
-            ])
-            ->paginate(10);
-
-//        $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
-//            ->leftJoin('job_applications', 'jobs.id', '=', 'job_applications.job_id')
-//            ->whereIn('jobs.skill_code', $skillCodeArray)
-////            ->whereNotIn('job_applications.applicant_id', [Auth::user()->id])
-//            ->orderBy('jobs.created_at', 'DESC')
-//            ->select([
-//                'users.id as user_id',
-//                'users.fullName',
-//                'users.profilePic',
-//                'jobs.title',
-//                'jobs.id as job_id',
-//                'jobs.created_at',
-//                'jobs.description',
-//                'job_applications.applicant_id'
-//            ])
-//            ->paginate(10);
-
-        $applications = Job::join('users', 'users.id', '=', 'jobs.user_id')
-            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
-            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
-            ->whereIn('jobs.skill_code', $skillCodeArray)
-            ->whereNotIn('jobs.id', $this->GETAPPLICATIONS_ID(Auth::user()->id))
+            ->whereNotIn('jobs.id', $EXCLUDED_JOBS)
+//            ->whereNotIn('jobs.id', $this->GETAPPLICATIONS_ID(Auth::user()->id))
+//            ->whereNotIn('jobs.id', $this->GET_HIRED_JOBSID(Auth::user()->id))
             ->where('expired', false)
             ->orderBy('jobs.created_at', 'DESC')
             ->select([
@@ -912,6 +877,7 @@ class TaskminatorController extends \BaseController {
                         ->join('users', 'users.id', '=', 'jobs.user_id')
                         ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
                         ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+                        ->whereNotIn('jobs.id', $EXCLUDED_JOBS)
                         ->where('job_applications.applicant_id', Auth::user()->id)
                         ->select([
                             'users.id as user_id',
@@ -1119,5 +1085,25 @@ class TaskminatorController extends \BaseController {
     public function DELETE_DOC($docID){
         Document::where('id', $docID)->delete();
         return Redirect::back();
+    }
+
+    public function WRKR_HIRED(){
+        $jobs = Job::join('job_hired_workers', 'jobs.id', '=', 'job_hired_workers.job_id')
+                ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+                ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+                ->where('job_hired_workers.worker_id', Auth::user()->id)
+                ->select([
+                    'jobs.id',
+                    'jobs.title',
+                    'jobs.salary',
+                    'jobs.expires_at',
+                    'jobs.hiring_type',
+                    'cities.cityname',
+                    'regions.regname'
+                ])
+                ->paginate(10);
+
+        return View::make('taskminator.WRKR_HIRED')
+                ->with('jobs', $jobs);
     }
 }

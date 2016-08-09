@@ -249,7 +249,7 @@
             <div class="widget-container fluid-height padded" style="display: flex; min-height:125px; display:block !important;">
                 <h3 style="margin: 0;"><a href="/{{$worker->username}}">{{$worker->fullName}}</a></h3>
                 <br/>
-                @if($hired->count())
+                @if($hired)
                     Hired at {{$hired->created_at}}
                 @else
                     <a href="/doHireWorker={{$worker->id}}={{$job->id}}" class="btn btn-success btn-block">Hire Worker</a>

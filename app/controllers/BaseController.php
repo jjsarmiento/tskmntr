@@ -654,6 +654,14 @@ class BaseController extends Controller {
         }
     }
 
+    public function GET_HIRED_JOBSID($worker_id){
+        $ox = JobHiredWorker::where('worker_id', $worker_id)->get();
+        $myArr = array();
+        foreach($ox as $o){ array_push($myArr, $o->job_id); }
+        return $myArr;
+
+    }
+
     public function GET_HIRED_WORKERSID_JOB($jobId){
         $ox = JobHiredWorker::where('job_id', $jobId)->get();
         $myArr = array();

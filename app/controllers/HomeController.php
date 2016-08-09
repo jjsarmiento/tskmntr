@@ -827,10 +827,12 @@ class HomeController extends BaseController {
                         ->orderBy('documents.created_at')
                         ->paginate(10);
 
-                    $applicationCount = JobApplication::where('applicant_id', Auth::user()->id)->count();
+                    $applicationCount = JobApplication::where('applicant_id', Auth::user()->id)->whereNotIn('job_id', $this->GET_HIRED_JOBSID(Auth::user()->id))->count();
                     $invitesCount = JobInvite::where('invited_id', Auth::user()->id)->count();
+                    $hired = JobHiredWorker::where('worker_id', Auth::user()->id)->count();
                     // NEW JOB MODULE -- END by JAN SARMIENTO
                     return View::make('taskminator.index')
+                            ->with('hired', $hired)
                             ->with('accountRole', $role)
                             ->with('tasks', $taskList)
                             ->with('jobs', $jobs)

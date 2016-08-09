@@ -2029,7 +2029,7 @@ class ClientIndiController extends \BaseController {
         ]);
 
         // notify worker of hiring
-        $this->NOTIFICATION_INSERT($worker_id, 'You have been hired for <b>'.$job->title.'</b>', '/jobDetails='.$job->id);
+        $this->NOTIFICATION_INSERT($worker_id, 'You have been hired for <b>'.$job->title.'</b>', '/jbdtls='.$job->id);
 
         return Redirect::back();
     }
