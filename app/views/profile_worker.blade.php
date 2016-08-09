@@ -82,7 +82,7 @@
                     <br/>
                     <div class="col-md-12">
                         <div class="col-md-6 padded">
-                            <a class="btn btn-warning" href="#"><i class="fa fa-envelope-o" style="color: #2ECC71;"></i> Invite to apply</a>
+                            <a data-toggle="modal" data-target="#INVITEMULTIJOB" class="btn btn-warning" href="#"><i class="fa fa-envelope-o" style="color: #2ECC71;"></i> Invite to apply</a>
                         </div>
 
                         <div class="col-md-6 padded">
