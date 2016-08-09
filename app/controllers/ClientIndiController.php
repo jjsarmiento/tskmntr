@@ -1803,7 +1803,7 @@ class ClientIndiController extends \BaseController {
     }
 
     public function REPOST_JOB($jobID){
-        if($this->POINT_CHECK(Auth::user()->points, 'CREATE_JOB')){
+        if($this->POINT_CHECK(Auth::user()->points, 'CREATE_JOB') && Job::where('id', $jobID)->pluck('expired')){
             Job::where('id', $jobID)->update([
                 'expired'       =>  false,
                 'expires_at'    =>  Carbon::now()->addWeek()
