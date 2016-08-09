@@ -1070,7 +1070,7 @@ class ClientIndiController extends \BaseController {
                     'points'    =>  (Auth::user()->points - SystemSetting::where('type', 'SYSSETTINGS_POINTSPERAD')->pluck('value'))
                 ]);
 
-            $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Created a <a href="ADMIN_jobDetails='.$jobId.'">job ad</a>');
+            $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Created a <a href="ADMIN_jobDetails='.$jobId.'">job ad - '.Input::get('title').'</a>');
             return Redirect::to('/jobDetails='.$jobId);
         }else{
             Session::flash('errorMsg', 'Not enough points to create a job ad');
@@ -2036,7 +2036,7 @@ class ClientIndiController extends \BaseController {
         $worker = User::where('id', $worker_id)->first();
         // notify worker of hiring
         $this->NOTIFICATION_INSERT($worker_id, 'You have been hired for <b>'.$job->title.'</b>', '/jbdtls='.$job->id);
-        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Hired <a href="/viewUserProfile/'.$worker->id.'">'.$worker->fullName.' for job ad - <a href="ADMIN_jobDetails='.$job->id.'">'.$job->title.'</a>');
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Hired <a href="/viewUserProfile/'.$worker->id.'">'.$worker->fullName.'</a> for job ad - <a href="ADMIN_jobDetails='.$job->id.'">'.$job->title.'</a>');
         return Redirect::back();
     }
 }

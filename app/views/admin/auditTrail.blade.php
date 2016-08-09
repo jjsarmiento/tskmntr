@@ -236,7 +236,7 @@
                         <div style="background-color: #ffffff;">
                             <h3 style="text-align: center;">Audit Trail for {{$user->fullName}}</h3>
                             @if($trails->count() > 0)
-                                <table class="table table-striped table-hover">
+                                <table class="table table-striped table-hover table-condensed">
                                     <thead>
                                         <th>Action</th>
                                         <th>Date of Action</th>
