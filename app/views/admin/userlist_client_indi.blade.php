@@ -365,6 +365,40 @@
                         <font style="color: red">No data available.</font>
                     </div>
                 @else
+                    <table style="background-color: white;" class="table table-hover table-striped">
+                        <thead>
+                            <th>Name @Username</th>
+                            <th>Date of Registration</th>
+                            <th>Account Status</th>
+                            <th>Action</th>
+                            <th>Audit Trail</th>
+                        </thead>
+                        <tbody>
+                            @foreach($users as $user)
+                                <tr>
+                                    <td>
+                                        <a href="/viewUserProfile/{{$user->id}}" style="font-weight: bolder;">
+                                            {{ $user->fullName }} {{'@'.$user->username}}
+                                        </a>
+                                    </td>
+                                    <td>{{ date('D, M j, Y \a\t g:ia', strtotime($user->created_at)) }}</td>
+                                    <td><b>{{$user->status}}</b></td>
+                                    <td>
+                                        @if($user->status == 'ACTIVATED')
+                                            <a style="border-radius: 0.3em;" data-msg="Confirm account DEACTIVATION of {{$user->fullName}}" class="btn-block ACT_DEAC btn btn-danger btn-xs" data-href="/adminDeactivate/{{$user->id}}">DEACTIVATE</a>
+                                        @elseif($user->Status == 'DEACTIVATED')
+                                            <a style="border-radius: 0.3em;" data-msg="Confirm account ACTIVATION of {{$user->fullName}}" class="btn-block ACT_DEAC btn btn-success btn-xs" data-href="/adminActivate/{{$user->id}}">ACTIVATE</a>
+                                        @else
+                                            <a style="border-radius: 0.3em;" class="btn btn-warning btn-xs btn-block">{{$user->status}}</a>
+                                        @endif
+                                    </td>
+                                    <td style="text-align: center;"><a style="font-size:1.3em" href="/auditTrail={{$user->id}}"><i class="fa fa-eye"></i></a></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <center>{{ $users->links() }}</center>
+                    <!--
                     @foreach($users as $user)
                         <div class="media block-update-card" style="">
                             <a class="pull-left" href="/viewUserProfile/{{$user->id}}">
@@ -391,8 +425,8 @@
                             </div>
                         </div>
                     @endforeach
+                    -->
                 @endif
-                <center>{{ $users->links() }}</center>
             </div>
         </div>
     </div>

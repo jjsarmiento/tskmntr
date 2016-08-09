@@ -309,6 +309,37 @@
                                 <font style="color: red">No data available.</font>
                             </div>
                         @else
+                            <table style="background-color: white;" class="table table-hover table-striped">
+                                <thead>
+                                    <th>Name @Username</th>
+                                    <th>Date of Registration</th>
+                                    <th>Account Status</th>
+                                    <th>Action</th>
+                                    <th>Audit Trail</th>
+                                </thead>
+                                <tbody>
+                                    @foreach($users as $user)
+                                        <tr>
+                                            <td>
+                                                <a href="viewUserProfile/{{$user->id}}" style="font-weight: bolder;">
+                                                    {{ $user->fullName }} {{'@'.$user->username}}
+                                                </a>
+                                            </td>
+                                            <td>{{ date('D, M j, Y \a\t g:ia', strtotime($user->created_at)) }}</td>
+                                            <td><b>{{$user->status}}</b></td>
+                                            <td>
+                                                @if($user->status == 'ACTIVATED')
+                                                    <a style="border-radius: 0.3em;" data-msg="Confirm account DEACTIVATION of {{$user->fullName}}" class="ACT_DEAC btn-block btn btn-danger btn-xs" data-href="/adminDeactivate/{{$user->id}}">DEACTIVATE</a>
+                                                @else
+                                                    <a style="border-radius: 0.3em;" data-msg="Confirm account ACTIVATION of {{$user->fullName}}" class="ACT_DEAC btn-block btn btn-success btn-xs" data-href="/adminActivate/{{$user->id}}">ACTIVATE</a>
+                                                @endif
+                                            </td>
+                                            <td style="text-align: center;"><a style="font-size:1.3em" href="/auditTrail={{$user->id}}"><i class="fa fa-eye"></i></a></td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <!--
                             @foreach($users as $user)
                                 <div class="media block-update-card" style="">
                                     <a class="pull-left" href="/viewUserProfile/{{$user->id}}">
@@ -325,6 +356,7 @@
                                         <p>
                                             {{--<i class="fa fa-map-marker"></i> {{ $user->regname }}, {{ $user->cityname }}<br/>--}}
                                             Registered at {{ date('D, M j, Y \a\t g:ia', strtotime($user->created_at)) }}<br/>
+                                            <a href="/auditTrail={{$user->id}}" class="btn btn-success btn-xs" style="border-radius: 0.3em; background-color: #9B59B6;">View Audit Trail</a>
                                             @if($user->status == 'ACTIVATED')
                                                 <a style="border-radius: 0.3em;" data-msg="Confirm account DEACTIVATION of {{$user->fullName}}" class="ACT_DEAC btn btn-danger btn-xs" data-href="/adminDeactivate/{{$user->id}}">DEACTIVATE</a>
                                             @else
@@ -334,8 +366,9 @@
                                     </div>
                                 </div>
                             @endforeach
+                            -->
+                            <center>{{ $users->links() }}</center>
                         @endif
-                        <center>{{ $users->links() }}</center>
                     </div>
                 </div>
             </div>
