@@ -307,8 +307,8 @@
                         <div id="notificationContainer" class="messages" style="min-height: 1em !important;">
                             <div id="notificationTitle">Notifications</div>
                             <div id="notificationsBody" style="min-height: 1em !important;" class="notifications">
-                                <ul class="dropdown-msg">
                                 @if(User::getNotif()->count() > 0)
+                                <ul class="dropdown-msg">
                                     @foreach(User::getNotif() as $notif)
                                       <li onclick="location.href='n_{{$notif->id}}:{{$notif->notif_url}}'">
                                           <a href="n_{{$notif->id}}:{{$notif->notif_url}}">
@@ -316,10 +316,11 @@
                                           </a>
                                       </li>
                                     @endforeach
-                                @else
-                                    <center><i>You have no notifications yet</i></center>
-                                @endif
                                 </ul>
+                                @else
+                                    <center><i style="font-size: 0.8em;">You have no notifications yet</i></center>
+                                    <br/>
+                                @endif
                             </div>
                             <div id="notificationFooter"><a href="/showAllNotif" onclick="location.href='/showAllNotif'">See All</a></div>
                         </div>
