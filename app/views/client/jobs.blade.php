@@ -17,16 +17,20 @@
 <section>
     <div class="container lato-text">
         <div class="col-md-4">
-            <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
+            <div class="widget-container padded fluid-height" style="">
+                <a style="border-radius: 0.3em;" href="#" data-href="/createJob" id="CREATE_JOB" class="btn btn-success btn-block btn-lg">Create Job</a>
+                <br/>
                 <div class="row" style="font-size: 1.2em; font-weight: bolder; text-align: center;">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <i class="fa fa-diamond" style="color: #2980B9;"></i>&nbsp;
                         {{ Auth::user()->points }}
                     </div>
+                    <!--
                     <div class="col-md-6">
                         <i class="fa fa-user" style="color: #2980B9;"></i>&nbsp;
                         {{ Auth::user()->accountType }}
                     </div>
+                    -->
                 </div>
             </div>
         </div>
@@ -61,7 +65,9 @@
                                         </div>
                                         <div class="col-md-8">
                                             <span class="text-right" style="padding:0;margin:0;"><i class="fa fa-map-marker"></i> {{$job->regname}}, {{$job->cityname}}</span><br/>
-                                            <span class="text-right" style="padding:0;margin:0;"><b>P</b>{{$job->salary}}</span>
+                                            @if($job->salary)
+                                                <span class="text-right" style="padding:0;margin:0;"><b>P</b>{{$job->salary}}</span>
+                                            @endif
                                         </div>
                                     </div>
                                 </a>

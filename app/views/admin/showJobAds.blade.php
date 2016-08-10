@@ -104,6 +104,7 @@
                             {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/jobAds=HIRING" class="sidemenu">Mass Hiring</a><br>--}}
                             {{--<i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/jobAds=REFERRAL" class="sidemenu">Referral</a><br>--}}
                         </div>
+                        <!--
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <a class="accordion-toggle">
@@ -113,12 +114,11 @@
                         <div class="panel-body">
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_workers" class="sidemenu">Workers</a><br>
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_companies" class="sidemenu">Company</a><br>
-                            <!--
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_taskminator" class="sidemenu">Workers</a><br>
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientindi" class="sidemenu">Client (Individual)</a><br>
                             <i class="glyphicon glyphicon-chevron-right"></i> &nbsp; <a href="/AT_clientcomp" class="sidemenu">Client (Company)</a>
-                            -->
                         </div>
+                        -->
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <a class="accordion-toggle">
@@ -134,8 +134,48 @@
             </div>
             <div class="col-md-9">
                 @if($jobs->count() != 0)
+                    <table class="table table-striped table-hover" style="background-color: white;">
+                        <thead>
+                            <th>Title</th>
+                            <th>Owner</th>
+                            <th>Location</th>
+                            <th>Work Duration</th>
+                            <th>Salary</th>
+                            <th>Expiration</th>
+                        </thead>
+                        <tbody>
+                            @foreach($jobs as $job)
+                                <tr>
+                                    <td><a href="/ADMIN_jobDetails={{$job->job_id}}">{{ $job->title}}</a>
+                                    <td><a href="/viewUserProfile/{{$job->user_id}}">{{$job->fullName}}</a></td>
+                                    <td>{{$job->regname}}, {{$job->cityname}}</td>
+                                    <td>
+                                        @if($job->hiring_type == 'LT6MOS')
+                                            Less than 6 months
+                                        @else
+                                            Greater than 6 months
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($job->salary)
+                                            {{$job->salary}}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($job->expired)
+                                            <span class="badge" style="background-color: #E74C3C">EXPIRED</span>
+                                        @else
+                                            Expires at {{ date('m/d/y', strtotime($job->expires_at)) }}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <!--
                     @foreach($jobs as $job)
-
                         <div class="widget-container fluid-height padded" data-wow-duration=".3s" data-wow-offset="0" data-wow-delay="0" style=" word-wrap: break-word; padding-left:1em; padding-right:10px; min-height: 1em; max-height: 10">
                             <div style="display:flex;padding-bottom:5px;">
                                 <div style="flex:11;">
@@ -176,29 +216,12 @@
                             </div>
                         </div>
                         <br>
-                        {{--<div class="widget-container fluid-height padded" style="word-wrap: break-word; padding-left:10px; padding-right:10px; min-height: 50px;">--}}
-                            {{--<div style="display:flex;padding-bottom:5px; border-bottom:1px solid #e6e6e6">--}}
-                                {{--<div style="flex:11;">--}}
-                                {{--<a href="/ADMIN_jobDetails={{$job->JOBID}}" style="text-decoration:none;">--}}
-                                    {{--<h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">--}}
-                                        {{--{{ $job->title}}--}}
-                                    {{--</h3>--}}
-                                    {{--<span class="text-right" style="padding:0;margin:0; color:#ccc;">--}}
-                                        {{--Created at {{ date('m/d/y', strtotime($job->created_at)) }} by <a href="/{{$job->username}}">{{$job->fullName}}</a>--}}
-                                    {{--</span>--}}
-                                    {{--</a>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<p class="lato-text no-padding" style="font-size: 1em">--}}
-                                {{--{{ $job->description }}--}}
-                            {{--</p>--}}
-                        {{--</div>--}}
-                        {{--<br>--}}
                     @endforeach
+                    -->
+                {{$jobs->links()}}
                 @else
                     <center><i>No job ads available</i></center>
                 @endif
-                {{$jobs->links()}}
             </div>
         </div>
     </div>

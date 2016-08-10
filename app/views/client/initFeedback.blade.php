@@ -373,7 +373,7 @@
                             </a>
                         </h3>
                         <br/>
-                        <div class="col-md-12">
+                        <div class="col-md-12" style="text-align: center;">
                             <div class="row lead">
                                 <div id="stars" class="starrr"></div>
                                 <span style="display:none;">You gave a rating of <span id="count">0</span> star(s)</span>
@@ -381,7 +381,23 @@
                         </div>
                         <br/>
                         <div class="form-group">
-                            <textarea name="review" class="form-control" rows="10" placeholder="Put in a review"></textarea>
+                            <label>Did you hire this worker?</label>
+                            <br/>
+                            <label class="radio-inline">
+                                <input value="true" type="radio" name="hired" required="required">Yes
+                            </label>
+                            <label class="radio-inline">
+                                <input value="false" type="radio" name="hired" required="required">No
+                            </label>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <label>Rate the worker's performance during the hiring process. (Did the worker reply immediately? Did the worker show up on the interview on time?)</label>
+                            <textarea name="review" class="form-control" rows="6" placeholder="Put in a review for worker"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Any suggestion/recommendation that you want to give for us to improve the system and our services?</label>
+                            <textarea name="suggestion" class="form-control" rows="6" placeholder=""></textarea>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary" type="submit">Send Feedback</button>

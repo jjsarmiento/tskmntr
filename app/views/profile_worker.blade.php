@@ -80,29 +80,30 @@
                         </div>
                     </div>
                     <br/>
-                    <div class="col-md-12">
-                        <div class="col-md-6 padded">
-                            <a class="btn btn-warning" href="#"><i class="fa fa-envelope-o" style="color: #2ECC71;"></i> Invite to apply</a>
-                        </div>
+                    @if($roles == 'TASKMINATOR' && $CLIENTFLAG)
+                        <div class="col-md-12">
+                            <div class="col-md-6 padded">
+                                <a data-toggle="modal" data-target="#INVITEMULTIJOB" class="btn btn-warning" href="#"><i class="fa fa-envelope-o" style="color: #2ECC71;"></i> Invite to apply</a>
+                            </div>
 
-                        <div class="col-md-6 padded">
-                            @if($roles == 'TASKMINATOR')
-                                @if($CLIENTFLAG)
-                                    @if(User::IS_BOOKMARKED(Auth::user()->id, $users->id))
-                                        <a class="btn btn-warning" href="/REMOVE_BOOKMARK:{{BookmarkUser::where('worker_id', $users->id)->where('company_id', Auth::user()->id)->pluck('id')}}"><i class="BOOKMARK_USER fa fa-bookmark" style="color: #2ECC71;"></i> Worker is  bookmarked</a>
-                                    @else
-                                        <a class="btn btn-warning" href="/ADD_BOOKMARK:{{$users->id}}"><i class="BOOKMARK_USER fa fa-bookmark-o" style="color: #2ECC71;"></i> Bookmark this worker</a>
-                                    @endif
+                            <div class="col-md-6 padded">
+                                @if($roles == 'TASKMINATOR')
+                                    @if($CLIENTFLAG)
+                                        @if(User::IS_BOOKMARKED(Auth::user()->id, $users->id))
+                                            <a class="btn btn-warning" href="/REMOVE_BOOKMARK:{{BookmarkUser::where('worker_id', $users->id)->where('company_id', Auth::user()->id)->pluck('id')}}"><i class="BOOKMARK_USER fa fa-bookmark" style="color: #2ECC71;"></i> Worker is  bookmarked</a>
+                                        @else
+                                            <a class="btn btn-warning" href="/ADD_BOOKMARK:{{$users->id}}"><i class="BOOKMARK_USER fa fa-bookmark-o" style="color: #2ECC71;"></i> Bookmark this worker</a>
+                                        @endif
 
-                                    @if(BaseController::IS_PURCHASED(Auth::user()->id, $users->id))
-                                        &nbsp;&nbsp;&nbsp;
-                                        <a href="#" data-toggle="modal" data-target="#INVITEMULTIJOB"><i class="fa fa-envelope" style="color: #F1C40F; font-size: 2em;"></i></a>
+                                        @if(BaseController::IS_PURCHASED(Auth::user()->id, $users->id))
+                                            &nbsp;&nbsp;&nbsp;
+                                            <a href="#" data-toggle="modal" data-target="#INVITEMULTIJOB"><i class="fa fa-envelope" style="color: #F1C40F; font-size: 2em;"></i></a>
+                                        @endif
                                     @endif
                                 @endif
-                            @endif
+                            </div>
                         </div>
-
-                    </div>
+                    @endif
 
                     <!-- <div class="text-center div_header">
                     <a href="#next" class="page-scroll">
@@ -127,28 +128,43 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Information</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                <span><b>Address: </b>Lorem ipsum sit dolor amet, consectetur nam perosa</span><br>
-                                <span><b>Gender: </b>Female</span><br>
+                                <span><b>Address: </b>{{$users->address}}</span><br>
+                                <span><b>Gender: </b>{{{$users->gender}}}</span><br>
                                 <span><b>Birthdate: </b>01/01/01 (55 years old)</span><br>
-                                <span><b>Martial Status: </b>Widowed</span><br>
+                                @if($users->marital_status)
+                                    <span><b>Martial Status: </b>{{$users->marital_status}}</span><br>
+                                @endif
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <!-- CONTACT INFO -->
                         <div class="lato-text">
                             <i class="fa fa-3x fa-phone text-primary">
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Contact Info</span></i>
                             <hr class="hrLine">
-                            <div class="ConInfo">
-                                <span><b>Mobile #: </b>09123456789</span><br>
-                                <span><b>Email: </b><a href="mailto:fakeemail@gmail.com">fakeemail@gmail.com</a></span><br>
-                                <span><b>FB: </b><a href="facebook.com" target="_Blank">Facebook.com</a></span><br>
-                                <span><b>Twitter: </b><a href="twitter.com" target="_Blank">Twitter.com</a></span><br>
-                                <span><b>Linkedin: </b><a href="linkedin.com" target="_Blank">Linkedin.com</a></span> 
-                            </div>
+                            @if($CLIENTFLAG && $roles == 'TASKMINATOR')
+                                @if($PURCHASED > 0)
+                                    <!-- CONTACT INFO -->
+                                    <div class="ConInfo">
+                                        <span><b>Mobile #: </b>{{$mobile}}</span><br>
+                                        <span><b>Email: </b><a href="mailto:fakeemail@gmail.com">fakeemail@gmail.com</a></span><br>
+                                        <span><b>FB: </b><a href="facebook.com" target="_Blank">Facebook.com</a></span><br>
+                                        <span><b>Twitter: </b><a href="twitter.com" target="_Blank">Twitter.com</a></span><br>
+                                        <span><b>Linkedin: </b><a href="linkedin.com" target="_Blank">Linkedin.com</a></span>
+                                    </div>
+                                @endif
+                            @else
+                                <!-- CONTACT INFO -->
+                                <div class="ConInfo">
+                                    <span><b>Mobile #: </b>{{$mobile}}</span><br>
+                                    <span><b>Email: </b><a href="mailto:fakeemail@gmail.com">fakeemail@gmail.com</a></span><br>
+                                    <span><b>FB: </b><a href="facebook.com" target="_Blank">Facebook.com</a></span><br>
+                                    <span><b>Twitter: </b><a href="twitter.com" target="_Blank">Twitter.com</a></span><br>
+                                    <span><b>Linkedin: </b><a href="linkedin.com" target="_Blank">Linkedin.com</a></span>
+                                </div>
+                            @endif
                         </div>
-                     </div>
+                    </div>
                 </div>
                 <!--=========================-->
                 <div class="col-md-12" style="padding-bottom: 20px;">
@@ -159,12 +175,12 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Skill & Competencies</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                <span class="skills">Mason</span>
-                                <span class="skills">Mason</span>
-                                <span class="skills">Mason</span>
-                                <span class="skills">Mason</span>
-                                <span class="skills">Mason</span>
-                                <span class="skills">Mason</span>
+                                @foreach(User::getSkills($users->id) as $skill)
+                                    <span class="skills">{{ $skill->itemname }}</span>
+                                @endforeach
+                                @foreach(User::GET_CUSTOM_SKILLS($users->id) as $skill)
+                                    <span class="skills">{{ $skill->skill }}</span>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -175,9 +191,7 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Educational Background</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                <span><b>College :</b>N/A</span><br>
-                                <span><b>Highschool :</b>N/A</span><br>
-                                <span><b>Elementary :</b>N/A</span>
+                                {{$users->educationalBackground}}
                             </div>
                         </div>
                     </div>
@@ -191,7 +205,7 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Relevant Experiences</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</span>
+                                <span>{{$users->experience}}</span>
                             </div>
                         </div>
                     </div>
@@ -202,11 +216,9 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Supporting Documents</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                <span><b>NBI</b></span>,
-                                <span><b>PASSPORT</b></span>,
-                                <span><b>SSS</b></span>,
-                                <span><b>GSIS</b></span>,
-                                <span><b>Driver's License</b></span>
+                                @foreach($DOCS as $d)
+                                    <span><i class="fa fa-check-circle" style="color: #1ABC9C; font-size: 1.3em;"></i> {{$d}}</span>&nbsp;&nbsp;
+                                @endforeach
                             </div>
                         </div>
                     </div>

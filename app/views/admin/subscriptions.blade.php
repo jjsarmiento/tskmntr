@@ -66,11 +66,11 @@
                                 <input required="required" type="text" value="{{$sub->subscription_price}}" name="subscription_price" class="form-control" />
                             </div>
                             <div class="form-group">
-                                <label>Worker Bookmark Limit</label>
+                                <label>Worker Bookmark Limit per week</label>
                                 <input required="required" type="text" value="{{$sub->worker_bookmark_limit}}" name="worker_bookmark_limit" class="form-control" />
                             </div>
                             <div class="form-group">
-                                <label>Invitation Limit</label>
+                                <label>Invitation Limit per week</label>
                                 <input required="required" type="text" value="{{$sub->invite_limit}}" name="invite_limit" class="form-control" />
                             </div>
                         </div>

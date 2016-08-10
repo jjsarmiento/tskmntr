@@ -215,7 +215,7 @@
                         <hr/>
                         <div class="text-left">
                         @foreach($jobs as $job)
-                            <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".3s" data-wow-offset="0" data-wow-delay="0" style="border-radius: 0.3em; word-wrap: break-word; padding-left:1em; padding-right:10px; min-height: 1em; max-height: 10">
+                            <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".3s" data-wow-offset="0" data-wow-delay="0" style="margin-bottom: 0.8em; border-radius: 0.3em; word-wrap: break-word; padding-left:1em; padding-right:10px; min-height: 1em; max-height: 10">
                                 <div style="display:flex;padding-bottom:5px;">
                                     <div style="flex:11;">
                                         <a href="/login" style="text-decoration:none;">
@@ -223,8 +223,8 @@
                                                 {{ $job->title}}
                                             </h3>
 
-                                            <div class="row" style="color:#95A5A6;">
-                                                <div class="col-md-4">
+                                            <div class="row" style="color:#95A5A6; font-size: 0.8em;">
+                                                <div class="col-md-5">
                                                     <span style="padding:0;margin:0;">
                                                         <i class="fa fa-briefcase"></i>
                                                         @if($job->hiring_type == 'LT6MOS')
@@ -241,7 +241,8 @@
                                                         @endif
                                                     </span>
                                                 </div>
-                                                <div class="col-md-8">
+
+                                                <div class="col-md-7">
                                                     <span class="text-right" style="padding:0;margin:0;"><i class="fa fa-map-marker"></i> {{$job->regname}}, {{$job->cityname}}</span><br/>
                                                     <span class="badge" style="background-color:#2ECC71;">Login to view salary</span>
                                                 </div>
@@ -250,7 +251,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <br>
                         @endforeach
                         <!--
                         <?php $counter = 0; ?>

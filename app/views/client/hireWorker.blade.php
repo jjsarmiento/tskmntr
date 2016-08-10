@@ -147,8 +147,15 @@
 <section>
     <div class="container lato-text">
         <div class="col-md-7">
+
             <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
-                <h3 style="margin: 0;">{{$job->title}}</h3>
+                <a href="#" data-href="/deleteJob={{$job->id}}" id="DELETE_AD" type="button" class="close" style="opacity: 0.5;">
+                    <i class="fa fa-trash"></i>
+                </a>
+                <a href="/editJob={{$job->id}}" type="button" class="close" style="opacity: 0.5;  margin-right: 0.4em;">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <h3 style="margin: 0;"><a href="/jobDetails={{$job->id}}">{{$job->title}}</a></h3>
                 <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>
                 <br/>
                 <br/>
@@ -181,6 +188,15 @@
                             @foreach($custom_skills as $cs)
                                 {{$cs->skill}} <br/>
                             @endforeach
+                            {{--<span style="background-color: #1ABC9C;" title="{{$job->categoryname}}" class="badge">--}}
+                                {{--{{ $job->categoryname }}--}}
+                            {{--</span>--}}
+                            {{--<span style="background-color: #3498DB;" title="{{ $job->itemname }}" class="badge">--}}
+                                {{--{{ $job->itemname }}--}}
+                            {{--</span>--}}
+                            {{--@foreach($custom_skills as $cs)--}}
+                                {{--<span style="background-color: #3498DB;" title="{{$cs->skill}}" class="badge">{{$cs->skill}}</span>--}}
+                            {{--@endforeach--}}
                         </div>
                         <br/><br/><br/>
                     </div>
@@ -230,52 +246,15 @@
             </div>
         </div>
         <div class="col-md-5">
-            @if($invitation)
-                <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
-                    <h3 style="margin: 0;">
-                        @if($isCheckedOut)
-                            {{$worker->fullName}}
-                        @else
-                            {{substr_replace($worker->firstName, str_repeat('*', strlen($worker->firstName)-1), 1)}}
-                            &nbsp;
-                            {{substr_replace($worker->lastName, str_repeat('*', strlen($worker->lastName)-1), 1)}}
-                        @endif
-                    </h3>
-                    <span style="color: #7F8C8D;">{{$worker->regname}} {{$worker->cityname}}</span>
-                    <br/><br/>
-                    <span style="color: #2980B9; font-weight: bold;">Invite sent at {{$invitation->created_at}}</span>
-                    <div>{{$invitation->message}}</div>
-                    <br/>
-                    <div class="form-group">
-                        <a href="/cancelInvite:{{$job->id}}:{{$worker->userid}}" class="btn btn-danger">Cancel Invite</a>
-                    </div>
-                </div>
-            @else
-                <form method="POST" action="/DOSNDINVT">
-                    <input type="hidden" name="JBID" value="{{$job->id}}" />
-                    <input type="hidden" name="USRID" value="{{$worker->userid}}" />
-                    <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
-                        <h3 style="margin: 0;">
-                            @if($isCheckedOut)
-                                {{$worker->fullName}}
-                            @else
-                                {{substr_replace($worker->firstName, str_repeat('*', strlen($worker->firstName)-1), 1)}}
-                                &nbsp;
-                                {{substr_replace($worker->lastName, str_repeat('*', strlen($worker->lastName)-1), 1)}}
-                            @endif
-                        </h3>
-                        <span style="color: #7F8C8D;">{{$worker->regname}} {{$worker->cityname}}</span>
-                        <br/><br/>
-                        <div class="form-group">
-                            <label>Message</label>
-                            <textarea name="txtarea_message" id="txtarea_message" rows="8" class="form-control" placeholder="Attach a message to your invite for {{$worker->fullName}}"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success">Send Invite</button>
-                        </div>
-                    </div>
-                </form>
-            @endif
+            <div class="widget-container fluid-height padded" style="display: flex; min-height:125px; display:block !important;">
+                <h3 style="margin: 0;"><a href="/{{$worker->username}}">{{$worker->fullName}}</a></h3>
+                <br/>
+                @if($hired)
+                    Hired at {{$hired->created_at}}
+                @else
+                    <a href="/doHireWorker={{$worker->id}}={{$job->id}}" class="btn btn-success btn-block">Hire Worker</a>
+                @endif
+            </div>
         </div>
     </div>
 </section>

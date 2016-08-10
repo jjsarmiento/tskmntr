@@ -2,6 +2,14 @@
  * Created by Jan on 4/24/15.
  */
 
+$(document).ready(function(){
+    $('.a-validate').click(function(){
+        if(confirm($(this).data('message'))){
+            location.href = $(this).data('href');
+        }
+    })
+});
+
 function registrationPage(){
     $('.client-btn').click(function(){
         $('.account-type-btns').hide();

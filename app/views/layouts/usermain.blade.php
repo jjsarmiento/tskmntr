@@ -51,9 +51,9 @@
     </style>
 
     {{ HTML::style('frontend/css/bootstrap.min.css') }}
-    {{ HTML::style('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800') }}
-    {{ HTML::style('http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic') }}
-    {{ HTML::style('https://fonts.googleapis.com/css?family=Lato:300') }}
+    {{ HTML::style('frontend/css/Lato.css') }}
+    {{ HTML::style('frontend/css/Open_Sans.css') }}
+    {{ HTML::style('frontend/css/Merriweather.css') }}
 
     {{ HTML::style('frontend/font-awesome/css/font-awesome.min.css') }}
     {{ HTML::style('frontend/css/animate.min.css') }}
@@ -307,8 +307,8 @@
                         <div id="notificationContainer" class="messages" style="min-height: 1em !important;">
                             <div id="notificationTitle">Notifications</div>
                             <div id="notificationsBody" style="min-height: 1em !important;" class="notifications">
-                                <ul class="dropdown-msg">
                                 @if(User::getNotif()->count() > 0)
+                                <ul class="dropdown-msg">
                                     @foreach(User::getNotif() as $notif)
                                       <li onclick="location.href='n_{{$notif->id}}:{{$notif->notif_url}}'">
                                           <a href="n_{{$notif->id}}:{{$notif->notif_url}}">
@@ -316,10 +316,11 @@
                                           </a>
                                       </li>
                                     @endforeach
-                                @else
-                                    <center><i>You have no notifications yet</i></center>
-                                @endif
                                 </ul>
+                                @else
+                                    <center><i style="font-size: 0.8em;">You have no notifications yet</i></center>
+                                    <br/>
+                                @endif
                             </div>
                             <div id="notificationFooter"><a href="/showAllNotif" onclick="location.href='/showAllNotif'">See All</a></div>
                         </div>
@@ -386,10 +387,9 @@
                                     </a>
                                 </li>
                             @endif
-                            <li><a href="#"><i class="fa fa-camera-retro fa-fw"></i> Edit Cover Photo</a></li>
                             @if($role == 'ADMIN')
-                                <li><a href="/cms"><i class="fa fa-edit fa-fw"></i> CMS</a></li>
-                            <li><a href="/SYSTEMSETTINGS"><i class="fa fa-cog fa-fw"></i> Settings</a></li>
+                                <li><a href="/CREATE_ADMIN"><i class="fa fa-edit fa-fw"></i> Create Admin</a></li>
+                                <li><a href="/SYSTEMSETTINGS"><i class="fa fa-cog fa-fw"></i> Settings</a></li>
                             @endif
                             @if($role == 'CLIENT_CMP' || $role == 'CLIENT_IND')
                                 <li>

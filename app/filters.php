@@ -130,6 +130,12 @@ Route::filter('JOB_LIMITS', function(){
             ->with('msg', "You have reached your subscription's weekly job ad limit!")
             ->with('sub', $basecontroller->SUBSCRIPTION_DETAILS(Auth::user()->id));
     }
+
+    if(!$basecontroller->POINT_CHECK(Auth::user()->points, 'CREATE_JOB')){
+        $pointsPerJob = SystemSetting::where('type', 'SYSSETTINGS_POINTSPERAD')->pluck('value');
+        return View::make('error.CLIENT_ERROR')
+                ->with('msg', "You don't have enough points to create/repost a job.<br/>Creating/Reposting a job costs <b>".$pointsPerJob."</b> per job.<br/>You currently have <b>".Auth::user()->points."</b> points.");
+    }
 });
 
 Route::filter('CLIENT-ONLY', function(){
@@ -152,6 +158,8 @@ Route::filter('CLIENT-ONLY', function(){
         BaseController::ROUTE_UPDATE_FEEDBACKS(Auth::user()->id);
         // check if subscription is expired
         BaseController::SUBSCRIPTION_UPDATE(Auth::user()->id);
+        // check if empoyer has less than 50 points
+        BaseController::CHECK_EMPLOYER_POINTS(Auth::user()->id);
     }else{
         return Redirect::to('/');
     }

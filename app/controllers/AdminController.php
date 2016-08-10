@@ -296,6 +296,12 @@ class AdminController extends \BaseController {
         return View::make('admin.categoryAndSkills')->with('taskCategory', TaskCategory::orderBy('categoryCode', 'ASC')->get());
     }
 
+    public function auditTrail($user_id){
+        return View::make('admin.auditTrail')
+                ->with('trails', AuditTrail::where('user_id', $user_id)->orderBy('created_at', 'DESC')->paginate(10))
+                ->with('user', User::where('id', $user_id)->first());
+    }
+    /*
     public function auditTrail($role){
         $query = User::join('user_has_role', 'user_has_role.user_id', '=', 'users.id')
                      ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
@@ -330,6 +336,7 @@ class AdminController extends \BaseController {
             ->with('user', User::where('id', $id)->first())
             ->with('trails', AuditTrail::where('user_id', $id)->paginate(10));
     }
+    */
 
     public function taskDetails($taskid){
         $taskQuery = Task::where('id', $taskid)->first();
@@ -1308,6 +1315,38 @@ class AdminController extends \BaseController {
                 'updated_at'            => date("Y:m:d H:i:s")
             ]);
 
+        return Redirect::back();
+    }
+
+    public function addSubscription($user_id){
+        $sub = SystemSubscription::leftJoin('user_subscriptions', 'user_subscriptions.system_subscription_id', '=', 'system_subscriptions.id')
+            ->where('user_subscriptions.user_id', $user_id)
+            ->select([
+                'user_subscriptions.id as user_sub_id',
+                'user_subscriptions.expired',
+                'user_subscriptions.expires_at',
+                'user_subscriptions.created_at',
+                'system_subscriptions.id as sys_sub_id',
+                'system_subscriptions.subscription_code',
+                'system_subscriptions.subscription_label',
+            ])
+            ->first();
+
+        $sys_subs = SystemSubscription::get();
+
+        return View::make('admin.addSubscription')
+            ->with('sys_subs', $sys_subs)
+            ->with('user', User::find($user_id))
+            ->with('sub', $sub);
+    }
+
+    public function doAddSubscription(){
+        $this->APPLY_SUBSCRIPTION_EMPLOYERS(Input::get('subs'), Input::get('user_id'));
+        return Redirect::back();
+    }
+
+    public function RMVSBSCRPTN($sub_id){
+        UserSubscription::find($sub_id)->delete();
         return Redirect::back();
     }
 }

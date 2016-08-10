@@ -95,6 +95,11 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+    // ADD SUBSCRIPTION TO USER
+    Route::get('/addSubscription={user_id}', 'AdminController@addSubscription');
+    Route::post('/doAddSubscription', 'AdminController@doAddSubscription');
+    Route::get('/RMVSBSCRPTN={sub_id}', 'AdminController@RMVSBSCRPTN');
+
     // SYSTEM SETTINGS ROUTE
     Route::get('/SYSTEMSETTINGS', 'AdminController@SYSTEMSETTINGS');
     Route::post('/doSYSTEMSETTINGS','AdminController@doSYSTEMSETTINGS');
@@ -128,8 +133,8 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     // SKILLS ROUTE
     Route::get('/skills', 'AdminController@skills');
 
-    // CMS ROUTE
-    Route::get('/cms', 'AdminController@cms');
+    // AUDIT TRAIL NEW -- Jan Sarmiento
+    Route::get('/auditTrail={user_id}', 'AdminController@auditTrail');
 
     // THE ROLE BASED ROUTES FOR ADMINISTRATORS GOES HERE
     Route::get('/admin', 'AdminController@index');
@@ -150,8 +155,8 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 
 //    Route::get('/categoryAndSkills', 'AdminController@categoryAndSkills');
     Route::get('/adminDeactivate/{id}', 'AdminController@adminDeactivate');
-    Route::get('/AT_{role}', 'AdminController@auditTrail');
-    Route::get('/userAuditTrail_{id}', 'AdminController@userAuditTrail');
+//    Route::get('/AT_{role}', 'AdminController@auditTrail');
+//    Route::get('/userAuditTrail_{id}', 'AdminController@userAuditTrail');
     Route::get('/admin/taskDetails/{taskid}', 'AdminController@taskDetails');
     Route::get('/viewRatings={tskmntrId}', 'AdminController@viewRatings');
     Route::get('/taskListBidding', 'AdminController@taskListBidding');
@@ -198,6 +203,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){
         Route::get('/WRKR_INVTS', 'TaskminatorController@WRKR_INVTS');
+//        Route::get('/WRKR_HIRED', 'TaskminatorController@WRKR_HIRED');
         Route::get('/WRKR_APPLCTNS', 'TaskminatorController@WRKR_APPLCTNS');
         Route::get('/jbdtls={jobId}', 'TaskminatorController@jbdtls');
 //    Route::get('/APPLYFRJB:{jobId}', 'TaskminatorController@APPLYFRJB');
@@ -274,6 +280,9 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
 
     // EMPLOYER MUST HAVE ATLEAST 50% PROFILE PROGRESS TO ACCESS THESE ROUTES -- JAN SARMIENTO
     Route::group(array('before' => 'EMPLOYER-UPDATE-PROFILE-PROGRESS'), function(){
+        // SEEN / VIEW PROFILE THROUGH JOB AD
+        Route::get('/VWPRFL:{jobapp_id}/{url}', 'ClientIndiController@VWPRFL');
+
         Route::get('/initFeedback:{sched_id}', 'ClientIndiController@initFeedback');
         Route::post('/doFeedback', 'ClientIndiController@doFeedback');
         Route::get('/reviews', 'ClientIndiController@reviews');
@@ -302,11 +311,14 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
             Route::post('/DOSNDINVT', 'ClientIndiController@DOSNDINVT');
         });
 
+        // HIRE WORKER
+        Route::get('/hireWorker={worker_id}={job_id}', 'ClientIndiController@hireWorker');
+        Route::get('/doHireWorker={worker_id}={job_id}', 'ClientIndiController@doHireWorker');
+
         Route::get('/SNDINVT:{invitedId}:{jobId}', 'ClientIndiController@SNDINVT');
         Route::get('/cancelInvite:{jobID}:{workerID}', 'ClientIndiController@cancelInvite');
         Route::get('/ShowInvited:{jobId}', 'ClientIndiController@ShowInvited');
         Route::get('/JOB_DELETECUSTSKILL={custom_skill_id}', 'ClientIndiController@JOB_DELETECUSTSKILL');
-
 
         // CART
         Route::get('/addToCart={worker_id}', 'ClientIndiController@addToCart');

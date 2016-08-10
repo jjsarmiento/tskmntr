@@ -249,14 +249,20 @@
                                 <a style="border-radius: 0.3em;" href="/jobs" class="btn btn-primary btn-block">Job</a>
                             @endif
                             <div class="row" style="font-size: 1.2em; font-weight: bolder; text-align: center;">
-                                <div class="col-md-6 padded">
+                                <div class="col-md-12 padded">
                                     <i class="fa fa-diamond" style="color: #2980B9;"></i>&nbsp;
                                     <span id="USR_POINTS">{{ Auth::user()->points }}</span>
                                 </div>
-                                <div class="col-md-6 padded">
-                                    <i class="fa fa-user" style="color: #2980B9;"></i>&nbsp;
+                                <!--
+                                <div class="col-md-4 padded">
+                                    <i class="fa fa-users" style="color: #2980B9;"></i>&nbsp;
                                     {{ Auth::user()->accountType }}
                                 </div>
+                                <div class="col-md-4 padded">
+                                    <i class="fa fa-briefcase" style="color: #2980B9;"></i>&nbsp;
+                                    {{ Auth::user()->accountType }}
+                                </div>
+                                -->
                             </div>
                         @endif
                 </div>

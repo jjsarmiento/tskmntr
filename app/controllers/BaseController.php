@@ -462,19 +462,24 @@ class BaseController extends Controller {
     public function APPLY_SUBSCRIPTION_EMPLOYERS($sys_subscription_id, $employer_id){
         if($sys_subscription_id != 0){
             $sub_duration = SystemSubscription::where('id', $sys_subscription_id)->pluck('subscription_duration');
-            $total_duration = time() + ($sub_duration * 24 * 60 * 60);
-            $total_duration = date("Y:m:d H:i:s", $total_duration);
+//            $total_duration = time() + ($sub_duration * 24 * 60 * 60);
+//            $total_duration = date("Y:m:d H:i:s", $total_duration);
+            $total_duration = Carbon::now()->addDays($sub_duration);
 
             $subscription_id = UserSubscription::insertGetId([
                 'user_id'                   =>  $employer_id,
                 'system_subscription_id'    =>  $sys_subscription_id,
                 'expires_at'                =>  $total_duration,
-                'created_at'                =>  date("Y:m:d H:i:s")
+                'created_at'                =>  Carbon::now()
             ]);
 
             User::where('id', $employer_id)->update([
                 'accountType'   =>  $subscription_id
             ]);
+
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -517,7 +522,7 @@ class BaseController extends Controller {
         $bc = new BaseController();
         $subscription_id = User::where('id', $employerID)->pluck('accountType');
         $subscription_details = UserSubscription::where('id', $subscription_id)->first();
-        if(!$subscription_details->expired){
+        if($subscription_details && !$subscription_details->expired){
             if(time() > strtotime($subscription_details->expires_at)){
                 $msg = 'Your subscription has expired';
                 $bc->NOTIFICATION_INSERT($employerID, $msg, $url);
@@ -533,29 +538,33 @@ class BaseController extends Controller {
         // RETURNS TRUE IF RESTRICTIONS ARE VIOLATED
         $subscription_id = User::where('id', $userID)->pluck('accountType');
         $subscription_details = UserSubscription::where('id', $subscription_id)->first();
-        $system_subscription_details = SystemSubscription::where('id', $subscription_details->system_subscription_id)->first();
-        $subscription_start = $subscription_details->created_at;
-        $subscription_expiration = $subscription_details->expires_at;
+        if($subscription_details){
+            $system_subscription_details = SystemSubscription::where('id', $subscription_details->system_subscription_id)->first();
+            $subscription_start = $subscription_details->created_at;
+            $subscription_expiration = $subscription_details->expires_at;
 
-        switch($restrictionType){
-            case 'worker_browse' :
-                return ($system_subscription_details->worker_browse) ? 0 : 1;
-                break;
-            case 'worker_bookmark_limit' :
-                return $this->RSTRCTN_WORKER_BOOKMARK_LIMIT($userID, $subscription_start, $system_subscription_details->worker_bookmark_limit);
-                break;
-            case 'invite_limit' :
-                return $this->RSTRCTN_INVITE_LIMIT($userID, $subscription_start, $system_subscription_details->invite_limit);
-                break;
-            case 'job_ad_limit_week' :
-                return $this->RSTRCTN_JOBADLIMIT_WK($userID, $subscription_start, $system_subscription_details->job_ad_limit_week);
-                break;
-            case 'job_ad_limit_month' :
-                return $this->RSTRCTN_JOBADLIMIT_MNTH($userID, $subscription_start, $subscription_expiration, $system_subscription_details->job_ad_limit_month);
-                break;
-            default :
-                return 'DEFAULT';
-                break;
+            switch($restrictionType){
+                case 'worker_browse' :
+                    return ($system_subscription_details->worker_browse) ? 0 : 1;
+                    break;
+                case 'worker_bookmark_limit' :
+                    return $this->RSTRCTN_WORKER_BOOKMARK_LIMIT($userID, $subscription_start, $system_subscription_details->worker_bookmark_limit);
+                    break;
+                case 'invite_limit' :
+                    return $this->RSTRCTN_INVITE_LIMIT($userID, $subscription_start, $system_subscription_details->invite_limit);
+                    break;
+                case 'job_ad_limit_week' :
+                    return $this->RSTRCTN_JOBADLIMIT_WK($userID, $subscription_start, $system_subscription_details->job_ad_limit_week);
+                    break;
+                case 'job_ad_limit_month' :
+                    return $this->RSTRCTN_JOBADLIMIT_MNTH($userID, $subscription_start, $subscription_expiration, $system_subscription_details->job_ad_limit_month);
+                    break;
+                default :
+                    return 'DEFAULT';
+                    break;
+            }
+        }else{
+            return 1;
         }
     }
 
@@ -652,6 +661,47 @@ class BaseController extends Controller {
                 }
             }
         }
+    }
+
+    public function GET_HIRED_JOBSID($worker_id){
+        $ox = JobHiredWorker::where('worker_id', $worker_id)->get();
+        $myArr = array();
+        foreach($ox as $o){ array_push($myArr, $o->job_id); }
+        return $myArr;
+
+    }
+
+    public function GET_HIRED_WORKERSID_JOB($jobId){
+        $ox = JobHiredWorker::where('job_id', $jobId)->get();
+        $myArr = array();
+        foreach($ox as $o){ array_push($myArr, $o->worker_id); }
+        return $myArr;
+    }
+
+    public static function CHECK_EMPLOYER_POINTS($user_id){
+        $points = User::where('id', $user_id)->pluck('points');
+        if($points <= 50){
+            $url = '/TOPUP';
+            $msg = 'You have '.$points.' points left. Click here to reload.';
+            $NOTIF_EXISTS = Notification::where('user_id', $user_id)->where('content', $msg)->where('notif_url', $url)->count();
+            if($NOTIF_EXISTS == 0){
+                $bc = new BaseController();
+                $bc->NOTIFICATION_INSERT($user_id, $msg, $url);
+            }
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function INSERT_AUDIT_TRAIL($user_id, $msg){
+        AuditTrail::insert([
+            'user_id'   => $user_id,
+            'content'   => $msg,
+            'at_url'    => Request::url(),
+            'ip_address'=> Request::getClientIp(),
+            'created_at'=> Carbon::now()
+        ]);
     }
     // AUTHORED BY Jan Sarmiento -- END
 }

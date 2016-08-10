@@ -18,6 +18,8 @@ class CreateJobApplicationsTable extends Migration {
 			$table->string('applicant_id');
 			$table->string('job_id');
 			$table->string('message');
+			$table->boolean('seen');
+			$table->timestamp('seen_at');
 			$table->timestamps();
 		});
 	}

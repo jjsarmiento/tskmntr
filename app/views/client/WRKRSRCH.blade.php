@@ -215,7 +215,7 @@
                                 </a>
                                 <div class="media-body update-card-body">
                                     <a href="{{$w->username}}" style="font-weight: bolder;">
-                                        @if($w->purchaseID)
+                                        @if(in_array($w->id, $CHECKED_OUT_USERS))
                                             {{ $w->fullName }}
                                         @else
                                             {{substr_replace($w->firstName, str_repeat('*', strlen($w->firstName)-1), 1)}}
@@ -226,6 +226,13 @@
                                     <p>{{ $w->regname }}, {{ $w->cityname }}</p>
                                 </div>
                                 <br/>
+                                <br/>
+                                @if(in_array($w->id, $INVITEDS))
+                                    <a data-sample="{{$w->inviteID}}" href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-success" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Invite Sent</a>
+                                @else
+                                    <a data-sample="{{$w->inviteID}}" href="/SNDINVT:{{$w->id}}:{{$job->id}}" class="btn btn-block btn-xs btn-primary" style="border-radius: 0.3em;"><i class="fa fa-envelope"></i> Send Invite</a>
+                                @endif
+                                <!--
                                 @if(in_array($w->id, $APPLICANTS))
                                     <span class="btn btn-danger btn-xs btn-block">APPLICANT</span>
                                 @endif
@@ -241,6 +248,7 @@
                                 @else
                                     <a href="/addToCart={{$w->id}}" class="btn btn-warning btn-xs btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
                                 @endif
+                                -->
                             </div>
                         </div>
                     @endforeach

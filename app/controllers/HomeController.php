@@ -7,7 +7,7 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){ // test()
-//        return BaseController::ROUTE_UPDATE_FEEDBACKS(2);
+        return BaseController::ROUTE_UPDATE_FEEDBACKS(2);
     }
 
     function generateConfirmationCode(){
@@ -39,6 +39,9 @@ class HomeController extends BaseController {
     */
 
     public function logout(){
+        if(Auth::check()){
+            $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Logged out');
+        }
         Auth::logout();
         return Redirect::to('/');
     }
@@ -373,13 +376,7 @@ class HomeController extends BaseController {
             )
         ));
 
-        AuditTrail::insert(array(
-            'user_id'   =>  $userId,
-            'content'   =>  'Created a Client Company account at '.date('D, M j, Y \a\t g:ia'),
-            'created_at'    =>  date("Y:m:d H:i:s"),
-            'at_url'        =>  '/viewUserProfile/'.$userId
-//                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
-        ));
+        $this->INSERT_AUDIT_TRAIL($userId, 'Created employer account.');
 
         // send email verification for registration - jan sarmiento
 
@@ -411,6 +408,7 @@ class HomeController extends BaseController {
         }
     }
 
+    /*
     public function doRegisterIndi(){
         Input::merge(array_map('trim', Input::all()));
         $check = SimpleCaptcha::check($_POST['captcha']);
@@ -511,7 +509,7 @@ class HomeController extends BaseController {
         Auth::attempt(array('username' => Input::get('uName'), 'password' => Input::get('primary_pass')));
         return Redirect::to('/')->with('successMsg', 'Registration Success. You may now login.');
     }
-
+    */
 
 //  NEW REGISTRATION REGISTER WORKER 
     public function regWorker()
@@ -579,12 +577,7 @@ class HomeController extends BaseController {
                     )
                 ));
 
-                AuditTrail::insert(array(
-                    'user_id'   =>  $userId,
-                    'content'   =>  'Created a Worker account at '.date('D, M j, Y \a\t g:ia'),
-                    'created_at'    =>  date("Y:m:d H:i:s"),
-                    'at_url'        =>  '/viewUserProfile/'.$userId
-                ));
+                $this->INSERT_AUDIT_TRAIL($userId, 'Created Worker Account.');
 
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- START
                 $data = array(
@@ -609,6 +602,7 @@ class HomeController extends BaseController {
 
     }//end regWorker
 
+    /*
     public function  doRegisterTaskminator(){
         Input::merge(array_map('trim', Input::all()));
         
@@ -695,19 +689,6 @@ class HomeController extends BaseController {
                 'content'       =>  Input::get('email'),
             )
         ));
-/*
-        if(Input::get('skills') !== null){
-            foreach(Input::get('skills') as $skill){
-                $skillCode = TaskCategory::where('categorycode', TaskItem::where('itemcode', $skill)->pluck('item_categorycode'))->pluck('categorycode');
-
-                TaskminatorHasSkill::insert(array(
-                    'user_id'           =>  $userId,
-                    'taskitem_code'     =>  $skill,
-                    'taskcategory_code' =>  $skillCode
-                ));
-            }
-        }
-*/
         AuditTrail::insert(array(
             'user_id'   =>  $userId,
             'content'   =>  'Created a Worker account at '.date('D, M j, Y \a\t g:ia'),
@@ -721,6 +702,7 @@ class HomeController extends BaseController {
         return Redirect::to('/');
 
     }
+    */
 
     public function login(){
         if(Auth::check()){
@@ -828,9 +810,12 @@ class HomeController extends BaseController {
                         ->paginate(10);
 
                     $applicationCount = JobApplication::where('applicant_id', Auth::user()->id)->count();
-                    $invitesCount = JobInvite::where('invited_id', Auth::user()->id)->count();
+                    $invitesCount = JobInvite::where('invited_id', Auth::user()->id)
+                                        ->whereNotIn('job_id', $this->GETAPPLICATIONS_ID(Auth::user()->id))->count();
+                    $hired = JobHiredWorker::where('worker_id', Auth::user()->id)->count();
                     // NEW JOB MODULE -- END by JAN SARMIENTO
                     return View::make('taskminator.index')
+                            ->with('hired', $hired)
                             ->with('accountRole', $role)
                             ->with('tasks', $taskList)
                             ->with('jobs', $jobs)
@@ -843,6 +828,7 @@ class HomeController extends BaseController {
                 case 'CLIENT_IND' :
                 case 'CLIENT_CMP' :
                     BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
+                    BaseController::CHECK_EMPLOYER_POINTS(Auth::user()->id);
 
                     $jobs = Job::where('user_id', Auth::user()->id)
                             ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
@@ -903,14 +889,6 @@ class HomeController extends BaseController {
 
     public function doLogin(){
         if(Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')))){
-            date_default_timezone_set("Asia/Manila");
-            AuditTrail::insert(array(
-                'user_id'   =>  Auth::user()->id,
-                'content'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
-                'created_at'    =>  date("Y:m:d H:i:s")
-//                'module'   =>  'Logged in at '.date('D, M j, Y \a\t g:ia'),
-            ));
-
             // profile completeness
             switch(User::GETROLE(Auth::user()->id)){
                 case 'CLIENT_IND' :
@@ -937,7 +915,7 @@ class HomeController extends BaseController {
                     Auth::logout();
                     return Redirect::to('/SLFACTVT='.time().'='.$user);
             }
-
+            $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Logged in.');
             return Redirect::to('/');
         }else if(User::where('username', Input::get('username'))->count() == 0){
             return Redirect::back()->with('successMsg', 'This account has not been registered. Click <a href="/">here</a> to register.');
@@ -1356,35 +1334,8 @@ class HomeController extends BaseController {
     }
 
     public function showAllNotif(){
-        switch(
-            Role::join('user_has_role', 'roles.id', '=', 'user_has_role.role_id')
-                ->where('user_has_role.user_id', Auth::user()->id)
-                ->pluck('role')
-        ){
-            case 'ADMIN' :
-                return View::make('showAllNotif')
-                ->with('notifications', Notification::where('user_id', Auth::user()->id)->paginate(15));
-            case 'TASKMINATOR' :
-            case 'CLIENT_IND' :
-            case 'CLIENT_CMP' :
-            default :
-                return Redirect::to('/');
-                break;
-        }
-//        var_dump($this->getRole(Auth::user()->id));
-//        if(in_array('ADMIN', (array) $this->getRole(Auth::user()->id))){
-//            echo "ADMIN TO";
-//        }else{
-//
-//        }
-//        Notification::where('status', 'NEW')
-//            ->where('user_id', Auth::user()->id)
-//            ->update(array(
-//                'status' => 'OLD'
-//            ));
-//
-//        return View::make('showAllNotif')
-//                ->with('notifications', Notification::where('user_id', Auth::user()->id)->paginate(15));
+        return View::make('showAllNotif')
+            ->with('notifs', Notification::where('user_id', Auth::user()->id)->paginate(10));
     }
 
     public function messages(){
@@ -1395,7 +1346,18 @@ class HomeController extends BaseController {
         if($role != 'ADMIN'){
             return View::make('messages')->with('threads', Thread::where('user_id', Auth::user()->id)->where('status', 'OPEN')->orderBy('created_at', 'ASC')->get());
         }else{
-            return View::make('admin.adminmessage');
+            $msgs = User::join('admin_messages', 'admin_messages.sender_id', '=', 'users.id')
+                ->where('admin_messages.status', 'NEW')
+                ->whereNotIn('admin_messages.sender_id', [Auth::user()->id])
+                ->groupBy('users.id')
+                ->select([
+                    'users.id',
+                    'users.username',
+                    'users.fullName'
+                ])
+                ->get();
+            return View::make('admin.adminmessage')
+                ->with('msgs', $msgs);
         }
     }
 
@@ -1589,7 +1551,8 @@ class HomeController extends BaseController {
             return $msg;
         }else{
             if(User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_IND' || User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_CMP'){
-                $this->APPLY_SUBSCRIPTION_EMPLOYERS(SystemSetting::where('type', 'SYSSETTINGS_FREE_SUB_ON_REG')->pluck('value'), $CODE_DETAILS->user_id);
+                $SETTINGS_TRIAL_SUBSCRIPTION = SystemSetting::where('type', 'SYSSETTINGS_FREE_SUB_ON_REG')->pluck('value');
+                $this->APPLY_SUBSCRIPTION_EMPLOYERS($SETTINGS_TRIAL_SUBSCRIPTION, $CODE_DETAILS->user_id);
             }
 
             User::where('id', $CODE_DETAILS->user_id)->update([
