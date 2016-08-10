@@ -1335,7 +1335,7 @@ class HomeController extends BaseController {
 
     public function showAllNotif(){
         return View::make('showAllNotif')
-            ->with('notifs', Notification::where('user_id', Auth::user()->id)->get());
+            ->with('notifs', Notification::where('user_id', Auth::user()->id)->paginate(10));
     }
 
     public function messages(){

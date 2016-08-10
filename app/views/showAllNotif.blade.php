@@ -79,6 +79,7 @@
                             @endforeach
                         </div>
                     </div>
+                    <center>{{$notifs->links()}}</center>
                 </div>
             </div>
         </div>
