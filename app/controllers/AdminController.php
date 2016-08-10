@@ -1317,4 +1317,36 @@ class AdminController extends \BaseController {
 
         return Redirect::back();
     }
+
+    public function addSubscription($user_id){
+        $sub = SystemSubscription::leftJoin('user_subscriptions', 'user_subscriptions.system_subscription_id', '=', 'system_subscriptions.id')
+            ->where('user_subscriptions.user_id', $user_id)
+            ->select([
+                'user_subscriptions.id as user_sub_id',
+                'user_subscriptions.expired',
+                'user_subscriptions.expires_at',
+                'user_subscriptions.created_at',
+                'system_subscriptions.id as sys_sub_id',
+                'system_subscriptions.subscription_code',
+                'system_subscriptions.subscription_label',
+            ])
+            ->first();
+
+        $sys_subs = SystemSubscription::get();
+
+        return View::make('admin.addSubscription')
+            ->with('sys_subs', $sys_subs)
+            ->with('user', User::find($user_id))
+            ->with('sub', $sub);
+    }
+
+    public function doAddSubscription(){
+        $this->APPLY_SUBSCRIPTION_EMPLOYERS(Input::get('subs'), Input::get('user_id'));
+        return Redirect::back();
+    }
+
+    public function RMVSBSCRPTN($sub_id){
+        UserSubscription::find($sub_id)->delete();
+        return Redirect::back();
+    }
 }

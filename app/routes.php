@@ -95,6 +95,11 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+    // ADD SUBSCRIPTION TO USER
+    Route::get('/addSubscription={user_id}', 'AdminController@addSubscription');
+    Route::post('/doAddSubscription', 'AdminController@doAddSubscription');
+    Route::get('/RMVSBSCRPTN={sub_id}', 'AdminController@RMVSBSCRPTN');
+
     // SYSTEM SETTINGS ROUTE
     Route::get('/SYSTEMSETTINGS', 'AdminController@SYSTEMSETTINGS');
     Route::post('/doSYSTEMSETTINGS','AdminController@doSYSTEMSETTINGS');
