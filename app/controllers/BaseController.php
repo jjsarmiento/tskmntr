@@ -538,29 +538,33 @@ class BaseController extends Controller {
         // RETURNS TRUE IF RESTRICTIONS ARE VIOLATED
         $subscription_id = User::where('id', $userID)->pluck('accountType');
         $subscription_details = UserSubscription::where('id', $subscription_id)->first();
-        $system_subscription_details = SystemSubscription::where('id', $subscription_details->system_subscription_id)->first();
-        $subscription_start = $subscription_details->created_at;
-        $subscription_expiration = $subscription_details->expires_at;
+        if($subscription_details){
+            $system_subscription_details = SystemSubscription::where('id', $subscription_details->system_subscription_id)->first();
+            $subscription_start = $subscription_details->created_at;
+            $subscription_expiration = $subscription_details->expires_at;
 
-        switch($restrictionType){
-            case 'worker_browse' :
-                return ($system_subscription_details->worker_browse) ? 0 : 1;
-                break;
-            case 'worker_bookmark_limit' :
-                return $this->RSTRCTN_WORKER_BOOKMARK_LIMIT($userID, $subscription_start, $system_subscription_details->worker_bookmark_limit);
-                break;
-            case 'invite_limit' :
-                return $this->RSTRCTN_INVITE_LIMIT($userID, $subscription_start, $system_subscription_details->invite_limit);
-                break;
-            case 'job_ad_limit_week' :
-                return $this->RSTRCTN_JOBADLIMIT_WK($userID, $subscription_start, $system_subscription_details->job_ad_limit_week);
-                break;
-            case 'job_ad_limit_month' :
-                return $this->RSTRCTN_JOBADLIMIT_MNTH($userID, $subscription_start, $subscription_expiration, $system_subscription_details->job_ad_limit_month);
-                break;
-            default :
-                return 'DEFAULT';
-                break;
+            switch($restrictionType){
+                case 'worker_browse' :
+                    return ($system_subscription_details->worker_browse) ? 0 : 1;
+                    break;
+                case 'worker_bookmark_limit' :
+                    return $this->RSTRCTN_WORKER_BOOKMARK_LIMIT($userID, $subscription_start, $system_subscription_details->worker_bookmark_limit);
+                    break;
+                case 'invite_limit' :
+                    return $this->RSTRCTN_INVITE_LIMIT($userID, $subscription_start, $system_subscription_details->invite_limit);
+                    break;
+                case 'job_ad_limit_week' :
+                    return $this->RSTRCTN_JOBADLIMIT_WK($userID, $subscription_start, $system_subscription_details->job_ad_limit_week);
+                    break;
+                case 'job_ad_limit_month' :
+                    return $this->RSTRCTN_JOBADLIMIT_MNTH($userID, $subscription_start, $subscription_expiration, $system_subscription_details->job_ad_limit_month);
+                    break;
+                default :
+                    return 'DEFAULT';
+                    break;
+            }
+        }else{
+            return 1;
         }
     }
 
