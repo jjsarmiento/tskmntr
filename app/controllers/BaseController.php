@@ -462,19 +462,24 @@ class BaseController extends Controller {
     public function APPLY_SUBSCRIPTION_EMPLOYERS($sys_subscription_id, $employer_id){
         if($sys_subscription_id != 0){
             $sub_duration = SystemSubscription::where('id', $sys_subscription_id)->pluck('subscription_duration');
-            $total_duration = time() + ($sub_duration * 24 * 60 * 60);
-            $total_duration = date("Y:m:d H:i:s", $total_duration);
+//            $total_duration = time() + ($sub_duration * 24 * 60 * 60);
+//            $total_duration = date("Y:m:d H:i:s", $total_duration);
+            $total_duration = Carbon::now()->addDays($sub_duration);
 
             $subscription_id = UserSubscription::insertGetId([
                 'user_id'                   =>  $employer_id,
                 'system_subscription_id'    =>  $sys_subscription_id,
                 'expires_at'                =>  $total_duration,
-                'created_at'                =>  date("Y:m:d H:i:s")
+                'created_at'                =>  Carbon::now()
             ]);
 
             User::where('id', $employer_id)->update([
                 'accountType'   =>  $subscription_id
             ]);
+
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -517,7 +522,7 @@ class BaseController extends Controller {
         $bc = new BaseController();
         $subscription_id = User::where('id', $employerID)->pluck('accountType');
         $subscription_details = UserSubscription::where('id', $subscription_id)->first();
-        if(!$subscription_details->expired){
+        if($subscription_details && !$subscription_details->expired){
             if(time() > strtotime($subscription_details->expires_at)){
                 $msg = 'Your subscription has expired';
                 $bc->NOTIFICATION_INSERT($employerID, $msg, $url);

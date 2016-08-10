@@ -1567,7 +1567,8 @@ class HomeController extends BaseController {
             return $msg;
         }else{
             if(User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_IND' || User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_CMP'){
-                $this->APPLY_SUBSCRIPTION_EMPLOYERS(SystemSetting::where('type', 'SYSSETTINGS_FREE_SUB_ON_REG')->pluck('value'), $CODE_DETAILS->user_id);
+                $SETTINGS_TRIAL_SUBSCRIPTION = SystemSetting::where('type', 'SYSSETTINGS_FREE_SUB_ON_REG')->pluck('value');
+                $this->APPLY_SUBSCRIPTION_EMPLOYERS($SETTINGS_TRIAL_SUBSCRIPTION, $CODE_DETAILS->user_id);
             }
 
             User::where('id', $CODE_DETAILS->user_id)->update([

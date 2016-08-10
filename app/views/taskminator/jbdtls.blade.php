@@ -152,22 +152,23 @@
                     <h3 style="margin: 0; text-align: center;"><i style="color: #E74C3C;" class="fa fa-warning"></i> This Job Ad is expired!</h3>
                 </div><br/>
             @endif
-
             @if($HIRED)
                 <div class="widget-container padded" style="min-height: 10px; display:block !important;">
                     <i class="fa fa-check-circle" style="color: #2ECC71; font-size: 1.5em;"></i>&nbsp;You have been hired for this job.<br/>
-                </div>
-            @else
-                @if($hasInvite)
-                    <div class="widget-container padded" style="min-height: 10px; display:block !important;">
-                        <span style="color: #2980B9; font-weight: bold;">
-                            Invitation sent at {{ date('D, M j, Y \a\t g:ia', strtotime($hasInvite->created_at)) }}<br/>
-                        </span>
-                        {{$hasInvite->message}}
-                    </div><br/>
-                @endif
+                        <span style="color: #7F8C8D;">Hired at {{ date('D M j, Y \a\t g:ia', strtotime($HIRED->created_at)) }}</span><br/>
+                </div><br/>
+            @endif
+            @if($hasInvite)
+                <div class="widget-container padded" style="min-height: 10px; display:block !important;">
+                    <span style="color: #2980B9; font-weight: bold;">
+                        Invitation sent at {{ date('D, M j, Y \a\t g:ia', strtotime($hasInvite->created_at)) }}<br/>
+                    </span>
+                    {{$hasInvite->message}}
+                </div><br/>
+            @endif
 
-                @if($application)
+            @if($application)
+                @if(!$HIRED)
                     <div class="widget-container padded" style="min-height: 10px; display:block !important;">
                         <i class="fa fa-check-circle" style="color: #2ECC71; font-size: 1.5em;"></i>&nbsp;You have applied for this job.<br/>
                         <span style="color: #7F8C8D;">Application sent at {{ date('D M j, Y \a\t g:ia', strtotime($application->created_at)) }}</span><br/>
@@ -176,19 +177,19 @@
                         <br/>
                         <a class="btn btn-danger btn-block" href="/CNCLAPPLCTN:{{$job->jobId}}">Cancel Application</a>
                     </div><br/>
-                @else
-                    @if(!$job->expired)
-                        <div class="widget-container padded" style="min-height: 10px; display:block !important;">
-                            <form method="POST" action="/APPLYFRJB">
-                                <div class="form-group">
-                                    <label>Application Message</label>
-                                    {{--<textarea class="form-control" name="application_message" placeholder="Attach a message with your application" rows="5"></textarea>--}}
-                                    <input type="hidden" name="application_jobID" value="{{$job->jobId}}" />
-                                </div>
-                                <button class="btn btn-primary btn-block">Send Application</button>
-                            </form>
-                        </div><br/>
-                    @endif
+                @endif
+            @else
+                @if(!$job->expired)
+                    <div class="widget-container padded" style="min-height: 10px; display:block !important;">
+                        <form method="POST" action="/APPLYFRJB">
+                            <div class="form-group">
+                                <label>Application Message</label>
+                                {{--<textarea class="form-control" name="application_message" placeholder="Attach a message with your application" rows="5"></textarea>--}}
+                                <input type="hidden" name="application_jobID" value="{{$job->jobId}}" />
+                            </div>
+                            <button class="btn btn-primary btn-block">Send Application</button>
+                        </form>
+                    </div><br/>
                 @endif
             @endif
         </div>
