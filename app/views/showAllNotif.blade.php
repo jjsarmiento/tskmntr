@@ -12,7 +12,7 @@
             text-decoration: none !important;
         }
         .item-new {
-            padding: 0.4em;
+            padding: 1em;
             background-color: #C5EFF7;
             font-weight: bold;
             border-bottom: solid 1px #BDC3C7;
@@ -23,7 +23,7 @@
             border-bottom: solid 1px #BDC3C7;
         }
         .item:hover{
-            background-color: #C5EFF7;
+            background-color: #E9EAED;
         }
     </style>
 @stop
@@ -65,7 +65,7 @@
                     <div class="widget-container fluid-height" style="padding: 0.5em;">
                         <div class="widget-content">
                             @foreach($notifs as $n)
-                                <a href="{{$n->notif_url}}" style="text-decoration: none;">
+                                <a href="/n_{{$n->id}}:{{$n->notif_url}}" style="text-decoration: none;">
                                     @if($n->status == 'NEW')
                                         <div class="item-new">
                                             {{$n->content}}
