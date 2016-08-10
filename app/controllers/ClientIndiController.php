@@ -1153,6 +1153,7 @@ class ClientIndiController extends \BaseController {
                     'users.firstName',
                     'users.lastName',
                     'users.id',
+                    'job_applications.id as jobapp_id',
                     'job_applications.created_at as applied_at',
                     'cities.cityname',
                     'regions.regname',
@@ -1232,6 +1233,7 @@ class ClientIndiController extends \BaseController {
                 'regions.regname',
             ])
             ->groupBy('jobs.id')
+            ->orderBy('jobs.created_at', 'DESC')
             ->paginate(10);
         return View::make('client.jobs')
                 ->with('jobs', $jobs);
@@ -2038,5 +2040,14 @@ class ClientIndiController extends \BaseController {
         $this->NOTIFICATION_INSERT($worker_id, 'You have been hired for <b>'.$job->title.'</b>', '/jbdtls='.$job->id);
         $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Hired <a href="/viewUserProfile/'.$worker->id.'">'.$worker->fullName.'</a> for job ad - <a href="ADMIN_jobDetails='.$job->id.'">'.$job->title.'</a>');
         return Redirect::back();
+    }
+
+    public function VWPRFL($jobapp_id, $url){
+        JobApplication::where('id', $jobapp_id)->update([
+            'seen'      => true,
+            'seen_at'   => Carbon::now()
+        ]);
+
+        return Redirect::to($url);
     }
 }

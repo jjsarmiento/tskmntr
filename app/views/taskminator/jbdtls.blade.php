@@ -178,6 +178,15 @@
                         <a class="btn btn-danger btn-block" href="/CNCLAPPLCTN:{{$job->jobId}}">Cancel Application</a>
                     </div><br/>
                 @endif
+
+                @if($application->seen)
+
+                    <div class="widget-container padded" style="min-height: 10px; display:block !important;">
+                        <i class="fa fa-eye" style="font-size: 1.5em;"></i>&nbsp;&nbsp;Your application and profile has been viewed {{date('\a\t g:ia - D, M j, Y ', strtotime($application->seen_at))}}<br/>
+
+                    </div>
+                @endif
+
             @else
                 @if(!$job->expired)
                     <div class="widget-container padded" style="min-height: 10px; display:block !important;">

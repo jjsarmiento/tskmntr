@@ -280,6 +280,9 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
 
     // EMPLOYER MUST HAVE ATLEAST 50% PROFILE PROGRESS TO ACCESS THESE ROUTES -- JAN SARMIENTO
     Route::group(array('before' => 'EMPLOYER-UPDATE-PROFILE-PROGRESS'), function(){
+        // SEEN / VIEW PROFILE THROUGH JOB AD
+        Route::get('/VWPRFL:{jobapp_id}/{url}', 'ClientIndiController@VWPRFL');
+
         Route::get('/initFeedback:{sched_id}', 'ClientIndiController@initFeedback');
         Route::post('/doFeedback', 'ClientIndiController@doFeedback');
         Route::get('/reviews', 'ClientIndiController@reviews');

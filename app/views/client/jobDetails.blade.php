@@ -196,15 +196,17 @@
                             @foreach($custom_skills as $cs)
                                 {{$cs->skill}} <br/>
                             @endforeach
-                            {{--<span style="background-color: #1ABC9C;" title="{{$job->categoryname}}" class="badge">--}}
-                                {{--{{ $job->categoryname }}--}}
-                            {{--</span>--}}
-                            {{--<span style="background-color: #3498DB;" title="{{ $job->itemname }}" class="badge">--}}
-                                {{--{{ $job->itemname }}--}}
-                            {{--</span>--}}
-                            {{--@foreach($custom_skills as $cs)--}}
-                                {{--<span style="background-color: #3498DB;" title="{{$cs->skill}}" class="badge">{{$cs->skill}}</span>--}}
-                            {{--@endforeach--}}
+                            <!--
+                            <span style="background-color: #1ABC9C;" title="{{$job->categoryname}}" class="badge">
+                                {{ $job->categoryname }}
+                            </span>
+                            <span style="background-color: #3498DB;" title="{{ $job->itemname }}" class="badge">
+                                {{ $job->itemname }}
+                            </span>
+                            @foreach($custom_skills as $cs)
+                                <span style="background-color: #3498DB;" title="{{$cs->skill}}" class="badge">{{$cs->skill}}</span>
+                            @endforeach
+                            -->
                         </div>
                         <br/><br/><br/>
                     </div>
@@ -369,7 +371,7 @@
                                 @endif
                             </a>
                             <div class="media-body update-card-body">
-                                <a href="/{{$a->username}}" target="_tab">
+                                <a href="/VWPRFL:{{$a->jobapp_id}}/{{$a->username}}" target="_tab">
                                     @if(in_array($a->id, $CHECKED_OUT_USERS))
                                         <h4 class="media-heading">{{ $a->fullName }}</h4>
                                     @else
