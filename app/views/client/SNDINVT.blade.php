@@ -147,16 +147,15 @@
 <section>
     <div class="container lato-text">
         <div class="col-md-7">
-
             <div class="widget-container padded" style="display: flex; min-height:125px; display:block !important;">
-                <h3 style="margin: 0;"><a href="/jobDetails={{$job->id}}">{{$job->title}}</a></h3>
+                <h3 style="margin: 0;">{{$job->title}}</h3>
                 <span style="color: #7F8C8D; font-size: 0.8em;">{{$job->created_at}}</span>
                 <br/>
                 <br/>
                 <div class="row" style="text-align: left">
                     <div class="col-md-6">
                         <div class="col-md-12">
-                            <i class="fa fa-clock-o"></i>&nbsp;
+                            <label>Work Duration : </label>
                             @if($job->hiring_type == 'LT6MOS')
                                 Less than 6 months
                             @else
@@ -164,24 +163,23 @@
                             @endif
                         </div>
                         <div class="col-md-12">
-                            <i class="fa fa-map-marker"></i>&nbsp;&nbsp;&nbsp;{{ $job->cityname }}, {{ $job->regname }}
+                            <label>Work Location : </label>{{ $job->cityname }}, {{ $job->regname }}
                         </div>
                         @if($job->salary != 0)
-                            <div class="col-md-12">P{{ $job->salary }}</div>
+                            <div class="col-md-12">
+                                <label>Salary : </label>
+                                P{{ $job->salary }}
+                            </div>
                         @endif
                         <br/>
                         <br/>
                         <br/>
                         <br/>
                         <div class="col-md-12">
-                            <span style="background-color: #1ABC9C;" title="{{$job->categoryname}}" class="badge">
-                                {{ $job->categoryname }}
-                            </span>
-                            <span style="background-color: #3498DB;" title="{{ $job->itemname }}" class="badge">
-                                {{ $job->itemname }}
-                            </span>
+                            <label>Skill Category : </label>{{ $job->categoryname }}<br/>
+                            <label>Skills Needed : </label>{{$job->itemname}}
                             @foreach($custom_skills as $cs)
-                                <span style="background-color: #3498DB;" title="{{$cs->skill}}" class="badge">{{$cs->skill}}</span>
+                                {{$cs->skill}} <br/>
                             @endforeach
                         </div>
                         <br/><br/><br/>
