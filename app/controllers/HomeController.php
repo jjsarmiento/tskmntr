@@ -1373,7 +1373,18 @@ class HomeController extends BaseController {
         if($role != 'ADMIN'){
             return View::make('messages')->with('threads', Thread::where('user_id', Auth::user()->id)->where('status', 'OPEN')->orderBy('created_at', 'ASC')->get());
         }else{
-            return View::make('admin.adminmessage');
+            $msgs = User::join('admin_messages', 'admin_messages.sender_id', '=', 'users.id')
+                ->where('admin_messages.status', 'NEW')
+                ->whereNotIn('admin_messages.sender_id', [Auth::user()->id])
+                ->groupBy('users.id')
+                ->select([
+                    'users.id',
+                    'users.username',
+                    'users.fullName'
+                ])
+                ->get();
+            return View::make('admin.adminmessage')
+                ->with('msgs', $msgs);
         }
     }
 

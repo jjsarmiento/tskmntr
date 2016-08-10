@@ -274,11 +274,19 @@
                                     <span id="FAILMSG" style="display: none;">
                                         <center> <i>No users found</i></center>
                                     </span>
-                                    {{--<div style="border-bottom: solid 1px #bdc3c7; padding: 0.9em; background-color: white;">--}}
-                                        {{--<b>Jan Sarmiento</b>--}}
-                                        {{--<br/>--}}
-                                        {{--<span style="font-size: 0.8em">Username</span>--}}
-                                    {{--</div>--}}
+                                    @foreach($msgs as $m)
+                                        <div data-userid="{{$m->id}}" class="DIVCHAT" style="cursor: pointer; border-bottom: solid 1px #bdc3c7; padding: 0.9em; background-color: white;">
+                                            <b class="FULLNAME">{{$m->fullName}}</b><br>
+                                            <span style="font-size: 0.8em" class="USERNAME">{{$m->username}}</span>
+                                        </div>
+                                    @endforeach
+                                    <!--
+                                    <div style="border-bottom: solid 1px #bdc3c7; padding: 0.9em; background-color: white;">
+                                        <b>Jan Sarmiento</b>
+                                        <br/>
+                                        <span style="font-size: 0.8em">Username</span>
+                                    </div>
+                                    -->
                                 </div>
                             </div>
                         </div>
