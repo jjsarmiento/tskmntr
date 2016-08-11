@@ -7,7 +7,9 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){ // test()
-        return $this->PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
+        Notification::where('user_id', Auth::user()->id)->update([
+           'status' =>  'OLD'
+        ]);
     }
 
     function generateConfirmationCode(){
@@ -863,6 +865,7 @@ class HomeController extends BaseController {
                     break;
                 case 'CLIENT_IND' :
                 case 'CLIENT_CMP' :
+                    BaseController::SUBSCRIPTION_UPDATE(Auth::user()->id);
                     BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
                     BaseController::CHECK_EMPLOYER_POINTS(Auth::user()->id);
                     $CHECKEDOUT_WORKERS = $this->GET_ALL_CHECKEDOUT_WORKERS(Auth::user()->id);
@@ -1839,6 +1842,10 @@ class HomeController extends BaseController {
                 }
             }
         }
+    }
+
+    public function PRVKUPDTSBSCRPTNS($user_id){
+        BaseController::SUBSCRIPTION_UPDATE($user_id);
     }
 }
 

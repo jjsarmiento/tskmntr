@@ -31,7 +31,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     }
 
     static function getNotif(){
-        return Notification::where('user_id', Auth::user()->id)->where('status', 'NEW')->take(5)->orderBy('created_at', 'DESC')->get();
+        return Notification::where('user_id', Auth::user()->id)->where('status', 'NEW')->orderBy('created_at', 'DESC')->get();
     }
 
     static function getSkills($id){

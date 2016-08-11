@@ -520,6 +520,8 @@ class BaseController extends Controller {
     }
 
     public static function SUBSCRIPTION_UPDATE($employerID){
+        $notif_days = [15,13,11,9,7,5,3,2];
+
         $url = '/TOPTUP';
         $bc = new BaseController();
         $subscription_id = User::where('id', $employerID)->pluck('accountType');
@@ -527,11 +529,18 @@ class BaseController extends Controller {
         if($subscription_details && !$subscription_details->expired){
             if(time() > strtotime($subscription_details->expires_at)){
                 $msg = 'Your subscription has expired';
-                $bc->NOTIFICATION_INSERT($employerID, $msg, $url);
+                $NOTIF_EXISTS = Notification::where('user_id', $employerID)->where('content', $msg)->where('notif_url', $url)->count();
+                if($NOTIF_EXISTS == 0){
+                    $bc->NOTIFICATION_INSERT($employerID, $msg, $url);
+                }
                 BaseController::SUBSCRIPTION_EXPIRED($subscription_id, $employerID);
-            }elseif(Carbon::now()->diffInDays(Carbon::parse($subscription_details->expires_at)) <= 3){
-                $msg = 'Your subscription will expire in less than 3 days';
-                $bc->NOTIFICATION_INSERT($employerID, $msg, $url);
+            }elseif(in_array(Carbon::now()->diffInDays(Carbon::parse($subscription_details->expires_at)), $notif_days)){
+                $days = Carbon::now()->diffInDays(Carbon::parse($subscription_details->expires_at));
+                $msg = 'Your subscription will expire in less than '.$days.' days';
+                $NOTIF_EXISTS = Notification::where('user_id', $employerID)->where('content', $msg)->where('notif_url', $url)->count();
+                if($NOTIF_EXISTS == 0){
+                    $bc->NOTIFICATION_INSERT($employerID, $msg, $url);
+                }
             }
         }
     }

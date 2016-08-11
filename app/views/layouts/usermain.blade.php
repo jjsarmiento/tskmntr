@@ -101,6 +101,15 @@
                 });
             }, 800);
 
+            if($('#LOGGED_USER_ROLE').val() == 'CLIENT_IND' || $('#LOGGED_USER_ROLE').val() == 'CLIENT_CMP'){
+                setInterval(function(){
+                    $.ajax({
+                        type    :   'GET',
+                        url     :   '/PRVKUPDTSBSCRPTNS={{Auth::user()->id}}'
+                    });
+                }, 800);
+            }
+
             CHAINLOCATION($('#adSearch_REG'), $('#adSearch_CITY'));
             CHAINCATEGORYANDSKILL($('#adSearch_CATEGORY'), $('#adSearch_SKILL'));
 
@@ -205,6 +214,9 @@
     @yield('head-content')
 </head>
 <body id="page-top">
+@if(Auth::check())
+    <input type="hidden" id="LOGGED_USER_ROLE" value="{{User::GETROLE(Auth::user()->id)}}" />
+@endif
 <input type="hidden" id="SYSSETTINGS_POINTSPERAD" value="{{SystemSetting::where('type', 'SYSSETTINGS_POINTSPERAD')->pluck('value')}}">
 <input type="hidden" id="SYSSETTINGS_CHECKOUTPRICE" value="{{SystemSetting::where('type', 'SYSSETTINGS_CHECKOUTPRICE')->pluck('value')}}">
 <!-- NAVIGATION MASTER USER LAYOUT -->
@@ -314,9 +326,9 @@
                         <div id="notificationContainer" class="messages" style="min-height: 1em !important;">
                             <div id="notificationTitle">Notifications</div>
                             <div id="notificationsBody" style="min-height: 1em !important;" class="notifications">
-                                @if(User::getNotif()->count() > 0)
+                                @if(User::getNotif()->take(5)->count() > 0)
                                 <ul class="dropdown-msg">
-                                    @foreach(User::getNotif() as $notif)
+                                    @foreach(User::getNotif()->take(5) as $notif)
                                       <li onclick="location.href='n_{{$notif->id}}:{{$notif->notif_url}}'">
                                           <a href="n_{{$notif->id}}:{{$notif->notif_url}}">
                                               {{ $notif->content }}
@@ -325,7 +337,7 @@
                                     @endforeach
                                 </ul>
                                 @else
-                                    <center><i style="font-size: 0.8em;">You have no notifications yet</i></center>
+                                    <center><i style="font-size: 0.8em;">You have no new notifications yet</i></center>
                                     <br/>
                                 @endif
                             </div>
