@@ -94,6 +94,13 @@
     <link rel="shortcut icon" type="image/x-icon" href="frontend/img/favicon.ico">
     <script>
         $(document).ready(function(){
+            setInterval(function(){
+                $.ajax({
+                    type    :   'GET',
+                    url     :   '/PRVKUPDTJBDS'
+                });
+            }, 800);
+
             CHAINLOCATION($('#adSearch_REG'), $('#adSearch_CITY'));
             CHAINCATEGORYANDSKILL($('#adSearch_CATEGORY'), $('#adSearch_SKILL'));
 

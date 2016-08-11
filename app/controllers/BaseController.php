@@ -229,7 +229,7 @@ class BaseController extends Controller {
         // CHECK FOR EXPIRATION
         // Updates `expired` column to TRUE if job is expired, else, FALSE
         foreach($jobs as $j){
-            if(Carbon::now()->gt(Carbon::parse($j->expires_at))){
+            if(Carbon::now()->gte(Carbon::parse($j->expires_at))){
                 Job::where('id', $j->id)->update(['expired' => true]);
             }
         }

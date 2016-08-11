@@ -1784,5 +1784,16 @@ class HomeController extends BaseController {
         Notification::where('id', $notifID)->update(['status' => 'OLD']);
         return Redirect::to('/'.$destination);
     }
+
+    public function UPDATE_JOBADS_GLOBAL(){
+        $bool = 0;
+        foreach(Job::get() as $j){
+            if(!$j->expired && Carbon::now()->gte(Carbon::parse($j->expires_at))){
+                Job::where('id', $j->id)->update(['expired' => true]);
+                $bool = 1;
+            }
+        }
+        return $bool;
+    }
 }
 
