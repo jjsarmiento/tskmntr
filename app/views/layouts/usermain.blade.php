@@ -136,8 +136,8 @@
                         $('#CRT_TOTAL').empty();
                         $('#CHECKOUTFORM').empty();
                         $.each(data, function(key,value){
-                            var worker_name = value['fullName'].charAt(0)+'**********';
-
+//                            var worker_name = value['fullName'].charAt(0)+'**********';
+                            var worker_name = (value['purchID'] == null) ? value['fullName'].charAt(0)+'**********' : value['fullName'];
                             $('#CARTCONTENTS').append('<a class="CART-ITEMS" href="/'+value['username']+'" target="_tab">'+worker_name+'</a>&nbsp;&nbsp;<a href="/removeCartItem:'+value['cartID']+'"><i class="fa fa-close"></i></a><br/>');
                             $('#CHECKOUTFORM').append('<input type="hidden" name="WORKERID[]" value="'+value['workerID']+'" />')
                         });

@@ -1586,8 +1586,10 @@ class ClientIndiController extends \BaseController {
 
     public function GET_CART_CONTENTS(){
         $cartdetails = Cart::join('users', 'carts.worker_id', '=', 'users.id')
+                        ->leftJoin('purchases', 'carts.worker_id', '=', 'purchases.worker_id')
                         ->where('carts.company_id', Auth::user()->id)
                         ->select([
+                            'purchases.id as purchID',
                             'users.id as workerID',
                             'users.fullName',
                             'users.username',
