@@ -137,6 +137,8 @@ class HomeController extends BaseController {
                             'barangays.bgyname',
                         ])
                         ->first();
+
+                    $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Visited profile of <a href="/viewUserProfile/'.$users->id.'">'.$users->fullName.'</a>');
                     return View::make('profile_worker')
                         ->with("users", $users)
                         ->with('roles', $role)
@@ -172,6 +174,7 @@ class HomeController extends BaseController {
                                 ])
                                 ->first();
 
+                    $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Visited profile of <a href="/viewUserProfile/'.$users->id.'">'.$users->fullName.'</a>');
                     $license = Document::where('user_id', $users->id)->where('type', 'DOLE_POEA_LISENCE')->first();
                     return View::make('profile_clients')
                         ->with('license', $license)
@@ -179,8 +182,10 @@ class HomeController extends BaseController {
                 }
             }else{
                 if($role == 'TASKMINATOR'){
+                    $users = User::where('username', '=', $username)->get()->first();
+                    $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Visited profile of <a href="/viewUserProfile/'.$users->id.'">'.$users->fullName.'</a>');
                     return View::make("publicProfile")
-                        ->with("users", User::where('username', '=', $username)->get()->first())
+                        ->with("users", $users)
                         ->with('roles', $role)
                         ->with('mobile', $mobile)
                         ->with('CLIENTFLAG', $CLIENTFLAG)
@@ -191,9 +196,7 @@ class HomeController extends BaseController {
                     return View::make('ERRORPAGE');
                 }
             }
-
         }else{
-//            return "ROUTE DOESN'T EXIST";
             return View::make('ERRORPAGE');
         }
     }
@@ -306,12 +309,13 @@ class HomeController extends BaseController {
                 });
                 // VALIDATE EMAIL - SEND MAIL NOTIFICATION -- END
                 BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER($userId);
+                $this->INSERT_AUDIT_TRAIL($userId, 'Created employer account.');
                 Session::flash('successMsg', 'We have sent a validation link to your email! <br/> Please validate your account to start using Proveek');
                 return Redirect::to('/login');
             }
         }
     }
-
+    /*
     public function doRegisterComp(){
         Input::merge(array_map('trim', Input::all()));
 
@@ -423,7 +427,7 @@ class HomeController extends BaseController {
         Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')));
         return Redirect::to('/')->with('successMsg', 'Registration Success. You may now login.');
     }
-
+    */
     public function checkCaptcha(){
         // check captcha
         $check = SimpleCaptcha::check($_POST['captcha']);
@@ -620,11 +624,13 @@ class HomeController extends BaseController {
 
                 Auth::attempt(array('username' => Input::get('uName'), 'password' => Input::get('pass')));
                 BaseController::PROVEEK_PROFILE_PERCENTAGE_WORKER($userId);
+                $this->INSERT_AUDIT_TRAIL($userId, 'Created Worker Account');
                 // return Redirect::to('/doVerifyMobileNumber');
                 return Redirect::to('/');
             }//end of inner if else
         }//end of outer if else
-
+        Auth::logout();
+        return Redirect::to('/');
     }//end regWorker
 
     /*
@@ -1000,7 +1006,7 @@ class HomeController extends BaseController {
             return Province::where('regcode', $region)->orderBy('provname', 'ASC')->get();
         }
     }
-
+    /*
     public function regTaskminator(){
         $fName = Input::get('fName');
         $lName = Input::get('lName');
@@ -1093,7 +1099,7 @@ class HomeController extends BaseController {
             ->with('barangays', Barangay::where('citycode', '012801')->orderBy('bgyname', 'ASC')->get())
             ->with('cities', City::where('regcode', '01')->orderBy('cityname', 'ASC')->get());
     }
-
+    */
     public function changePassword(){
         $flag = 'SUCCESS';
         $msg = '';
@@ -1137,6 +1143,7 @@ class HomeController extends BaseController {
             });
 
             $msg = 'Forgot Password link has been sent';
+            $this->INSERT_AUDIT_TRAIL($userId, 'Forgot password Initiated.');
         }
 
         return array(
@@ -1196,6 +1203,7 @@ class HomeController extends BaseController {
         }else if($user->pluck('status') != 'DEACTIVATED'){
             return Redirect::to('/');
         }else{
+            $this->INSERT_AUDIT_TRAIL($user->pluck('id'), 'Reset password Initiated.');
             return View::make('forgotpass')->with('user', User::where('confirmationCode', $confirmationCode)->first());
         }
     }
@@ -1208,6 +1216,7 @@ class HomeController extends BaseController {
         }else if($user->pluck('status') != 'DEACTIVATED'){
             return Redirect::to('/');
         }else{
+            $this->INSERT_AUDIT_TRAIL(Input::get('userId'), 'Change password Inititated.');
             return View::make('changepass')->with('user', User::where('confirmationCode', $confirmationCode)->first());
         }
     }
@@ -1227,6 +1236,7 @@ class HomeController extends BaseController {
             'status'        =>  'ACTIVATED'
         ));
 
+        $this->INSERT_AUDIT_TRAIL(Input::get('userId'), 'Reset password Accomplished.');
         Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')));
         return Redirect::to('/');
     }
@@ -1253,6 +1263,7 @@ class HomeController extends BaseController {
             'status'        =>  'ACTIVATED'
         ));
 
+        $this->INSERT_AUDIT_TRAIL(Input::get('userId'), 'Change password Accomplished.');
         Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')));
         return Redirect::to('/');
     }
@@ -1345,6 +1356,7 @@ class HomeController extends BaseController {
             return Redirect::back()->with('errorMsg', $validator);
         }
 
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Uploaded Profile Picture');
         return Redirect::back()->with('successMsg', 'Profile pic upload successful');
     }
 
@@ -1544,6 +1556,7 @@ class HomeController extends BaseController {
                 ->update([
                     'status'    =>  'SELF_DEACTIVATED'
                 ]);
+            $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Self Deactivated Account');
             Auth::logout();
             return Redirect::to('/login');
         }else{
@@ -1563,6 +1576,7 @@ class HomeController extends BaseController {
             'status'    =>  'ACTIVATED'
         ]);
 
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Self Activated Account');
         return Redirect::to('/login');
     }
 
@@ -1583,6 +1597,7 @@ class HomeController extends BaseController {
                     'status'    =>  'PRE_ACTIVATED'
                 ]);
                 Auth::login(User::find($CODE_DETAILS->user_id));
+                $this->INSERT_AUDIT_TRAIL($CODE_DETAILS->user_id, 'Verified Account');
                 return Redirect::to('/login')
                     ->with('successMsg', 'You may now user your Proveek account!');
             }
@@ -1621,6 +1636,7 @@ class HomeController extends BaseController {
             $message->to($email)->subject('Proveek BETA - Resend Validation Link');
         });
 
+        $this->INSERT_AUDIT_TRAIL($userid, 'Sent Validation Link to email : '.$email);
         return Redirect::to('/login')
                 ->with('successMsg', 'A new validation link has been sent to your '.$email);
     }
@@ -1762,6 +1778,7 @@ class HomeController extends BaseController {
                         });
 
                         Auth::logout();
+                        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Change Email - Sent Verification Link to email : '.$email);
                         Session::flash('successMsg', 'We have sent a validation link to '.$email.' <br/> Please validate your account to start using Proveek');
                         return Redirect::to('/login');
                     }else{
