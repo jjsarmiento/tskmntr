@@ -37,6 +37,63 @@
 
 </head>
 
+<style type="text/css">
+    a.tooltips {outline:none; }
+    a.tooltips strong {line-height:30px;}
+    a.tooltips:hover {text-decoration:none;} 
+    a.tooltips span {
+        z-index:10;display:none; padding:14px 20px;
+        margin-top:-30px; margin-left:28px;
+        width:300px; line-height:16px;
+    }
+    a.tooltips:hover span{
+        display:inline; position:absolute; color:#111;
+        border:1px solid #DCA; background:#fffAF0;}
+    .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
+        
+    /*CSS3 extras*/
+    a.tooltips span
+    {
+        border-radius:4px;
+        box-shadow: 5px 5px 8px #CCC;
+    }
+    .col-md-4 .hayt img {
+        height: 50px;
+    }
+
+    span.OrClass{
+        height: 115px;
+        width: 320px;
+        font-size: 35px;
+        display: table-cell;
+        margin: auto;
+        color: rgb(102, 102, 102);
+        visibility: visible;
+        animation-delay: 0.3s;
+        animation-name: fadeIn;
+        vertical-align: middle;
+        text-align: center;
+    }
+    @media (max-width: 991px) {
+        .desk {
+            display: none;
+        }
+        .mob {
+            display:block !important;
+        }
+        a.tooltips span {
+            margin-left: -175px;
+            box-shadow: 0px 3px 8px #CCC;
+        }
+        img.callout {
+            display: none;
+        }
+        .hire {
+                margin-left: -165px !important;
+        }
+    }
+</style>
+
 <body id="page-top">
     <div class="toTop">
         <a class="page-scroll text-primary" href="#page-top" style="text-decoration:none; outline:none;">
@@ -122,14 +179,101 @@
 <!-- STEPS ON HOW IT WORKS -->
     <section id="works" style="padding-top:40px;padding-bottom:40px;">
         <div class="container-fluid">
-            <div class="row">
+            <div class="row desk">
                 <div class="col-lg-6 text-center" style="border-right: 1px solid #ccc;">
                     <i class="fa fa-5x fa-user-plus wow bounceIn text-primary" data-wow-delay=".1s"></i>
                     <h2 class="section-heading">For Job Providers</h2>
                     <hr class="text-primary">
                     <div class="col-lg-1"></div>
-                    <div class="col-lg-10">
-                        <img src="frontend/img/pw_jobP.jpg" class="wow fadeIn" data-wow-delay=".3s">
+                    <div class="col-lg-10 padded">
+                        <div class="row" >
+                            <div class="col-md-4 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobP/browse.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Browse
+                                    <span>
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Browse</strong><br />
+                                        You can browse on the pool of worker's profile.
+                                    </span>
+                                </a>
+                            </div>  
+                            <div class="col-md-4 padded" style="border-left: 1px solid #666; border-right: 1px solid #666; height:115px;">
+                                <!--BLANK-->
+                            </div>
+                            <div class="col-md-4 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobP/postajob.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Post a job
+                                    <span>
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Post a job</strong><br />
+                                        You can post a job and wait for workers to apply.
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row" >
+                            <div class="col-md-4 padded">
+                                <img src="frontend/img/pw_jobP/down.png" class="hayt wow fadeIn" data-wow-delay=".3s">
+                            </div>  
+                            <div class="col-md-4" style="border-left: 1px solid #666; border-right: 1px solid #666; height:115px;">
+                                <span class="wow fadeIn OrClass" data-wow-delay=".3s">OR</span>
+                            </div>
+                            <div class="col-md-4 padded">
+                                <img src="frontend/img/pw_jobP/down.png" class="hayt wow fadeIn" data-wow-delay=".3s">
+                            </div>
+                        </div>
+
+                        <div class="row" >
+                            <div class="col-md-4 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobP/choose.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Choose
+                                    <span>
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Choose</strong><br />
+                                        You can directly choose a profile and invite them to apply to your job ad or you can bookmark their profile for future references or for bulk invitations.
+                                    </span>
+                                </a>
+                            </div>  
+                            <div class="col-md-4" style="border-left: 1px solid #666; border-right: 1px solid #666; height:115px;">
+                                <!--BLANK-->
+                            </div>
+                            <div class="col-md-4 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobP/compare.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Compare
+                                    <span>
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Compare</strong><br />
+                                        Compare the profile of the workers who apply for the job.
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row" >
+                            <div class="col-md-4 padded">
+                                <img src="frontend/img/pw_jobP/right.png" class="hayt wow fadeIn" data-wow-delay=".3s">
+                            </div>  
+                            <div class="col-md-4 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobP/hire.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Hire
+                                    <span>
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Hire</strong><br />
+                                        You can check out the contact details of the workers who you invite to apply or who you choose from the pool of workers who applied to your job ad. Contact them and hire them.
+                                    </span>
+                                </a>
+                            </div>  
+                            <div class="col-md-4 padded">
+                                <img src="frontend/img/pw_jobP/left.png" class="hayt wow fadeIn" data-wow-delay=".3s">
+                            </div>
+                        </div>
+
                     </div>
                     <div class="col-lg-1"></div>
                 </div>
@@ -176,11 +320,81 @@
                     <i class="fa fa-5x fa-hand-paper-o wow bounceIn text-primary" data-wow-delay=".2s"></i>
                     <h2 class="section-heading">For Job Seekers</h2>
                     <hr class="text-primary">
+                    <br>
                     <div class="col-lg-1"></div>
-                    <div class="col-lg-10">
-                        <img src="frontend/img/pw_jobS.jpg" class="wow fadeIn" data-wow-delay=".4s">
+                    <div class="col-lg-10 padded">
+                        <div class="row padded">
+                            <div class="col-md-4">
+                                <img src="frontend/img/pw_jobS/down.png" class="wow fadeIn" data-wow-delay=".3s">
+                            </div>  
+                            <div class="col-md-4">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobS/signup.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Sign Up
+                                    <span>
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Sign Up</strong><br />
+                                        Make sure to provide a correct, complete and updated profile for you to be hired easily.
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="frontend/img/pw_jobS/down2.png" class="wow fadeIn" data-wow-delay=".3s">
+                            </div>
+                        </div>
+
+                        <div class="row padded">
+                            <div class="col-md-4">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobS/waitforjob.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Wait for Job Invitation
+                                    <span>
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Wait for Job Invitation</strong><br />
+                                        You can wait for Employers to send you invitation to apply to their Jobs Ads.
+                                    </span>
+                                </a>
+                            </div>  
+                            <div class="col-md-4" style="border-left: 1px solid #666; border-right: 1px solid #666;">
+                                <span class="wow fadeIn OrClass" data-wow-delay=".3s">OR</span>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobS/bidforjob.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Apply for a Job
+                                    <span style="margin-left: -425px !important; box-shadow: -5px 5px 8px #CCC;">
+                                        <img class="callout" style="left: 298px; -ms-transform: rotate(180deg); -webkit-transform: rotate(180deg); transform: rotate(180deg);" src="frontend/img/callout.gif" />
+                                        <strong>Apply for a Job</strong><br />
+                                        You can search for a job and directly send your application.
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row padded">
+                            <div class="col-md-4">
+                                <img src="frontend/img/pw_jobS/right.png" class="wow fadeIn" data-wow-delay=".3s">
+                            </div>  
+                            <div class="col-md-4">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobS/gethired.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Get Hired
+                                    <span>
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Get Hired</strong><br />
+                                        Wait for the employer to contact you once you are shortlisted for the job.
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="frontend/img/pw_jobS/left.png" class="wow fadeIn" data-wow-delay=".3s">
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-1"></div>
+
+                    <!--First tooltips-->
+
 <!-- HARD CODE DESIGN DIAGRAM -->
                    <!--  <div class="col-lg-4">
                         <div class="text-center" style="padding-top:20px; padding-bottom:20px;">
@@ -215,7 +429,206 @@
 <!-- END OF -->
                 </div>
             </div>
-        </div>
+
+            <div class="row mob" style="display:none;">
+                <div class="col-lg-6 text-center" style="border-right: 1px solid #ccc;">
+                    <i class="fa fa-5x fa-user-plus wow bounceIn text-primary" data-wow-delay=".1s"></i>
+                    <h2 class="section-heading">For Job Providers</h2>
+                    <hr class="text-primary">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10">
+                        <div class="row" >
+                            <div class="col-md-12 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobP/browse.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Browse
+                                    <span>
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Browse</strong><br />
+                                        You can browse on the pool of worker's profile.
+                                    </span>
+                                </a>
+                            </div> 
+                            <div class="col-md-12 padded">
+                                <img src="frontend/img/pw_jobP/down.png" class="hayt wow fadeIn" data-wow-delay=".3s">
+                            </div> 
+                            <div class="col-md-12 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobP/choose.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Choose
+                                    <span>
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Choose</strong><br />
+                                        You can directly choose a profile and invite them to apply to your job ad or you can bookmark their profile for future references or for bulk invitations.
+                                    </span>
+                                </a>
+                            </div>  
+                            <div class="col-md-12 padded">
+                                <img src="frontend/img/pw_jobP/down.png" class="hayt wow fadeIn" data-wow-delay=".3s">
+                            </div>
+                            <div class="col-md-12 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobP/hire.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Hire
+                                    <span class="hire">
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Hire</strong><br />
+                                        You can check out the contact details of the workers who you invite to apply or who you choose from the pool of workers who applied to your job ad. Contact them and hire them.
+                                    </span>
+                                </a>
+                            </div> 
+                            <div class="col-md-12">
+                            <hr style="max-width:100%; border-width: 1px;">
+                                <span class="wow fadeIn" data-wow-delay=".3s"  style="font-size: 35px; padding:20px;">OR</span>
+                            <hr style="max-width:100%; border-width: 1px;">
+                            </div>          
+
+                            <div class="col-md-12 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobP/postajob.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Post a job
+                                    <span style="margin-left:-180px;">
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Post a job</strong><br />
+                                        You can post a job and wait for workers to apply.
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="col-md-12 padded">
+                                <img src="frontend/img/pw_jobP/down.png" class="hayt wow fadeIn" data-wow-delay=".3s">
+                            </div>
+                            <div class="col-md-12 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobP/compare.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Compare
+                                    <span style="margin-left:-180px;">
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Compare</strong><br />
+                                        Compare the profile of the workers who apply for the job.
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="col-md-12 padded">
+                                <img src="frontend/img/pw_jobP/down.png" class="hayt wow fadeIn" data-wow-delay=".3s">
+                            </div>
+                            <div class="col-md-12 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobP/hire.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Hire
+                                    <span class="hire">
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Hire</strong><br />
+                                        You can check out the contact details of the workers who you invite to apply or who you choose from the pool of workers who applied to your job ad. Contact them and hire them.
+                                    </span>
+                                </a>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="col-lg-1"></div>                    
+                </div>
+                <hr style="max-width: 100%; border-color: #dadada; border-width: 1px; margin-bottom: 40px;">
+                <div class="col-lg-6 text-center">
+                    <i class="fa fa-5x fa-hand-paper-o wow bounceIn text-primary" data-wow-delay=".2s"></i>
+                    <h2 class="section-heading">For Job Seekers</h2>
+                    <hr class="text-primary">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10">
+                        <div class="row">
+                            <div class="col-md-12 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobS/signup.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Sign Up
+                                    <span>
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Sign Up</strong><br />
+                                        Make sure to provide a correct, complete and updated profile for you to be hired easily.
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="col-md-12 padded">
+                                <img src="frontend/img/pw_jobP/down.png" class="hayt wow fadeIn" data-wow-delay=".3s">
+                            </div>
+                            <div class="col-md-12 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobS/waitforjob.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Wait for Job Invitation
+                                    <span style="margin-left: -227px;">
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Wait for Job Invitation</strong><br />
+                                        You can wait for Employers to send you invitation to apply to their Jobs Ads.
+                                    </span>
+                                </a>
+                            </div> 
+                            <div class="col-md-12 padded">
+                                <img src="frontend/img/pw_jobP/down.png" class="hayt wow fadeIn" data-wow-delay=".3s">
+                            </div>
+                            <div class="col-md-12 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobS/gethired.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Get Hired
+                                    <span style="margin-left: -182px;">
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Get Hired</strong><br />
+                                        Wait for the employer to contact you once you are shortlisted for the job.
+                                    </span>
+                                </a>
+                            </div>
+
+                            <div class="col-md-12">
+                            <hr style="max-width:100%; border-width: 1px;">
+                                <span class="wow fadeIn" data-wow-delay=".3s"  style="font-size: 35px; padding:20px;">OR</span>
+                            <hr style="max-width:100%; border-width: 1px;">
+                            </div> 
+
+                            <div class="col-md-12 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobS/signup.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Sign Up
+                                    <span>
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Sign Up</strong><br />
+                                        Make sure to provide a correct, complete and updated profile for you to be hired easily.
+                                    </span>
+                                </a>
+                            </div> 
+
+                            <div class="col-md-12 padded">
+                                <img src="frontend/img/pw_jobP/down.png" class="hayt wow fadeIn" data-wow-delay=".3s">
+                            </div>
+
+                            <div class="col-md-12 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobS/bidforjob.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Apply for a Job
+                                    <span style="margin-left: -202px;">
+                                        <img class="callout" style="left: 298px; -ms-transform: rotate(180deg); -webkit-transform: rotate(180deg); transform: rotate(180deg);" src="frontend/img/callout.gif" />
+                                        <strong>Apply for a Job</strong><br />
+                                        You can search for a job and directly send your application.
+                                    </span>
+                                </a>
+                            </div>
+
+                            <div class="col-md-12 padded">
+                                <img src="frontend/img/pw_jobP/down.png" class="hayt wow fadeIn" data-wow-delay=".3s">
+                            </div>
+
+                            <div class="col-md-12 padded">
+                                <a class="tooltips">
+                                    <img src="frontend/img/pw_jobS/gethired.png" class="hayt wow fadeIn" data-wow-delay=".3s"><br>
+                                    Get Hired
+                                    <span style="margin-left: -182px;">
+                                        <img class="callout" src="frontend/img/callout.gif" />
+                                        <strong>Get Hired</strong><br />
+                                        Wait for the employer to contact you once you are shortlisted for the job.
+                                    </span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+            </div>
     </section>
 <!-- END OF IT -->
 
@@ -280,7 +693,7 @@
                             <div class="div_footer">
                                 <a href="https://www.facebook.com/proveek"><i class="fa fa-facebook-square fa-3x wow bounceIn" data-wow-delay=".2s"></i></a>
                                 <a href="https://twitter.com/Proveek"><i class="fa fa-twitter-square fa-3x wow bounceIn" data-wow-delay=".3s"></i></a>
-                                <a href="#"><i class="fa fa-instagram fa-3x wow bounceIn" data-wow-delay=".4s"></i></a>
+                                <a href="#"><i class="fa fa-instagram fa-3x wow bounceIn" class="wow fadeIn" data-wow-delay=".3s"></i></a>
                                 <a href="https://plus.google.com/108796854139900682022/posts"><i class="fa fa-google-plus-square fa-3x wow bounceIn" data-wow-delay=".5s"></i></a>
                                 <a href="#"><i class="fa fa-envelope-square fa-3x wow bounceIn" data-wow-delay=".6s"></i></a>
                             </div>
