@@ -96,7 +96,12 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
-    // CREATE ADMIN
+    // POINTS
+    Route::get('/points={user_id}', 'AdminController@points');
+    Route::post('/doAddPoints', 'AdminController@doAddPoints');
+    Route::post('/doSubtractPoints', 'AdminController@doSubtractPoints');
+
+    // MANAGE ADMIN
     Route::get('/CREATE_ADMIN', 'AdminController@CREATE_ADMIN');
     Route::post('/doCREATE_ADMIN', 'AdminController@doCREATE_ADMIN');
     Route::get('/DELETE_ADMIN:{user_id}', 'AdminController@DELETE_ADMIN');

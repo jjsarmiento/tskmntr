@@ -391,6 +391,7 @@
                                         @else
                                             <a style="border-radius: 0.3em;" class="btn btn-warning btn-xs btn-block">{{$user->status}}</a>
                                         @endif
+                                        <a href="/points={{$user->id}}" class="btn btn-warning btn-xs btn-block" style="border-radius: 0.3em;">POINTS</a>
                                         <a href="/addSubscription={{$user->id}}" class="btn btn-primary btn-xs btn-block" style="border-radius: 0.3em;">Subscription</a>
                                     </td>
                                     <td style="text-align: center;"><a style="font-size:1.3em" href="/auditTrail={{$user->id}}"><i class="fa fa-eye"></i></a></td>

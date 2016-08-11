@@ -1470,4 +1470,39 @@ class AdminController extends \BaseController {
         ]);
         return Redirect::back();
     }
+
+    public function points($user_id){
+        return View::make('admin.points')
+            ->with('user', User::find($user_id));
+    }
+
+    public function doAddPoints(){
+        if(is_numeric(Input::get('points'))){
+            User::where('id', Input::get('user_id'))->update([
+                'points'    =>  Input::get('current_points') + Input::get('points')
+            ]);
+
+            Session::flash('successMsg', Input::get('points').' point(s) added');
+            return Redirect::back();
+        }else{
+            Session::flash('errorMsg', 'Please input numeric values only.');
+            return Redirect::back();
+        }
+    }
+
+    public function doSubtractPoints(){
+        if(is_numeric(Input::get('points'))){
+
+            User::where('id', Input::get('user_id'))->update([
+                'points'    =>  $points = (Input::get('current_points') < Input::get('points')) ? 0 : Input::get('current_points') - Input::get('points')
+            ]);
+
+            Session::flash('successMsg', $points.' point(s) subtracted');
+            return Redirect::back();
+        }else{
+            Session::flash('errorMsg', 'Please input numeric values only.');
+            return Redirect::back();
+        }
+
+    }
 }
