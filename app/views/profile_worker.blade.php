@@ -243,9 +243,23 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Supporting Documents</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                @foreach($DOCS as $d)
-                                    <span><i class="fa fa-check-circle" style="color: #1ABC9C; font-size: 1.3em;"></i> {{$d}}</span>&nbsp;&nbsp;
-                                @endforeach
+                                @if($PURCHASED > 0)
+                                    @if(count($DOCS) > 0)
+                                        @foreach($full_docs as $d)
+                                            <a download href="{{$d->path}}"><span><i class="fa fa-check-circle" style="color: #1ABC9C; font-size: 1.3em;"></i> {{$d->label}}</span>&nbsp;&nbsp;</a><br/>
+                                        @endforeach
+                                    @else
+                                        <center>N/A</center>
+                                    @endif
+                                @else
+                                    @if(count($DOCS) > 0)
+                                        @foreach($DOCS as $d)
+                                            <span><i class="fa fa-check-circle" style="color: #1ABC9C; font-size: 1.3em;"></i> {{$d}}</span>&nbsp;&nbsp;<br/>
+                                        @endforeach
+                                    @else
+                                        <center>N/A</center>
+                                    @endif
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -68,6 +68,7 @@ class HomeController extends BaseController {
             $PURCHASED = false;
             $CLIENTFLAG = false;
             $MULTIJOB = false;
+            $full_docs = false;
 
             if(Auth::check()){
                 if($temp->total_profile_progress < 50){
@@ -110,6 +111,10 @@ class HomeController extends BaseController {
                                 'job_invites.created_at'
                             ])
                             ->get();
+
+                        if($PURCHASED > 0){
+                            $full_docs = Document::where('user_id', $temp->id)->get();
+                        }
                     }
 
                     $users = User::where('username', '=', $username)
@@ -140,6 +145,7 @@ class HomeController extends BaseController {
 
                     $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Visited profile of <a href="/viewUserProfile/'.$users->id.'">'.$users->fullName.'</a>');
                     return View::make('profile_worker')
+                        ->with('full_docs', $full_docs)
                         ->with("users", $users)
                         ->with('roles', $role)
                         ->with('mobile', $mobile)
@@ -183,7 +189,6 @@ class HomeController extends BaseController {
             }else{
                 if($role == 'TASKMINATOR'){
                     $users = User::where('username', '=', $username)->get()->first();
-                    $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Visited profile of <a href="/viewUserProfile/'.$users->id.'">'.$users->fullName.'</a>');
                     return View::make("publicProfile")
                         ->with("users", $users)
                         ->with('roles', $role)
