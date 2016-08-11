@@ -395,7 +395,7 @@
                                 </li>
                             @endif
                             @if($role == 'ADMIN')
-                                <li><a href="/CREATE_ADMIN"><i class="fa fa-edit fa-fw"></i> Create Admin</a></li>
+                                <li><a href="/CREATE_ADMIN"><i class="fa fa-key fa-fw"></i> Manage Admin</a></li>
                                 <li><a href="/SYSTEMSETTINGS"><i class="fa fa-cog fa-fw"></i> Settings</a></li>
                             @endif
                             @if($role == 'CLIENT_CMP' || $role == 'CLIENT_IND')

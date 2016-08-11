@@ -1349,4 +1349,108 @@ class AdminController extends \BaseController {
         UserSubscription::find($sub_id)->delete();
         return Redirect::back();
     }
+
+    public function CREATE_ADMIN(){
+        $admins = User::join('user_has_role', 'user_has_role.user_id', '=', 'users.id')
+                ->where('user_has_role.role_id', 1)
+                ->select([
+                    'users.created_at',
+                    'users.username',
+                    'users.fullName',
+                    'users.id'
+                ])
+                ->orderBy('created_at', 'DESC')
+                ->paginate(10);
+
+        return View::make('admin.CREATE_ADMIN')
+                ->with('admins', $admins);
+    }
+
+    public function doCREATE_ADMIN(){
+        if(Input::get('admin_fname') && Input::get('admin_lname') && Input::get('admin_username') && Input::get('admin_password') && Input::get('admin_cpassword')){
+            if(strcmp(Input::get('admin_password'), Input::get('admin_cpassword')) == 0){
+                if(User::where('username', Input::get('admin_username'))->count() == 0){
+                    $ADMIN_ID = User::insertGetId([
+                        'username'  =>  Input::get('admin_username'),
+                        'password'  =>  Hash::make(Input::get('admin_password')),
+                        'firstName' =>  Input::get('admin_fname'),
+                        'midName'   =>  Input::get('admin_mname'),
+                        'lastName'  =>  Input::get('admin_lname'),
+                        'fullName'  =>  Input::get('admin_fname').' '.Input::get('admin_mname').' '.Input::get('admin_lname'),
+                        'created_at'=>  \Carbon\Carbon::now()
+                    ]);
+
+                    UserHasRole::insert(array(
+                        'user_id'           =>  $ADMIN_ID,
+                        'role_id'           =>  1,
+                    ));
+                    Session::flash('successMsg', 'New administrator created');
+                }else{
+                    Session::flash('errorMsg', 'Username already exists');
+                }
+            }else{
+                Session::flash('errorMsg', 'Password does not match');
+            }
+        }else{
+            Session::flash('errorMsg', 'Required fields must be filled out');
+        }
+
+        return Redirect::back()
+            ->withInput();
+    }
+
+    public function DELETE_ADMIN($user_id){
+        User::where('id', $user_id)->delete();
+        UserHasRole::where('user_id', $user_id)->delete();
+        return Redirect::back();
+    }
+
+    public function EDIT_ADMIN($user_id){
+        $admins = User::join('user_has_role', 'user_has_role.user_id', '=', 'users.id')
+            ->where('user_has_role.role_id', 1)
+            ->select([
+                'users.created_at',
+                'users.username',
+                'users.fullName',
+                'users.id'
+            ])
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
+
+        return View::make('admin.EDIT_ADMIN')
+            ->with('admins', $admins)
+            ->with('admin', User::where('id', $user_id)->first());
+    }
+
+    public function doEDIT_ADMIN(){
+        if(Input::get('admin_fname') && Input::get('admin_lname') && Input::get('admin_username') && Input::get('admin_password') && Input::get('admin_cpassword')){
+            if(strcmp(Input::get('admin_password'), Input::get('admin_cpassword')) == 0){
+                if(User::where('username', Input::get('admin_username'))->whereNotIn('id', [Input::get('admin_id')])->count() == 0){
+                    User::where('id', Input::get('admin_id'))->update([
+                        'username'  =>  Input::get('admin_username'),
+                        'password'  =>  Hash::make(Input::get('admin_password')),
+                        'firstName' =>  Input::get('admin_fname'),
+                        'midName'   =>  Input::get('admin_mname'),
+                        'lastName'  =>  Input::get('admin_lname'),
+                        'fullName'  =>  Input::get('admin_fname').' '.Input::get('admin_mname').' '.Input::get('admin_lname'),
+                    ]);
+                    Session::flash('successMsg', 'Administrator account edited');
+                }else{
+                    Session::flash('errorMsg', 'Username already exists');
+                }
+            }else{
+                Session::flash('errorMsg', 'Password does not match');
+            }
+        }else{
+            Session::flash('errorMsg', 'Required fields must be filled out');
+        }
+
+        if(Auth::user()->id == Input::get('admin_id')){
+            Auth::logout();
+            return Redirect::to('/login');
+        }else{
+            return Redirect::back()
+                ->withInput();
+        }
+    }
 }

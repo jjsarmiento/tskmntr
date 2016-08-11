@@ -96,6 +96,13 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+    // CREATE ADMIN
+    Route::get('/CREATE_ADMIN', 'AdminController@CREATE_ADMIN');
+    Route::post('/doCREATE_ADMIN', 'AdminController@doCREATE_ADMIN');
+    Route::get('/DELETE_ADMIN:{user_id}', 'AdminController@DELETE_ADMIN');
+    Route::get('/EDIT_ADMIN:{user_id}', 'AdminController@EDIT_ADMIN');
+    Route::post('/doEDIT_ADMIN', 'AdminController@doEDIT_ADMIN');
+
     // ADD SUBSCRIPTION TO USER
     Route::get('/addSubscription={user_id}', 'AdminController@addSubscription');
     Route::post('/doAddSubscription', 'AdminController@doAddSubscription');
