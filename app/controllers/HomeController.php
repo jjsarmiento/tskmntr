@@ -854,33 +854,27 @@ class HomeController extends BaseController {
                 case 'CLIENT_CMP' :
                     BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
                     BaseController::CHECK_EMPLOYER_POINTS(Auth::user()->id);
-
-                    $jobs = Job::where('user_id', Auth::user()->id)
-                            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
-                            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
-                            ->select([
-                                'jobs.title',
-                                'jobs.id as job_id',
-                                'jobs.expires_at',
-                                'jobs.salary',
-                                'jobs.created_at',
-                                'jobs.description',
-                                'jobs.expired',
-                                'jobs.hiring_type',
-                                'cities.cityname',
-                                'regions.regname',
-                            ])
-                            ->groupBy('jobs.id')
-                            ->take('6')
-                            ->get();
-
+                    $workers = User::join('user_has_role', 'user_has_role.user_id', '=', 'users.id')
+                        ->where('user_has_role.role_id', 2)
+                        ->where('users.total_profile_progress', '>=', 50)
+                        ->select([
+                            'users.id',
+                            'users.fullName',
+                            'users.profilePic',
+                            'users.username',
+                            'users.total_profile_progress',
+                        ])
+                        ->orderBy('users.created_at', 'DESC')
+                        ->take(3)
+                        ->get();
                     return View::make('client.index')
-                    ->with('subscription_msg', $this->SUBSCRIPTION_DURATION_MSG(Auth::user()->id))
-                    ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
-                    ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get())
+                        ->with('workers', $workers)
+                        ->with('subscription_msg', $this->SUBSCRIPTION_DURATION_MSG(Auth::user()->id))
+                        ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
+                        ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get());
 //                    ->with('TOTALPROG', $this->PROFILE_PERCENTAGE_COMPANY(Auth::user()->id))
-                    ->with('tasks', Task::where('user_id', Auth::user()->id)->whereNotIn('status', ['CANCELLED', 'COMPLETE'])->orderBy('created_at', 'DESC')->paginate(10))
-                    ->with('jobs', $jobs);
+//                    ->with('tasks', Task::where('user_id', Auth::user()->id)->whereNotIn('status', ['CANCELLED', 'COMPLETE'])->orderBy('created_at', 'DESC')->paginate(10));
+//                    ->with('jobs', $jobs);
                     break;
                 default :
                     return Redirect::to('/');
@@ -1571,21 +1565,26 @@ class HomeController extends BaseController {
     public function VRFYACCT($code){
         $CODE_DETAILS = ActivationCode::where('code', $code)->first();
 
-        if(time() > strtotime($CODE_DETAILS->duration)){
-            $msg = 'Activation code has expired. Click <a href="/RESENDVALIDATION='.$CODE_DETAILS->user_id.'">here</a> to request for another activation code';
-            return $msg;
-        }else{
-            if(User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_IND' || User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_CMP'){
-                $SETTINGS_TRIAL_SUBSCRIPTION = SystemSetting::where('type', 'SYSSETTINGS_FREE_SUB_ON_REG')->pluck('value');
-                $this->APPLY_SUBSCRIPTION_EMPLOYERS($SETTINGS_TRIAL_SUBSCRIPTION, $CODE_DETAILS->user_id);
+        if($CODE_DETAILS){
+            if(time() > strtotime($CODE_DETAILS->duration)){
+                $msg = 'Activation code has expired. Click <a href="/RESENDVALIDATION='.$CODE_DETAILS->user_id.'">here</a> to request for another activation code';
+                return $msg;
+            }else{
+                if(User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_IND' || User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_CMP'){
+                    $SETTINGS_TRIAL_SUBSCRIPTION = SystemSetting::where('type', 'SYSSETTINGS_FREE_SUB_ON_REG')->pluck('value');
+                    $this->APPLY_SUBSCRIPTION_EMPLOYERS($SETTINGS_TRIAL_SUBSCRIPTION, $CODE_DETAILS->user_id);
+                }
+
+                User::where('id', $CODE_DETAILS->user_id)->update([
+                    'status'    =>  'PRE_ACTIVATED'
+                ]);
+                Auth::login(User::find($CODE_DETAILS->user_id));
+                return Redirect::to('/login')
+                    ->with('successMsg', 'You may now user your Proveek account!');
             }
-
-            User::where('id', $CODE_DETAILS->user_id)->update([
-                'status'    =>  'PRE_ACTIVATED'
-            ]);
-
-            return Redirect::to('/login')
-                ->with('successMsg', 'You may now login your account!');
+        }else{
+            Auth::logout();
+            return Redirect::to('/');
         }
     }
 
@@ -1786,14 +1785,18 @@ class HomeController extends BaseController {
     }
 
     public function UPDATE_JOBADS_GLOBAL(){
-        $bool = 0;
-        foreach(Job::get() as $j){
-            if(!$j->expired && Carbon::now()->gte(Carbon::parse($j->expires_at))){
-                Job::where('id', $j->id)->update(['expired' => true]);
-                $bool = 1;
+        if(Auth::check()){
+            $bool = 0;
+            foreach(Job::get() as $j){
+                if(!$j->expired && Carbon::now()->gte(Carbon::parse($j->expires_at))){
+                    Job::where('id', $j->id)->update(['expired' => true]);
+                    $bool = 1;
+                }
             }
+            return $bool;
+        }else{
+            return 0;
         }
-        return $bool;
     }
 }
 

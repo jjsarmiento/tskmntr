@@ -200,7 +200,6 @@
                             <div class="col-md-9">
                                 <select data-loctype="CITY_TO_BARANGAY" name="barangay-task" id="barangay-task" class="form-control">
                                     @foreach($barangays as $bgy)
-                                        <option value=""></option>
                                         <option value="{{$bgy->bgycode}}" <?php if($bgy->bgycode == $user->barangay){ echo('selected'); } ?> >{{ $bgy->bgyname }}</option>
                                     @endforeach
                                 </select><br/>

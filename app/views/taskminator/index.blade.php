@@ -433,7 +433,7 @@
                     <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
                         <div class="widget-content">
                             <div class="panel-body" style="color:#2980b9; font-size:20pt;">
-                                <i class="fa fa-search" aria-hidden="true"></i> Preferred Job
+                                <i class="fa fa-search" aria-hidden="true"></i> Recommended Jobs
                             </div>
                             <div class="panel-body" style="padding: 0 15px 15px;">
                                 <div class="col-md-12 no-padding">

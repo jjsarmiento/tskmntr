@@ -426,7 +426,7 @@ class TaskminatorController extends \BaseController {
                 ->with('regions', Region::orderBy('regname', 'ASC')->get())
                 ->with('prov', Province::orderBy('provname', 'ASC')->where('regcode', Auth::user()->region)->get())
                 ->with('cities', City::orderBy('cityname', 'ASC')->where('regcode', Auth::user()->region)->get())
-                ->with('barangays', Barangay::orderBy('bgyname', 'ASC')->where('regcode', Auth::user()->city)->get());
+                ->with('barangays', Barangay::orderBy('bgyname', 'ASC')->where('regcode', Auth::user()->region)->get());
     }
 
     public function doEditPersonalInfo(){
