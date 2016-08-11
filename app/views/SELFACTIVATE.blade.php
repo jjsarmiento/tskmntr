@@ -17,8 +17,6 @@
                         <div class="col-md-6">
                             <h4>Personal Information</h4>
                             Name : {{ $user->fullName }}
-                            <br/>
-                            Birthdate : {{ $user->birthdate }}
                         </div>
                         <div class="col-md-6">
                             <h4>Account Information</h4>

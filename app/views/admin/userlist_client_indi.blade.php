@@ -386,7 +386,7 @@
                                     <td>
                                         @if($user->status == 'ACTIVATED')
                                             <a style="border-radius: 0.3em;" data-msg="Confirm account DEACTIVATION of {{$user->fullName}}" class="btn-block ACT_DEAC btn btn-danger btn-xs" data-href="/adminDeactivate/{{$user->id}}">DEACTIVATE</a>
-                                        @elseif($user->Status == 'DEACTIVATED')
+                                        @elseif($user->status == 'DEACTIVATED' || $user->status == 'SELF_DEACTIVATED')
                                             <a style="border-radius: 0.3em;" data-msg="Confirm account ACTIVATION of {{$user->fullName}}" class="btn-block ACT_DEAC btn btn-success btn-xs" data-href="/adminActivate/{{$user->id}}">ACTIVATE</a>
                                         @else
                                             <a style="border-radius: 0.3em;" class="btn btn-warning btn-xs btn-block">{{$user->status}}</a>
