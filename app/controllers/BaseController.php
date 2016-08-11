@@ -520,7 +520,7 @@ class BaseController extends Controller {
     }
 
     public static function SUBSCRIPTION_UPDATE($employerID){
-        $notif_days = [15,13,11,9,7,5,3,2];
+        $notif_days = [15,13,11,9,7,5,3,2,1];
 
         $url = '/TOPTUP';
         $bc = new BaseController();
@@ -536,7 +536,7 @@ class BaseController extends Controller {
                 BaseController::SUBSCRIPTION_EXPIRED($subscription_id, $employerID);
             }elseif(in_array(Carbon::now()->diffInDays(Carbon::parse($subscription_details->expires_at)), $notif_days)){
                 $days = Carbon::now()->diffInDays(Carbon::parse($subscription_details->expires_at));
-                $msg = 'Your subscription will expire in less than '.$days.' days';
+                $msg = 'Your subscription will expire in less than '.$days.' day(s)';
                 $NOTIF_EXISTS = Notification::where('user_id', $employerID)->where('content', $msg)->where('notif_url', $url)->count();
                 if($NOTIF_EXISTS == 0){
                     $bc->NOTIFICATION_INSERT($employerID, $msg, $url);

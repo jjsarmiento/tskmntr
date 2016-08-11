@@ -99,7 +99,7 @@
                     type    :   'GET',
                     url     :   '/PRVKUPDTJBDS'
                 });
-            }, 800);
+            }, 2000);
 
             if($('#LOGGED_USER_ROLE').val() == 'CLIENT_IND' || $('#LOGGED_USER_ROLE').val() == 'CLIENT_CMP'){
                 setInterval(function(){
@@ -107,7 +107,7 @@
                         type    :   'GET',
                         url     :   '/PRVKUPDTSBSCRPTNS={{Auth::user()->id}}'
                     });
-                }, 800);
+                }, 2000);
             }
 
             CHAINLOCATION($('#adSearch_REG'), $('#adSearch_CITY'));
