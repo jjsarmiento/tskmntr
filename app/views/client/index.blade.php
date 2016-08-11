@@ -383,7 +383,7 @@
                                             @else
                                                 {{ $w->fullName }}
                                             @endif
-                                        </b><br/> <a href="#" class="user">{{ '@'.$w->username }}</a></span><br>
+                                        </b><br/> <a href="/{{$w->username}}" class="user">{{ '@'.$w->username }}</a></span><br>
                                         {{--<span>Address Lorem ipsum sit dolor amet</span><br>--}}
                                         <span><b>Profile Rating: </b> {{$w->total_profile_progress}}%</span><br>
                                         {{--<span><b>Last Login: </b> 2 Days ago</span>--}}
