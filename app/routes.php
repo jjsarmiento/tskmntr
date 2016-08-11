@@ -202,6 +202,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 });
 
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
+    Route::get('/wprofileProgress', 'TaskminatorController@wprofileProgress');
     Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){
         Route::get('/WRKR_INVTS', 'TaskminatorController@WRKR_INVTS');
 //        Route::get('/WRKR_HIRED', 'TaskminatorController@WRKR_HIRED');
