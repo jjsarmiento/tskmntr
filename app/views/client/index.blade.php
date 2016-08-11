@@ -374,12 +374,21 @@
                                         <a href="" style="padding: 5px;">
                                             <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png" width="80" height="80">
                                         </a>
-                                        <span><b>{{$w->fullName}}</b> <a href="#" class="user">{{ '@'.$w->username }}</a></span><br>
+                                        <span>
+                                        <b>
+                                            @if(!in_array($w->id, $CHECKEDOUT_WORKERS))
+                                                {{substr_replace($w->firstName, str_repeat('*', strlen($w->firstName)-1), 1)}}
+                                                &nbsp;
+                                                {{substr_replace($w->lastName, str_repeat('*', strlen($w->lastName)-1), 1)}}
+                                            @else
+                                                {{ $w->fullName }}
+                                            @endif
+                                        </b><br/> <a href="#" class="user">{{ '@'.$w->username }}</a></span><br>
                                         {{--<span>Address Lorem ipsum sit dolor amet</span><br>--}}
                                         <span><b>Profile Rating: </b> {{$w->total_profile_progress}}%</span><br>
-                                        <span><b>Last Login: </b> 2 Days ago</span>
+                                        {{--<span><b>Last Login: </b> 2 Days ago</span>--}}
                                     </div>
-                                    <a href="" class="viewSal">VIEW FULL PROFILE</a>
+                                    <a href="/{{$w->username}}" class="viewSal">VIEW FULL PROFILE</a>
                                 </div>
                             @endforeach
                             <!--

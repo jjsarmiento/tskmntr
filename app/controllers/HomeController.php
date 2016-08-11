@@ -854,12 +854,15 @@ class HomeController extends BaseController {
                 case 'CLIENT_CMP' :
                     BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
                     BaseController::CHECK_EMPLOYER_POINTS(Auth::user()->id);
+                    $CHECKEDOUT_WORKERS = $this->GET_ALL_CHECKEDOUT_WORKERS(Auth::user()->id);
                     $workers = User::join('user_has_role', 'user_has_role.user_id', '=', 'users.id')
                         ->where('user_has_role.role_id', 2)
                         ->where('users.total_profile_progress', '>=', 50)
                         ->select([
                             'users.id',
                             'users.fullName',
+                            'users.firstName',
+                            'users.lastName',
                             'users.profilePic',
                             'users.username',
                             'users.total_profile_progress',
@@ -868,6 +871,7 @@ class HomeController extends BaseController {
                         ->take(3)
                         ->get();
                     return View::make('client.index')
+                        ->with('CHECKEDOUT_WORKERS', $CHECKEDOUT_WORKERS)
                         ->with('workers', $workers)
                         ->with('subscription_msg', $this->SUBSCRIPTION_DURATION_MSG(Auth::user()->id))
                         ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())

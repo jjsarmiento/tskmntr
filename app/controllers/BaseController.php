@@ -705,5 +705,12 @@ class BaseController extends Controller {
             'created_at'=> Carbon::now()
         ]);
     }
+
+    public function GET_ALL_CHECKEDOUT_WORKERS($companyID){
+        $ox = Purchase::where('company_id', $companyID)->get();
+        $myArr = array();
+        foreach($ox as $o){ array_push($myArr, $o->worker_id); }
+        return $myArr;
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }
