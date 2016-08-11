@@ -99,7 +99,7 @@ class HomeController extends BaseController {
 
                         $MULTIJOB = Job::where('user_id', Auth::user()->id)
                             ->whereIn('skill_code', User::getSkillsCODE_ARRAY($temp->id))
-                            ->whereNotIn('id', $this->WORKERGETINVITES_JOBID($temp->id))
+                            ->whereNotIn('id', array_merge($this->WORKERGETINVITES_JOBID($temp->id), $this->GET_WORKER_APPLICATIONS($temp->id)))
                             ->get();
 
                         $HAS_INVITES = Job::join('job_invites', 'job_invites.job_id', '=', 'jobs.id')
@@ -114,8 +114,33 @@ class HomeController extends BaseController {
                             ->get();
                     }
 
+                    $users = User::where('username', '=', $username)
+                        ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+                        ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+                        ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+                        ->select([
+                            'users.id',
+                            'users.fullName',
+                            'users.firstName',
+                            'users.lastName',
+                            'users.midName',
+                            'users.gender',
+                            'users.businessDescription',
+                            'users.profilePic',
+                            'users.companyName',
+                            'users.skills',
+                            'users.businessNature',
+                            'users.educationalBackground',
+                            'users.experience',
+                            'users.address',
+                            'users.birthdate',
+                            'regions.regname',
+                            'cities.cityname',
+                            'barangays.bgyname',
+                        ])
+                        ->first();
                     return View::make('profile_worker')
-                        ->with("users", User::where('username', '=', $username)->get()->first())
+                        ->with("users", $users)
                         ->with('roles', $role)
                         ->with('mobile', $mobile)
                         ->with('DOCS', $this->DOCUMENTS_GETEXISTINGLABELS($temp->id))
@@ -513,7 +538,7 @@ class HomeController extends BaseController {
     }
     */
 
-//  NEW REGISTRATION REGISTER WORKER 
+//  NEW REGISTRATION REGISTER WORKER
     public function regWorker()
     {
         $url = 'https://www.google.com/recaptcha/api/siteverify';
@@ -607,13 +632,13 @@ class HomeController extends BaseController {
     /*
     public function  doRegisterTaskminator(){
         Input::merge(array_map('trim', Input::all()));
-        
+
         $check = SimpleCaptcha::check($_POST['captcha']);
 
         if(!$check) {
             return Redirect::back()->with('errorMsg', 'Captcha does not match. Please retry.')->withInput(Input::except('password', 'captcha'));
         }
-        
+
         $rules = array(
             'firstName'         => "required|regex:/^[\p{L}\s'.-]+$/",
             'midName'           => "required|regex:/^[\p{L}\s'.-]+$/",
@@ -732,7 +757,7 @@ class HomeController extends BaseController {
     public function whychooseproveek(){
 
         return View::make('whychooseproveek');
-    }  
+    }
 
     public function pricing(){
 
@@ -1049,7 +1074,7 @@ class HomeController extends BaseController {
             ->with('cities', City::where('regcode', '01')->orderBy('cityname', 'ASC')->get());
         }
         else
-        {   
+        {
             $vMsg = "";
             return View::make('reg-clientcomp')
             ->with('compName', $compName)

@@ -137,9 +137,9 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Information</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                <span><b>Address: </b>{{$users->address}}</span><br>
+                                <span><b>Address: </b>{{$users->address}}, {{$users->regname}}, {{$users->cityname}} {{$users->bgyname}}</span><br>
                                 <span><b>Gender: </b>{{{$users->gender}}}</span><br>
-                                <span><b>Birthdate: </b>01/01/01 (55 years old)</span><br>
+                                <span><b>Birthdate: </b>{{$users->birthdate}} ({{ \Carbon\Carbon::now()->diffInYears(\Carbon\Carbon::parse($users->birthdate)) }} years old)</span><br>
                                 @if($users->marital_status)
                                     <span><b>Martial Status: </b>{{$users->marital_status}}</span><br>
                                 @endif

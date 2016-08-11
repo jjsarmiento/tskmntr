@@ -446,6 +446,15 @@ class BaseController extends Controller {
         return $FINAL_PERCENTAGE;
     }
 
+    public function GET_WORKER_APPLICATIONS($workerID){
+        $ox = JobApplication::where('applicant_id', $workerID)->select(['job_id'])->get();
+        $myArr = array();
+        foreach($ox as $o){
+            array_push($myArr, $o->job_id);
+        }
+        return $myArr;
+    }
+
     public function APPLICATIONS_OF_WORKER_FOR_COMPANY($companyID, $workerID){
         return Job::join('job_applications', 'job_applications.job_id', '=', 'jobs.id')
                 ->where('jobs.user_id', $companyID)
