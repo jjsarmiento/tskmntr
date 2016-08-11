@@ -1357,7 +1357,8 @@ class AdminController extends \BaseController {
                     'users.created_at',
                     'users.username',
                     'users.fullName',
-                    'users.id'
+                    'users.id',
+                    'users.status'
                 ])
                 ->orderBy('created_at', 'DESC')
                 ->paginate(10);
@@ -1377,6 +1378,7 @@ class AdminController extends \BaseController {
                         'midName'   =>  Input::get('admin_mname'),
                         'lastName'  =>  Input::get('admin_lname'),
                         'fullName'  =>  Input::get('admin_fname').' '.Input::get('admin_mname').' '.Input::get('admin_lname'),
+                        'status'    =>  'ACTIVATED',
                         'created_at'=>  \Carbon\Carbon::now()
                     ]);
 
@@ -1412,7 +1414,8 @@ class AdminController extends \BaseController {
                 'users.created_at',
                 'users.username',
                 'users.fullName',
-                'users.id'
+                'users.id',
+                'users.status'
             ])
             ->orderBy('created_at', 'DESC')
             ->paginate(10);
@@ -1452,5 +1455,19 @@ class AdminController extends \BaseController {
             return Redirect::back()
                 ->withInput();
         }
+    }
+
+    public function DEACTIVATE_ADMIN($user_id){
+        User::where('id', $user_id)->update([
+            'status'    =>  'DEACTIVATED'
+        ]);
+        return Redirect::back();
+    }
+
+    public function ACTIVATE_ADMIN($user_id){
+        User::where('id', $user_id)->update([
+            'status'    =>  'ACTIVATED'
+        ]);
+        return Redirect::back();
     }
 }

@@ -176,7 +176,7 @@
             <div class="container lato-text" style="">
                 <div class="page-title">
                     <h1 class="lato-text">
-                        Create ADMIN Account
+                        Edit ADMIN Account
                     </h1>
                 </div>
 
@@ -213,7 +213,7 @@
                                 <thead>
                                     <th>Name</th>
                                     <th>Username</th>
-                                    <th>Created At</th>
+                                    <th>Account Status</th>
                                     <th>Action</th>
                                 </thead>
                                 <tbody>
@@ -221,7 +221,7 @@
                                         <tr>
                                             <td>{{$a->fullName}}</td>
                                             <td>{{$a->username}}</td>
-                                            <td>{{$a->created_at}}</td>
+                                            <td>{{$a->status}}</td>
                                             <td>
                                                 <a href="/EDIT_ADMIN:{{$a->id}}"><i class="fa fa-edit"></i></a>
                                                 @if($a->id != Auth::user()->id)

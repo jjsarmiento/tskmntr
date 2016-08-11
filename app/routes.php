@@ -102,6 +102,8 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/DELETE_ADMIN:{user_id}', 'AdminController@DELETE_ADMIN');
     Route::get('/EDIT_ADMIN:{user_id}', 'AdminController@EDIT_ADMIN');
     Route::post('/doEDIT_ADMIN', 'AdminController@doEDIT_ADMIN');
+    Route::get('/DEACTIVATE_ADMIN:{user_id}', 'AdminController@DEACTIVATE_ADMIN');
+    Route::get('/ACTIVATE_ADMIN:{user_id}', 'AdminController@ACTIVATE_ADMIN');
 
     // ADD SUBSCRIPTION TO USER
     Route::get('/addSubscription={user_id}', 'AdminController@addSubscription');

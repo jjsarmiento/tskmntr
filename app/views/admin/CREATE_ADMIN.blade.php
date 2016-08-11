@@ -213,7 +213,7 @@
                                 <thead>
                                     <th>Name</th>
                                     <th>Username</th>
-                                    <th>Created At</th>
+                                    <th>Account Status</th>
                                     <th>Action</th>
                                 </thead>
                                 <tbody>
@@ -221,12 +221,17 @@
                                         <tr>
                                             <td>{{$a->fullName}}</td>
                                             <td>{{$a->username}}</td>
-                                            <td>{{$a->created_at}}</td>
+                                            <td>{{$a->status}}</td>
                                             <td>
-                                                <a href="/EDIT_ADMIN:{{$a->id}}"><i class="fa fa-edit"></i></a>
                                                 @if($a->id != Auth::user()->id)
+                                                    @if($a->status == 'ACTIVATED')
+                                                        <a href="#" class="a-validate" data-message="Are you sure you want to DEACTIVATE Admin {{$a->fullName}}" data-href="/DEACTIVATE_ADMIN:{{$a->id}}"><i style="color: #E74C3C;" class="fa fa-close"></i></a>
+                                                    @else
+                                                        <a href="/ACTIVATE_ADMIN:{{$a->id}}"><i style="color: #2ECC71;" class="fa fa-check"></i></a>
+                                                    @endif
                                                     <a href="#" class="a-validate" data-message="Are you sure you want to DELETE Admin {{$a->fullName}}" data-href="/DELETE_ADMIN:{{$a->id}}"><i class="fa fa-trash"></i></a>
                                                 @endif
+                                                <a href="/EDIT_ADMIN:{{$a->id}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
