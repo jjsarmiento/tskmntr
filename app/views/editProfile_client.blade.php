@@ -258,10 +258,16 @@
                         <div class="col-md-12 padded">
                             <div class="col-md-12">
                                 <div class="heading" style="font-size:14pt; color:#2980b9; word-wrap: break-word;">
-                                    <i class="fa fa-sticky-note" style="font-size:14pt; color:#2980b9"></i>&nbsp Other Notes <button onclick="#" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                                    <i class="fa fa-sticky-note" style="font-size:14pt; color:#2980b9"></i>&nbsp Supporting Documents<a href="/editDocumentsCMP" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</a>
                                 </div>
                                 <div style="padding-left: 19px; word-wrap: break-word;">
-                                    <span></span>
+                                    @if($docs->count() > 0)
+                                        @foreach($docs as $d)
+                                            <i class="fa fa-check-circle" style="color: #2ECC71;"></i>&nbsp;<span style="color: rgb(72, 157, 179);">{{$d->sys_doc_label}}</span><br/>
+                                        @endforeach
+                                    @else
+                                        <span>N/A</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>

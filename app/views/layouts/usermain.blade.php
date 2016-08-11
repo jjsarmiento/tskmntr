@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Bootstrap Core CSS -->
     <!-- <link rel="stylesheet" href="frontend/css/bootstrap.min.css" type="text/css"> -->
-    
+
 
     <!-- Custom Fonts -->
 <!--     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -94,6 +94,13 @@
     <link rel="shortcut icon" type="image/x-icon" href="frontend/img/favicon.ico">
     <script>
         $(document).ready(function(){
+            setInterval(function(){
+                $.ajax({
+                    type    :   'GET',
+                    url     :   '/PRVKUPDTJBDS'
+                });
+            }, 800);
+
             CHAINLOCATION($('#adSearch_REG'), $('#adSearch_CITY'));
             CHAINCATEGORYANDSKILL($('#adSearch_CATEGORY'), $('#adSearch_SKILL'));
 
@@ -136,8 +143,8 @@
                         $('#CRT_TOTAL').empty();
                         $('#CHECKOUTFORM').empty();
                         $.each(data, function(key,value){
-                            var worker_name = value['fullName'].charAt(0)+'**********';
-
+//                            var worker_name = value['fullName'].charAt(0)+'**********';
+                            var worker_name = (value['purchID'] == null) ? value['fullName'].charAt(0)+'**********' : value['fullName'];
                             $('#CARTCONTENTS').append('<a class="CART-ITEMS" href="/'+value['username']+'" target="_tab">'+worker_name+'</a>&nbsp;&nbsp;<a href="/removeCartItem:'+value['cartID']+'"><i class="fa fa-close"></i></a><br/>');
                             $('#CHECKOUTFORM').append('<input type="hidden" name="WORKERID[]" value="'+value['workerID']+'" />')
                         });
@@ -388,7 +395,7 @@
                                 </li>
                             @endif
                             @if($role == 'ADMIN')
-                                <li><a href="/CREATE_ADMIN"><i class="fa fa-edit fa-fw"></i> Create Admin</a></li>
+                                <li><a href="/CREATE_ADMIN"><i class="fa fa-key fa-fw"></i> Manage Admin</a></li>
                                 <li><a href="/SYSTEMSETTINGS"><i class="fa fa-cog fa-fw"></i> Settings</a></li>
                             @endif
                             @if($role == 'CLIENT_CMP' || $role == 'CLIENT_IND')

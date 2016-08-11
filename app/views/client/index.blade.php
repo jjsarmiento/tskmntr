@@ -292,7 +292,7 @@
                     <div class="widget-container weather" style="min-height: 1em; box-shadow:none;">
                         <div class="widget-content">
                             <div class="padded text-center" style="min-height:30px; text-align:left; color:#2980b9; font-size:18pt;">
-                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ Auth::user()->total_profile_progress }}% | {{$subscription_msg}}
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : <a href="/cprofileProgress"><b>{{ Auth::user()->total_profile_progress }}%</b></a> | {{$subscription_msg}}
                                 <div class="widget-content">
                                     <div class="padded text-center" style="font-size:18pt; padding: 10px 0 0;">
                                         <div id="progressbar">
@@ -368,105 +368,50 @@
                             <div class="panel-body" style="color:#2980b9; font-size:20pt; margin-bottom: -10px;">
                                 <i class="fa fa-search" aria-hidden="true"></i> Recommended workers
                             </div>
-                            <!-- <div class="panel-body" style="padding: 0 15px 15px;">
-                                <div class="col-md-12 no-padding">
-                                    @foreach($jobs as $j)
-                                        <div class="col-md-4 padded">
-                                            <b class="title">{{$j->title}}</b>
-                                            <p class="content">
-                                                <i class="fa fa-briefcase"></i>
-                                                @if($j->hiring_type == 'LT6MOS')
-                                                    Less than 6 months
-                                                @else
-                                                    Greater than 6 months
-                                                @endif<br/>
-
-                                                @if($j->expired)
-                                                    <span class="badge" style="background-color: #E74C3C">EXPIRED</span>
-                                                @else
-                                                    <i class="fa fa-clock-o"></i> Expires at {{ date('m/d/y', strtotime($j->expires_at)) }}
-                                                @endif<br/>
-
-                                                <span class="text-right" style="padding:0;margin:0;"><i class="fa fa-map-marker"></i> {{$j->regname}}, {{$j->cityname}}</span><br/>
-                                                @if($j->salary)
-                                                <span class="text-right" style="padding:0;margin:0;"><b>P</b>{{$j->salary}}</span>
-                                                @endif
-                                            </p>
-                                            <a href="/jobDetails={{$j->job_id}}" class="viewSal">View full details</a>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                @if($jobs->count() == 6)
-                                <div class="col-md-12 padded" style="margin-top: 2em; text-align:center;">
-                                    <a href="/jobs" class="clickHere" style="padding: 5px 100px;">SEE MORE</a>
-                                </div>
-                                @endif
-                            </div> -->
-                            @for($i=0; $i<=2; $i++)
-                                    <div class="col-md-4">
-                                        <div class="workers">
-                                            <a href="" style="padding: 5px;">
-                                                <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png" width="80" height="80">
-                                            </a>
-                                            <span><b>J*** D********</b> <a href="#" class="user">@username</a></span><br>
-                                            <span>Address Lorem ipsum sit dolor amet</span><br>
-                                            <span><b>Profile Rating: </b> 23%</span><br>
-                                            <span><b>Last Login: </b> 2 Days ago</span>
-                                        </div>
-                                        <a href="" class="viewSal">VIEW FULL PROFILE<a>
+                            @foreach($workers as $w)
+                                <div class="col-md-4">
+                                    <div class="workers">
+                                        <a href="" style="padding: 5px;">
+                                            <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png" width="80" height="80">
+                                        </a>
+                                        <span>
+                                        <b>
+                                            @if(!in_array($w->id, $CHECKEDOUT_WORKERS))
+                                                {{substr_replace($w->firstName, str_repeat('*', strlen($w->firstName)-1), 1)}}
+                                                &nbsp;
+                                                {{substr_replace($w->lastName, str_repeat('*', strlen($w->lastName)-1), 1)}}
+                                            @else
+                                                {{ $w->fullName }}
+                                            @endif
+                                        </b><br/> <a href="/{{$w->username}}" class="user">{{ '@'.$w->username }}</a></span><br>
+                                        {{--<span>Address Lorem ipsum sit dolor amet</span><br>--}}
+                                        <span><b>Profile Rating: {{$w->total_profile_progress}}%</b></span><br>
+                                        {{--<span><b>Last Login: </b> 2 Days ago</span>--}}
                                     </div>
+                                    <a href="/{{$w->username}}" class="viewSal">VIEW FULL PROFILE</a>
+                                </div>
+                            @endforeach
+                            <!--
+                            @for($i=0; $i<=2; $i++)
+                                <div class="col-md-4">
+                                    <div class="workers">
+                                        <a href="" style="padding: 5px;">
+                                            <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png" width="80" height="80">
+                                        </a>
+                                        <span><b>J*** D********</b> <a href="#" class="user">@username</a></span><br>
+                                        <span>Address Lorem ipsum sit dolor amet</span><br>
+                                        <span><b>Profile Rating: </b> 23%</span><br>
+                                        <span><b>Last Login: </b> 2 Days ago</span>
+                                    </div>
+                                    <a href="" class="viewSal">VIEW FULL PROFILE</a>
+                                </div>
                             @endfor
+                            -->
                             <div style="clear:both; padding-bottom:20px;"></div>
                         </div>
                     </div>
                 </div>
                 <br/>
-
-                <!-- NEW JOBS MODULE -- START : Authored by Jan Sarmiento -->
-                <!-- @if($jobs->count() == 0)
-                    <br/>
-                    <center><i>No jobs posted yet</i></center>
-                @else
-                    @foreach($jobs as $job)
-                        <div class="widget-container fluid-height padded wow fadeInUp" data-wow-duration=".3s" data-wow-offset="0" data-wow-delay="0" style=" word-wrap: break-word; padding-left:1em; padding-right:10px; min-height: 1em; max-height: 10">
-                            <div style="display:flex;padding-bottom:5px;">
-                                <div style="flex:11;">
-                                    <a href="/jobDetails={{$job->job_id}}" style="text-decoration:none;">
-                                        <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
-                                            {{ $job->title}}
-                                        </h3>
-
-                                        <div class="row" style="color:#95A5A6;">
-                                            <div class="col-md-4">
-                                                <span style="padding:0;margin:0;">
-                                                    <i class="fa fa-briefcase"></i>
-                                                    @if($job->hiring_type == 'LT6MOS')
-                                                        Less than 6 months
-                                                    @else
-                                                        Greater than 6 months
-                                                    @endif
-                                                </span><br>
-                                                <span class="text-right" style="padding:0;margin:0;">
-                                                    @if($job->expired)
-                                                        <span class="badge" style="background-color: #E74C3C">EXPIRED</span>
-                                                    @else
-                                                        <i class="fa fa-clock-o"></i> Expires at {{ date('m/d/y', strtotime($job->expires_at)) }}
-                                                    @endif
-                                                </span>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <span class="text-right" style="padding:0;margin:0;"><i class="fa fa-map-marker"></i> {{$job->regname}}, {{$job->cityname}}</span><br/>
-                                                <span class="text-right" style="padding:0;margin:0;"><b>P</b>{{$job->salary}}</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                    @endforeach
-                @endif -->
-                <!-- NEW JOBS MODULE -- END : Authored by Jan Sarmiento -->
             </div>
 
             <div class="col-lg-8" style="margin-top: 2em;">

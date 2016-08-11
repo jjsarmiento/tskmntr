@@ -229,7 +229,7 @@ class BaseController extends Controller {
         // CHECK FOR EXPIRATION
         // Updates `expired` column to TRUE if job is expired, else, FALSE
         foreach($jobs as $j){
-            if(Carbon::now()->gt(Carbon::parse($j->expires_at))){
+            if(Carbon::now()->gte(Carbon::parse($j->expires_at))){
                 Job::where('id', $j->id)->update(['expired' => true]);
             }
         }
@@ -363,7 +363,7 @@ class BaseController extends Controller {
         // computation for 2nd 50%
         $base = 0;
         $base = ($user->businessNature          ==  null) ? $base : ++$base;
-        $base = ($user->years_in_opeartion      ==  null) ? $base : ++$base;
+        $base = ($user->years_in_operation      ==  null) ? $base : ++$base;
         $base = ($user->number_of_branches      ==  null) ? $base : ++$base;
         $base = ($user->contact_person_position ==  null) ? $base : ++$base;
         $base = ($user->number_of_employees     ==  null) ? $base : ++$base;
@@ -423,20 +423,13 @@ class BaseController extends Controller {
         if(TaskminatorHasSkill::where('user_id', $user->id)->count() > 0 || CustomSkill::where('created_by', $user->id)->count() > 0){
             $base++;
         }
+
         $first50 = $base * (50/13);
         $base = 0;
 
-        // 2nd 50%
-        $doc2nd = Document::where('user_id', $user->id)
-                    ->where('type' , 'TIN_ID')
-                    ->orWhere('type' , 'NBI')
-                    ->orWhere('type' , 'PASSPORT')
-                    ->orWhere('type' , 'VOTERS_ID')
-                    ->count();
         $base = ($user->educationalBackground   == null) ? $base : ++$base;
         $base = ($user->experience              == null) ? $base : ++$base;
-        $base = ($doc2nd                        > 0) ? $base : ++$base;
-        $FINAL_PERCENTAGE = $first50 + ($base * (50/3));
+        $FINAL_PERCENTAGE = $first50 + ($base * (50/2));
 
         // UPDATE total_profile_progress column on users table
         User::where('id', $user->id)->update([
@@ -444,6 +437,15 @@ class BaseController extends Controller {
         ]);
 
         return $FINAL_PERCENTAGE;
+    }
+
+    public function GET_WORKER_APPLICATIONS($workerID){
+        $ox = JobApplication::where('applicant_id', $workerID)->select(['job_id'])->get();
+        $myArr = array();
+        foreach($ox as $o){
+            array_push($myArr, $o->job_id);
+        }
+        return $myArr;
     }
 
     public function APPLICATIONS_OF_WORKER_FOR_COMPANY($companyID, $workerID){
@@ -702,6 +704,13 @@ class BaseController extends Controller {
             'ip_address'=> Request::getClientIp(),
             'created_at'=> Carbon::now()
         ]);
+    }
+
+    public function GET_ALL_CHECKEDOUT_WORKERS($companyID){
+        $ox = Purchase::where('company_id', $companyID)->get();
+        $myArr = array();
+        foreach($ox as $o){ array_push($myArr, $o->worker_id); }
+        return $myArr;
     }
     // AUTHORED BY Jan Sarmiento -- END
 }

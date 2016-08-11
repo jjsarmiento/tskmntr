@@ -191,7 +191,7 @@
                             <a href="/editProfile" style="font-weight:bold; font-size:14pt;">{{ Auth::user()->fullName }}</a><br>
                         </div>
                         {{--<span><b>Employment Status:</b> Not Hired</span><br>--}}
-                        <span><b>Last Login:</b> 08/02/16</span>
+                        {{--<span><b>Last Login:</b> 08/02/16</span>--}}
                     </div>
                     <!-- <div class="col-lg-12" style="padding-left:24px;">
                         <a href="/editProfile">Edit Profile</a>
@@ -216,7 +216,7 @@
                                 <div class="panel filter-categories">
                                     <div class="panel-body">
                                         <div class="padded" style="color:#2980b9; font-size:20pt;">
-                                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ Auth::user()->total_profile_progress }}%
+                                            <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : <a href="/wprofileProgress" style="font-weight: bold">{{ Auth::user()->total_profile_progress }}%</a>
 
                                             <div class="padded text-center" style="padding:10px 0 0; color:#2980b9; font-size:18pt;">
                                                 <div id="progressbar">
@@ -260,10 +260,10 @@
                                         </div>     
                                         <div class="panel-body">
                                             <span><b>Address:</b> {{Auth::user()->address}}</span><br>
-                                            <span><b>Birthdate:</b> 01/01/01</span><br>
+                                            <span><b>Birthdate:</b> {{Auth::user()->birthdate}}</span><br>
                                             <span><b>Gender:</b> {{Auth::user()->gender}}</span><br>
                                             <span><b>Marital Status:</b> {{Auth::user()->marital_status}}</span><br>
-                                            <span><b>Age:</b> 42</span><br>
+                                            <span><b>Age:</b> {{ \Carbon\Carbon::now()->diffInYears(\Carbon\Carbon::parse(Auth::user()->birthdate)) }} y/o</span><br>
                                             <span><b>Account Status:</b> {{Auth::user()->status}}</span><br>
                                             <span><b>Account Created:</b> {{date('m/d/y', strtotime(Auth::user()->created_at))}}</span><br>
                                         </div>  
@@ -433,7 +433,7 @@
                     <div class="widget-container" style="min-height:30px; border:1px solid #e6e6e6">
                         <div class="widget-content">
                             <div class="panel-body" style="color:#2980b9; font-size:20pt;">
-                                <i class="fa fa-search" aria-hidden="true"></i> Preferred Job
+                                <i class="fa fa-search" aria-hidden="true"></i> Recommended Jobs
                             </div>
                             <div class="panel-body" style="padding: 0 15px 15px;">
                                 <div class="col-md-12 no-padding">

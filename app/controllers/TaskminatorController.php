@@ -426,7 +426,7 @@ class TaskminatorController extends \BaseController {
                 ->with('regions', Region::orderBy('regname', 'ASC')->get())
                 ->with('prov', Province::orderBy('provname', 'ASC')->where('regcode', Auth::user()->region)->get())
                 ->with('cities', City::orderBy('cityname', 'ASC')->where('regcode', Auth::user()->region)->get())
-                ->with('barangays', Barangay::orderBy('bgyname', 'ASC')->where('regcode', Auth::user()->city)->get());
+                ->with('barangays', Barangay::orderBy('bgyname', 'ASC')->where('regcode', Auth::user()->region)->get());
     }
 
     public function doEditPersonalInfo(){
@@ -1124,5 +1124,49 @@ class TaskminatorController extends \BaseController {
 
         return View::make('taskminator.WRKR_HIRED')
                 ->with('jobs', $jobs);
+    }
+
+    public function wprofileProgress(){
+        $check = '<i style="color: #1ABC9C; font-size: 1.2em" class="fa fa-check-circle"></i>&nbsp;&nbsp;';
+        $close = '<i style="color: #E74C3C; font-size: 1.2em" class="fa fa-close"></i>&nbsp;&nbsp;';
+
+        $mobile = Contact::where('user_id', Auth::user()->id)->where('ctype', 'mobileNum')->pluck('content');
+        $email = Contact::where('user_id', Auth::user()->id)->where('ctype', 'email')->pluck('content');
+
+        $PASSPORT = Document::where('user_id', Auth::user()->id)->where('type', 'PASSPORT')->count();
+        $NBI = Document::where('user_id', Auth::user()->id)->where('type', 'NBI')->count();
+        $VOTERS_ID = Document::where('user_id', Auth::user()->id)->where('type', 'VOTERS_ID')->count();
+        $TIN = Document::where('user_id', Auth::user()->id)->where('type', 'TIN_ID')->count();
+
+        $ARRAY = array();
+
+        array_push($ARRAY, ['content'  => ((Auth::user()->firstName)            ? $check.'First Name'               : $close.'First Name'),             'url'    => '/editPersonalInfo']);
+        array_push($ARRAY, ['content'  => ((Auth::user()->lastName)             ? $check.'Last Name'                : $close.'Last Name'),              'url'    => '/editPersonalInfo']);
+        array_push($ARRAY, ['content'  => ((Auth::user()->region)               ? $check.'Region'                   : $close.'Region'),                 'url'    => '/editPersonalInfo']);
+        array_push($ARRAY, ['content'  => ((Auth::user()->province)             ? $check.'Province'                 : $close.'Province'),               'url'    => '/editPersonalInfo']);
+        array_push($ARRAY, ['content'  => ((Auth::user()->barangay)             ? $check.'Barangay'                 : $close.'Barangay'),               'url'    => '/editPersonalInfo']);
+        array_push($ARRAY, ['content'  => ((Auth::user()->city)                 ? $check.'City'                     : $close.'City'),                   'url'    => '/editPersonalInfo']);
+        array_push($ARRAY, ['content'  => ((Auth::user()->birthdate)            ? $check.'Birthdate'                : $close.'Birthdate'),              'url'    => '/editPersonalInfo']);
+        array_push($ARRAY, ['content'  => ((Auth::user()->marital_status)       ? $check.'Marital Status'           : $close.'Marital Status'),         'url'    => '/editPersonalInfo']);
+        array_push($ARRAY, ['content'  => ((Auth::user()->profilePic)           ? $check.'Profile Picture'          : $close.'Profile Picture'),        'url'    => '/editProfile']);
+        array_push($ARRAY, ['content'  => ((Auth::user()->educationalBackground)? $check.'Educational Background'   : $close.'Educational Background'), 'url'    => '/editPersonalInfo']);
+        array_push($ARRAY, ['content'  => ((Auth::user()->experience)           ? $check.'Experience'               : $close.'Experience'),             'url'    => '/editPersonalInfo']);
+        array_push($ARRAY, ['content'  => (($mobile)                            ? $check.'Mobile Number'            : $close.'Mobile Number'),          'url'    => '/editContactInfo']);
+        array_push($ARRAY, ['content'  => (($email)                             ? $check.'Email'                    : $close.'Email'),                  'url'    => '/editContactInfo']);
+
+        if(TaskminatorHasSkill::where('user_id', Auth::user()->id)->count() > 0 || CustomSkill::where('created_by', Auth::user()->id)->count() > 0){
+            array_push($ARRAY, ['content'  => $check.'Skill / Custom Skill', 'url'    => '/editSkillInfo']);
+        }else{
+            array_push($ARRAY, ['content'  => $close.'Skill / Custom Skill', 'url'    => '/editSkillInfo']);
+        }
+
+        if($PASSPORT > 0 || $NBI > 0 || $VOTERS_ID > 0 || $TIN > 0){
+            array_push($ARRAY, ['content'  => $check.'Supporting Documents (NBI, Passport, Voters ID, or TIN)', 'url'    => '/editDocuments']);
+        }else{
+            array_push($ARRAY, ['content'  => $close.'Supporting Documents (NBI, Passport, Voters ID, or TIN)', 'url'    => '/editDocuments']);
+        }
+
+        return View::make('wprofileProgress')
+            ->with('reqs', $ARRAY);
     }
 }

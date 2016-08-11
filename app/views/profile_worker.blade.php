@@ -82,11 +82,12 @@
                     <br/>
                     @if($roles == 'TASKMINATOR' && $CLIENTFLAG)
                         <div class="col-md-12">
-                            <div class="col-md-6 padded">
+
+                            <div class="col-md-4 padded">
                                 <a data-toggle="modal" data-target="#INVITEMULTIJOB" class="btn btn-warning" href="#"><i class="fa fa-envelope-o" style="color: #2ECC71;"></i> Invite to apply</a>
                             </div>
 
-                            <div class="col-md-6 padded">
+                            <div class="col-md-4 padded">
                                 @if($roles == 'TASKMINATOR')
                                     @if($CLIENTFLAG)
                                         @if(User::IS_BOOKMARKED(Auth::user()->id, $users->id))
@@ -94,14 +95,22 @@
                                         @else
                                             <a class="btn btn-warning" href="/ADD_BOOKMARK:{{$users->id}}"><i class="BOOKMARK_USER fa fa-bookmark-o" style="color: #2ECC71;"></i> Bookmark this worker</a>
                                         @endif
-
-                                        @if(BaseController::IS_PURCHASED(Auth::user()->id, $users->id))
-                                            &nbsp;&nbsp;&nbsp;
-                                            <a href="#" data-toggle="modal" data-target="#INVITEMULTIJOB"><i class="fa fa-envelope" style="color: #F1C40F; font-size: 2em;"></i></a>
-                                        @endif
                                     @endif
                                 @endif
                             </div>
+                            @if($PURCHASED == 0)
+                                @if(BaseController::IS_AN_APPLICANT_FOR_COMPANY($users->id, Auth::user()->id))
+                                    <div class="col-md-4 padded">
+                                        @if($USERINCART > 0)
+                                            <a href="#" class="btn btn-warning SHWCRT" data-target="#CARTMODAL" data-toggle="modal" style="background-color: #E74C3C;"><i  class="fa fa-cart-plus"></i>&nbsp;&nbsp;Added to cart</a>
+                                            {{--<a href="#" class="SHWCRT btn btn-danger"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Added to Cart</a>--}}
+                                        @else
+                                            <a href="/addToCart={{$users->id}}" class="btn btn-warning"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
+                                        @endif
+                                        {{--<a data-toggle="modal" data-target="#INVITEMULTIJOB" class="btn btn-warning" href="#"><i class="fa fa-envelope-o" style="color: #2ECC71;"></i> Checkout </a>--}}
+                                    </div>
+                                @endif
+                            @endif
                         </div>
                     @endif
 
@@ -128,9 +137,9 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Information</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                <span><b>Address: </b>{{$users->address}}</span><br>
+                                <span><b>Address: </b>{{$users->address}}, {{$users->regname}}, {{$users->cityname}} {{$users->bgyname}}</span><br>
                                 <span><b>Gender: </b>{{{$users->gender}}}</span><br>
-                                <span><b>Birthdate: </b>01/01/01 (55 years old)</span><br>
+                                <span><b>Birthdate: </b>{{$users->birthdate}} ({{ \Carbon\Carbon::now()->diffInYears(\Carbon\Carbon::parse($users->birthdate)) }} years old)</span><br>
                                 @if($users->marital_status)
                                     <span><b>Martial Status: </b>{{$users->marital_status}}</span><br>
                                 @endif
@@ -146,11 +155,29 @@
                                 @if($PURCHASED > 0)
                                     <!-- CONTACT INFO -->
                                     <div class="ConInfo">
+                                        @foreach(Contact::where('user_id', $users->id)->get() as $con)
+                                            <span><b>
+                                                @if($con->ctype == "mobileNum")
+                                                    Mobile #
+                                                @elseif($con->ctype == "businessNum")
+                                                    Business #
+                                                @elseif($con->ctype == 'email')
+                                                    Email
+                                                @else
+                                                    {{ $con->ctype }}
+                                                @endif
+                                            </b></span>
+                                             :
+                                            <span style="margin-left: 5px">{{ $con->content }}</span>
+                                            <br/>
+                                        @endforeach
+                                        <!--
                                         <span><b>Mobile #: </b>{{$mobile}}</span><br>
                                         <span><b>Email: </b><a href="mailto:fakeemail@gmail.com">fakeemail@gmail.com</a></span><br>
                                         <span><b>FB: </b><a href="facebook.com" target="_Blank">Facebook.com</a></span><br>
                                         <span><b>Twitter: </b><a href="twitter.com" target="_Blank">Twitter.com</a></span><br>
                                         <span><b>Linkedin: </b><a href="linkedin.com" target="_Blank">Linkedin.com</a></span>
+                                        -->
                                     </div>
                                 @endif
                             @else

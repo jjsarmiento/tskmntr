@@ -276,7 +276,7 @@
                         <div class="col-md-12 padded">
                             <div class="heading" style="font-size:14pt; color:#2980b9">
                                 <i class="fa fa-file" style="font-size:14pt; color:#2980b9"></i>&nbsp Supporting Documents
-                                <button class="btn btn-xs btn-default pull-right" onclick="location.href='/editDocuments'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                                <a class="btn btn-xs btn-default pull-right" href="/editDocuments" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</a>
                             </div> 
                             <div style="padding-left:27px;">
                                 @if($docs->count() > 0)

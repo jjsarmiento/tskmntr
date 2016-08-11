@@ -2,6 +2,7 @@
 
 // PLACE NON PROTECTED ROUTES HERE -- START
 Route::get('/', 'HomeController@index');
+Route::get('/PRVKUPDTJBDS', 'HomeController@UPDATE_JOBADS_GLOBAL');
 // Route::get('/home', 'HomeController@home');
 Route::get('/employer','HomeController@employer');
 Route::get('/howitworks', 'HomeController@howitworks');
@@ -95,6 +96,13 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+    // CREATE ADMIN
+    Route::get('/CREATE_ADMIN', 'AdminController@CREATE_ADMIN');
+    Route::post('/doCREATE_ADMIN', 'AdminController@doCREATE_ADMIN');
+    Route::get('/DELETE_ADMIN:{user_id}', 'AdminController@DELETE_ADMIN');
+    Route::get('/EDIT_ADMIN:{user_id}', 'AdminController@EDIT_ADMIN');
+    Route::post('/doEDIT_ADMIN', 'AdminController@doEDIT_ADMIN');
+
     // ADD SUBSCRIPTION TO USER
     Route::get('/addSubscription={user_id}', 'AdminController@addSubscription');
     Route::post('/doAddSubscription', 'AdminController@doAddSubscription');
@@ -201,6 +209,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 });
 
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
+    Route::get('/wprofileProgress', 'TaskminatorController@wprofileProgress');
     Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){
         Route::get('/WRKR_INVTS', 'TaskminatorController@WRKR_INVTS');
 //        Route::get('/WRKR_HIRED', 'TaskminatorController@WRKR_HIRED');
@@ -264,6 +273,7 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
 });
 
 Route::group(array('before' => 'CLIENT-ONLY'), function(){
+    Route::get('/cprofileProgress', 'ClientIndiController@cprofileProgress');
     Route::get('/cltEditPersonalInfo', 'ClientIndiController@cltEditPersonalInfo');
     Route::post('/doCltEditPersonalInfo', 'ClientIndiController@doCltEditPersonalInfo');
     Route::get('/cltEditContactInfo', 'ClientIndiController@cltEditContactInfo');

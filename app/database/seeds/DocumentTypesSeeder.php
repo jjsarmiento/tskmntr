@@ -9,6 +9,15 @@
 class DocumentTypesSeeder extends Seeder {
     public function run(){
         // WORKER DOCUMENTS -- START
+
+        // RESUME
+        DocumentType::create([
+            'sys_doc_type'      =>  'RESUME',
+            'sys_doc_label'     =>  'Resume',
+            'sys_doc_role'      =>  'WORKER',
+            'sys_doc_disabled'  =>  false,
+        ]);
+
         // NBI
         DocumentType::create([
             'sys_doc_type'      =>  'NBI',

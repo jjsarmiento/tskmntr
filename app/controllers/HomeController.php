@@ -7,7 +7,7 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){ // test()
-        return BaseController::ROUTE_UPDATE_FEEDBACKS(2);
+        return $this->PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
     }
 
     function generateConfirmationCode(){
@@ -97,7 +97,7 @@ class HomeController extends BaseController {
 
                         $MULTIJOB = Job::where('user_id', Auth::user()->id)
                             ->whereIn('skill_code', User::getSkillsCODE_ARRAY($temp->id))
-                            ->whereNotIn('id', $this->WORKERGETINVITES_JOBID($temp->id))
+                            ->whereNotIn('id', array_merge($this->WORKERGETINVITES_JOBID($temp->id), $this->GET_WORKER_APPLICATIONS($temp->id)))
                             ->get();
 
                         $HAS_INVITES = Job::join('job_invites', 'job_invites.job_id', '=', 'jobs.id')
@@ -112,8 +112,33 @@ class HomeController extends BaseController {
                             ->get();
                     }
 
+                    $users = User::where('username', '=', $username)
+                        ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
+                        ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
+                        ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
+                        ->select([
+                            'users.id',
+                            'users.fullName',
+                            'users.firstName',
+                            'users.lastName',
+                            'users.midName',
+                            'users.gender',
+                            'users.businessDescription',
+                            'users.profilePic',
+                            'users.companyName',
+                            'users.skills',
+                            'users.businessNature',
+                            'users.educationalBackground',
+                            'users.experience',
+                            'users.address',
+                            'users.birthdate',
+                            'regions.regname',
+                            'cities.cityname',
+                            'barangays.bgyname',
+                        ])
+                        ->first();
                     return View::make('profile_worker')
-                        ->with("users", User::where('username', '=', $username)->get()->first())
+                        ->with("users", $users)
                         ->with('roles', $role)
                         ->with('mobile', $mobile)
                         ->with('DOCS', $this->DOCUMENTS_GETEXISTINGLABELS($temp->id))
@@ -511,7 +536,7 @@ class HomeController extends BaseController {
     }
     */
 
-//  NEW REGISTRATION REGISTER WORKER 
+//  NEW REGISTRATION REGISTER WORKER
     public function regWorker()
     {
         $url = 'https://www.google.com/recaptcha/api/siteverify';
@@ -605,13 +630,13 @@ class HomeController extends BaseController {
     /*
     public function  doRegisterTaskminator(){
         Input::merge(array_map('trim', Input::all()));
-        
+
         $check = SimpleCaptcha::check($_POST['captcha']);
 
         if(!$check) {
             return Redirect::back()->with('errorMsg', 'Captcha does not match. Please retry.')->withInput(Input::except('password', 'captcha'));
         }
-        
+
         $rules = array(
             'firstName'         => "required|regex:/^[\p{L}\s'.-]+$/",
             'midName'           => "required|regex:/^[\p{L}\s'.-]+$/",
@@ -730,7 +755,7 @@ class HomeController extends BaseController {
     public function whychooseproveek(){
 
         return View::make('whychooseproveek');
-    }  
+    }
 
     public function pricing(){
 
@@ -829,33 +854,31 @@ class HomeController extends BaseController {
                 case 'CLIENT_CMP' :
                     BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
                     BaseController::CHECK_EMPLOYER_POINTS(Auth::user()->id);
-
-                    $jobs = Job::where('user_id', Auth::user()->id)
-                            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
-                            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
-                            ->select([
-                                'jobs.title',
-                                'jobs.id as job_id',
-                                'jobs.expires_at',
-                                'jobs.salary',
-                                'jobs.created_at',
-                                'jobs.description',
-                                'jobs.expired',
-                                'jobs.hiring_type',
-                                'cities.cityname',
-                                'regions.regname',
-                            ])
-                            ->groupBy('jobs.id')
-                            ->take('6')
-                            ->get();
-
+                    $CHECKEDOUT_WORKERS = $this->GET_ALL_CHECKEDOUT_WORKERS(Auth::user()->id);
+                    $workers = User::join('user_has_role', 'user_has_role.user_id', '=', 'users.id')
+                        ->where('user_has_role.role_id', 2)
+                        ->where('users.total_profile_progress', '>=', 50)
+                        ->select([
+                            'users.id',
+                            'users.fullName',
+                            'users.firstName',
+                            'users.lastName',
+                            'users.profilePic',
+                            'users.username',
+                            'users.total_profile_progress',
+                        ])
+                        ->orderBy('users.created_at', 'DESC')
+                        ->take(3)
+                        ->get();
                     return View::make('client.index')
-                    ->with('subscription_msg', $this->SUBSCRIPTION_DURATION_MSG(Auth::user()->id))
-                    ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
-                    ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get())
+                        ->with('CHECKEDOUT_WORKERS', $CHECKEDOUT_WORKERS)
+                        ->with('workers', $workers)
+                        ->with('subscription_msg', $this->SUBSCRIPTION_DURATION_MSG(Auth::user()->id))
+                        ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
+                        ->with('categorySkills', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get());
 //                    ->with('TOTALPROG', $this->PROFILE_PERCENTAGE_COMPANY(Auth::user()->id))
-                    ->with('tasks', Task::where('user_id', Auth::user()->id)->whereNotIn('status', ['CANCELLED', 'COMPLETE'])->orderBy('created_at', 'DESC')->paginate(10))
-                    ->with('jobs', $jobs);
+//                    ->with('tasks', Task::where('user_id', Auth::user()->id)->whereNotIn('status', ['CANCELLED', 'COMPLETE'])->orderBy('created_at', 'DESC')->paginate(10));
+//                    ->with('jobs', $jobs);
                     break;
                 default :
                     return Redirect::to('/');
@@ -1047,7 +1070,7 @@ class HomeController extends BaseController {
             ->with('cities', City::where('regcode', '01')->orderBy('cityname', 'ASC')->get());
         }
         else
-        {   
+        {
             $vMsg = "";
             return View::make('reg-clientcomp')
             ->with('compName', $compName)
@@ -1546,21 +1569,26 @@ class HomeController extends BaseController {
     public function VRFYACCT($code){
         $CODE_DETAILS = ActivationCode::where('code', $code)->first();
 
-        if(time() > strtotime($CODE_DETAILS->duration)){
-            $msg = 'Activation code has expired. Click <a href="/RESENDVALIDATION='.$CODE_DETAILS->user_id.'">here</a> to request for another activation code';
-            return $msg;
-        }else{
-            if(User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_IND' || User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_CMP'){
-                $SETTINGS_TRIAL_SUBSCRIPTION = SystemSetting::where('type', 'SYSSETTINGS_FREE_SUB_ON_REG')->pluck('value');
-                $this->APPLY_SUBSCRIPTION_EMPLOYERS($SETTINGS_TRIAL_SUBSCRIPTION, $CODE_DETAILS->user_id);
+        if($CODE_DETAILS){
+            if(time() > strtotime($CODE_DETAILS->duration)){
+                $msg = 'Activation code has expired. Click <a href="/RESENDVALIDATION='.$CODE_DETAILS->user_id.'">here</a> to request for another activation code';
+                return $msg;
+            }else{
+                if(User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_IND' || User::GETROLE($CODE_DETAILS->user_id) == 'CLIENT_CMP'){
+                    $SETTINGS_TRIAL_SUBSCRIPTION = SystemSetting::where('type', 'SYSSETTINGS_FREE_SUB_ON_REG')->pluck('value');
+                    $this->APPLY_SUBSCRIPTION_EMPLOYERS($SETTINGS_TRIAL_SUBSCRIPTION, $CODE_DETAILS->user_id);
+                }
+
+                User::where('id', $CODE_DETAILS->user_id)->update([
+                    'status'    =>  'PRE_ACTIVATED'
+                ]);
+                Auth::login(User::find($CODE_DETAILS->user_id));
+                return Redirect::to('/login')
+                    ->with('successMsg', 'You may now user your Proveek account!');
             }
-
-            User::where('id', $CODE_DETAILS->user_id)->update([
-                'status'    =>  'PRE_ACTIVATED'
-            ]);
-
-            return Redirect::to('/login')
-                ->with('successMsg', 'You may now login your account!');
+        }else{
+            Auth::logout();
+            return Redirect::to('/');
         }
     }
 
@@ -1758,6 +1786,37 @@ class HomeController extends BaseController {
     public function catchNotif($notifID, $destination){
         Notification::where('id', $notifID)->update(['status' => 'OLD']);
         return Redirect::to('/'.$destination);
+    }
+
+    public function UPDATE_JOBADS_GLOBAL(){
+        $jobs = Job::get();
+        // CHECK FOR EXPIRATION
+        // Updates `expired` column to TRUE if job is expired, else, FALSE
+        foreach($jobs as $j){
+            $bc = new BaseController();
+            $url = '/jobDetails='.$j->id;
+            if(Carbon::now()->gt(Carbon::parse($j->expires_at))){
+                Job::where('id', $j->id)->update(['expired' => true]);
+                $msg = 'Your job ad - '.$j->title.' has expired.';
+                $NOTIF_EXISTS = Notification::where('user_id', $j->user_id)->where('content', $msg)->where('notif_url', $url)->count();
+                if($NOTIF_EXISTS == 0){
+                    $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
+                }
+            }elseif(Carbon::now()->diffInDays(Carbon::parse($j->expires_at)) <= 3){
+                $msg = 'Your job ad - '.$j->title.' will expire in less than 3 days';
+                $NOTIF_EXISTS = Notification::where('user_id', $j->user_id)->where('content', $msg)->where('notif_url', $url)->count();
+                if($NOTIF_EXISTS == 0){
+                    $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
+                }
+            }elseif(!$j->expired && Carbon::now()->gte(Carbon::parse($j->expires_at))){
+                Job::where('id', $j->id)->update(['expired' => true]);
+                $msg = 'Your job ad - '.$j->title.' has expired.';
+                $NOTIF_EXISTS = Notification::where('user_id', $j->user_id)->where('content', $msg)->where('notif_url', $url)->count();
+                if($NOTIF_EXISTS == 0){
+                    $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
+                }
+            }
+        }
     }
 }
 
