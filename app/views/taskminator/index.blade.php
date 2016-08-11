@@ -191,7 +191,7 @@
                             <a href="/editProfile" style="font-weight:bold; font-size:14pt;">{{ Auth::user()->fullName }}</a><br>
                         </div>
                         {{--<span><b>Employment Status:</b> Not Hired</span><br>--}}
-                        <span><b>Last Login:</b> 08/02/16</span>
+                        {{--<span><b>Last Login:</b> 08/02/16</span>--}}
                     </div>
                     <!-- <div class="col-lg-12" style="padding-left:24px;">
                         <a href="/editProfile">Edit Profile</a>

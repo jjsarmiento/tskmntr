@@ -7,9 +7,7 @@ use Carbon\Carbon;
 class HomeController extends BaseController {
 
     public function TESTINGROUTE(){ // test()
-        $c = new ClientIndiController();
-        return $c->GET_CART_CONTENTS();
-        return BaseController::ROUTE_UPDATE_FEEDBACKS(2);
+        return $this->PROVEEK_PROFILE_PERCENTAGE_WORKER(Auth::user()->id);
     }
 
     function generateConfirmationCode(){

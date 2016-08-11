@@ -155,11 +155,29 @@
                                 @if($PURCHASED > 0)
                                     <!-- CONTACT INFO -->
                                     <div class="ConInfo">
+                                        @foreach(Contact::where('user_id', $users->id)->get() as $con)
+                                            <span><b>
+                                                @if($con->ctype == "mobileNum")
+                                                    Mobile #
+                                                @elseif($con->ctype == "businessNum")
+                                                    Business #
+                                                @elseif($con->ctype == 'email')
+                                                    Email
+                                                @else
+                                                    {{ $con->ctype }}
+                                                @endif
+                                            </b></span>
+                                             :
+                                            <span style="margin-left: 5px">{{ $con->content }}</span>
+                                            <br/>
+                                        @endforeach
+                                        <!--
                                         <span><b>Mobile #: </b>{{$mobile}}</span><br>
                                         <span><b>Email: </b><a href="mailto:fakeemail@gmail.com">fakeemail@gmail.com</a></span><br>
                                         <span><b>FB: </b><a href="facebook.com" target="_Blank">Facebook.com</a></span><br>
                                         <span><b>Twitter: </b><a href="twitter.com" target="_Blank">Twitter.com</a></span><br>
                                         <span><b>Linkedin: </b><a href="linkedin.com" target="_Blank">Linkedin.com</a></span>
+                                        -->
                                     </div>
                                 @endif
                             @else

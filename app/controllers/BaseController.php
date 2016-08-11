@@ -423,20 +423,13 @@ class BaseController extends Controller {
         if(TaskminatorHasSkill::where('user_id', $user->id)->count() > 0 || CustomSkill::where('created_by', $user->id)->count() > 0){
             $base++;
         }
+
         $first50 = $base * (50/13);
         $base = 0;
 
-        // 2nd 50%
-        $doc2nd = Document::where('user_id', $user->id)
-                    ->where('type' , 'TIN_ID')
-                    ->orWhere('type' , 'NBI')
-                    ->orWhere('type' , 'PASSPORT')
-                    ->orWhere('type' , 'VOTERS_ID')
-                    ->count();
         $base = ($user->educationalBackground   == null) ? $base : ++$base;
         $base = ($user->experience              == null) ? $base : ++$base;
-        $base = ($doc2nd                        > 0) ? $base : ++$base;
-        $FINAL_PERCENTAGE = $first50 + ($base * (50/3));
+        $FINAL_PERCENTAGE = $first50 + ($base * (50/2));
 
         // UPDATE total_profile_progress column on users table
         User::where('id', $user->id)->update([
