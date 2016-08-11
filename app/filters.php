@@ -154,7 +154,7 @@ Route::filter('CLIENT-ONLY', function(){
 
         BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
         // check for expired job ads
-        BaseController::ROUTE_UPDATE_JOBADS(Auth::user()->id);
+//        BaseController::ROUTE_UPDATE_JOBADS(Auth::user()->id);
         // check for feedbacks
         BaseController::ROUTE_UPDATE_FEEDBACKS(Auth::user()->id);
         // check if subscription is expired

@@ -1789,17 +1789,33 @@ class HomeController extends BaseController {
     }
 
     public function UPDATE_JOBADS_GLOBAL(){
-        if(Auth::check()){
-            $bool = 0;
-            foreach(Job::get() as $j){
-                if(!$j->expired && Carbon::now()->gte(Carbon::parse($j->expires_at))){
-                    Job::where('id', $j->id)->update(['expired' => true]);
-                    $bool = 1;
+        $jobs = Job::get();
+        // CHECK FOR EXPIRATION
+        // Updates `expired` column to TRUE if job is expired, else, FALSE
+        foreach($jobs as $j){
+            $bc = new BaseController();
+            $url = '/jobDetails='.$j->id;
+            if(Carbon::now()->gt(Carbon::parse($j->expires_at))){
+                Job::where('id', $j->id)->update(['expired' => true]);
+                $msg = 'Your job ad - '.$j->title.' has expired.';
+                $NOTIF_EXISTS = Notification::where('user_id', $j->user_id)->where('content', $msg)->where('notif_url', $url)->count();
+                if($NOTIF_EXISTS == 0){
+                    $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
+                }
+            }elseif(Carbon::now()->diffInDays(Carbon::parse($j->expires_at)) <= 3){
+                $msg = 'Your job ad - '.$j->title.' will expire in less than 3 days';
+                $NOTIF_EXISTS = Notification::where('user_id', $j->user_id)->where('content', $msg)->where('notif_url', $url)->count();
+                if($NOTIF_EXISTS == 0){
+                    $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
+                }
+            }elseif(!$j->expired && Carbon::now()->gte(Carbon::parse($j->expires_at))){
+                Job::where('id', $j->id)->update(['expired' => true]);
+                $msg = 'Your job ad - '.$j->title.' has expired.';
+                $NOTIF_EXISTS = Notification::where('user_id', $j->user_id)->where('content', $msg)->where('notif_url', $url)->count();
+                if($NOTIF_EXISTS == 0){
+                    $bc->NOTIFICATION_INSERT($j->user_id, $msg, $url);
                 }
             }
-            return $bool;
-        }else{
-            return 0;
         }
     }
 }
