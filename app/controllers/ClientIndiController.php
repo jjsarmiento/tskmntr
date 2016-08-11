@@ -2052,4 +2052,42 @@ class ClientIndiController extends \BaseController {
 
         return Redirect::to($url);
     }
+
+    public function cprofileProgress(){
+        $check = '<i style="color: #1ABC9C; font-size: 1.2em" class="fa fa-check-circle"></i>&nbsp;&nbsp;';
+        $close = '<i style="color: #E74C3C; font-size: 1.2em" class="fa fa-close"></i>&nbsp;&nbsp;';
+        $mobile = Contact::where('user_id', Auth::user()->id)->where('ctype', 'mobileNum')->pluck('content');
+        $businessMobile = Contact::where('user_id', Auth::user()->id)->where('ctype', 'businessNum')->pluck('content');
+        $email = Contact::where('user_id', Auth::user()->id)->where('ctype', 'email')->pluck('content');
+        $POEA_LICENSE = Document::where('user_id', Auth::user()->id)->where('type', 'DOLE_LICENSE')->count();
+        $DOLE_LICENSE = Document::where('user_id', Auth::user()->id)->where('type', 'POEA_LICENSE')->count();
+        $ARRAY = array();
+
+        array_push($ARRAY, ['content' => ((Auth::user()->fullName)                 ? $check : $close).'Company Name / Business Name',      'url' => '/cltEditPersonalInfo']);
+        array_push($ARRAY, ['content' => ((Auth::user()->profilePic)               ? $check : $close).'Profile Picture / Company Logo',    'url' => '/editProfile']);
+        array_push($ARRAY, ['content' => ((Auth::user()->region)                   ? $check : $close).'Region',                    'url' => '/cltEditPersonalInfo']);
+        array_push($ARRAY, ['content' => ((Auth::user()->province)                 ? $check : $close).'Province',                  'url' => '/cltEditPersonalInfo']);
+        array_push($ARRAY, ['content' => ((Auth::user()->city)                     ? $check : $close).'City',                      'url' => '/cltEditPersonalInfo']);
+        array_push($ARRAY, ['content' => ((Auth::user()->barangay)                 ? $check : $close).'Barangay',                  'url' => '/cltEditPersonalInfo']);
+        array_push($ARRAY, ['content' => ((Auth::user()->businessPermit)           ? $check : $close).'Business Permit',           'url' => '/cltEditPersonalInfo']);
+        array_push($ARRAY, ['content' => ((Auth::user()->businessDescription)      ? $check : $close).'Business Description',      'url' => '/cltEditPersonalInfo']);
+        array_push($ARRAY, ['content' => ((Auth::user()->businessNature)           ? $check : $close).'Business Nature',           'url' => '/cltEditPersonalInfo']);
+        array_push($ARRAY, ['content' => ((Auth::user()->years_in_operation)       ? $check : $close).'Years in Operation',        'url' => '/cltEditPersonalInfo']);
+        array_push($ARRAY, ['content' => ((Auth::user()->number_of_branches)       ? $check : $close).'Number Of Branches',        'url' => '/cltEditPersonalInfo']);
+        array_push($ARRAY, ['content' => ((Auth::user()->contact_person_position)  ? $check : $close).'Contact Person Position',   'url' => '/cltEditPersonalInfo']);
+        array_push($ARRAY, ['content' => ((Auth::user()->number_of_employees)      ? $check : $close).'Number Of Employees',       'url' => '/cltEditPersonalInfo']);
+        array_push($ARRAY, ['content' => ((Auth::user()->working_hours)            ? $check : $close).'Working Hours',             'url' => '/cltEditPersonalInfo']);
+        array_push($ARRAY, ['content' => (($mobile)                                ? $check : $close).'Mobile Number',             'url' => '/cltEditContactInfo']);
+        array_push($ARRAY, ['content' => (($businessMobile)                        ? $check : $close).'Business Mobile Number',    'url' => '/cltEditContactInfo']);
+        array_push($ARRAY, ['content' => (($email)                                 ? $check : $close).'Email',                     'url' => '/cltEditContactInfo']);
+
+        if($POEA_LICENSE > 0 || $DOLE_LICENSE > 0){
+            array_push($ARRAY, ['content' => $check.'POEA License / DOLE License', 'url' => '/cltEditPersonalInfo']);
+        }else{
+            array_push($ARRAY, ['content' => $close.'POEA License / DOLE License', 'url' => '/cltEditPersonalInfo']);
+        }
+
+        return View::make('client.cprofileProgress')
+            ->with('reqs', $ARRAY);
+    }
 }

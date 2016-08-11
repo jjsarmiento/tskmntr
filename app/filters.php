@@ -152,6 +152,7 @@ Route::filter('CLIENT-ONLY', function(){
             return Redirect::to('/');
         }
 
+        BaseController::PROVEEK_PROFILE_PERCENTAGE_EMPLOYER(Auth::user()->id);
         // check for expired job ads
         BaseController::ROUTE_UPDATE_JOBADS(Auth::user()->id);
         // check for feedbacks

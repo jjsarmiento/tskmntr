@@ -266,6 +266,7 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
 });
 
 Route::group(array('before' => 'CLIENT-ONLY'), function(){
+    Route::get('/cprofileProgress', 'ClientIndiController@cprofileProgress');
     Route::get('/cltEditPersonalInfo', 'ClientIndiController@cltEditPersonalInfo');
     Route::post('/doCltEditPersonalInfo', 'ClientIndiController@doCltEditPersonalInfo');
     Route::get('/cltEditContactInfo', 'ClientIndiController@cltEditContactInfo');

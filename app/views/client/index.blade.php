@@ -292,7 +292,7 @@
                     <div class="widget-container weather" style="min-height: 1em; box-shadow:none;">
                         <div class="widget-content">
                             <div class="padded text-center" style="min-height:30px; text-align:left; color:#2980b9; font-size:18pt;">
-                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : {{ Auth::user()->total_profile_progress }}% | {{$subscription_msg}}
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i>&nbspYour Status : <a href="/cprofileProgress"><b>{{ Auth::user()->total_profile_progress }}%</b></a> | {{$subscription_msg}}
                                 <div class="widget-content">
                                     <div class="padded text-center" style="font-size:18pt; padding: 10px 0 0;">
                                         <div id="progressbar">
@@ -385,7 +385,7 @@
                                             @endif
                                         </b><br/> <a href="/{{$w->username}}" class="user">{{ '@'.$w->username }}</a></span><br>
                                         {{--<span>Address Lorem ipsum sit dolor amet</span><br>--}}
-                                        <span><b>Profile Rating: </b> {{$w->total_profile_progress}}%</span><br>
+                                        <span><b>Profile Rating: {{$w->total_profile_progress}}%</b></span><br>
                                         {{--<span><b>Last Login: </b> 2 Days ago</span>--}}
                                     </div>
                                     <a href="/{{$w->username}}" class="viewSal">VIEW FULL PROFILE</a>

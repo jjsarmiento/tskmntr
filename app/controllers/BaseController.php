@@ -363,7 +363,7 @@ class BaseController extends Controller {
         // computation for 2nd 50%
         $base = 0;
         $base = ($user->businessNature          ==  null) ? $base : ++$base;
-        $base = ($user->years_in_opeartion      ==  null) ? $base : ++$base;
+        $base = ($user->years_in_operation      ==  null) ? $base : ++$base;
         $base = ($user->number_of_branches      ==  null) ? $base : ++$base;
         $base = ($user->contact_person_position ==  null) ? $base : ++$base;
         $base = ($user->number_of_employees     ==  null) ? $base : ++$base;
