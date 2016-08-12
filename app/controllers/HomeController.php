@@ -775,6 +775,10 @@ class HomeController extends BaseController {
         return View::make('pricing');
     }
 
+    public function seeFAQ(){
+        return View::make('Faq');
+    }
+
     public function dashboard(){
         return View::make('userdashboard');
     }

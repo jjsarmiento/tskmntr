@@ -9,6 +9,7 @@ Route::get('/employer','HomeController@employer');
 Route::get('/howitworks', 'HomeController@howitworks');
 Route::get('/whychooseproveek', 'HomeController@whychooseproveek');
 Route::get('/pricing', 'HomeController@pricing');
+Route::get('/faq', 'HomeController@seeFAQ');
 Route::get('/login', 'HomeController@login');
 
 Route::post('/doLogin', 'HomeController@doLogin');

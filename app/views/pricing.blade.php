@@ -471,7 +471,7 @@
                                     <li><a href="/howitworks">How It Works</a></li>
                                     <li><a href="/whychooseproveek">Why Choose Proveek</a></li>
                                     <li><a href="/pricing">Pricing</a></li>
-                                    <li><a href="#">FAQ</a></li>
+                                    <li><a href="/faq">FAQ</a></li>
                                     <li><a href="/login">Login / Sign Up</a></li>
                                 </ul>
                             </div>
