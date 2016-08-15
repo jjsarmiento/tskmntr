@@ -778,6 +778,9 @@ class HomeController extends BaseController {
     public function seeFAQ(){
         return View::make('Faq');
     }
+    public function seeFAQTAG(){
+        return View::make('faqTag');
+    }
 
     public function dashboard(){
         return View::make('userdashboard');
