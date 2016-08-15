@@ -782,6 +782,10 @@ class HomeController extends BaseController {
         return View::make('faqTag');
     }
 
+    public function landingJobAd(){
+        return View::make('JobAdCategoryWorkers');
+    }
+
     public function dashboard(){
         return View::make('userdashboard');
     }

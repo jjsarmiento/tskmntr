@@ -255,7 +255,7 @@
                         <!--
                         <?php $counter = 0; ?>
                             @foreach($tasks as $task)
-                                <a href="#GlobalModal" data-toggle="modal" style="text-decoration:none; ">
+                                <a href="/workercategory" data-toggle="modal" style="text-decoration:none; ">
                                     <div class="widget-container fluid-height padded wow fadeInUp" data-wow-offset="-300" data-wow-delay="0.{{ $counter}}s" style="background-color:rgba(255,255,255,1); padding-left:10px; padding-right:10px;color:#f9f9f9; border-radius:4px; min-height: 50px; border:1px solid #ccc;">
                                         <h3 class="lato-text" style="color:#2980b9; margin:0 !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $task->title }}</h3>
                                         <span style="padding:0;margin:0;color:#060606; ">
@@ -295,7 +295,7 @@
                 <!-- SEARCH BUTTONS -->
 		
                 <!-- <div class="btn" style="padding-top: 20px;">
-                    <a href="#GlobalModal" data-toggle="modal"  style="text-decoration:none;">
+                    <a href="/workercategory" data-toggle="modal"  style="text-decoration:none;">
                         <button type="button" class="btn btn-primary btn-md" style="width: 180px; border-top-right-radius: 1em; border-bottom-right-radius: 1em;">Job Provider</button>
                         <button type="button" class="btn btn-primary btn-md" style="width: 180px;border-top-left-radius: 1em; border-bottom-left-radius: 1em;">Job Seeker</button>
                     </a>
@@ -320,8 +320,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                	<i class="fa fa-5x fa-users wow bounceIn text-primary"></i>
-                    <h2 class="section-heading">Skills and Services Offered</h2>
+                	<i class="fa fa-5x fa-search wow bounceIn text-primary"></i>
+                    <h2 class="section-heading">Job Ads Category</h2>
                     <hr class="primary">
                     <p>Please select from the catergories</p>
                 </div>
@@ -332,7 +332,7 @@
         <div class="container-fluid">
             <div class="row no-gutter">
                 <div class="col-lg-3 col-sm-6">
-                    <a href="#GlobalModal" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                     	<i class="fa fa-5x fa-building-o wow bounceIn text-primary" style="padding-top:50px;"></i>
                     	<h3>Construction / Factory Workers</h3>
                         <div class="portfolio-box-caption">
@@ -348,7 +348,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="#GlobalModal" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <!-- <img src="#" class="img-responsive" alt=""> -->
                         <i class="fa fa-5x fa-cogs wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".1s"></i>
                         <h3>Automotive / Electronics</h3>
@@ -365,7 +365,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="#GlobalModal" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <i class="fa fa-5x fa-dollar wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".2s"></i>
                         <h3>Sales Agents / Salesclerk</h3>
                         <div class="portfolio-box-caption">
@@ -381,7 +381,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="#GlobalModal" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <i class="fa fa-5x fa-user-md wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".3s"></i>
                         <h3>House Helpers / Caregivers</h3>
                         <div class="portfolio-box-caption">
@@ -397,7 +397,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="#GlobalModal" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <i class="fa fa-5x fa-wrench wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".4s"></i>
                         <h3>Repair &amp Maintenance Services</h3>
                         <div class="portfolio-box-caption">
@@ -413,7 +413,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="#GlobalModal" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <i class="fa fa-5x fa-stethoscope wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".5s"></i>
                         <h3>Personal Care &amp Wellness</h3>
                         <div class="portfolio-box-caption">
@@ -429,7 +429,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="#GlobalModal" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <i class="fa fa-5x fa-cutlery wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".6s"></i>
                         <h3>Hotel &amp Restaurant Crew</h3>
                         <div class="portfolio-box-caption">
@@ -445,7 +445,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="#GlobalModal" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <i class="fa fa-5x fa-ellipsis-h wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".7s"></i>
                         <h3>More</h3>
                         <div class="portfolio-box-caption">
@@ -472,7 +472,7 @@
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                 	<i class="fa fa-5x fa-search wow bounceIn text-primary"></i>
                     <h2 class="section-heading">Can't find what you're looking for?</h2><br>
-                    <a href="#GlobalModal" data-toggle="modal" class="btn btn-default btn-lg" style="border-radius: 4em; width: 250px; outline:none;">Post a Job</a>
+                    <a href="/workercategory" data-toggle="modal" class="btn btn-default btn-lg" style="border-radius: 4em; width: 250px; outline:none;">Post a Job</a>
                     <!--<a href="#" class="btn btn-default btn-xl">Get Started!</a>
                 </div>
             </div>
@@ -575,7 +575,7 @@
 <!-- END OF TESTIMONIAL SLIDER -->
 
 <!-- PARTNERSHIP SLIDER -->
-<!--     <section class="bg-primary" style="background-image: url(frontend/img/blur_03.jpg); background-position: top; background-attachment: fixed; -webkit-background-size: cover; -moz-background-size: cover; background-size: cover; -o-background-size: cover; padding-top:40px; padding-bottom: 40px">
+    <section class="bg-primary" style="background-image: url(frontend/img/blur_03.jpg); background-position: top; background-attachment: fixed; -webkit-background-size: cover; -moz-background-size: cover; background-size: cover; -o-background-size: cover; padding-top:40px; padding-bottom: 40px">
 		<div class="item">
 			<div class="container-fluid">
 				<div class="row">
@@ -638,7 +638,7 @@
 			    </div>
 		    </div>
 	    </div>
-    </section> -->
+    </section>
 <!-- END OF PARTNERSHIP SLIDER -->
 
 <!-- FOOTER -->
@@ -652,6 +652,7 @@
                                 <h2>Proveek</h2>
                                 <ul style="padding-left:0">
                                     <li><a href="#page-top" class="page-scroll">Home</a></li>
+                                    <li><a href="#">About</a></li>
                                     <li>{{ HTML::link('/howitworks', 'How It Works')}}</li>
                                     <li>  {{ HTML::link('/whychooseproveek', 'Why Choose Proveek')}}</li>
                                     <li>  {{ HTML::link('/pricing', 'Pricing')}}</li>
@@ -692,8 +693,8 @@
                             <div class="div_footer">
                                 <a href="https://www.facebook.com/proveek"><i class="fa fa-facebook-square fa-3x wow bounceIn" data-wow-delay=".2s"></i></a>
                                 <a href="https://twitter.com/Proveek"><i class="fa fa-twitter-square fa-3x wow bounceIn" data-wow-delay=".3s"></i></a>
-                                <a href="#"><i class="fa fa-instagram fa-3x wow bounceIn" data-wow-delay=".4s"></i></a>
-                                <a href="https://plus.google.com/108796854139900682022/posts"><i class="fa fa-google-plus-square fa-3x wow bounceIn" data-wow-delay=".5s"></i></a>
+                                <!-- <a href="#"><i class="fa fa-instagram fa-3x wow bounceIn" data-wow-delay=".4s"></i></a>
+                                <a href="https://plus.google.com/108796854139900682022/posts"><i class="fa fa-google-plus-square fa-3x wow bounceIn" data-wow-delay=".5s"></i></a> -->
                                 <a href="#"><i class="fa fa-envelope-square fa-3x wow bounceIn" data-wow-delay=".6s"></i></a>
                             </div>
                             <p>2015  <i class="fa fa-copyright"></i>  Proveek Inc.</p>
