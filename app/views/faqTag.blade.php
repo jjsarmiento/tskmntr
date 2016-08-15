@@ -258,9 +258,9 @@
                     <h1 style="text-transform:none">Frequently Asked Questions</h1>
                     <hr>
                     <p style="color:#ECF0F1">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec odio mauris. Vestibulum ante ipsum primis in faucibus orci mollis lorem vel ultricies.
+                        Tagalog Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec odio mauris. Vestibulum ante ipsum primis in faucibus orci mollis lorem vel ultricies.
                     </p>
-                    <a class="FAQbutton lato-text" href="/faqTag">Translate to Tagalog Version</a>
+                    <a class="FAQbutton lato-text" href="/faq">Translate to English Version</a>
                     <!-- <a class="btnLink" style="text-decoration:none;" href="#GlobalModal" data-toggle="modal">Get Quotation Now</a>
                     <p style="margin-bottom:0; margin-top:2%;">or</p> -->
                     <div class="text-center div_header">
@@ -284,48 +284,48 @@
 				<div class="panel-heading">
 					<h4 class="panel-title">
 						<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse1">
-						Are you an Agency?</a>
+						Ahensya (Agency) ba ang Proveek?</a>
 					</h4>
 				</div>
 				<div id="collapse1" class="panel-collapse collapse in">
 					<div class="panel-body">
-						NO. We are not an agency nor are we affiliated to any Agency or Company. Proveekisa software company that aims to providean online platform for Employers and Workers to be connected.
+						HINDI. Ang Proveek ay hindi ahensya (agency) at wala kaming anumang koneksyon sa alin mang ahensya o kumpanya na naghahanap ng manggagawa. Ang Proveek ay isang software company na naglalayong maging tulay para sa mga Employer at Manggagawa.
 					</div>
 				</div>
 			</div>
 
 			<div class="col-md-6">
-				<h3>FAQ for Employer (Company/Individual)</h3>
+				<h3>FAQ para sa Employer (Company/Individual)</h3>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse2">
-							How do I signup as an Employer?</a>
+							Paano ako makakapag-sign up bilang Employer?</a>
 						</h4>
 					</div>
 					<div id="collapse2" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul style="list-style-type: decimal;">
-								<li>Click <a href="/employer">‘Employer’</a> page.</li>
-								<li>Fill in your details.</li>
-								<li>Click on <a href="/employer">‘Signup’</a>. Make sure to read the Terms of Service and Privacy Policy before Clicking Signup. (You'll be directed to your profile)</li>
-								<li>Fill in your other important company/individual details, upload necessary documents and click on ‘Save’.</li>
-								<li>Wait for email verification/Contact # verification.</li>
+								<li>Pindutin ang <a href="/employer">‘Employer’</a> page.</li>
+								<li>Ilagay ang mga detalyeng hinihingi.</li>
+								<li>Pindutin ang <a href="/employer">‘Signup’</a>Siguruhing nabasa mo ang Panuntunan ng Serbisyo (Terms of Service) and Privacy Policy bago pindutin ang ‘Signup’. Pagkapindot ay ididirekta ka sa iyong Profile.</li>
+								<li>Ilagay ang mga importanteng detalye at i-upload ang mga kinakailang dokumento. Pindutin ang ‘Save’.</li>
+								<li>Hintayin ang email verification/Contact # verification.</li>
 							</ul>
-							<b>For email verification:</b>
+							<b>Para sa email verification:</b>
 							<ul style="list-style-type: decimal;">
-								<li>Check the email address you provided.</li>
-								<li>Click on the verification link sent by Proveek (If the link is not working, copy the link and paste it in the URL)</li>
-								<li>This verification link will lead you to Proveek Home Page.</li>
-								<li>Get started!</li>
+								<li>Pumunta sa iyong email address naibinigay mo para sa email verification.</li>
+								<li>Pindutin lamang ang verification link (Kung hindi ito gumagana, kopyahin ang link at i-paste ito sa URL)</li>
+								<li>Isang pagbati sa Proveek ang makikita sa Home Page.</li>
+								<li>Maari ka ng magsimula!</li>
 							</ul>
-							<b>For Number Verification:</b>	
+							<b>Para sa Number Verification:</b>	
 							<ul style="list-style-type: decimal;">
-								<li>Input your cellphone number in the box provided then click Verify.</li>
-								<li>Wait for a verification code.</li>
-								<li>Input the verification code and click Submit</li>
-								<li>This will lead you to Proveek Home Page.</li>
-								<li>Get started!</li>
+								<li>Ilagay ang iyong cellphone number sa box na nasa Website tapos ay pindutin ang ‘Verify’.</li>
+								<li>Hintayin ang verification code.</li>
+								<li>Ilagay ang natanggap na verification code at pindutin ang ‘Submit’.</li>
+								<li>Isang pagbati sa Proveek ang makikita sa Home Page.</li>
+								<li>Maari ka ng magsimula!</li>
 							</ul>					
 						</div>
 					</div>
@@ -335,16 +335,16 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse3">
-							How do I post a job ad?</a>
+							Paano mag-post ng trabaho (job post)?</a>
 						</h4>
 					</div>
 					<div id="collapse3" class="panel-collapse collapse">
 						<div class="panel-body">
-							<em>[Please note: In order to post a job, your profile must be 50% complete]</em>
+							<em>[Paalala: Para makapag-post ng job ad,kailangang 50% complete na ang iyong profile]</em>
 							<ul style="list-style-type: decimal;">
-								<li>Click on the “Create Job” button. (You need to be registered and logged-in order to post a job)</li>
-								<li>Fill in the necessary job details.</li>
-								<li>Post job.</li>
+								<li>Pindutin ang “Create Job” button. (Kailangang nakarehistro ka at logged-in sa Website upang makapag-post ngtrabaho)</li>
+								<li>Ilagay ang mga detalyeng hinihingi.</li>
+								<li>Pindutin ang ‘Post’.</li>
 							</ul>
 						</div>
 					</div>
@@ -354,12 +354,12 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse4">
-							Do I need to pay if I post a job?</a>
+							Kinakailangan ko ba magbayad para makapag-post?</a>
 						</h4>
 					</div>
 					<div id="collapse4" class="panel-collapse collapse">
 						<div class="panel-body">
-							A newly registered employer will be given 150 credit points for 30 days. You may use the credit points to post a Job for FREE. However, after the 30-days FREE trial period or if the FREE credits points were already used up, you need to load up your account in order to post a job. Please see <a href="/pricing">Pricing</a> for the list of Service Fees.
+							Ang isang bagong signup na Employer ay mabibigyang ng LIBRENG 150 credit points na valid for 30 days. Pwedeng gamitin ang credit points na ito na pambayad sa mga services ng Proveek tulad ng pag-Post ng Job Ad, pag-checkout ng profile ng worker at iba pa. Ngunit kapag naubos na ang LIBRENG credit points or kapag nakalipas na ang 30-days FREE trial period, kailangang load-an ang iyong account para maka gamit muli ng serbisyong Proveek. Para sa iba pang detalye ukol dito, pumun tasa<a href="/pricing">Pricing</a> para sa karampatang Service Fees.
 						</div>
 					</div>
 				</div>
@@ -368,12 +368,12 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse5">
-							How many jobs can I post?</a>
+							Gaano karaming trabaho ang maaari kong i-post?</a>
 						</h4>
 					</div>
 					<div id="collapse5" class="panel-collapse collapse">
 						<div class="panel-body">
-							You may post up to 10 job ads per month for each account. After a job post expires, you may repost it or you may post another job.
+							Maaari kang mag-post ng hanggang sampung trabaho (10 job ads) per month para sa bawat account. Pagang post mo ay nag-expire na, maaari mo itong i-post muli o mag-post ng panibagong trabaho.
 						</div>
 					</div>
 				</div>
@@ -382,12 +382,12 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse6">
-							How long would posted job ad last?</a>
+							Gaano katagal ang post sa Website?</a>
 						</h4>
 					</div>
 					<div id="collapse6" class="panel-collapse collapse">
 						<div class="panel-body">
-							The job post will be displayed within your set timeframe. A job post can last up to7 days. After 1 week, you will receive a notification that your job post has expired and you will be asked if you want to repost the job again. 
+							Ang bawat job post ay makikita sa Website sa itinakda mong panahon. Ang isang job post ay maaaring magtagal ng pitong araw sa Website. Pagkatapos ng isang linggo, makakatanggap kang email o text upang ipaalam sayo na nag-expire na ang iyong post at tanong kung nais mo pang i-repost ito. 
 						</div>
 					</div>
 				</div>
@@ -396,12 +396,12 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse7">
-							Do I still need to pay if I reposted the same job ad after it expired?</a>
+							Kailangan ko ba magbayad kung ire-repost ko muli ang trabaho?</a>
 						</h4>
 					</div>
 					<div id="collapse7" class="panel-collapse collapse">
 						<div class="panel-body">
-							Yes. After you used up your FREE credit points or if your 30-days FREE trial period expires, a corresponding fee will be applied for every job ad posted or reposted. Please see <a href="/pricing">Pricing</a> for the list of Service Fees.
+							Oo. Para sa iba pang detalye ukol dito, pumunta sa <a href="/pricing">Pricing</a> para sa karampatang Service Fees.
 						</div>
 					</div>
 				</div>
@@ -410,17 +410,17 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse8">
-							What is the process of hiring people?</a>
+							Ano ang proseso ng pagtangggap ng manggagawa?</a>
 						</h4>
 					</div>
 					<div id="collapse8" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul style="list-style-type: decimal;">
-								<li>When someone applies to your job ad, you will receive a notification from the system thru your verified email orcellphone number. </li>
-								<li>Check your account for the list of applicants.</li>
-								<li>You may then check the portfolio of the applicants.</li>
-								<li>Once you have made a decision on who to hire, you may checkout their profile for you to access their name and contact details. Please see <a href="/pricing">Pricing</a> for the corresponding amount to be paid on checking out an applicant’s profile.</li>
-								<li>You may contact him or her directly using the contact details on the applicant’s profile you checked out.</li>
+								<li>Kapag mayroon ng nag-apply sa pinost mong Job Ad, ikaw ay makakatanggap ng email o text message.</li>
+								<li>Mag-login sa iyong account para makita ang listahan ng mga workers na nag-apply sa iyong Job Ad.</li>
+								<li>Pwede mong suriin ang bawat profile ng Aplikante.</li>
+								<li>Kapag naka pagdesisyon kana ay maaari mong i-checkout ang kanilang profile upang makita ang kanilang contact details. Para sa iba pang detalye ukol dito, pumunta sa<a href="/pricing">Pricing</a> para sa karampatang Service Fees.</li>
+								<li>Pwede mo na siyang abutin sa pamamagitan ng contact details ng aplikante na nakalagay sa kanyang Profile pagkatapos mo siyang i-checkout.</li>
 							</ul>
 						</div>
 					</div>
@@ -430,12 +430,12 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse9">
-							How will I pay for the job ads and other services?</a>
+							Paano ako magbabayad para sa mga serbisyo?</a>
 						</h4>
 					</div>
 					<div id="collapse9" class="panel-collapse collapse">
 						<div class="panel-body">
-							You can pay for the job ads and other services by loading your account through online bank transfers. Please refer below for the following bank accounts or you may contact us thru <a href="mailto:service.proveek@gmail.com">service.proveek@gmail.com</a> for further assistance.
+							Maaari mong bayaran ang mga serbisyong Proveek sa pamamagitan ng paglo-load saiyong account  via online bank transfers. Para saiba pang detalye ukol dito, pumunta sa listahan ng mga bank accounts.Maaari nyo din kaming abutin sa <a href="mailto:service.proveek@gmail.com">service.proveek@gmail.com</a> para sa anumang tulong na inyong kinakailangan ukol dito.
 						</div>
 					</div>
 				</div>
@@ -444,12 +444,12 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse10">
-							How much do I need to load in my account?</a>
+							Magkano ang kailangan kong i-load sa aking account?</a>
 						</h4>
 					</div>
 					<div id="collapse10" class="panel-collapse collapse">
 						<div class="panel-body">
-							There is no limit on the amount you want to load. You can load your account for a minimum of P200/month by paying through online bank transfers. Please refer below for the following bank accounts or you may contact us thru <a href="mailto:service.proveek@gmail.com">service.proveek@gmail.com</a> for further assistance.
+							Walang limit kung magkano ang nais mong ilagay sa iyong account. Maaari kang magload ng hindi bababa sa P200 kadabuwan sa pamamagitan ng online bank transfers. Para saiba pang detalye ukol dito, pumunta sa listahan ng mga bank accounts. Maaari nyo din kaming abutin sa <a href="mailto:service.proveek@gmail.com">service.proveek@gmail.com</a> para sa anumang tulong na inyong kinakailangan ukol dito.
 						</div>
 					</div>
 				</div>
@@ -457,13 +457,13 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">
-							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse11">
-							Can I refund the unused load credits in my account?</a>
+							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse10">
+							Maaari ko bang bawiin ang natitirang laman ng aking account?</a>
 						</h4>
 					</div>
-					<div id="collapse11" class="panel-collapse collapse">
+					<div id="collapse10" class="panel-collapse collapse">
 						<div class="panel-body">
-							Yes, you can refund unused load credits if it is above P100. However, load credits below P100 are not refundable. You may contact us for further assistance.
+							Oo, maaari mong bawiin o i-refund ang natitira mong pera kung ito ay lagpas P100. Gayun man, kung ito ay mas mababa sa P100, ito ay hindi na maaaring bawiin (non-refundable).
 						</div>
 					</div>
 				</div>
@@ -472,16 +472,16 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse12">
-							How can I edit/update my profile?</a>
+							Paano i-edit o i-update ang aking Profile?</a>
 						</h4>
 					</div>
 					<div id="collapse12" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul style="list-style-type:decimal;">
-								<li>Log-in to your account.</li>
-								<li>Click on your name or Edit my Profile button.</li>
-								<li>Edit/update your details.</li>
-								<li>Click “Save”</li>
+								<li>Mag-log in sa iyong account.</li>
+								<li>Pindutin ang iyong pangalan. Maaari ding pindutin ang ‘Edit my Profile’ button.</li>
+								<li>Maaari mong gawin ang mga pagbabago.</li>
+								<li>Pindutin ang “Save”</li>
 							</ul>
 						</div>
 					</div>
@@ -491,15 +491,15 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse13">
-							How can I deactivate my account?</a>
+							Paano i-deactivate ang aking account?</a>
 						</h4>
 					</div>
 					<div id="collapse13" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul style="list-style-type:decimal;">
-								<li>Log-in to your account.</li>
-								<li>Go to Settings.</li>
-								<li>lick on “Deactivate”</li>
+								<li>Mag-log in sa iyong account.</li>
+								<li>Pumunta sa Settings.</li>
+								<li>Pindutin ang “Deactivate”.</li>
 							</ul>
 						</div>
 					</div>
@@ -509,43 +509,43 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse14">
-							Is it important to send a feedback regarding the applicant?</a>
+							Importante ba ang pag bibigay ng feedback sa bawat manggagawa?</a>
 						</h4>
 					</div>
 					<div id="collapse14" class="panel-collapse collapse">
 						<div class="panel-body">
-							Yes. Sending a feedback regarding an applicant is crucial for us to assess the performance of the applicant such as if he/she showed up to the interview or if he/she is reachable through the contact details given. Your feedback will also help us to improve our service so we can provide more reliable and more qualified applicants.
+							Oo. Ang iyong feedback ay importante para sa Proveek upang ma-assess at matukoy namin ang ipinakitang performance ng bawat manggagawa tulad ng kung siya ay sumipot sa interview o madali ba siyang naabot sa numero o email nakanyang ibinigay. Ang iyong feedback ay makakatulong din upang mapaganda pa lalo ang aming serbisyo upang makapagbigay kami ng mas kwalipikadong mga mangagawa.
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div class="col-md-6">
-				<h3>FAQ for Worker</h3>
+				<h3>FAQ para sa Worker</h3>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse15">
-							How do I signup as an Worker?</a>
+							Paano ako makakapag-sign up bilang Worker?</a>
 						</h4>
 					</div>
 					<div id="collapse15" class="panel-collapse collapse">
 						<div class="panel-body">
-							<ul style="list-style-type: decimal;">
-								<li>Click <a href="/">‘Worker’</a> page.</li>
-								<li>Fill in your details.</li>
-								<li>Click on <a href="/">‘Signup’</a>. Make sure to read the Terms of Service and Privacy Policy before Clicking Signup. (You'll be directed to your profile)</li>
-								<li>Fill in your other important details, upload necessary documents and click on ‘Save’.</li>
-								<li>Wait for Contact # verification.</li>
-							</ul>
-							<b>For Number Verification:</b>	
-							<ul style="list-style-type: decimal;">
-								<li>Input your cellphone number in the box provided then click Verify.</li>
-								<li>Wait for a verification code.</li>
-								<li>Input the verification code and click Submit</li>
-								<li>This will lead you to Proveek Home Page.</li>
-								<li>Get started!</li>
-							</ul>					
+                            <ul style="list-style-type: decimal;">
+                                <li>Pindutin ang <a href="/worker">‘Worker’</a> page.</li>
+                                <li>Ilagay ang mga detalyeng hinihingi.</li>
+                                <li>Pindutin ang <a href="/worker">‘Signup’</a>Siguruhing nabasa mo ang Panuntunan ng Serbisyo (Terms of Service) and Privacy Policy bago pindutin ang ‘Signup’. Pagkapindot ay ididirekta ka sa iyong Profile.</li>
+                                <li>Ilagay ang mga importanteng detalye at i-upload ang mga kinakailang dokumento. Pindutin ang ‘Save’.</li>
+                                <li>Hintayin ang email verification/Contact # verification.</li>
+                            </ul>
+                            <b>Para sa Number Verification:</b> 
+                            <ul style="list-style-type: decimal;">
+                                <li>Ilagay ang iyong cellphone number sa box na nasa Website tapos ay pindutin ang ‘Verify’.</li>
+                                <li>Hintayin ang verification code.</li>
+                                <li>Ilagay ang natanggap na verification code at pindutin ang ‘Submit’.</li>
+                                <li>Isang pagbati sa Proveek ang makikita sa Home Page.</li>
+                                <li>Maari ka ng magsimula!</li>
+                            </ul>					
 						</div>
 					</div>
 				</div>			
@@ -554,12 +554,12 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse16">
-							What is the importance Contact # verification?</a>
+							Ano ang kahalagahan ng iyong Contact # verification?</a>
 						</h4>
 					</div>
 					<div id="collapse16" class="panel-collapse collapse">
 						<div class="panel-body">
-							Contact number verification is needed for you to receive notifications, such as if someone hired you, list of newly posted job ads, etc., through the contact number you've provided.
+							Ang Email at contact number verification ay kailangan upang maberepika (verify) ang iyong account at makatanggap ka ng balita (notifications) katulad ng kung mayroong mga bagong trabaho, kung mayroong nais kumuha saiyo, at iba pa.
 						</div>
 					</div>
 				</div>
@@ -568,12 +568,12 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse17">
-							Do I need to pay for creating an account?</a>
+							Kailangan ko bang mag-bayad para sa aking account?</a>
 						</h4>
 					</div>
 					<div id="collapse17" class="panel-collapse collapse">
 						<div class="panel-body">
-							NO. Signing up is FREE.
+							HINDI. Ang paggawa ng account ay <b>LIBRE</b>.
 						</div>
 					</div>
 				</div>
@@ -582,19 +582,19 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse18">
-							How can I apply for job?</a>
+							Paano mag-apply sa trabaho?</a>
 						</h4>
 					</div>
 					<div id="collapse18" class="panel-collapse collapse">
 						<div class="panel-body">
-							<em>[Please note: In order to apply for a job, your profile must be 50% complete]</em>
+							<em>[Paalala:Para makapag-apply ng trabaho,kailangang 50% kumpleto o tapos na ang iyong Profile]</em>
 							<ul style="list-style-type: decimal;">
-								<li>Login to your account.</li>
-								<li>Look for the job you intended to apply for.</li>
-								<li>Click the job to view its full details.</li>
-								<li>Make sure to review all the qualifications for the job and its job descriptions.</li>
-								<li>If the jobsuits you, clickthe “Apply” button.</li>
-								<li>You will receive a notification that your profile was already sent to the company for review and that the company will contact you once your profile is shortlisted for the job.</li>
+								<li>Mag-log in sa iyong account</li>
+								<li>Hanapin ang nais mong trabaho.</li>
+								<li>Pindutin ito upang makita ang mga detalye ukol dito.</li>
+								<li>Siguruhing mabasa lahat ng impormasyon na nakasaad tulad ng kwalipikasyon (qualifications) at uri ng trabaho (job descriptions). </li>
+								<li>Kung nais mo itong trabaho, pindutin lamang ang “Apply for the Job” button.</li>
+								<li>Makakatanggap ka ng mensahe (notification) na ang iyong profile ay naipadala na sa Employer o kumpanya at handa na para masuri. Kapag ikaw ang kanilang napili ay direkta kang aabutin ng Employer o kumpanya.</li>
 							</ul>
 						</div>
 					</div>
@@ -604,26 +604,12 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse19">
-							Do I need to pay anything if I applied for a job?</a>
+							Kailangan ko bang magbayad kung ako ay mag-a-apply ng trabaho?</a>
 						</h4>
 					</div>
 					<div id="collapse19" class="panel-collapse collapse">
 						<div class="panel-body">
-							NO. Applying for a job through the system is FREE.
-						</div>
-					</div>
-				</div>
-
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse20">
-							Do I need to pay anything if I applied for a job?</a>
-						</h4>
-					</div>
-					<div id="collapse20" class="panel-collapse collapse">
-						<div class="panel-body">
-							NO. Applying for a job through the system is FREE.
+							HINDI. Ang pag-a-apply ay LIBRE at walang bayad.
 						</div>
 					</div>
 				</div>
@@ -632,12 +618,12 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse21">
-							What is the importance of me completing my profile?</a>
+							Bakit importanteng makumpleto ang aking Profile?</a>
 						</h4>
 					</div>
 					<div id="collapse21" class="panel-collapse collapse">
 						<div class="panel-body">
-							Your profile is what employers will see once you applied to job via our system thus completing it with correct and updated data as possible will increase your chance of getting contacted by the employer easier. If you want to be hired faster, improve your profile by putting all the necessary details.
+							Ang iyong profile ay ang makikitang Employer kapag ikaw ay nag-apply sa isang trabaho. Ang kumpleto at komprehensibong detalye ukol sayo ay makakapag pataas ng tsansa na ikaw ang mapili para sa trabaho. Kung nais mong matanggap ng mas mabilis, siguraduhing tama at kumpleto ang lahat ng detalye ukolsayo.
 						</div>
 					</div>
 				</div>
@@ -646,12 +632,12 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" class="collapse" data-parent="#accordion" href="#collapse22">
-							How long is the hiring process?</a>
+							Gaano katagal bago ako matanggap?</a>
 						</h4>
 					</div>
 					<div id="collapse22" class="panel-collapse collapse">
 						<div class="panel-body">
-							The hiring process depends on the company who posted the job you applied for. We, Proveek, do not have any control for how long would it take for a company to contact you in the event that you were chosen for the job. However, it might help the company on deciding faster if you have a complete, professional and updated profile for them to review.
+							Ang proseso ng pagtanggap ay depende sa kumpanya o Employer. Ang Proveek ay walang control sa kung gaano katagal ang proseso ng kumpanya o Employer sa pag piling manggagawa. Gayunman, kung kumpleto ang iyong Profile ay mas maaaring mapadali ang pag pili saiyo.
 						</div>
 					</div>
 				</div>
