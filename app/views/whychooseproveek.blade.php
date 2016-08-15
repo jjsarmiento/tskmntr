@@ -224,7 +224,7 @@
                                     <li>{{ HTML::link('/howitworks', 'How It Works')}}</li>
                                     <li>  {{ HTML::link('/whychooseproveek', 'Why Choose Proveek')}}</li>
                                     <li>  {{ HTML::link('/pricing', 'Pricing')}}</li>
-                                   <li><a href="faq.html">FAQ</a></li>
+                                   <li><a href="/faq">FAQ</a></li>
                                     <li>    {{ HTML::link('/login', 'Login / Sign Up')}}</li>
                                 </ul>
                             </div>
