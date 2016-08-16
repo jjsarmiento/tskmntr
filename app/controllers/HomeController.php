@@ -1882,5 +1882,9 @@ class HomeController extends BaseController {
     public function PRVKUPDTSBSCRPTNS($user_id){
         BaseController::SUBSCRIPTION_UPDATE($user_id);
     }
+
+    public function more(){
+        return View::make('more');
+    }
 }
 
