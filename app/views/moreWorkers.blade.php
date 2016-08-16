@@ -229,20 +229,123 @@
         	padding:20px;
         }
 
+    .block-update-card {
+        padding: 0.8em;
+      height: 100%;
+      border: 1px #FFFFFF solid;
+      /*width: 380px;*/
+      float: left;
+      /*margin-left: 10px;*/
+      /*margin-top: 0;*/
+      /*padding: 0;*/
+      box-shadow: 1px 1px 8px #d8d8d8;
+      background-color: #FFFFFF;
+    }
+    .block-update-card .h-status {
+      width: 100%;
+      height: 7px;
+      background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+    }
+    .block-update-card .v-status {
+      width: 5px;
+      height: 80px;
+      float: left;
+      margin-right: 5px;
+      background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+    }
+    .block-update-card .update-card-MDimentions {
+      width: 80px;
+      height: 80px;
+    }
+    .block-update-card .update-card-body {
+      margin-top: 10px;
+      margin-left: 5px;
+    }
+    .block-update-card .update-card-body h4 {
+      color: #737373;
+      font-weight: bold;
+      /*font-size: 13px;*/
+    }
+    .block-update-card .update-card-body p {
+      color: #737373;
+      font-size: 12px;
+    }
+    .block-update-card .card-action-pellet {
+      padding: 5px;
+    }
+    .block-update-card .card-action-pellet div {
+      margin-right: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      color: #dddddd;
+    }
+    .block-update-card .card-action-pellet div:hover {
+      color: #999999;
+    }
+    .block-update-card .card-bottom-status {
+      color: #a9a9aa;
+      font-weight: bold;
+      font-size: 14px;
+      border-top: #e0e0e0 1px solid;
+      padding-top: 5px;
+      margin: 0px;
+    }
+    .block-update-card .card-bottom-status:hover {
+      background-color: #dd4b39;
+      color: #FFFFFF;
+      cursor: pointer;
+    }
+
+    /*
+    Creating a block for social media buttons
+    */
+    .card-body-social {
+      font-size: 30px;
+      margin-top: 10px;
+    }
+    .card-body-social .git {
+      color: black;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .card-body-social .twitter {
+      color: #19C4FF;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .card-body-social .google-plus {
+      color: #DD4B39;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .card-body-social .facebook {
+      color: #49649F;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .card-body-social .linkedin {
+      color: #007BB6;
+      cursor: pointer;
+      margin-left: 10px;
+    }
     </style>
     <!-- END OF STYLE -->
     <script>
         $(document).ready(function(){
-            CHAINLOCATION($('#guest_region'), $('#guest_city'));
-            CHAINCATEGORYANDSKILL($('#guest_category'), $('#guest_skill'));
-            $('#guest_initSearch').click(function(){
-                var keyword = ($('#guest_keyword').val() == '') ? 'ALL' : $('#guest_keyword').val(),
-                    region = $('#guest_region').val(),
-                    city = $('#guest_city').val(),
-                    category = $('#guest_category').val(),
-                    skills = $('#guest_skill').val();
 
-                    location.href = '/moreJobs:'+keyword+':'+region+':'+city+':'+category+':'+skills;
+            CHAINLOCATION($('#employer_region'), $('#employer_city'));
+            CHAINLOCATION($('#employer_region'), $('#employer_province'));
+            CHAINLOCATION($('#employer_province'), $('#employer_city'));
+
+            $('#SRCHBTN_SKILL').click(function(){
+                var SKLL = $('#taskitems').val(),
+                    CTGRY = $('#taskcategory').val(),
+                    regions = $('#employer_region').val(),
+                    city = $('#employer_city').val(),
+                    province = $('#employer_province').val(),
+                    profilePercentage = $('#employer_profilePercentage').val();
+
+                location.href="/moreWorkers="+CTGRY+'='+SKLL+'='+regions+'='+city+'='+province+'='+profilePercentage;
             });
         });
     </script>
@@ -304,11 +407,91 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Name / Username Keyword</label>
-                                        <input type="text" name="guest_name" id="guest_name" value="" placeholder="Name keyword" class="form-control" />
+                                        <label>Region</label>
+                                        <select id="employer_region" name="employer_region" data-loctype="REGION_TO_CITY" class="form-control">
+                                            <option value="ALL">All regions</option>
+                                            @foreach($regions as $r)
+                                                <option value="{{$r->regcode}}" <?php if($region == $r->regcode){ echo 'selected'; } ?> >{{$r->regname}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label>Province</label>
+                                        <select id="employer_province" data-loctype="REGION_TO_PROVINCE" data-loctypeother="PROVINCE_TO_CITY" name="employer_province" class="form-control">
+                                            <option value="ALL">All provinces</option>
+                                            @foreach($provinces as $p)
+                                                <option value="{{$p->provcode}}" <?php if($p->provcode == $province){ echo 'selected'; } ?> >{{$p->provname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <select id="employer_city" data-loctype="REGION_TO_CITY" name="employer_city" class="form-control">
+                                            <option value="ALL">All cities</option>
+                                            @foreach($cities as $c)
+                                                <option value="{{$c->citycode}}" <?php if($c->citycode == $city){echo 'selected';} ?> >{{$c->cityname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Skill Category</label>
+                                        <select name="taskcategory" id="taskcategory" class="form-control">
+                                            <option value="ALL">Display from all categories</option>
+                                            @foreach($categories as $category)
+                                                <option <?php if($categoryId == $category->categorycode){echo "selected";} ?> value="{{ $category->categorycode }}">{{ $category->categoryname }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Skill</label>
+                                        <select name="taskitems" id="taskitems" class="form-control">
+                                            <option value="ALL">Display all skills</option>
+                                            @foreach($categorySkills as $skill)
+                                                <option <?php if($skillId == $skill->itemcode){echo "selected";} ?> value="{{ $skill->itemcode }}">{{ $skill->itemname }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Profile Percentage</label>
+                                        <select class="form-control" name="employer_profilePercentage" id="employer_profilePercentage">
+                                            <option <?php if($profilePercentage == 'DESC'){ echo 'selected'; } ?> value="DESC">Highest to Lowest</option>
+                                            <option <?php if($profilePercentage == 'ASC'){ echo 'selected'; } ?> value="ASC">Lowest to Highest</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-primary btn-block" id="SRCHBTN_SKILL"><i class="fa fa-search"></i> Search for workers</button>
                                 </div>
-                                <div class="col-md-8"></div>
+                                <div class="col-md-8">
+                                    @if($users->count() == 0)
+                                        <center><i>No data available</i></center>
+                                    @else
+                                        <h4>{{$users->count()}} result(s) found</h4>
+                                        @foreach($users as $user)
+                                            <div class="media block-update-card">
+                                                <a class="pull-left" href="/{{$user->username}}">
+                                                    @if($user->profilePic)
+                                                        <img class="media-object update-card-MDimentions" src="{{$user->profilePic}}">
+                                                    @else
+                                                        <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
+                                                    @endif
+                                                </a>
+                                                <div class="media-body update-card-body">
+                                                    <a href="/{{$user->username}}">
+                                                        <h4 class="media-heading">
+                                                            {{substr_replace($user->firstName, str_repeat('*', strlen($user->firstName)-1), 1)}}
+                                                            &nbsp;
+                                                            {{substr_replace($user->lastName, str_repeat('*', strlen($user->lastName)-1), 1)}}
+                                                            <span style="color: #3498db">{{'@'.$user->username}}</span>
+                                                        </h4>
+                                                    </a>
+                                                    <span>{{$user->address}}, {{$user->regname}}, {{$user->cityname}}, {{$user->bgyname}}</span><br>
+                                                    <span><b>Profile Rating: </b>70%</span><br>
+                                                    <span><b>Last login: </b>2 Days ago</span>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        {{$users->links()}}
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -285,7 +285,7 @@
                     <a href="/moreJobs" class="btn btn-primary btn-lg btn-block">Look for Jobs</a>
                     <br/>
                     <br/>
-                    <a href="/moreWorkers" class="btn btn-warning btn-lg btn-block">Look for Workers</a>
+                    <a href="/moreWorkers=006=006001=ALL=ALL=ALL=DESC" class="btn btn-warning btn-lg btn-block">Look for Workers</a>
             	</div>
         	</div>
         </div>

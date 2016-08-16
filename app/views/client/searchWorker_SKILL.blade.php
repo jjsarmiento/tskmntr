@@ -275,6 +275,7 @@
                             </div>
                         </div>
                     @endforeach
+                    {{$users->links()}}
                 @endif
             </div>
         </div>

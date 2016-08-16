@@ -1952,8 +1952,67 @@ class HomeController extends BaseController {
             ->with('regions', $regions);
     }
 
-    public function moreWorkers(){
-        return View::make('moreWorkers');
+    public function moreWorkers($categoryId, $skillId, $region, $city, $province, $profilePercentage){
+        $users = User::leftJoin('cities', 'users.city', '=', 'cities.citycode')
+            ->leftJoin('regions', 'users.region', '=', 'regions.regcode')
+            ->leftJoin('provinces', 'users.province', '=', 'provinces.provcode')
+            ->join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
+            ->where('users.total_profile_progress', '>=', 50);
+
+        $regions = Region::get();
+        $cities = [];
+        $provinces = [];
+
+        if($region != 'ALL'){
+            $cities = City::where('regcode', $region)->get();
+            $provinces = Province::where('regcode', $region)->get();
+            $users = $users->where('users.region', $region);
+        }
+
+        if($city != 'ALL'){
+            $users = $users->where('users.city', $city);
+        }
+
+        if($province != 'ALL'){
+            $cities = City::where('provcode', $province)->get();
+            $users = $users->where('users.province', $province);
+        }
+
+        if($categoryId != 'ALL'){
+            $users = $users->where('taskminator_has_skills.taskcategory_code', $categoryId);
+        }
+
+        if($skillId != 'ALL'){
+            $users = $users->where('taskminator_has_skills.taskitem_code', $skillId);
+        }
+        $users = $users->select([
+            'users.id',
+            'users.address',
+            'users.profilePic',
+            'users.username',
+            'users.fullName',
+            'users.firstName',
+            'users.lastName',
+            'cities.cityname',
+            'regions.regname'
+        ])
+            ->groupBy('users.id')
+            ->orderBy('users.total_profile_progress', $profilePercentage)
+            ->paginate(10);
+
+        return View::make('moreWorkers')
+            ->with('region', $region)
+            ->with('city', $city)
+            ->with('province', $province)
+            ->with('profilePercentage', $profilePercentage)
+            ->with('categoryId', $categoryId)
+            ->with('skillId', $skillId)
+            ->with('users', $users)
+            ->with('regions', $regions)
+            ->with('cities', $cities)
+            ->with('provinces', $provinces)
+            ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
+            ->with('categorySkills', TaskItem::where('item_categorycode', $categoryId)->orderBy('itemname', 'ASC')->get());
     }
 }
 
