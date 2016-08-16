@@ -186,6 +186,15 @@
                             <li>
                                 <a href="/"><i class="fa fa-home"></i></a>
                             </li>
+                            <li>
+                                <a href="/admin">User Lists</a>
+                            </li>
+                            <li>
+                                <a href="/UsrAccntLstCMPNY">Company</a>
+                            </li>
+                            <li>
+                                Points
+                            </li>
                         </ul>
                     </div>
                 </div>
