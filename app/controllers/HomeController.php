@@ -1886,5 +1886,57 @@ class HomeController extends BaseController {
     public function more(){
         return View::make('more');
     }
+
+    public function moreJobs(){
+        $regions = Region::get();
+        $category = TaskCategory::orderBy('categoryname', 'ASC')->get();
+        return View::make('moreJobs')
+            ->with('categories', $category)
+            ->with('regions', $regions);
+    }
+
+    public function moreJobsSEARCH($keyword, $region, $city, $category, $skill){
+        $cities = null;
+        $skills = null;
+        $categories = TaskCategory::orderBy('categoryname', 'ASC')->get();
+
+        $jobs = Job::leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode');
+
+        if($region != 'ALL'){
+            $jobs = $jobs->where('jobs.regcode', $region);
+            $cities = City::where('regcode', $region)->get();
+        }
+
+        if($city != 'ALL'){
+            $jobs = $jobs->where('jobs.citycode', $city);
+        }
+        if($category != 'ALL'){
+            $jobs = $jobs->where('jobs.skill_category_code', $category);
+            $skills = TaskItem::where('item_categorycode', $category)->get();
+        }
+        if($skill != 'ALL'){
+            $jobs = $jobs->where('jobs.skill_code', $skill);
+        }
+        if($keyword != 'ALL'){
+            $jobs = $jobs->where('jobs.title', 'LIKE', '%'.$keyword.'%');
+        }else{
+            $keyword = '';
+        }
+
+        $jobs = $jobs->where('expired', false)->paginate(10);
+        $regions = Region::get();
+        return View::make('moreJobs')
+            ->with('jobs', $jobs)
+            ->with('cities', $cities)
+            ->with('skills', $skills)
+            ->with('search_keyword', $keyword)
+            ->with('search_region', $region)
+            ->with('search_city', $city)
+            ->with('search_category', $category)
+            ->with('search_skill', $skill)
+            ->with('categories', $categories)
+            ->with('regions', $regions);
+    }
 }
 

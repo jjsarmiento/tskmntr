@@ -3,6 +3,9 @@
 // PLACE NON PROTECTED ROUTES HERE -- START
 Route::get('/', 'HomeController@index');
 Route::get('/more', 'HomeController@more');
+Route::get('/moreJobs', 'HomeController@moreJobs');
+Route::get('/moreJobs:{keyword}:{region}:{city}:{category}:{skill}', 'HomeController@moreJobsSEARCH');
+
 Route::get('/PRVKUPDTJBDS', 'HomeController@UPDATE_JOBADS_GLOBAL');
 Route::get('/PRVKUPDTSBSCRPTNS={user_id}', 'HomeController@PRVKUPDTSBSCRPTNS');
 // Route::get('/home', 'HomeController@home');
