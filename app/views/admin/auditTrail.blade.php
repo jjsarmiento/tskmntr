@@ -176,7 +176,6 @@
             <div class="container lato-text" style="">
                 <div class="page-title">
                     <h1 class="lato-text">
-                        User List : Workers
                     </h1>
                 </div>
 
@@ -185,6 +184,12 @@
                         <ul class="breadcrumb">
                             <li>
                                 <a href="/"><i class="fa fa-home"></i></a>
+                            </li>
+                            <li>
+                                <a href="/">User List</a>
+                            </li>
+                            <li>
+                                Audit Trail
                             </li>
                         </ul>
                     </div>
