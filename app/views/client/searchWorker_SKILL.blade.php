@@ -144,6 +144,7 @@
                     url     :   '/SKILLCATCHAIN='+$('#taskcategory').val(),
 //                    data    :   $('#doEditSkillInfo').serialize(),
                     success :   function(data){
+                        $('#taskitems').append('<option value="ALL">Dispaly from all skills</option>')
                         $.each(data, function(key, value){
                             $('#taskitems').append('<option value="'+ value['itemcode'] +'">'+value['itemname']+'</option>');
                         });
@@ -185,7 +186,7 @@
                         <select id="employer_region" name="employer_region" data-loctype="REGION_TO_CITY" class="form-control">
                             <option value="ALL">All regions</option>
                             @foreach($regions as $r)
-                                <option value="{{$r->regcode}}">{{$r->regname}}</option>
+                                <option value="{{$r->regcode}}" <?php if($region == $r->regcode){ echo 'selected'; } ?> >{{$r->regname}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -193,17 +194,24 @@
                         <label>Province</label>
                         <select id="employer_province" data-loctype="REGION_TO_PROVINCE" data-loctypeother="PROVINCE_TO_CITY" name="employer_province" class="form-control">
                             <option value="ALL">All provinces</option>
+                            @foreach($provinces as $p)
+                                <option value="{{$p->provcode}}" <?php if($p->provcode == $province){ echo 'selected'; } ?> >{{$p->provname}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label>City</label>
                         <select id="employer_city" data-loctype="REGION_TO_CITY" name="employer_city" class="form-control">
                             <option value="ALL">All cities</option>
+                            @foreach($cities as $c)
+                                <option value="{{$c->citycode}}" <?php if($c->citycode == $city){echo 'selected';} ?> >{{$c->cityname}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Skill Category</label>
                         <select name="taskcategory" id="taskcategory" class="form-control">
+                            <option value="ALL">Display from all categories</option>
                             @foreach($categories as $category)
                                 <option <?php if($categoryId == $category->categorycode){echo "selected";} ?> value="{{ $category->categorycode }}">{{ $category->categoryname }}</option>
                             @endforeach
@@ -212,6 +220,7 @@
                     <div class="form-group">
                         <label>Skill</label>
                         <select name="taskitems" id="taskitems" class="form-control">
+                            <option value="ALL">Display all skills</option>
                             @foreach($categorySkills as $skill)
                                 <option <?php if($skillId == $skill->itemcode){echo "selected";} ?> value="{{ $skill->itemcode }}">{{ $skill->itemname }}</option>
                             @endforeach
@@ -220,8 +229,8 @@
                     <div class="form-group">
                         <label>Profile Percentage</label>
                         <select class="form-control" name="employer_profilePercentage" id="employer_profilePercentage">
-                            <option value="DESC">Highest to Lowest</option>
-                            <option value="ASC">Lowest to Highest</option>
+                            <option <?php if($profilePercentage == 'DESC'){ echo 'selected'; } ?> value="DESC">Highest to Lowest</option>
+                            <option <?php if($profilePercentage == 'ASC'){ echo 'selected'; } ?> value="ASC">Lowest to Highest</option>
                         </select>
                     </div>
                     <button class="btn btn-primary btn-block" id="SRCHBTN_SKILL"><i class="fa fa-search"></i> Search for workers</button>
