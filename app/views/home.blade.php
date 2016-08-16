@@ -332,7 +332,7 @@
         <div class="container-fluid">
             <div class="row no-gutter">
                 <div class="col-lg-3 col-sm-6">
-                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory=007" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                     	<i class="fa fa-5x fa-building-o wow bounceIn text-primary" style="padding-top:50px;"></i>
                     	<h3>Construction / Factory Workers</h3>
                         <div class="portfolio-box-caption">
@@ -348,7 +348,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory=006" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <!-- <img src="#" class="img-responsive" alt=""> -->
                         <i class="fa fa-5x fa-cogs wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".1s"></i>
                         <h3>Automotive / Electronics</h3>
@@ -397,7 +397,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory=007" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <i class="fa fa-5x fa-wrench wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".4s"></i>
                         <h3>Repair &amp Maintenance Services</h3>
                         <div class="portfolio-box-caption">
@@ -413,7 +413,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory=002" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <i class="fa fa-5x fa-stethoscope wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".5s"></i>
                         <h3>Personal Care &amp Wellness</h3>
                         <div class="portfolio-box-caption">
@@ -429,7 +429,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory=003" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <i class="fa fa-5x fa-cutlery wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".6s"></i>
                         <h3>Hotel &amp Restaurant Crew</h3>
                         <div class="portfolio-box-caption">

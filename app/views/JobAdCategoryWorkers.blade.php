@@ -15,9 +15,15 @@
     <link rel="stylesheet" href="frontend/css/bootstrap.min.css" type="text/css">
 
     <!-- Custom Fonts -->
+
+    {{ HTML::style('frontend/css/Lato.css') }}
+    {{ HTML::style('frontend/css/Open_Sans.css') }}
+    {{ HTML::style('frontend/css/Merriweather.css') }}
+    <!--
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    -->
     <link rel="stylesheet" href="frontend/font-awesome/css/font-awesome.min.css" type="text/css">
 
     <!-- Plugin CSS -->
@@ -29,10 +35,13 @@
     <link rel="stylesheet" href="frontend/css/custom.css" type="text/css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+    <!--[if lt IE 9]
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    [endif]-->
+
+    {{ HTML::script('frontend/js/html5shiv.js') }}
+    {{ HTML::script('frontend/js/respond.min.js') }}
     <link rel="shortcut icon" type="image/x-icon" href="frontend/img/favicon.ico">
 
 <!-- CUSTOM STYLE, ONLY FOR PRICING PAGE -->
@@ -273,51 +282,57 @@
         <div class="vegas.overlay" style="height:100%; width:100%; background-color: rgba(0,0,0,.5);">
             <div class="header-content">
                 <div class="header-content-inner">
-                    <h2 style="text-transform:none; font-size:30px; font-size: 40px; font-weight: bold;">Category Title</h2>
+                    <h2 style="text-transform:none; font-size:30px; font-size: 40px; font-weight: bold;">{{$category_title}}</h2>
                     <hr>
                     <p style="color:#ECF0F1">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec odio mauris. Vestibulum ante ipsum primis in faucibus orci mollis lorem vel ultricies.
                     </p>
 
                     <div class="col-md-12">
-	                    @for($i=1; $i<7; $i++)
+                        @foreach($jobs as $job)
+                        <div class="col-md-4" style="padding:10px;">
+                            <div style="background: white; padding: 15px; border-radius: 7px;">
+                                <div style="display:flex;padding-bottom:5px;">
+                                    <div style="flex:11;">
+                                        <a href="/login" style="text-decoration:none;">
+                                            <h3 class="lato-text" style="font-weight: bold; margin:0 0 10px 0 !important; color:#2980b9">
+                                                {{$job->title}}
+                                            </h3>
 
-	                    <div class="col-md-4" style="padding:10px;">
-	                    	<div style="background: white; padding: 15px; border-radius: 7px;">
-		                        <div style="display:flex;padding-bottom:5px;">
-		                            <div style="flex:11;">
-		                                <a href="/login" style="text-decoration:none;">
-		                                    <h3 class="lato-text" style="font-weight: bold; margin:0 0 10px 0 !important; color:#2980b9">
-		                                        Job Title
-		                                    </h3>
+                                            <div class="row" style="color:#95A5A6; font-size: 0.8em;">
+                                                <div class="col-md-5">
+                                                    <span style="padding:0;margin:0;">
+                                                        <i class="fa fa-briefcase"></i>
+                                                        @if($job->hiring_type == 'LT6MOS')
+                                                            Less than 6 months
+                                                        @else
+                                                            Greater than 6 months
+                                                        @endif
+                                                    </span><br>
+                                                    <span class="text-right" style="padding:0;margin:0;">
+                                                        @if($job->expired)
+                                                            <span class="badge" style="background-color: #E74C3C">EXPIRED</span>
+                                                        @else
+                                                            <i class="fa fa-clock-o"></i> Expires at {{ date('m/d/y', strtotime($job->expires_at)) }}
+                                                        @endif
+                                                    </span>
+                                                </div>
 
-		                                    <div class="row" style="color:#95A5A6; font-size: 0.8em;">
-		                                        <div class="col-md-5">
-		                                            <span style="padding:0;margin:0;">
-		                                                <i class="fa fa-briefcase"></i>Less than 6 months</span><br>
-		                                            <span class="text-right" style="padding:0;margin:0;">
-		                                                <i class="fa fa-clock-o"></i> Expires at 08/15/16</span>
-		                                        </div>
+                                                <div class="col-md-7">
+                                                    <span class="text-right" style="padding:0;margin:0;"><i class="fa fa-map-marker"></i> {{$job->regname}}, {{$job->cityname}}</span><br/>
+                                                    <span class="badge" style="background-color:#2ECC71;">Login to view salary</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
 
-		                                        <div class="col-md-7">
-		                                            <span class="text-right" style="padding:0;margin:0;"><i class="fa fa-map-marker"></i> REGION I (ILOCOS REGION), ADAMS</span><br>
-		                                            <span class="badge" style="background-color:#2ECC71;">Login to view salary</span>
-		                                        </div>
-		                                    </div>
-		                                </a>
-		                            </div>
-		                        </div>	                    		
-	                    	</div>
-	                    </div>
-
-	                    @if($i == 6)
 	                    <div class="col-md-12" style="padding: 20px;">
-	                   		<a class="seemore">SEE MORE</a>
-	                    </div>	    
-	                    @else
-	                    @endif
-
-	                    @endfor
+	                   		<a href="/login" class="seemore">SEE MORE</a>
+	                    </div>
                 	</div>
             	</div>
         	</div>

@@ -751,7 +751,6 @@ class HomeController extends BaseController {
     }
 
     public function home(){
-
         return View::make('home');
     }
 
@@ -782,8 +781,31 @@ class HomeController extends BaseController {
         return View::make('faqTag');
     }
 
-    public function landingJobAd(){
-        return View::make('JobAdCategoryWorkers');
+    public function landingJobAd($categoryCode){
+        $this->UPDATE_JOBADS_GLOBAL();
+        $jobs = Job::join('users', 'jobs.user_id', '=', 'users.id')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->select([
+                'users.fullName',
+                'jobs.title',
+                'jobs.id as job_id',
+                'jobs.expires_at',
+                'jobs.salary',
+                'jobs.created_at',
+                'jobs.description',
+                'jobs.hiring_type',
+                'cities.cityname',
+                'regions.regname',
+            ])
+            ->where('jobs.expired', false)
+            ->where('jobs.skill_category_code', $categoryCode)
+            ->groupBy('jobs.id')
+            ->take(6)
+            ->get();
+        return View::make('JobAdCategoryWorkers')
+            ->with('jobs', $jobs)
+            ->with('category_title', TaskCategory::where('categorycode', $categoryCode)->pluck('categoryname'));
     }
 
     public function dashboard(){
@@ -791,6 +813,7 @@ class HomeController extends BaseController {
     }
 
     public function index(){
+        $this->UPDATE_JOBADS_GLOBAL();
         if(Auth::check()){
             switch(Auth::user()->status){
                 case 'DEACTIVATED'      :
@@ -925,6 +948,7 @@ class HomeController extends BaseController {
                     'cities.cityname',
                     'regions.regname',
                 ])
+                ->where('jobs.expired', false)
                 ->groupBy('jobs.id')
                 ->paginate(3);
 
