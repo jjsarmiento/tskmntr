@@ -1888,9 +1888,15 @@ class HomeController extends BaseController {
     }
 
     public function moreJobs(){
+        $jobs = Job::leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->where('jobs.expired', false)->paginate(10);
         $regions = Region::get();
         $category = TaskCategory::orderBy('categoryname', 'ASC')->get();
         return View::make('moreJobs')
+            ->with('jobs', $jobs)
+            ->with('cities', null)
+            ->with('skills', null)
             ->with('categories', $category)
             ->with('regions', $regions);
     }
@@ -1937,6 +1943,10 @@ class HomeController extends BaseController {
             ->with('search_skill', $skill)
             ->with('categories', $categories)
             ->with('regions', $regions);
+    }
+
+    public function moreWorkers(){
+        return View::make('moreWorkers');
     }
 }
 
