@@ -1751,6 +1751,8 @@ class HomeController extends BaseController {
             case 'CITY_TO_BARANGAY' :
                 return Barangay::where('citycode', $locationID)->orderBy('bgyname', 'ASC')->get();
                 break;
+            case 'PROVINCE_TO_CITY' :
+                return City::where('provcode', $locationID)->orderBy('cityname', 'ASC')->get();
             default :
                 return "FAILED";
                 break;

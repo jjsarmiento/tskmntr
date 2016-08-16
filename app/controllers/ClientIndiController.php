@@ -978,8 +978,9 @@ class ClientIndiController extends \BaseController {
             ->with('TOTALPROG', $this->PROFILE_PERCENTAGE_WORKER(Auth::user()->id));
     }
 
-    public function SRCHWRKRSKLL($categoryId, $skillId){
+    public function SRCHWRKRSKLL($categoryId, $skillId, $region, $city, $province, $profilePercentage){
         if(Auth::user()->status == 'ACTIVATED'){
+            $regions = Region::get();
             $users = User::join('taskminator_has_skills', 'taskminator_has_skills.user_id', '=', 'users.id')
                 ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
                 ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
@@ -1000,8 +1001,10 @@ class ClientIndiController extends \BaseController {
                 ])
                 ->paginate(10);
 
+
             return View::make('client.searchWorker_SKILL')
                 ->with('CHECKED_OUT_USERS', $this->GETCHECKEDOUTUSERS(Auth::user()->id))
+                ->with('regions', $regions)
                 ->with('categoryId', $categoryId)
                 ->with('skillId', $skillId)
                 ->with('users', $users)

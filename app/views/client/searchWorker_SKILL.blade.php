@@ -121,20 +121,20 @@
     <script>
         $(document).ready(function(){
 
+            CHAINLOCATION($('#employer_region'), $('#employer_city'));
+            CHAINLOCATION($('#employer_region'), $('#employer_province'));
+            CHAINLOCATION($('#employer_province'), $('#employer_city'));
+
             $('#SRCHBTN_SKILL').click(function(){
-                var CTGRY = "N",
-                    SKLL = "N";
+                var SKLL = $('#taskitems').val(),
+                    CTGRY = $('#taskcategory').val(),
+                    regions = $('#employer_region').val(),
+                    city = $('#employer_city').val(),
+                    province = $('#employer_province').val(),
+                    profilePercentage = $('#employer_profilePercentage').val();
 
-                if($('#taskitems').val() != ''){
-                    SKLL = $('#taskitems').val()
-                }
-
-                if($('#taskcategory').val() != ''){
-                    CTGRY = $('#taskcategory').val()
-                }
-
-                location.href="/SRCHWRKRSKLL="+CTGRY+'='+SKLL;
-            })
+                location.href="/SRCHWRKRSKLL="+CTGRY+'='+SKLL+'='+regions+'='+city+'='+province+'='+profilePercentage;
+            });
 
 
             $('#taskcategory').change(function(){
@@ -181,6 +181,28 @@
             <div class="col-md-4">
                 <div style="background-color: white; padding: 1em; margin-top: 2em;">
                     <div class="form-group">
+                        <label>Region</label>
+                        <select id="employer_region" name="employer_region" data-loctype="REGION_TO_CITY" class="form-control">
+                            <option value="ALL">All regions</option>
+                            @foreach($regions as $r)
+                                <option value="{{$r->regcode}}">{{$r->regname}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Province</label>
+                        <select id="employer_province" data-loctype="REGION_TO_PROVINCE" data-loctypeother="PROVINCE_TO_CITY" name="employer_province" class="form-control">
+                            <option value="ALL">All provinces</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <select id="employer_city" data-loctype="REGION_TO_CITY" name="employer_city" class="form-control">
+                            <option value="ALL">All cities</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Skill Category</label>
                         <select name="taskcategory" id="taskcategory" class="form-control">
                             @foreach($categories as $category)
                                 <option <?php if($categoryId == $category->categorycode){echo "selected";} ?> value="{{ $category->categorycode }}">{{ $category->categoryname }}</option>
@@ -188,10 +210,18 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label>Skill</label>
                         <select name="taskitems" id="taskitems" class="form-control">
                             @foreach($categorySkills as $skill)
                                 <option <?php if($skillId == $skill->itemcode){echo "selected";} ?> value="{{ $skill->itemcode }}">{{ $skill->itemname }}</option>
                             @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Profile Percentage</label>
+                        <select class="form-control" name="employer_profilePercentage" id="employer_profilePercentage">
+                            <option value="DESC">Highest to Lowest</option>
+                            <option value="ASC">Lowest to Highest</option>
                         </select>
                     </div>
                     <button class="btn btn-primary btn-block" id="SRCHBTN_SKILL"><i class="fa fa-search"></i> Search for workers</button>

@@ -147,21 +147,6 @@
         </style>
     <script>
         $(document).ready(function() {
-            $('#SRCHBTN_SKILL').click(function(){
-                var CTGRY = "N",
-                    SKLL = "N";
-
-                if($('#taskitems').val() != ''){
-                    SKLL = $('#taskitems').val()
-                }
-
-                if($('#taskcategory').val() != ''){
-                    CTGRY = $('#taskcategory').val()
-                }
-
-                location.href="/SRCHWRKRSKLL="+CTGRY+'='+SKLL;
-            })
-
 
             $('#taskcategory').change(function(){
                 $('#taskitems').empty();
@@ -283,7 +268,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button class="btn btn-primary btn-block" id="SRCHBTN_SKILL"><i class="fa fa-search"></i> Search for workers</button>
+                        <a class="btn btn-primary btn-block" id="SRCHBTN_SKILL" href="/SRCHWRKRSKLL=006=006001=ALL=ALL=ALL=DESC"><i class="fa fa-search"></i> Search for workers</a>
                     </div>
                 @endif
 
