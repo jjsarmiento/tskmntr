@@ -101,14 +101,16 @@
                 });
             }, 2000);
 
-            if($('#LOGGED_USER_ROLE').val() == 'CLIENT_IND' || $('#LOGGED_USER_ROLE').val() == 'CLIENT_CMP'){
-                setInterval(function(){
-                    $.ajax({
-                        type    :   'GET',
-                        url     :   '/PRVKUPDTSBSCRPTNS={{Auth::user()->id}}'
-                    });
-                }, 2000);
-            }
+            @if(Auth::check())
+                if($('#LOGGED_USER_ROLE').val() == 'CLIENT_IND' || $('#LOGGED_USER_ROLE').val() == 'CLIENT_CMP'){
+                    setInterval(function(){
+                        $.ajax({
+                            type    :   'GET',
+                            url     :   '/PRVKUPDTSBSCRPTNS={{Auth::user()->id}}'
+                        });
+                    }, 2000);
+                }
+            @endif
 
             CHAINLOCATION($('#adSearch_REG'), $('#adSearch_CITY'));
             CHAINCATEGORYANDSKILL($('#adSearch_CATEGORY'), $('#adSearch_SKILL'));
