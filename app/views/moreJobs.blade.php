@@ -240,9 +240,11 @@
                     region = $('#guest_region').val(),
                     city = $('#guest_city').val(),
                     category = $('#guest_category').val(),
-                    skills = $('#guest_skill').val();
+                    skills = $('#guest_skill').val(),
+                    orderBy = $('#guest_orderBy').val(),
+                    workDuration = $('#guest_workDuration').val();
 
-                    location.href = '/moreJobs:'+keyword+':'+region+':'+city+':'+category+':'+skills;
+                    location.href = '/moreJobs:'+keyword+':'+region+':'+city+':'+category+':'+skills+':'+orderBy+':'+workDuration;
             });
         });
     </script>
@@ -299,8 +301,8 @@
         <div class="vegas.overlay" style="height:100%; width:100%; background-color: rgba(0,0,0,.5); color:black;">
             <div class="header-content">
                 <div class="header-content-inner">
-                    <div class="widget-container padded">
-                        <div class="widget-content">
+                    <div class="widget-container padded fluid-height">
+                        <div class="widget-content fluid-height">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -345,6 +347,21 @@
                                                     <option <?php if(@$search_skill == $s->itemcode){ echo 'selected'; } ?> value="{{$s->itemcode}}">{{$s->itemname}}</option>
                                                 @endforeach
                                             @endif
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Work Duration</label>
+                                        <select id="guest_workDuration" name="guest_workDuration" class="form-control">
+                                            <option value="ALL">Display all work durations</option>
+                                            <option <?php if(@$search_workDuration == 'LT6MOS'){ echo 'selected'; } ?> value="LT6MOS">Less Than 6 Months</option>
+                                            <option <?php if(@$search_workDuration == 'GT6MOS'){ echo 'selected'; } ?> value="GT6MOS">Greater Than 6 Months</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Order By</label>
+                                        <select id="guest_orderBy" name="guest_orderBy" class="form-control">
+                                            <option <?php if(@$search_orderBy == 'ASC'){ echo 'selected'; } ?> value="ASC">Oldest to Newest</option>
+                                            <option <?php if(@$search_orderBy == 'DESC'){ echo 'selected'; } ?> value="DESC">Newest to Oldest</option>
                                         </select>
                                     </div>
                                     <div class="form-group">

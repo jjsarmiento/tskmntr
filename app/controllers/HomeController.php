@@ -1901,7 +1901,7 @@ class HomeController extends BaseController {
             ->with('regions', $regions);
     }
 
-    public function moreJobsSEARCH($keyword, $region, $city, $category, $skill){
+    public function moreJobsSEARCH($keyword, $region, $city, $category, $skill, $orderBy, $workDuration){
         $cities = null;
         $skills = null;
         $categories = TaskCategory::orderBy('categoryname', 'ASC')->get();
@@ -1929,13 +1929,18 @@ class HomeController extends BaseController {
         }else{
             $keyword = '';
         }
+        if($workDuration != 'ALL'){
+            $jobs = $jobs->where('hiring_type', $workDuration);
+        }
 
-        $jobs = $jobs->where('expired', false)->paginate(10);
+        $jobs = $jobs->where('expired', false)->orderBy('jobs.created_at', $orderBy)->paginate(10);
         $regions = Region::get();
         return View::make('moreJobs')
             ->with('jobs', $jobs)
             ->with('cities', $cities)
             ->with('skills', $skills)
+            ->with('search_workDuration', $workDuration)
+            ->with('search_orderBy', $orderBy)
             ->with('search_keyword', $keyword)
             ->with('search_region', $region)
             ->with('search_city', $city)

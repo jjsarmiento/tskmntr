@@ -5,7 +5,7 @@ Route::get('/', 'HomeController@index');
 Route::get('/more', 'HomeController@more');
 Route::get('/moreWorkers', 'HomeController@moreWorkers');
 Route::get('/moreJobs', 'HomeController@moreJobs');
-Route::get('/moreJobs:{keyword}:{region}:{city}:{category}:{skill}', 'HomeController@moreJobsSEARCH');
+Route::get('/moreJobs:{keyword}:{region}:{city}:{category}:{skill}:{orderBy}:{workDuration}', 'HomeController@moreJobsSEARCH');
 
 Route::get('/PRVKUPDTJBDS', 'HomeController@UPDATE_JOBADS_GLOBAL');
 Route::get('/PRVKUPDTSBSCRPTNS={user_id}', 'HomeController@PRVKUPDTSBSCRPTNS');
