@@ -236,7 +236,7 @@
                                             <input type="text" required="required" class="form-control" name="points" placeholder="Input amount of points to subtract" />
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-danger">Add points</button>
+                                            <button type="submit" class="btn btn-danger">Minus points</button>
                                         </div>
                                     </div>
                                 </form>
