@@ -365,7 +365,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory=013" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <i class="fa fa-5x fa-dollar wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".2s"></i>
                         <h3>Sales Agents / Salesclerk</h3>
                         <div class="portfolio-box-caption">
@@ -381,7 +381,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/workercategory=012" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <i class="fa fa-5x fa-user-md wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".3s"></i>
                         <h3>House Helpers / Caregivers</h3>
                         <div class="portfolio-box-caption">
@@ -445,7 +445,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <a href="/workercategory" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
+                    <a href="/more" data-toggle="modal" class="portfolio-box text-center" style="text-decoration:none;">
                         <i class="fa fa-5x fa-ellipsis-h wow bounceIn text-primary" style="padding-top:50px;" data-wow-delay=".7s"></i>
                         <h3>More</h3>
                         <div class="portfolio-box-caption">

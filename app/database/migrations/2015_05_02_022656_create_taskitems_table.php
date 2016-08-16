@@ -17,7 +17,7 @@ class CreateTaskitemsTable extends Migration {
             $table->increments('id');
             $table->string('item_categorycode')->nullable();
             $table->string('itemname')->nullable();
-            $table->string('itemcode')->nullable();
+            $table->string('itemcode')->nullable()->unique();
             $table->timestamps();
         });
     }

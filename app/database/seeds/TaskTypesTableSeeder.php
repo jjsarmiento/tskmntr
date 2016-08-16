@@ -86,17 +86,27 @@ class TaskTypesTableSeeder extends Seeder {
             ('011', '011009', 'Pharmacy Assistant'),
             ('011', '011010', 'Laboratory and Metrology Calibration Services Technician'),
 
-            ('999', '012001', 'Driver'),
-            ('999', '012002', 'Security Guard'),
-            ('999', '012003', 'Call Center Agents'),
-            ('999', '012004', 'Caregiver'),
-            ('999', '012005', 'Housekeeping / Laundry'),
-            ('999', '012006', 'Photography'),
-            ('999', '012007', 'Visual Graphic Designer'),
-            ('999', '012008', 'Training Facilitator/Coordinator'),
-            ('999', '012009', 'Tutor'),
-            ('999', '012010', 'Tour Guide'),
-            ('999', '012011', 'Personal Assistant')
+            ('012', '012001', 'Maid'),
+            ('012', '012002', 'Domestic Helper'),
+            ('012', '012003', 'Caregiver'),
+            ('012', '012004', 'House Boy'),
+            ('012', '012005', 'Gardener'),
+
+            ('013', '013001', 'Store Attendant'),
+            ('013', '013002', 'Cashier'),
+            ('013', '013003', 'Sales Agent'),
+
+            ('999', '999001', 'Driver'),
+            ('999', '999002', 'Security Guard'),
+            ('999', '999003', 'Call Center Agents'),
+            ('999', '999004', 'Caregiver'),
+            ('999', '999005', 'Housekeeping / Laundry'),
+            ('999', '999006', 'Photography'),
+            ('999', '999007', 'Visual Graphic Designer'),
+            ('999', '999008', 'Training Facilitator/Coordinator'),
+            ('999', '999009', 'Tutor'),
+            ('999', '999010', 'Tour Guide'),
+            ('999', '999011', 'Personal Assistant')
         ");
     }
 }

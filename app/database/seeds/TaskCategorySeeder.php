@@ -14,6 +14,8 @@ class TaskCategorySeeder extends Seeder {
             ('009', 'HVAC-R Services'),
             ('010', 'Maritime Services'),
             ('011', 'Health Institution Staff'),
+            ('012', 'House Helpers/Care Givers'),
+            ('013', 'Sales Agent/Sales Clerk'),
             ('999', 'Others')
         ");
     }
