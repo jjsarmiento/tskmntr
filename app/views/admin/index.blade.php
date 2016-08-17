@@ -149,13 +149,11 @@
                     rating = $('#search_rating').val(),
                     hiring = $('#search_hiring').val(),
                     orderBy = $('#search_orderBy').val(),
-                    keyword = $('#search_keyword').val();
+                    keyword = ($('#search_keyword').val() == '') ? 'NONE' : $('#search_keyword').val(),
+                    checkout = $('#search_checkoutStatus').val();
 
-                    if(keyword == ""){
-                        keyword = "NONE";
-                    }
 
-                    location.href = "/searchWorker:"+acctStatus+":"+rating+":"+hiring+":"+orderBy+":"+keyword;
+                    location.href = "/searchWorker:"+acctStatus+":"+rating+":"+hiring+":"+orderBy+":"+keyword+":"+checkout;
             });
 
             $('.ACT_DEAC').click(function(){
@@ -258,12 +256,14 @@
                     <div class="col-md-9">
                         <div class="well selected-filters">
                             <h3 style="margin: 0; cursor: pointer;" onclick="$('#SEARCH_PARAMETERS').slideToggle('fast');">Search for Workers <i class="fa fa-search"></i></h3>
-                            <div id="SEARCH_PARAMETERS" class="row" style="display: none;">
+                            {{--<div id="SEARCH_PARAMETERS" class="row" style="display: none;">--}}
+                            <div id="SEARCH_PARAMETERS" class="row" style="">
                                 <br/>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Account Status</label>
                                         <select class="form-control" id="search_acctStatus" name="search_acctStatus">
+                                            <option value="ALL">Display All</option>
                                             <option <?php if(@$acctStatus == "ACTIVATED"){ echo('selected'); } ?> value="ACTIVATED">Activated</option>
                                             <option <?php if(@$acctStatus == "DEACTIVATED"){ echo('selected'); } ?> value="DEACTIVATED">Deactivated</option>
                                         </select>
@@ -296,6 +296,14 @@
                                     <div class="form-group">
                                         <label>Search Keywords (Name or Username)</label>
                                         <input type="text" class="form-control" value="{{@$keyword}}" placeholder="KEYWORD FOR NAME/USERNAME" id="search_keyword" name="search_keyword" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Checkout Status</label>
+                                        <select class="form-control" id="search_checkoutStatus" name="search_checkoutStatus">
+                                            <option value="ALL">Display All</option>
+                                            <option value="1">Checked Out</option>
+                                            <option value="0">Not Checked Out</option>
+                                        </select>
                                     </div>
                                     <div class="form-group pull-right">
                                         <button type="submit" class="btn btn-primary" id="search_btn">Search</button>
