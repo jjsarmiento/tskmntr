@@ -164,7 +164,7 @@
         <div class="header-content">
             <div class="header-content-inner lato-text">
                 <div class="row">
-                    <div class="col-lg-8 text-left">
+                    <div class="col-lg-7 text-left">
                         <h2>Sign Up</h2>
                         <h3 class="lato-text">Post jobs and find suitable workers!</h3>
                         <br>
@@ -222,6 +222,34 @@
                           
                         </div>
                     </div> -->
+                    <div class="col-lg-5" style="text-align: left;">
+                        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+                        <br><br>
+                        <div class="col-md-2">
+                            <i class="fa fa-bar-chart" aria-hidden="true" style="font-size:45px;"></i>
+                        </div>
+                        <div class="col-md-10">
+                            <span style="font-size:18px;"><b>Integer viverra tincidunt finibus,</b> Sed sollicitudin ligula quis volutpat tempus feugiat dolor ac, ornare tellus</span>
+                            <br><br><br>
+                        </div>
+
+                        <div class="col-md-2">
+                            <i class="fa fa-pie-chart" aria-hidden="true" style="font-size:45px;"></i>
+                        </div>
+                        <div class="col-md-10">
+                            <span style="font-size:18px;"><b>Aliquam eu accumsan arcu,</b> Mauris mattis ligula eget justo molestie venenatis</span>
+                            <br><br><br>
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <i class="fa fa-area-chart" aria-hidden="true" style="font-size:45px;"></i>
+                        </div>
+                        <div class="col-md-10">
+                            <span style="font-size:18px;"><b>Donec et ligula sit amet ex gravida viverra et ut felis,</b>  Maecenas feugiat congue ex, sed facilisis ante commodo eu. Sed id hendrerit erat, vitae scelerisque est.</span>
+                            <br><br><br>
+                        </div>
+
+                    </div>
                 </div>
                 <!-- <h1>Find Jobs that Matched Your Skills</h1>
                 <hr>
@@ -597,7 +625,8 @@
                             <div class="col-lg-12 text-left div_footer">
                                 <h2>Proveek</h2>
                                 <ul style="padding-left:0">
-                                    <li><a href="/" class="page-scroll">Home</a></li>
+                                    <li><a href="#page-top" class="page-scroll">Home</a></li>
+                                    <li><a href="#">About</a></li>
                                     <li>{{ HTML::link('/howitworks', 'How It Works')}}</li>
                                     <li>  {{ HTML::link('/whychooseproveek', 'Why Choose Proveek')}}</li>
                                     <li>  {{ HTML::link('/pricing', 'Pricing')}}</li>
@@ -607,20 +636,25 @@
                             </div>
                         </div>
                         <div class="col-lg-8 text-left feedback_footer">
-                            <h2>Contact Us</h2>
-                            <p>We love to hear from you. Please drop us a message.</p>
-                            <div class="col-lg-12" style="padding:0;">
-                                <input type="text" placeholder="Name">
-                            </div>
-                            <div class="col-lg-12" style="padding:15px 0 0 0 ;">
-                                <input type="email" placeholder="Email">
-                            </div>
-                            <div class="col-lg-12" style="padding:15px 0 0 0 ;">
-                                <input type="text" placeholder="Message">
-                            </div>
-                            <div class="col-lg-12 text-right" style="padding:15px 0 0 0 ;">
-                                <button type="button" class="btn btn-primary btn-md" style="width: 120px;border-radius: 4px;">Send</button>
-                            </div>
+                            <form method="POST" action="/ContactUs">
+                                <h2>Contact Us</h2>
+                                <p>We love to hear from you. Please drop us a message.</p>
+                                <div class="col-lg-12" style="padding:0;">
+                                    <input type="text" name="ContactUs_name" placeholder="Name" required="required">
+                                </div>
+                                <div class="col-lg-12" style="padding:15px 0 0 0 ;">
+                                    @if(Session::has('errorMsg'))
+                                        <p><i class="fa fa-warning" style="color:#E74C3C"></i> {{Session::get('errorMsg')}}</p>
+                                    @endif
+                                    <input type="email" name="ContactUs_email" placeholder="Email" required="required">
+                                </div>
+                                <div class="col-lg-12" style="padding:15px 0 0 0 ;">
+                                    <input type="text" name="ContactUs_msg" placeholder="Message" required="required">
+                                </div>
+                                <div class="col-lg-12 text-right" style="padding:15px 0 0 0 ;">
+                                    <button type="submit" class="btn btn-primary btn-md" style="width: 120px;border-radius: 4px;">Send</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="col-lg-4 text-center">
@@ -631,11 +665,11 @@
                                 Stay connected to keep up with the latest news, promos and updates.
                             </p>
                             <div class="div_footer">
-                                <a href="https://www.facebook.com/proveek"><i class="fa fa-facebook-square fa-3x wow bounceIn" data-wow-delay=".2s"></i></a>
-                                <a href="https://twitter.com/Proveek"><i class="fa fa-twitter-square fa-3x wow bounceIn" data-wow-delay=".3s"></i></a>
-                                <a href="#"><i class="fa fa-instagram fa-3x wow bounceIn" data-wow-delay=".4s"></i></a>
-                                <a href="https://plus.google.com/108796854139900682022/posts"><i class="fa fa-google-plus-square fa-3x wow bounceIn" data-wow-delay=".5s"></i></a>
-                                <a href="#"><i class="fa fa-envelope-square fa-3x wow bounceIn" data-wow-delay=".6s"></i></a>
+                                <a href="https://www.facebook.com/proveek" target="_blank"><i class="fa fa-facebook-square fa-3x wow bounceIn" data-wow-delay=".2s"></i></a>
+                                <a href="https://twitter.com/Proveek" target="_blank"><i class="fa fa-twitter-square fa-3x wow bounceIn" data-wow-delay=".3s"></i></a>
+                                <!-- <a href="#"><i class="fa fa-instagram fa-3x wow bounceIn" data-wow-delay=".4s"></i></a>
+                                <a href="https://plus.google.com/108796854139900682022/posts"><i class="fa fa-google-plus-square fa-3x wow bounceIn" data-wow-delay=".5s"></i></a> -->
+                                <a href="#" target="_blank"><i class="fa fa-envelope-square fa-3x wow bounceIn" data-wow-delay=".6s"></i></a>
                             </div>
                             <p>2015  <i class="fa fa-copyright"></i>  Proveek Inc.</p>
                         </div>

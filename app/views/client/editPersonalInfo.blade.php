@@ -178,10 +178,10 @@
                                         <label>Number of Branches</label>
                                         <input value="{{Auth::user()->number_of_branches}}" type="text" class="form-control" name="NOB" id="NOB"/>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label>Contact Person Position</label>
                                         <input value="{{Auth::user()->contact_person_position}}" type="text" class="form-control" name="CPP" id="CPP"/>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label>Number of employees</label>
                                         <input value="{{Auth::user()->number_of_employees}}" type="text" class="form-control" name="NOE" id="NOE"/>
@@ -220,7 +220,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label>City</label>
+                                        <label>City/Municipality    </label>
                                        <select name="city-comp" id="city" data-loctype="REGION_TO_CITY" class="form-control">
                                             <option value="">Select a city</option>
                                            @foreach($cities as $city)
