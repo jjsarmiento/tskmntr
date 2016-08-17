@@ -148,7 +148,7 @@
                                 <tr>
                                     <td><a href="/ADMIN_jobDetails={{$job->job_id}}">{{ $job->title}}</a>
                                     <td><a href="/viewUserProfile/{{$job->user_id}}">{{$job->fullName}}</a></td>
-                                    <td>{{$job->regname}}, {{$job->cityname}}</td>
+                                    <td>{{$job->regname}}, {{$job->provname}}, {{$job->cityname}}</td>
                                     <td>
                                         @if($job->hiring_type == 'LT6MOS')
                                             Less than 6 months
@@ -167,7 +167,7 @@
                                         @if($job->expired)
                                             <span class="badge" style="background-color: #E74C3C">EXPIRED</span>
                                         @else
-                                            Expires at {{ date('m/d/y', strtotime($job->expires_at)) }}
+                                            {{ date('m/d/y', strtotime($job->expires_at)) }}
                                         @endif
                                     </td>
                                 </tr>

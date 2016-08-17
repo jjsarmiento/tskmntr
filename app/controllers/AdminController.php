@@ -958,6 +958,7 @@ class AdminController extends \BaseController {
         $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
             ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
             ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('provinces', 'provinces.provcode', '=', 'jobs.provcode')
             ->select([
                 'users.fullName',
                 'users.id as user_id',
@@ -970,7 +971,9 @@ class AdminController extends \BaseController {
                 'jobs.hiring_type',
                 'cities.cityname',
                 'regions.regname',
+                'provinces.provname',
             ])
+            ->orderBy('jobs.created_at', 'DESC')
             ->groupBy('jobs.id')
             ->paginate(10);
 
