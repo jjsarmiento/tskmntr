@@ -24,7 +24,7 @@
     }
     span.skills {
         background-color: #2980b9;
-        padding: 10px 20px;
+        padding: 10px 18px;
         margin: 5px;
         color: white;
         font-size: 18px;
@@ -74,32 +74,31 @@
                     <br/>
 
                     <!-- Jups -->
-                    <div class="lato-text">
+<!--                     <div class="lato-text">
                         <div class="centered">
                             <span style="font-size:18px;"><em>" To be successful in my field, Proin porta nibh non dui ullamcorper pretium. Ut nunc augue, aliquet vitae luctus sit amet, molestie vitae ante. "</em></span>
                         </div>
-                    </div>
+                    </div> -->
                     <br/>
                     @if($roles == 'TASKMINATOR' && $CLIENTFLAG)
                         <div class="col-md-12">
-
-                            <div class="col-md-4 padded">
-                                <a data-toggle="modal" data-target="#INVITEMULTIJOB" class="btn btn-warning" href="#"><i class="fa fa-envelope-o" style="color: #2ECC71;"></i> Invite to apply</a>
-                            </div>
-
-                            <div class="col-md-4 padded">
-                                @if($roles == 'TASKMINATOR')
-                                    @if($CLIENTFLAG)
-                                        @if(User::IS_BOOKMARKED(Auth::user()->id, $users->id))
-                                            <a class="btn btn-warning" href="/REMOVE_BOOKMARK:{{BookmarkUser::where('worker_id', $users->id)->where('company_id', Auth::user()->id)->pluck('id')}}"><i class="BOOKMARK_USER fa fa-bookmark" style="color: #2ECC71;"></i> Worker is  bookmarked</a>
-                                        @else
-                                            <a class="btn btn-warning" href="/ADD_BOOKMARK:{{$users->id}}"><i class="BOOKMARK_USER fa fa-bookmark-o" style="color: #2ECC71;"></i> Bookmark this worker</a>
-                                        @endif
-                                    @endif
-                                @endif
-                            </div>
                             @if($PURCHASED == 0)
                                 @if(BaseController::IS_AN_APPLICANT_FOR_COMPANY($users->id, Auth::user()->id))
+                                    <div class="col-md-4 padded">
+                                        <a data-toggle="modal" data-target="#INVITEMULTIJOB" class="btn btn-warning" href="#"><i class="fa fa-envelope-o" style="color: #2ECC71;"></i> Invite to apply</a>
+                                    </div>
+
+                                    <div class="col-md-4 padded">
+                                        @if($roles == 'TASKMINATOR')
+                                            @if($CLIENTFLAG)
+                                                @if(User::IS_BOOKMARKED(Auth::user()->id, $users->id))
+                                                    <a class="btn btn-warning" href="/REMOVE_BOOKMARK:{{BookmarkUser::where('worker_id', $users->id)->where('company_id', Auth::user()->id)->pluck('id')}}"><i class="BOOKMARK_USER fa fa-bookmark" style="color: #2ECC71;"></i> Worker is  bookmarked</a>
+                                                @else
+                                                    <a class="btn btn-warning" href="/ADD_BOOKMARK:{{$users->id}}"><i class="BOOKMARK_USER fa fa-bookmark-o" style="color: #2ECC71;"></i> Bookmark this worker</a>
+                                                @endif
+                                            @endif
+                                        @endif
+                                    </div>
                                     <div class="col-md-4 padded">
                                         @if($USERINCART > 0)
                                             {{--<a href="#" class="btn btn-warning SHWCRT" data-target="#CARTMODAL" data-toggle="modal" style="background-color: #E74C3C;"><i  class="fa fa-cart-plus"></i>&nbsp;&nbsp;Added to cart</a>--}}
@@ -110,6 +109,24 @@
                                         @endif
                                         {{--<a data-toggle="modal" data-target="#INVITEMULTIJOB" class="btn btn-warning" href="#"><i class="fa fa-envelope-o" style="color: #2ECC71;"></i> Checkout </a>--}}
                                     </div>
+
+                                @else
+                                    <div class="col-md-6 padded">
+                                        <a data-toggle="modal" data-target="#INVITEMULTIJOB" class="btn btn-warning" href="#"><i class="fa fa-envelope-o" style="color: #2ECC71;"></i> Invite to apply</a>
+                                    </div>
+
+                                    <div class="col-md-6 padded">
+                                        @if($roles == 'TASKMINATOR')
+                                            @if($CLIENTFLAG)
+                                                @if(User::IS_BOOKMARKED(Auth::user()->id, $users->id))
+                                                    <a class="btn btn-warning" href="/REMOVE_BOOKMARK:{{BookmarkUser::where('worker_id', $users->id)->where('company_id', Auth::user()->id)->pluck('id')}}"><i class="BOOKMARK_USER fa fa-bookmark" style="color: #2ECC71;"></i> Worker is  bookmarked</a>
+                                                @else
+                                                    <a class="btn btn-warning" href="/ADD_BOOKMARK:{{$users->id}}"><i class="BOOKMARK_USER fa fa-bookmark-o" style="color: #2ECC71;"></i> Bookmark this worker</a>
+                                                @endif
+                                            @endif
+                                        @endif
+                                    </div>
+
                                 @endif
                             @endif
                         </div>
@@ -140,9 +157,11 @@
                             <div class="content">
                                 <span><b>Address: </b>{{$users->address}}, {{$users->regname}}, {{$users->cityname}} {{$users->bgyname}}</span><br>
                                 <span><b>Gender: </b>{{{$users->gender}}}</span><br>
-                                <span><b>Birthdate: </b>{{$users->birthdate}} ({{ \Carbon\Carbon::now()->diffInYears(\Carbon\Carbon::parse($users->birthdate)) }} years old)</span><br>
+                                <span><b>Birthdate: </b>{{$users->birthdate}} <!-- ({{ \Carbon\Carbon::now()->diffInYears(\Carbon\Carbon::parse($users->birthdate)) }} years old) --></span><br>
                                 @if($users->marital_status)
                                     <span><b>Martial Status: </b>{{$users->marital_status}}</span><br>
+                                @else
+                                    <span><b>Martial Status: </b>N/A</span><br>
                                 @endif
                             </div>
                         </div>
@@ -152,6 +171,8 @@
                             <i class="fa fa-3x fa-phone text-primary">
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Contact Info</span></i>
                             <hr class="hrLine">
+                            <span style="color:red; font-size:15px;"><em>Note: "Contact information will only be available after you check-out the Worker's Profile"</em></span>
+
                             @if($CLIENTFLAG && $roles == 'TASKMINATOR')
                                 @if($PURCHASED > 0)
                                     <!-- CONTACT INFO -->
@@ -219,7 +240,34 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Educational Background</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                {{$users->educationalBackground}}
+                                <!-- {{$users->educationalBackground}} -->
+                                <div class="col-md-12">
+                                    <span><b>College/Vocational: </b></span>
+                                    <ul>
+                                        <li><b>School Name: </b>Lorem ipsum</li>
+                                        <li><b>Course: </b>BSIT</li>
+                                        <li><b>School Year: </b>2001/2015</li>
+                                        <li><b>Awards: </b>N/A</li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <span><b>High School: </b></span>
+                                    <ul>
+                                        <li><b>School Name: </b>Lorem ipsum</li>
+                                        <li><b>School Year: </b>1996/2001</li>
+                                        <li><b>Awards: </b>N/A</li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <span><b>Elementary: </b></span>
+                                    <ul>
+                                        <li><b>School Name: </b>Lorem ipsum</li>
+                                        <li><b>School Year: </b>1990/1996</li>
+                                        <li><b>Awards: </b>N/A</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -244,7 +292,7 @@
                             <span class="section-heading lato-text" style="font-size: 30px; color:#333;">Supporting Documents</span></i>
                             <hr class="hrLine">
                             <div class="content">
-                                @if($PURCHASED > 0)
+<!--                                 @if($PURCHASED > 0)
                                     @if(count($DOCS) > 0)
                                         @foreach($full_docs as $d)
                                             <a download href="{{$d->path}}"><span><i class="fa fa-check-circle" style="color: #1ABC9C; font-size: 1.3em;"></i> {{$d->label}}</span>&nbsp;&nbsp;</a><br/>
@@ -260,7 +308,9 @@
                                     @else
                                         <center>N/A</center>
                                     @endif
-                                @endif
+                                @endif -->
+
+                                <span style="color:red; font-size:15px;"><em>Note: "Supporting Documents will only be available for viewing and download after you check-out the Worker's Profile"</em></span>
                             </div>
                         </div>
                     </div>

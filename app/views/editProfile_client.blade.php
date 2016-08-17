@@ -147,9 +147,9 @@
 
                 <div class="col-md-3 container lato-text padded">
                     <div class="row padded" style="border-bottom: 1px solid #cdcdcd; text-align: center;">
-                        <div class="thumbnail">
+                        <!-- <div class="thumbnail">
                             @if($user->profilePic == null)
-                                <div style="border: 1px solid #333333; padding: 0.4em; margin-top: 0.8em;">
+                                <div style="padding: 0.4em; margin-top: 0.8em;">
                                     {{ Form::open(array('url' => '/uploadProfilePic', 'id' => 'uploadProfilePicForm', 'files' => 'true')) }}
                                     Please upload a profile picture<br/>
                                     <input type="file" name="profilePic" accept="image/*" required="required"/><br/>
@@ -162,7 +162,39 @@
                                     <span style="display:none;" id="picNotice">Click to change profile picture</span>
                                 </div>
                             @endif
-                        </div>
+                        </div> -->
+
+                        @if(Auth::user()->profilePic == null)
+                            <div class="thumbnail">
+                                @if(Auth::user()->profilePic)
+                                    <img src="{{ Auth::user()->profilePic }}" class="portrait"/><br>
+                                @else
+                                    <img src="/images/default_profile_pic.png"/><br>
+                                @endif
+                            </div>
+                            <h3 class="lato-text" style="margin-top:0px;">{{ $user->fullName }}</h3>
+
+                            <div class="heading" style="margin-bottom: 15px;">
+                                <i class="icon-signal"></i>Please upload a profile picture
+                            </div>
+
+                            <div class="widget-content" style="width: 236px;">
+                                {{ Form::open(array('url' => '/uploadProfilePic', 'id' => 'uploadProfilePicForm', 'files' => 'true')) }}
+                                    <input type="file" name="profilePic" accept="image/*" class="form-control" /><br/>
+                                    <button type="submit" class="btn btn-success" style="border: 1px solid #5cb85c;">Upload</button>
+                                {{ Form::close() }}
+                            </div>
+                        @else
+                            <div class="widget-content padded">
+                                <div class="thumbnail">
+                                    <a href="/editProfile"><img src="{{ Auth::user()->profilePic }}" class="portrait"/></a>
+                                </div>
+                                <div class="heading">
+                                    <i class="glyphicon glyphicon-user"></i>{{ Auth::user()->fullName }}
+                                </div>
+                            </div>
+                        @endif
+
                         <h3 class="lato-text">{{ $user->companyName }}</h3>
                     </div>
                     <div class="row padded bord">
@@ -231,6 +263,10 @@
                                          :
                                         <span style="margin-left: 5px">{{ $contact->content }}</span><br/>
                                     @endforeach
+
+                                    <span><b>Facebook: </b><a href="#"> </a>N/A</span><br>
+                                    <span><b>Twitter: </b><a href="#"> </a>N/A</span><br>
+                                    <span><b>Linkedin: </b><a href="#"> </a>N/A</span>
                                 </div>
                             </div>
 
