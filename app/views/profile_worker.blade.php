@@ -100,7 +100,7 @@
                             </div>
                             @if($PURCHASED == 0 && BaseController::IS_AN_APPLICANT_FOR_COMPANY($users->id, Auth::user()->id))
                                 <div class="col-md-4 padded">
-                                    <a href="/doCheckout={{$users->id}}" class="btn btn-warning" style="background-color: #E74C3C;">Checkout</a>
+                                    <a href="/doCheckout" class="btn btn-warning" style="background-color: #E74C3C;">Checkout</a>
                                     <!-- OLD CART PROCEDURE
                                     @if($USERINCART > 0)
                                         <a href="#" class="btn btn-warning SHWCRT" data-target="#CARTMODAL" data-toggle="modal" style="background-color: #E74C3C;"><i  class="fa fa-cart-plus"></i>&nbsp;&nbsp;Added to cart</a>

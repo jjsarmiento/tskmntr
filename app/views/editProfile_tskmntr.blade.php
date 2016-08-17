@@ -155,6 +155,30 @@
                             </div>
                         @endif
                     </div>
+
+                    <div class="row padded bord" style="border-bottom: 1px solid #cdcdcd;">
+                        <div class="heading" style="font-size:13pt; color:#2980b9; padding-bottom: 3px;">
+                            <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>&nbsp Contact Information <button class="btn btn-xs btn-default pull-right" onclick="location.href='/editContactInfo'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                        </div>       
+                        @foreach(Contact::where('user_id', $user->id)->get() as $con)
+                            <span style="text-transform: capitalize; font-weight:600; margin-right: 5px;">
+                                @if($con->ctype == "mobileNum") Mobile No.
+                                @elseif($con->ctype == "businessNum") Business No.
+                                @else {{ $con->ctype }} @endif
+                            </span>
+                             :
+                            <span style="margin-left: 5px">{{ $con->content }}</span>
+                            @if($con->ctype == "mobileNum")
+                                @if(Contact::where('user_id',  Auth::user()->id)->pluck('pincode')!='verified')
+                                    {{--<button class="btn btn-xs btn-primary" onclick="location.href='/doVerifyMobileNumber'" style="padding: 2px 10px 2px 10px; margin: 5px; text-transform: none;">Verify</button>--}}
+                                @else
+                                    {{--<span class="btn btn-xs btn-default" style=" margin: 5px;">Verified</span>--}}
+                                @endif
+                            @endif
+                            <br/>
+                        @endforeach
+                    </div>
+
                     <div class="row padded bord">
                         <div class="heading" style="font-size:14pt; color:#2980b9">
                            <i class="fa fa-certificate" style="font-size:14pt; color:#2980b9"></i>&nbsp Certification <button class="btn btn-xs btn-default pull-right" onclick="#" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
@@ -207,53 +231,72 @@
                     <div class="row" style="border-bottom: 1px solid #cdcdcd;">
                         <div class="col-md-12 padded">
                             <div class="heading" style="font-size:14pt; color:#2980b9">
-                                <i class="fa fa-graduation-cap" style="font-size:14pt; color:#2980b9"></i>&nbsp Educational Background <button class="btn btn-xs btn-default pull-right" onclick="#" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                                <i class="fa fa-graduation-cap" style="font-size:14pt; color:#2980b9"></i> Educational Background <button class="btn btn-xs btn-default pull-right" onclick="#" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
                             </div> 
                             <div style="padding-left:27px;">
-                                <span>
+                                <!-- <span>
                                     {{Auth::user()->educationalBackground}}
-                                </span>
+                                </span> -->
+                                <div class="col-md-4">
+                                    <span><b>College/Vocational: </b></span>
+                                    <ul>
+                                        <li><b>School Name: </b>Lorem ipsum</li>
+                                        <li><b>Course: </b>BSIT</li>
+                                        <li><b>School Year: </b>2001/2015</li>
+                                        <li><b>Awards: </b>N/A</li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <span><b>High School: </b></span>
+                                    <ul>
+                                        <li><b>School Name: </b>Lorem ipsum</li>
+                                        <li><b>School Year: </b>1996/2001</li>
+                                        <li><b>Awards: </b>N/A</li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <span><b>Elementary: </b></span>
+                                    <ul>
+                                        <li><b>School Name: </b>Lorem ipsum</li>
+                                        <li><b>School Year: </b>1990/1996</li>
+                                        <li><b>Awards: </b>N/A</li>
+                                    </ul>
+                                </div>
                             </div>      
                         </div>
 
                     </div>
 
                     <div class="row" style="border-bottom: 1px solid #cdcdcd;">
-                        <div class="col-md-6 padded">
-                            <div class="heading" style="font-size:14pt; color:#2980b9">
-                                <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>&nbsp Contact Information <button class="btn btn-xs btn-default pull-right" onclick="location.href='/editContactInfo'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
-                            </div>       
-                            <div style="padding-left: 27px;">
-                                @foreach(Contact::where('user_id', $user->id)->get() as $con)
-                                    <span style="text-transform: capitalize; font-weight:600; margin-right: 5px;">
-                                        @if($con->ctype == "mobileNum") Mobile No.
-                                        @elseif($con->ctype == "businessNum") Business No.
-                                        @else {{ $con->ctype }} @endif
-                                    </span>
-                                     :
-                                    <span style="margin-left: 5px">{{ $con->content }}</span>
-                                    @if($con->ctype == "mobileNum")
-                                        @if(Contact::where('user_id',  Auth::user()->id)->pluck('pincode')!='verified')
-                                            {{--<button class="btn btn-xs btn-primary" onclick="location.href='/doVerifyMobileNumber'" style="padding: 2px 10px 2px 10px; margin: 5px; text-transform: none;">Verify</button>--}}
-                                        @else
-                                            {{--<span class="btn btn-xs btn-default" style=" margin: 5px;">Verified</span>--}}
-                                        @endif
-                                    @endif
-                                    <br/>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 padded">
+                        <div class="col-md-12 padded">
                             <div class="heading" style="font-size:14pt; color:#2980b9">
                                <i class="fa fa-lightbulb-o" style="font-size:14pt; color:#2980b9"></i>&nbsp Experience <button class="btn btn-xs btn-default pull-right" onclick="#'" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
                             </div>
-                            @if(Auth::user()->experience)
+                            <!-- @if(Auth::user()->experience)
                                 {{Auth::user()->experience}}
                             @else
                                 N/A
-                            @endif
+                            @endif -->
+                            @for($i=0; $i<3; $i++)
+                                <ul>
+                                    <li><b>Position: </b><b style="font-size:18px;">Lorem Ipsum</b></li>
+                                    <li><b>Company Name: </b><b style="font-size:15px;">Company Sample name</b></li>
+                                    <li><b>Location: </b>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper fringilla tellus in mattis. Quisque nec nisi lacus. Fusce ac sem sem. Nam tristique congue egestas.</li>
+                                    <li><b>Time Period: </b>2015 - Present</li>
+                                    <li><b>Roles and Responsibilities: </b>Sit dolor amet</li>
+                                </ul>
+                                @if($i < 2)
+                                <hr>
+                                @endif
+                            @endfor
                         </div>
+
+                    </div>
+
+                    <div class="row" style="border-bottom: 1px solid #cdcdcd;">
+
                     </div>
 
                     <div class="row" style="border-bottom: 1px solid #cdcdcd;">
