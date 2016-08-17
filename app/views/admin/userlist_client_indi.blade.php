@@ -145,21 +145,28 @@
 @section('body-scripts')
     <script>
         $(document).ready(function(){
+            CHAINLOCATION($('#cmpSearch_Region'), $('#cmpSearch_City'));
+            CHAINLOCATION($('#cmpSearch_Region'), $('#cmpSearch_Province'));
+            CHAINLOCATION($('#cmpSearch_Province'), $('#cmpSearch_City'));
+
             $('#searchBtn').click(function(){
                 var searchWord = ($('#searchWord').val() == '') ? false : $('#searchWord').val(),
                     acctStatus = ($('#acct_status').val() == '') ? false : $('#acct_status').val(),
                     accountType = ($('#acctType').val() == '') ? false :$('#acctType').val(),
                     orderBy = $('#adminCMP_orderBy').val(),
-                    searchBy = $('#adminCMP_SrchBy').val();
+                    searchBy = $('#adminCMP_SrchBy').val(),
+                    region = ($('#cmpSearch_Region').val() == 'ALL') ? false : $('#cmpSearch_Region').val(),
+                    city = ($('#cmpSearch_City').val() == 'ALL') ? false : $('#cmpSearch_City').val(),
+                    province = ($('#cmpSearch_Province').val() == 'ALL') ? false : $('#cmpSearch_Province').val();
 
-                location.href = '/userListClientIndi=search='+searchWord+'='+acctStatus+'='+accountType+'='+orderBy+'='+searchBy;
+                location.href = '/userListClientIndi=search='+searchWord+'='+acctStatus+'='+accountType+'='+orderBy+'='+searchBy+'='+region+'='+city+'='+province;
             });
 
             $('.ACT_DEAC').click(function(){
                 if(confirm($(this).data('msg'))){
                     location.href = $(this).data('href');
                 }
-            })
+            });
         });
     </script>
 @stop
@@ -358,6 +365,36 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="cmpSearch_Region" id="cmpSearch_Region">
+                                    <option value="ALL">All regions</option>
+                                    @foreach($regions as $r)
+                                        <option <?php if(@$cmpSearch_Region == $r->regcode){ echo 'selected'; } ?> value="{{$r->regcode}}">{{$r->regname}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="cmpSearch_Province" id="cmpSearch_Province" data-loctype="REGION_TO_PROVINCE" data-loctypeother="PROVINCE_TO_CITY">
+                                    <option value="ALL">All provinces</option>
+                                    @foreach($provinces as $p)
+                                        <option <?php if(@$cmpSearch_Province == $p->provcode){ echo 'selected'; } ?> value="{{$p->provcode}}">{{$p->provname}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="cmpSearch_City" id="cmpSearch_City" data-loctype="REGION_TO_CITY">
+                                    <option value="ALL">All cities</option>
+                                    @foreach($cities as $c)
+                                        <option <?php if(@$cmpSearch_City == $c->citycode){ echo 'selected'; } ?> value="{{$c->citycode}}">{{$c->cityname}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 @if($users->count() == 0)
@@ -400,34 +437,6 @@
                         </tbody>
                     </table>
                     <center>{{ $users->links() }}</center>
-                    <!--
-                    @foreach($users as $user)
-                        <div class="media block-update-card" style="">
-                            <a class="pull-left" href="/viewUserProfile/{{$user->id}}">
-                                @if($user->profilePic != "")
-                                    <img class="media-object update-card-MDimentions" src="{{$user->profilePic}}">
-                                @else
-                                    <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
-                                @endif
-                            </a>
-                            <div class="media-body update-card-body">
-                                <a href="/viewUserProfile/{{$user->id}}" style="font-weight: bolder;">
-                                    {{ $user->fullName }} {{'@'.$user->username}}
-                                </a>
-                                <p>
-                                    Registered at {{ date('D, M j, Y \a\t g:ia', strtotime($user->created_at)) }}<br/>
-                                    @if($user->status == 'ACTIVATED')
-                                        <a style="border-radius: 0.3em;" data-msg="Confirm account DEACTIVATION of {{$user->fullName}}" class="ACT_DEAC btn btn-danger btn-xs" data-href="/adminDeactivate/{{$user->id}}">DEACTIVATE</a>
-                                    @elseif($user->Status == 'DEACTIVATED')
-                                        <a style="border-radius: 0.3em;" data-msg="Confirm account ACTIVATION of {{$user->fullName}}" class="ACT_DEAC btn btn-success btn-xs" data-href="/adminActivate/{{$user->id}}">ACTIVATE</a>
-                                    @else
-                                        <a style="border-radius: 0.3em;" class="btn btn-warning btn-xs">{{$user->status}}</a>
-                                    @endif
-                                </p>
-                            </div>
-                        </div>
-                    @endforeach
-                    -->
                 @endif
             </div>
         </div>

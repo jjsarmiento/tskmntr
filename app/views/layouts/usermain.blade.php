@@ -354,7 +354,13 @@
                     </li>
                     @if(User::GETROLE(Auth::user()->id) == 'CLIENT_CMP' || User::GETROLE(Auth::user()->id) == 'CLIENT_IND')
                         <li>
+                            <!--
                             <a href="#" style="background:transparent; font-size: 14pt;" class="SHWCRT" data-target="#CARTMODAL" data-toggle="modal">
+                                <i class="fa fa-shopping-cart fa-fw"></i>
+                                <span class="visible-xs-inline hidden-sm hidden-md" style="text-transform:none; font-size:11pt;">{{User::GETROLE(Auth::user()->id)}}</span>
+                            </a>
+                            -->
+                            <a href="checkouts" style="background:transparent; font-size: 14pt;">
                                 <i class="fa fa-shopping-cart fa-fw"></i>
                                 <span class="visible-xs-inline hidden-sm hidden-md" style="text-transform:none; font-size:11pt;">{{User::GETROLE(Auth::user()->id)}}</span>
                             </a>

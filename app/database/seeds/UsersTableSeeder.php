@@ -5,6 +5,10 @@ class UsersTableSeeder extends Seeder {
     public function run(){
         date_default_timezone_set("Asia/Manila");
 
+        $total_duration = time() + (30 * 24 * 60 * 60);
+        $total_duration = date("Y:m:d H:i:s", $total_duration);
+
+        /*
         // CLIENT - INDIVIDIUAL
         User::create(array(
             'id'                =>  1,
@@ -32,15 +36,13 @@ class UsersTableSeeder extends Seeder {
             'role_id'           =>  3,
         ));
 
-        $total_duration = time() + (30 * 24 * 60 * 60);
-        $total_duration = date("Y:m:d H:i:s", $total_duration);
-
         UserSubscription::insert([
             'user_id'                   =>  1,
             'system_subscription_id'    =>  1,
             'expires_at'                =>  $total_duration,
             'created_at'                =>  date("Y:m:d H:i:s")
         ]);
+        */
 
         // CLIENT - COMPANY
         User::create(array(
@@ -77,14 +79,12 @@ class UsersTableSeeder extends Seeder {
             'position'          =>  'Client Keyperon Position',
             'country'           =>  'PHILIPPINES',
         ));
-
         UserSubscription::insert([
             'user_id'                   =>  2,
             'system_subscription_id'    =>  1,
             'expires_at'                =>  $total_duration,
             'created_at'                =>  date("Y:m:d H:i:s")
         ]);
-
         // TASKMINATOR 1
         User::create(array(
             'id'                =>  3,

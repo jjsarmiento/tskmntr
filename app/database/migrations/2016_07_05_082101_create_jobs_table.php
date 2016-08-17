@@ -22,6 +22,7 @@ class CreateJobsTable extends Migration {
             $table->string('skill_category_code')->nullable();
             $table->string('skill_code')->nullable();
             $table->string('regcode')->nullable();
+            $table->string('provcode')->nullable();
             $table->string('bgycode')->nullable();
             $table->string('citycode')->nullable();
             $table->string('hiring_type')->nullable();

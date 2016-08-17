@@ -18,7 +18,7 @@
     <div class="container lato-text">
         <div class="col-md-4">
             <div class="widget-container padded fluid-height" style="">
-                <a style="border-radius: 0.3em;" href="#" data-href="/createJob" id="CREATE_JOB" class="btn btn-success btn-block btn-lg">Create Job</a>
+                <a style="border-radius: 0.3em;" href="/createJob" id="CREATE_JOB" class="btn btn-success btn-block btn-lg">Create Job</a>
                 <br/>
                 <div class="row" style="font-size: 1.2em; font-weight: bolder; text-align: center;">
                     <div class="col-md-12">

@@ -32,9 +32,10 @@
             $('#loadingContent').hide();
             $('#mainContent').fadeIn();
 
+            CHAINLOCATION($('#province'), $('#city'));
             locationChain($('#region'), $('#city'),$('#taskCreateForm'), '/chainRegion');
             locationChain($('#region'), $('#province'),$('#taskCreateForm'), '/chainProvince');
-            locationChain($('#city'), $('#barangay'),$('#taskCreateForm'), '/chainCity');
+//            locationChain($('#city'), $('#barangay'),$('#taskCreateForm'), '/chainCity');
 
             $('#taskcategory').change(function(){
                 $('#taskitems').empty();
@@ -177,7 +178,7 @@
                                     <hr/>
                                     <h5><i class="glyphicon glyphicon-map-marker"></i> &nbsp;Task Location</h5><br/>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="city">Region</label>
                                                 <select name="region" id="region" class="form-control" required="required">
@@ -186,24 +187,24 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <!--
+                                        </div>
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="barangay">Barangay</label>
-                                                <select name="barangay" id="barangay" class="form-control" required="required">
-                                                    @if(Input::old('city'))
-                                                        @foreach(Barangay::where('citycode', Input::old('city'))->orderBy('bgyname', 'ASC')->get() as $bgy)
-                                                            <option value="{{$bgy->bgycode}}" <?php  if(Input::old('barangay') == $bgy->bgycode){ echo('selected'); } ?>>{{ $bgy->bgyname }}</option>
+                                                <label>Province</label>
+                                                <select name="province" id="province" class="form-control" required="required" data-loctypeother="PROVINCE_TO_CITY">
+                                                    @if(Input::old('region'))
+                                                        @foreach(Province::where('regcode', Input::old('region'))->get() as $p)
+                                                            <option value="{{$p->provcode}}">{{$p->provname}}</option>
                                                         @endforeach
                                                     @else
-                                                        @foreach($barangays as $bgy)
-                                                            <option value="{{$bgy->bgycode}}" <?php  if(Input::old('barangay') == $bgy->bgycode){ echo('selected'); } ?>>{{ $bgy->bgyname }}</option>
+                                                        @foreach($provinces as $p)
+                                                            <option value="{{$p->provcode}}">{{$p->provname}}</option>
                                                         @endforeach
                                                     @endif
                                                 </select>
                                             </div>
-                                            -->
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="city">City</label>
                                                 <select name="city" id="city" required="required" class="form-control">

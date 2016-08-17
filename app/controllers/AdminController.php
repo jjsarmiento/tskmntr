@@ -666,28 +666,38 @@ class AdminController extends \BaseController {
             ->with('users', $query->orderBy('created_at', 'ASC')->paginate(10));
     }
 
-    public function userListClientIndiSearch($keyword, $status, $accountType, $orderBy, $searchBy){
-        $keyword = ($keyword == 'false') ? '' : $keyword;
+    public function userListClientIndiSearch($keyword, $status, $accountType, $orderBy, $searchBy, $region, $city, $province){
+        $users = User::leftJoin('cities', 'cities.citycode', '=', 'users.city')
+            ->leftJoin('provinces', 'provinces.provcode', '=', 'users.province')
+            ->leftJoin('regions', 'regions.regcode', '=', 'users.region');
+        $cities = [];
+        $regions = Region::get();
+        $provinces = [];
 
-        $userList = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
-            ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
-            ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
-            ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
-            ->leftJoin('user_subscriptions', 'user_subscriptions.id', '=', 'users.accountType')
-            ->join('system_subscriptions', 'system_subscriptions.id', '=', 'user_subscriptions.system_subscription_id')
-            ->whereIn('user_has_role.role_id', ['3', '4'])
-            ->where($searchBy, 'LIKE', '%'.$keyword.'%')
-            ->where('users.status', 'ACTIVATED');
-
+        if($keyword != 'false'){
+            $users = $users->where('users.'.$searchBy, 'LIKE', '%'.$keyword.'%');
+        }
         if($status != 'false'){
-            $userList = $userList->where('users.status', $status);
+            $users = $users->where('users.status', $status);
         }
-
-        if($accountType != 'false'){
-            $userList = $userList->where('system_subscriptions.subscription_label', $accountType);
+        if($accountType !=' false'){
+            $users = $users->join('user_subscriptions', 'user_subscriptions.id', '=', 'users.accountType')
+                ->join('system_subscriptions', 'system_subscriptions.id', '=', 'user_subscriptions.system_subscription_id')
+                ->where('system_subscriptions.subscription_label', $accountType);
         }
-
-        $userList = $userList->select([
+        if($region != 'false'){
+            $users = $users->where('users.region', $region);
+            $cities = City::where('regcode', $region)->get();
+            $provinces = Province::where('regcode', $region)->get();
+        }
+        if($city != 'false'){
+            $users = $users->where('users.city', $city);
+        }
+        if($province != 'false'){
+            $users = $users->where('users.province', $province);
+            $cities = City::where('provcode', $province)->get();
+        }
+        $users = $users->orderBy('users.created_at', $orderBy)->select([
                 'users.id',
                 'users.fullName',
                 'users.username',
@@ -697,18 +707,24 @@ class AdminController extends \BaseController {
                 'cities.cityname',
                 'regions.regname',
             ])
-            ->orderBy('users.created_at', $orderBy)
             ->groupBy('users.id')
             ->paginate(10);
 
         return View::make('admin.userlist_client_indi')
+            ->with('cities', $cities)
+            ->with('regions', $regions)
+            ->with('provinces', $provinces)
+            ->with('cmpSearch_Region', $region)
+            ->with('cmpSearch_City', $city)
+            ->with('cmpSearch_Province', $province)
             ->with('subs', SystemSubscription::orderBy('id', 'ASC')->get())
             ->with('keyword', $keyword)
             ->with('acct_status', $status)
             ->with('adminCMP_accountType', $accountType)
             ->with('orderBy', $orderBy)
             ->with('adminCMP_SrchBy', $searchBy)
-            ->with('users', $userList);
+//            ->with('users', $userList);
+            ->with('users', $users);
     }
 
     public function userListClientCompSearch($searchBy, $searchWord){
@@ -942,6 +958,7 @@ class AdminController extends \BaseController {
         $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
             ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
             ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('provinces', 'provinces.provcode', '=', 'jobs.provcode')
             ->select([
                 'users.fullName',
                 'users.id as user_id',
@@ -954,7 +971,9 @@ class AdminController extends \BaseController {
                 'jobs.hiring_type',
                 'cities.cityname',
                 'regions.regname',
+                'provinces.provname',
             ])
+            ->orderBy('jobs.created_at', 'DESC')
             ->groupBy('jobs.id')
             ->paginate(10);
 
@@ -1091,10 +1110,13 @@ class AdminController extends \BaseController {
                 'regions.regname',
             ])
             ->paginate(10);
-
+        $regions = Region::get();
         $subscriptions = SystemSubscription::orderBy('id', 'ASC')->get();
 
         return View::make('admin.userlist_client_indi')
+            ->with('regions', $regions)
+            ->with('provinces', [])
+            ->with('cities', [])
             ->with('subs', $subscriptions)
             ->with('users', $userList);
 
