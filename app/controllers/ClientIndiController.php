@@ -1057,6 +1057,7 @@ class ClientIndiController extends \BaseController {
             ->with('regions', Region::all())
             ->with('barangays', Barangay::where('citycode', '012801')->orderBy('bgyname', 'ASC')->get())
             ->with('cities', City::where('regcode', '01')->orderBy('cityname', 'ASC')->get())
+            ->with('provinces', Province::where('regcode', '01')->get())
             ->with('taskcategories',TaskCategory::orderBy('categoryname', 'ASC')->whereNotIn('categorycode', ['999'])->get())
             ->with('intiTaskitems', TaskItem::where('item_categorycode', '006')->orderBy('itemname', 'ASC')->get());
     }
@@ -1074,6 +1075,7 @@ class ClientIndiController extends \BaseController {
                 'regcode'               =>  Input::get('region'),
 //            'bgycode'               =>  Input::get('barangay'),
                 'citycode'              =>  Input::get('city'),
+                'provcode'              =>  Input::get('province'),
                 'hiring_type'           =>  Input::get('hireType'),
                 'salary'                =>  Input::get('salaryRange'),
                 'AverageProcessingTime' =>  Input::get('AverageProcessingTime'),
