@@ -437,34 +437,6 @@
                         </tbody>
                     </table>
                     <center>{{ $users->links() }}</center>
-                    <!--
-                    @foreach($users as $user)
-                        <div class="media block-update-card" style="">
-                            <a class="pull-left" href="/viewUserProfile/{{$user->id}}">
-                                @if($user->profilePic != "")
-                                    <img class="media-object update-card-MDimentions" src="{{$user->profilePic}}">
-                                @else
-                                    <img class="media-object update-card-MDimentions" src="/images/default_profile_pic.png">
-                                @endif
-                            </a>
-                            <div class="media-body update-card-body">
-                                <a href="/viewUserProfile/{{$user->id}}" style="font-weight: bolder;">
-                                    {{ $user->fullName }} {{'@'.$user->username}}
-                                </a>
-                                <p>
-                                    Registered at {{ date('D, M j, Y \a\t g:ia', strtotime($user->created_at)) }}<br/>
-                                    @if($user->status == 'ACTIVATED')
-                                        <a style="border-radius: 0.3em;" data-msg="Confirm account DEACTIVATION of {{$user->fullName}}" class="ACT_DEAC btn btn-danger btn-xs" data-href="/adminDeactivate/{{$user->id}}">DEACTIVATE</a>
-                                    @elseif($user->Status == 'DEACTIVATED')
-                                        <a style="border-radius: 0.3em;" data-msg="Confirm account ACTIVATION of {{$user->fullName}}" class="ACT_DEAC btn btn-success btn-xs" data-href="/adminActivate/{{$user->id}}">ACTIVATE</a>
-                                    @else
-                                        <a style="border-radius: 0.3em;" class="btn btn-warning btn-xs">{{$user->status}}</a>
-                                    @endif
-                                </p>
-                            </div>
-                        </div>
-                    @endforeach
-                    -->
                 @endif
             </div>
         </div>
