@@ -349,7 +349,8 @@ Route::group(array('before' => 'CLIENT-ONLY'), function(){
         // CART
         Route::get('/addToCart={worker_id}', 'ClientIndiController@addToCart');
         Route::get('/GET_CART_CONTENTS', 'ClientIndiController@GET_CART_CONTENTS');
-        Route::post('/doCheckout', 'ClientIndiController@doCheckout');
+//        Route::post('/doCheckout', 'ClientIndiController@doCheckout');    // OLD CHECKOUT PROCEDURE -- Jan Sarmiento
+        Route::get('/doCheckout={worker_id}', 'ClientIndiController@doCheckout');       // NEW CHECKOUT PROCEDURE -- Jan Sarmiento
         Route::get('/checkouts', 'ClientIndiController@checkouts');
         Route::get('/removeCartItem:{cartID}', 'ClientIndiController@removeCartItem');
         Route::get('/compDoSearch', 'searchTestController@compDoSearch');
