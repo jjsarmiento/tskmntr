@@ -43,6 +43,7 @@ class UsersTableSeeder extends Seeder {
         ]);
 
         // CLIENT - COMPANY
+        /*
         User::create(array(
             'id'                =>  2,
             'username'          =>  'clientcomp',
@@ -77,14 +78,13 @@ class UsersTableSeeder extends Seeder {
             'position'          =>  'Client Keyperon Position',
             'country'           =>  'PHILIPPINES',
         ));
-
         UserSubscription::insert([
             'user_id'                   =>  2,
             'system_subscription_id'    =>  1,
             'expires_at'                =>  $total_duration,
             'created_at'                =>  date("Y:m:d H:i:s")
         ]);
-
+        */
         // TASKMINATOR 1
         User::create(array(
             'id'                =>  3,

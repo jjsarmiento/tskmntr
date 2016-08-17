@@ -32,16 +32,20 @@
         </div>
         <div class="col-md-8">
             @if($workers->count() != 0)
-                @foreach($workers as $w)
-                    <div class="widget-container padded" style="display: flex; min-height:5em; display:block !important; border-bottom: #ECF0F1 solid 1px;">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h3 style="margin: 0"><a href="/{{$w->username}}">{{ $w->fullName }}</a></h3>
-                                <span style="color: #7F8C8D; font-size: 0.8em;">Checked out at {{$w->purchased_at}}</span>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+                <table class="table table-striped table-hover table-condensed">
+                    <thead>
+                        <th>Checkout Date</th>
+                        <th>Name</th>
+                    </thead>
+                    <tbody>
+                        @foreach($workers as $w)
+                            <tr>
+                                <td>{{$w->purchased_at}}</td>
+                                <td><a href="/{{$w->username}}">{{$w->fullName}}</a></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             @else
                 <center><i>
                     No workers checked out yet.<br/>
