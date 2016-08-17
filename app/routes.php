@@ -204,7 +204,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/viewUsersTasks/{clientid}', 'AdminController@viewUsersTasks');
     Route::post('/viewUsersTasks=search', 'AdminController@viewUsersTasksSearch');
     Route::get('/userListTaskminators=search={searchBy}={searchWord}', 'AdminController@userListTaskminatorsSearch');
-    Route::get('/userListClientIndi=search={keyword}={acctStatus}={acctType}={orderBy}={searchBy}', 'AdminController@userListClientIndiSearch');
+    Route::get('/userListClientIndi=search={keyword}={acctStatus}={acctType}={orderBy}={searchBy}={region}={city}={province}', 'AdminController@userListClientIndiSearch');
     Route::get('/userListClientComp=search={searchBy}={searchWord}', 'AdminController@userListClientCompSearch');
     Route::post('/newSkill', 'AdminController@newSkill');
     Route::post('/newCategory', 'AdminController@newCategory');

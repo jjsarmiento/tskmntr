@@ -145,21 +145,28 @@
 @section('body-scripts')
     <script>
         $(document).ready(function(){
+            CHAINLOCATION($('#cmpSearch_Region'), $('#cmpSearch_City'));
+            CHAINLOCATION($('#cmpSearch_Region'), $('#cmpSearch_Province'));
+            CHAINLOCATION($('#cmpSearch_Province'), $('#cmpSearch_City'));
+
             $('#searchBtn').click(function(){
                 var searchWord = ($('#searchWord').val() == '') ? false : $('#searchWord').val(),
                     acctStatus = ($('#acct_status').val() == '') ? false : $('#acct_status').val(),
                     accountType = ($('#acctType').val() == '') ? false :$('#acctType').val(),
                     orderBy = $('#adminCMP_orderBy').val(),
-                    searchBy = $('#adminCMP_SrchBy').val();
+                    searchBy = $('#adminCMP_SrchBy').val(),
+                    region = ($('#cmpSearch_Region').val() == 'ALL') ? false : $('#cmpSearch_Region').val(),
+                    city = ($('#cmpSearch_City').val() == 'ALL') ? false : $('#cmpSearch_City').val(),
+                    province = ($('#cmpSearch_Province').val() == 'ALL') ? false : $('#cmpSearch_Province').val();
 
-                location.href = '/userListClientIndi=search='+searchWord+'='+acctStatus+'='+accountType+'='+orderBy+'='+searchBy;
+                location.href = '/userListClientIndi=search='+searchWord+'='+acctStatus+'='+accountType+'='+orderBy+'='+searchBy+'='+region+'='+city+'='+province;
             });
 
             $('.ACT_DEAC').click(function(){
                 if(confirm($(this).data('msg'))){
                     location.href = $(this).data('href');
                 }
-            })
+            });
         });
     </script>
 @stop
@@ -355,6 +362,36 @@
                                     <option value="">All Account Status</option>
                                     <option <?php if(@$acct_status == 'DEACTIVATED'){echo 'selected';} ?> value="DEACTIVATED">Deactivated</option>
                                     <option <?php if(@$acct_status == 'ACTIVATED'){echo 'selected';} ?> value="ACTIVATED">Activated</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="cmpSearch_Region" id="cmpSearch_Region">
+                                    <option value="ALL">All regions</option>
+                                    @foreach($regions as $r)
+                                        <option <?php if(@$cmpSearch_Region == $r->regcode){ echo 'selected'; } ?> value="{{$r->regcode}}">{{$r->regname}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="cmpSearch_Province" id="cmpSearch_Province" data-loctype="REGION_TO_PROVINCE" data-loctypeother="PROVINCE_TO_CITY">
+                                    <option value="ALL">All provinces</option>
+                                    @foreach($provinces as $p)
+                                        <option <?php if(@$cmpSearch_Province == $p->provcode){ echo 'selected'; } ?> value="{{$p->provcode}}">{{$p->provname}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="cmpSearch_City" id="cmpSearch_City" data-loctype="REGION_TO_CITY">
+                                    <option value="ALL">All cities</option>
+                                    @foreach($cities as $c)
+                                        <option <?php if(@$cmpSearch_City == $c->citycode){ echo 'selected'; } ?> value="{{$c->citycode}}">{{$c->cityname}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
