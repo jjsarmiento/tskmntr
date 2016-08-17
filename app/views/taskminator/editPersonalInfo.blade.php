@@ -58,6 +58,7 @@
                 CHAINLOCATION($('#reg-task'), $('#edt_prov'));
                 CHAINLOCATION($('#reg-task'), $('#city-task'));
                 CHAINLOCATION($('#city-task'), $('#barangay-task'));
+                CHAINLOCATION($('#edt_prov'), $('#city-task'));
 //                locationChain($('#city-task'), $('#barangay-task'),$('#editPersonalInfo'), '/chainCity');
 //                $('#reg-task').change(function(){
 //                    citydropdown.prop('disabled', true);
@@ -176,7 +177,7 @@
                                 Province :
                             </div>
                             <div class="col-md-9">
-                                <select name="edt_prov" id="edt_prov" data-loctype="REGION_TO_PROVINCE" class="form-control">
+                                <select name="edt_prov" id="edt_prov" data-loctype="REGION_TO_PROVINCE" class="form-control" data-loctypeother="PROVINCE_TO_CITY">
                                     <option value="">Please Select your province</option>
                                     @foreach($prov as $p)
                                         <option <?php if($p->provcode == Auth::user()->province){echo 'selected';} ?> value="{{$p->provcode}}">{{$p->provname}}</option>

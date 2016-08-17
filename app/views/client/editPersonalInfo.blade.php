@@ -54,6 +54,7 @@
             CHAINLOCATION($('#reg-task'), $('#edt_prov'));
             CHAINLOCATION($('#reg-task'), $('#city'));
             CHAINLOCATION($('#city'), $('#barangay'));
+            CHAINLOCATION($('#edt_prov'), $('#city'));
 
             /*
             locationChain($('#city'), $('#barangay'),$('#editPersonalInfo'), '/chainCity');
@@ -211,7 +212,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Province</label>
-                                        <select name="edt_prov" id="edt_prov" data-loctype="REGION_TO_PROVINCE" class="form-control">
+                                        <select name="edt_prov" id="edt_prov" data-loctype="REGION_TO_PROVINCE" data-loctypeother="PROVINCE_TO_CITY" class="form-control">
                                             <option value="">Select a province</option>
                                             @foreach($prov as $p)
                                                 <option <?php if($p->provcode == Auth::user()->province){echo 'selected';} ?> value="{{$p->provcode}}">{{$p->provname}}</option>
