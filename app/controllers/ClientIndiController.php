@@ -1637,7 +1637,19 @@ class ClientIndiController extends \BaseController {
         return $cartdetails;
     }
 
-    public function doCheckout(){
+    public function doCheckout($worker_id){
+        // NEW CHECKOUT PROCEDURE -- August 17, 2016
+        Purchase::insert([
+            'company_id'    =>  Auth::user()->id,
+            'worker_id'     =>  $worker_id,
+            'purchased_at'  =>  Carbon::now(),
+            'created_at'    =>  Carbon::now()
+        ]);
+
+        $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Checked out <a href="/viewUserProfile/'.$worker_id.'">worker</a>');
+        return Redirect::back();
+        /*
+         * //OLD CHECKOUT PROCEDURE as of August 17, 2016 - Jan Sarmiento
         $Points_Per_Checkout = SystemSetting::where('type', 'SYSSETTINGS_CHECKOUTPRICE')->pluck('value');
         foreach(Input::get('WORKERID') as $w){
             Purchase::insert([
@@ -1658,6 +1670,7 @@ class ClientIndiController extends \BaseController {
             'points'    =>  $TOTAL_PTS,
         ]);
         return Redirect::back();
+        */
     }
 
     public function JOB_DELETECUSTSKILL($custom_skill_id){
@@ -1666,10 +1679,16 @@ class ClientIndiController extends \BaseController {
     }
 
     public function checkouts(){
-        $points_per_worker = SystemSetting::where('type', 'SYSSETTINGS_CHECKOUTPRICE')->pluck('value');
         $workers = User::join('purchases', 'purchases.worker_id', '=', 'users.id')
-                        ->where('purchases.company_id', Auth::user()->id)
-                        ->paginate(10);
+            ->where('purchases.company_id', Auth::user()->id)
+            ->paginate(10);
+
+        return View::make('client.checkouts')
+            ->with('workers', $workers);
+
+        // OLD CHECKOUT PROCEDURE -- Jan Sarmiento
+        /*
+        $points_per_worker = SystemSetting::where('type', 'SYSSETTINGS_CHECKOUTPRICE')->pluck('value');
 
         $qty = Cart::where('company_id', Auth::user()->id)->count();
         $carts = User::join('carts', 'carts.worker_id', '=', 'users.id')
@@ -1691,6 +1710,7 @@ class ClientIndiController extends \BaseController {
 //            ->with('points_after_checkout', (Auth::user()->points - ($total_price * 16)))
             ->with('points_per_worker', $points_per_worker)
             ->with('workers', $workers);
+        */
     }
 
     public function removeCartItem($cartID){

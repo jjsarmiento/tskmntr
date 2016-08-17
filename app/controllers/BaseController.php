@@ -721,5 +721,11 @@ class BaseController extends Controller {
         foreach($ox as $o){ array_push($myArr, $o->worker_id); }
         return $myArr;
     }
+
+    public function ADMIN_GET_CHECKEDOUT_WORKERS(){
+        $myArr = array();
+        foreach(Purchase::get() as $o){ array_push($myArr, $o->worker_id); }
+        return $myArr;
+    }
     // AUTHORED BY Jan Sarmiento -- END
 }

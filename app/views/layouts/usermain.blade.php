@@ -361,9 +361,18 @@
                             </a>
                             -->
                             <a href="checkouts" style="background:transparent; font-size: 14pt;">
-                                <i class="fa fa-shopping-cart fa-fw"></i>
+                                {{--<i class="fa fa-shopping-cart fa-fw"></i>--}}
+                                <i class="fa fa-users fa-fw"></i>
                                 <span class="visible-xs-inline hidden-sm hidden-md" style="text-transform:none; font-size:11pt;">{{User::GETROLE(Auth::user()->id)}}</span>
                             </a>
+                            @if(Purchase::where('company_id', Auth::user()->id)->count() != 0)
+                                <div class="fb-bar">
+                                    <div id="notif-icon" class="notif-icon">
+                                        <span style="background-color: #2980B9;" id="notification_count">{{Purchase::where('company_id', Auth::user()->id)->count()}}</span>
+                                    </div>
+                                </div>
+                            @endif
+                            {{--
                             @if(Cart::where('company_id', Auth::user()->id)->count() != 0)
                                 <div class="fb-bar">
                                     <div id="notif-icon" class="notif-icon">
@@ -371,6 +380,7 @@
                                     </div>
                                 </div>
                             @endif
+                            --}}
                         </li>
                         <li>
                             <a href="/bookmarkedUsers" style="background:transparent; font-size: 14pt;">

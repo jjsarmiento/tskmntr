@@ -387,13 +387,16 @@
                             <br/>
                             <br/>
                             @if(!in_array($a->id, $CHECKED_OUT_USERS))
+                                <a href="/VWPRFL:{{$a->jobapp_id}}/doCheckout={{$a->id}}" class="btn btn-xs btn-danger btn-block" style="border-radius: 0.3em;">CHECKOUT</a>
+                                <!--
                                 @if(in_array($a->id, $INCART))
                                     <a href="#" data-target="#CARTMODAL" data-toggle="modal" class="SHWCRT btn btn-xs btn-danger btn-block" style="border-radius: 0.3em;">Added to Cart</a>
                                 @else
                                     <a href="/addToCart={{$a->id}}" class="btn btn-warning btn-xs btn-block" style="border-radius: 0.3em;"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>
                                 @endif
+                                -->
                             @else
-                                <a href="/hireWorker={{$a->id}}={{$job->id}}" class="btn btn-xs btn-success btn-block">Hire Worker</a>
+                                <a href="/VWPRFL:{{$a->jobapp_id}}/hireWorker={{$a->id}}={{$job->id}}" class="btn btn-xs btn-success btn-block">Hire Worker</a>
                             @endif
                         </div>
                     @endforeach
