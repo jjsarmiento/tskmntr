@@ -102,7 +102,8 @@
                                 @if(BaseController::IS_AN_APPLICANT_FOR_COMPANY($users->id, Auth::user()->id))
                                     <div class="col-md-4 padded">
                                         @if($USERINCART > 0)
-                                            <a href="#" class="btn btn-warning SHWCRT" data-target="#CARTMODAL" data-toggle="modal" style="background-color: #E74C3C;"><i  class="fa fa-cart-plus"></i>&nbsp;&nbsp;Added to cart</a>
+                                            {{--<a href="#" class="btn btn-warning SHWCRT" data-target="#CARTMODAL" data-toggle="modal" style="background-color: #E74C3C;"><i  class="fa fa-cart-plus"></i>&nbsp;&nbsp;Added to cart</a>--}}
+                                            <a href="/checkouts" class="btn btn-warning SHWCRT" style="background-color: #E74C3C;"><i  class="fa fa-cart-plus"></i>&nbsp;&nbsp;Added to cart</a>
                                             {{--<a href="#" class="SHWCRT btn btn-danger"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Added to Cart</a>--}}
                                         @else
                                             <a href="/addToCart={{$users->id}}" class="btn btn-warning"><i class="fa fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</a>

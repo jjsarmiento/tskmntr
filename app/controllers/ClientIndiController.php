@@ -1666,12 +1666,31 @@ class ClientIndiController extends \BaseController {
     }
 
     public function checkouts(){
+        $points_per_worker = SystemSetting::where('type', 'SYSSETTINGS_CHECKOUTPRICE')->pluck('value');
         $workers = User::join('purchases', 'purchases.worker_id', '=', 'users.id')
                         ->where('purchases.company_id', Auth::user()->id)
                         ->paginate(10);
 
+        $qty = Cart::where('company_id', Auth::user()->id)->count();
+        $carts = User::join('carts', 'carts.worker_id', '=', 'users.id')
+            ->where('carts.company_id', Auth::user()->id)
+            ->select([
+                'users.fullName',
+                'users.username',
+                'users.id as user_id',
+                'carts.id as cart_id',
+                'carts.created_at'
+            ])
+            ->paginate(10);
+        $total_price = $qty * $points_per_worker;
         return View::make('client.checkouts')
-                ->with('workers', $workers);
+            ->with('carts', $carts)
+            ->with('qty', $qty)
+            ->with('total_price', $total_price)
+            ->with('points_after_checkout', (Auth::user()->points - $total_price))
+//            ->with('points_after_checkout', (Auth::user()->points - ($total_price * 16)))
+            ->with('points_per_worker', $points_per_worker)
+            ->with('workers', $workers);
     }
 
     public function removeCartItem($cartID){
