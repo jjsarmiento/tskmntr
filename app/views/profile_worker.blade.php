@@ -208,6 +208,10 @@
                                     <span><b>Linkedin: </b><a href="linkedin.com" target="_Blank">Linkedin.com</a></span>
                                 </div>
                             @endif
+
+                            <span style="color:red; font-size:15px;">
+                                <em><b>Note:</b> Contact Information will only be available after you check-out the Worker's Profile</em>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -275,7 +279,9 @@
                                             <span><i class="fa fa-check-circle" style="color: #1ABC9C; font-size: 1.3em;"></i> {{$d}}</span>&nbsp;&nbsp;<br/>
                                         @endforeach
                                     @else
-                                        <center>N/A</center>
+                                        <span style="color:red; font-size:15px;">
+                                            <em><b>Note:</b> Supporting Documents will only be available for viewing and download after you check-out the Worker's Profile</em>
+                                        </span>
                                     @endif
                                 @endif
                             </div>
