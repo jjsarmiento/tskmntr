@@ -24,7 +24,7 @@
     }
     span.skills {
         background-color: #2980b9;
-        padding: 10px 20px;
+        padding: 10px 18px;
         margin: 5px;
         color: white;
         font-size: 18px;
@@ -74,20 +74,20 @@
                     <br/>
 
                     <!-- Jups -->
-                    <div class="lato-text">
+<!--                     <div class="lato-text">
                         <div class="centered">
                             <span style="font-size:18px;"><em>" To be successful in my field, Proin porta nibh non dui ullamcorper pretium. Ut nunc augue, aliquet vitae luctus sit amet, molestie vitae ante. "</em></span>
                         </div>
-                    </div>
+                    </div> -->
                     <br/>
                     @if($roles == 'TASKMINATOR' && $CLIENTFLAG)
                         <div class="col-md-12">
 
-                            <div class="col-md-4 padded">
+                            <div class="col-md-6 padded">
                                 <a data-toggle="modal" data-target="#INVITEMULTIJOB" class="btn btn-warning" href="#"><i class="fa fa-envelope-o" style="color: #2ECC71;"></i> Invite to apply</a>
                             </div>
 
-                            <div class="col-md-4 padded">
+                            <div class="col-md-6 padded">
                                 @if($roles == 'TASKMINATOR')
                                     @if($CLIENTFLAG)
                                         @if(User::IS_BOOKMARKED(Auth::user()->id, $users->id))
@@ -99,6 +99,22 @@
                                 @endif
                             </div>
                             @if($PURCHASED == 0 && BaseController::IS_AN_APPLICANT_FOR_COMPANY($users->id, Auth::user()->id))
+                                <div class="col-md-4 padded">
+                                    <a data-toggle="modal" data-target="#INVITEMULTIJOB" class="btn btn-warning" href="#"><i class="fa fa-envelope-o" style="color: #2ECC71;"></i> Invite to apply</a>
+                                </div>  
+
+                                <div class="col-md-4 padded">
+                                    @if($roles == 'TASKMINATOR')
+                                        @if($CLIENTFLAG)
+                                            @if(User::IS_BOOKMARKED(Auth::user()->id, $users->id))
+                                                <a class="btn btn-warning" href="/REMOVE_BOOKMARK:{{BookmarkUser::where('worker_id', $users->id)->where('company_id', Auth::user()->id)->pluck('id')}}"><i class="BOOKMARK_USER fa fa-bookmark" style="color: #2ECC71;"></i> Worker is  bookmarked</a>
+                                            @else
+                                                <a class="btn btn-warning" href="/ADD_BOOKMARK:{{$users->id}}"><i class="BOOKMARK_USER fa fa-bookmark-o" style="color: #2ECC71;"></i> Bookmark this worker</a>
+                                            @endif
+                                        @endif
+                                    @endif
+                                </div>
+
                                 <div class="col-md-4 padded">
                                     <a href="/doCheckout={{$users->id}}" class="btn btn-warning" style="background-color: #E74C3C;">Checkout</a>
                                     <!-- OLD CART PROCEDURE
