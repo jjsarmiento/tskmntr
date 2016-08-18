@@ -280,7 +280,7 @@
                                     <span><b>Name: </b></span><br>
                                     <span><b>Position: </b></span><br>
                                     <span style="text-transform: capitalize; font-weight: 600; margin-right: 5px;">
-                                         @if($contact->ctype == "mobileNum") Contact No :
+                                         @if($contact->ctype == "mobileNum") Mobile No :
                                          @endif
                                     </span>
                                     <span style="margin-left: 5px">{{ $contact->content }}</span><br/>

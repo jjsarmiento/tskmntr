@@ -780,6 +780,9 @@ class HomeController extends BaseController {
     public function seeFAQTAG(){
         return View::make('faqTag');
     }
+    public function seeAbout(){
+        return View::make('aboutus');
+    }
 
     public function landingJobAd($categoryCode){
         $this->UPDATE_JOBADS_GLOBAL();

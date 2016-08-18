@@ -16,6 +16,7 @@ Route::get('/whychooseproveek', 'HomeController@whychooseproveek');
 Route::get('/pricing', 'HomeController@pricing');
 Route::get('/faq', 'HomeController@seeFAQ');
 Route::get('/faqTag', 'HomeController@seeFAQTAG');
+Route::get('/about', 'HomeController@seeAbout');
 Route::get('/workercategory={categorycode}', 'HomeController@landingJobAd');
 Route::get('/login', 'HomeController@login');
 
