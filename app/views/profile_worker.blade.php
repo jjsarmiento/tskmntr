@@ -283,7 +283,7 @@
                                             <em><b>Note:</b> Supporting Documents will only be available for viewing and download after you check-out the Worker's Profile</em>
                                         </span>
                                     @endif
-                                @endif
+                                @endif 
                             </div>
                         </div>
                     </div>
