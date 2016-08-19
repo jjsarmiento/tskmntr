@@ -661,11 +661,11 @@ class AdminController extends \BaseController {
             ->with('searchWord', Input::get('searchWord'));
     }
 
-    public function viewUsersTasks($clientid){
-        return View::make('admin.clientTask')
-                ->with('tasks', Task::where('user_id', $clientid)->orderBy('created_at', 'DESC')->paginate(10))
-                ->with('client', User::where('id', $clientid)->first());
-    }
+//    public function viewUsersTasks($clientid){
+//        return View::make('admin.clientTask')
+//                ->with('tasks', Task::where('user_id', $clientid)->orderBy('created_at', 'DESC')->paginate(10))
+//                ->with('client', User::where('id', $clientid)->first());
+//    }
 
     public function viewUsersTasksSearch(){
         $query = Task::where('user_id', Input::get('clientid'));
@@ -1572,5 +1572,10 @@ class AdminController extends \BaseController {
             return Redirect::back();
         }
 
+    }
+
+    public function allJobAds_user($user_id){
+        return View::make('admin.allJobAds_user')
+            ->with('jobs', Job::where('user_id', $user_id)->get());
     }
 }

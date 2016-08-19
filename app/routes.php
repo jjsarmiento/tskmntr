@@ -105,6 +105,8 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+    Route::get('/allJobAds_user/{user_id}', 'AdminController@allJobAds_user');
+
     // POINTS
     Route::get('/points={user_id}', 'AdminController@points');
     Route::post('/doAddPoints', 'AdminController@doAddPoints');
@@ -201,7 +203,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 //    Route::post('/taskListBidding=search', 'AdminController@taskListBiddingSearch');
 //    Route::post('/taskListAuto=search', 'AdminController@taskListAutoSearch');
     Route::post('/taskListDirect=search', 'AdminController@taskListDirectSearch');
-    Route::get('/viewUsersTasks/{clientid}', 'AdminController@viewUsersTasks');
+//    Route::get('/viewUsersTasks/{clientid}', 'AdminController@viewUsersTasks');
     Route::post('/viewUsersTasks=search', 'AdminController@viewUsersTasksSearch');
     Route::get('/userListTaskminators=search={searchBy}={searchWord}', 'AdminController@userListTaskminatorsSearch');
     Route::get('/userListClientIndi=search={keyword}={acctStatus}={acctType}={orderBy}={searchBy}={region}={city}={province}', 'AdminController@userListClientIndiSearch');
