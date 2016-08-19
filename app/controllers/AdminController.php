@@ -1582,7 +1582,21 @@ class AdminController extends \BaseController {
 
     public function doEditCategory(){
         TaskCategory::where('id', Input::get('category_id'))->update([
-            'categoryname'  =>  Input::get('category_name')
+            'categoryname'  =>  strip_tags(trim(Input::get('category_name')))
+        ]);
+        return Redirect::back();
+    }
+
+    public function categoryFullDetails($cat_id){
+        return View::make('admin.categoryFullDetails')
+            ->with('skills', TaskItem::where('item_categorycode', $cat_id)->paginate(10))
+            ->with('cat', TaskCategory::where('categorycode', $cat_id)->first());
+    }
+
+    public function doEditCategorySkill(){
+//        return Input::all();
+        TaskItem::where('id', Input::get('skill_id'))->update([
+            'itemname' => strip_tags(trim(Input::get('skill_name')))
         ]);
         return Redirect::back();
     }

@@ -151,8 +151,10 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/skills', 'AdminController@skills');
     Route::get('/editCategory={category}', 'AdminController@editCategory');
     Route::post('/doEditCategory', 'AdminController@doEditCategory');
+    Route::get('/categoryFullDetails={cat_id}', 'AdminController@categoryFullDetails');
     Route::get('/customSkills', 'AdminController@customSkills');
     Route::get('/DELCSTSKLL={skillID}', 'AdminController@DELCSTSKLL');
+    Route::post('/doEditCategorySkill', 'AdminController@doEditCategorySkill');
 
     // JOB ADS ROUTES
     Route::get('/showJobAds', 'AdminController@showJobAds');
