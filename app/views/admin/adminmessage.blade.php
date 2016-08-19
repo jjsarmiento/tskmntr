@@ -7,9 +7,40 @@
 @section('head-content')
     <style type="text/css">
         body{background-color:#E9EAED;}
+        /* Added by Jups */
+        section{
+            background: url("../frontend/img/slideshow/10admin.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+        }
+        h1.lato-text{
+            color: white;
+        }
+        .widget-container, div#PANELBODY{
+            background-color: rgba(245,245,245,0.3) !important;
+        }
+        div#PANELBODY {
+            color:white;
+        }
+        .breadcrumb, .panel-heading, .panel-footer{
+            background-color: rgba(245,245,245,0.7) !important;
+        }
+        .breadcrumb>li{
+            color: white !important;
+        }
+        a.sidemenu {
+            color: white;
+        }
+        a.sidemenu:hover {
+            transition: 0.3s;
+            color: #d9d9d9;
+            text-decoration: none;
+        }
+        /*-----------------*/
         .accordion-toggle
         {
-            text-decoration: none !important;
+            text-decoration: none !important; 
         }
 
         .chat {

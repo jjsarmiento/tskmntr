@@ -17,6 +17,7 @@
             background: url("../frontend/img/slideshow/10admin.jpg");
             background-size: cover;
             background-repeat: no-repeat;
+            height: 100%;
         }
         h1.lato-text{
             color: white;

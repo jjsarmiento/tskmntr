@@ -39,6 +39,23 @@
 
 </head>
 
+<style type="text/css">
+	body{
+		font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+	}
+	.vegas-wrapper {
+	    background: rgba(0,0,0,0.5);
+	}
+	@media (max-width: 991px) {
+		.imahe {
+			display: none;
+		}
+		.imahes {
+			width: 230px !important;
+		}
+	}
+</style>
+
 <body id="page-top">
     <div class="toTop">
         <a class="page-scroll text-primary" href="#page-top" style="text-decoration:none; outline:none;">
@@ -78,7 +95,7 @@
 
 
                     <li class = "active">
-                       <a class="page-scroll" href="#page-top">Why Choose Proveek</a>
+                       <a class="page-scroll" href="#page-top">About Us</a>
                          
 
                     </li>
@@ -112,103 +129,78 @@
     <!-- HEADER SEARCH SECTION -->
     <header>
         <div class="header-content">
-            <div class="vegas.overlay" style="height:100%; width:100%; opacity:1;background-color:rgba(0,0,0,.8);"></div>
-                <div class="header-content-inner wow fadeIn" style="background-color:rgba(0,0,0,.5); padding-top: 35px; padding-bottom:15px; border-radius: 8px;">
-                    <h1>Proveek</h1>
-                    <hr>
-                    <p style="text-align:center">Proveek, formerly called TASKminator, is an online system that aims to connect Job providers (Employers) to Job Seekers (Workers) specifically skilled and manual laborers. The system seeks to empower the skilled and manual laborers by providing them an avenue to highlight their skills in an online profile for the whole wide world to see which may in turn increase their chance of getting a job as well as having additional source of income by doing part-time jobs. Also, the platform serves as an avenue for Job providers or employers to easily look for workers fitted for the job. Proveek is one of the finalists of Ideaspace Foundation Inc. incubation for the year 2015.</p>
-                    <div class="text-center div_header">
-                    <a href="#next" class="page-scroll">
-                        <i class="fa fa-4x fa-angle-down"></i>
-                    </a>
-                    </div>
-                </div>
+            <div class="vegas.overlay lato-text" style="height:100%; width:100%; opacity:1;background-color:rgba(0,0,0,.8);"></div>
+            	<div class="container col-md-8 col-md-offset-2">
+		        	<div class="row desk text-center padded">
+		        		<h1 style="text-align: center;">About Us</h1><br>
+		            	<div class="col-md-4">
+		            		<img class="imahes" src="/images/youseek.png" style="width:100%;">
+		            	</div>
+						<div class="col-md-8" style="text-align:left;">
+			            	<p>
+			            		Proveek is not just an ordinary online recruitment platform. It strives to be the best in connecting job providers to job seekers by providing opportunities to everyone. 
+			            	</p>
+							<p>
+			            		Proveek is a group of people believing that each one of us is meant for greater things and wider landscapes. We believe that one of the ways in achieving greatness, not only success, is having a good job. 
+			            	</p>					
+			            	<p>
+			            		Through Proveek, skilled workers like TESDA graduates and undergraduates have equal opportunities of landing not only a job but also a career that can lead to a brighter future. We believe that citizens with good jobs build great nation. Thus, Proveek is confident that nations can be great once more, one job at a time. 
+			            	</p>
+						</div>
+		        	</div>	            		
+            	</div>
             </div>
     </header>
     <!-- END OF -->
 
-    <section id="next" style="padding-top:40px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <i class="fa fa-5x fa-wrench wow bounceIn text-primary" data-wow-delay=".1s"></i>
-                    <h2 class="section-heading">Why Choose Proveek?</h2>
-                    <hr class="text-primary">
+    <section class="container" id="works" style="padding:0px 40px 0px 40px;">
+        <div class="container-fluid">
+            <div class="row desk text-center col-md-6" style="padding: 38px 0px 40px 0px;">
+				<div class="col-md-12">
+	                <i class="fa fa-5x fa-bullseye wow bounceIn text-primary" data-wow-delay=".2s"></i>
+	                <h2 class="section-heading">Mission</h2>
+	                <hr class="text-primary">
+	                <p>
+	                	Our Mission is to Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse hendrerit massa lorem, sed semper neque ultricies vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+	                </p>
+				</div> 
 
-<!-- WHY PROVEEK? CONTAINER -->
-                    <div class="col-lg-12">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-4 wow fadeIn" data-wow-delay=".1s">
-                            <img src="frontend/img/customIcons/group-user.png" style="margin:0; padding:0;">
-                            <p style="padding-top:20px; text-align:center"><p style="padding: 0 0 0 0; margin:0; font-size:14pt; font-family: 'Lato', sans-serif;">Hire with ease.</p><br>
-                            We provide you a wide range of pre-vetted workers to choose from.</p>
-                        </div>
-                        <div class="col-lg-4 wow fadeIn" data-wow-delay=".15s">
-                            <img src="frontend/img/customIcons/group-user.png" style="margin:0; padding:0;">
-                            <p style="padding-top:20px; text-align:center"><p style="padding: 0 0 0 0; margin:0; font-size:14pt; font-family: 'Lato', sans-serif;">Reduced expenses.</p><br>
-                            We charge you only for the workers you choose.</p>
-                        </div>
-                        <div class="col-lg-2"></div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-4 wow fadeIn" data-wow-delay=".20s">
-                            <img src="frontend/img/customIcons/excel-badge.png" style="margin:0; padding:0;">
-                            <p style="padding-top:20px; text-align:center"><p style="padding: 0 0 0 0; margin:0; font-size:14pt; font-family: 'Lato', sans-serif;">Guaranteed quality.</p><br>
-                            Workers will be screened based on the recommendations of their LGUs or Trainers (in the case of TESDA). For better quality, all workers will be reviewed and rated by their client after each job done.</p>
-                        </div>
-                        <div class="col-lg-4 wow fadeIn" data-wow-delay=".25s">
-                            <img src="frontend/img/customIcons/group-user.png" style="margin:0; padding:0;">
-                            <p style="padding-top:20px; text-align:center"><p style="padding: 0 0 0 0; margin:0; font-size:14pt; font-family: 'Lato', sans-serif;">Help while being helped out.</p><br> 
-                            You will help someone today to get a job to provide for his/her family.</p>
-                        </div>
-                        <div class="col-lg-2"></div>
-                    </div>
-<!-- END OF -->
-
-                    <!-- <i class="fa fa-5x fa-group wow bounceIn text-primary" data-wow-delay=".1s"></i>
-                    <h2 class="section-heading">The Proveek Team</h2>
-                    <hr class="text-primary"> -->
-
-<!-- PROVEEK TEAM CONTAINERS -->
-                    <!-- <div class="col-lg-3 wow fadeIn" data-wow-delay=".1s">
-                        <img src="frontend/img/team/03.jpg" style="width:150px; height:150px; border-radius:100%;">
-                        <p style="padding-top:20px">Joni Salang-oy</p>
-                    </div>
-                    <div class="col-lg-3 wow fadeIn" data-wow-delay=".2s">
-                        <img src="frontend/img/team/05.jpg" style="width:150px; height:150px; border-radius:100%;">
-                        <p style="padding-top:20px">Marc Briones</p>
-                    </div>
-                    <div class="col-lg-3 wow fadeIn" data-wow-delay=".3s">
-                        <img src="frontend/img/team/04.jpg" style="width:150px; height:150px; border-radius:100%;">
-                        <p style="padding-top:20px">Rhoda Lyn Ramos</p>
-                    </div>
-                    <div class="col-lg-3 wow fadeIn" data-wow-delay=".4s">
-                        <img src="frontend/img/team/02.jpg" style="width:150px; height:150px; border-radius:100%;">
-                        <p style="padding-top:20px">Mark Dean Raymundo</p>
-                    </div>
-
-                    <div class="col-lg-6 wow fadeIn" data-wow-delay=".5s">
-                        <img src="frontend/img/team/00.jpg" style="width:150px; height:150px; border-radius:100%;">
-                        <p style="padding-top:20px">Felicia Mae Sace</p>
-                    </div>
-                    <div class="col-lg-6 wow fadeIn" data-wow-delay=".6s">
-                        <img src="frontend/img/team/01.png" style="width:150px; height:150px; border-radius:100%;">
-                        <p style="padding-top:20px">Lambo</p>
-                    </div> -->
-                    <!-- <div class="col-lg-3 wow fadeIn" data-wow-delay=".7s">
-                        <img src="frontend/img/team/00.jpg" style="width:150px; height:150px; border-radius:100%;">
-                        <p style="padding-top:20px">Reserved</p>
-                    </div>
-                    <div class="col-lg-3 wow fadeIn" data-wow-delay=".8s">
-                        <img src="frontend/img/team/00.jpg" style="width:150px; height:150px; border-radius:100%;">
-                        <p style="padding-top:20px">Reserved</p>
-                    </div> -->
-<!-- END OF -->
-                </div>
+				<div class="col-md-12">
+	                <i class="fa fa-5x fa-eye wow bounceIn text-primary" data-wow-delay=".2s"></i>
+	                <h2 class="section-heading">Vision</h2>
+	                <hr class="text-primary"> 
+	                <p>
+	                	Our Vision is to Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse hendrerit massa lorem, sed semper neque ultricies vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+	                </p>	                
+				</div> 
+            </div>
+            <div class="row desk text-center col-md-6">
+            	<div class="col-md-12">
+		            <img class="imahe" src="/images/shakehands.jpg" style="width:100%;">
+		        </div>
             </div>
         </div>
     </section>
+
+    <section id="works" style="padding: 50px; background: url('../images/BGQuote.jpg')">
+        <div class="container-fluid container">
+            <div class="row desk text-center">
+				<div class="col-md-12" style="color:white;">
+	                <i class="fa fa-5x fa-book wow bounceIn text-primary" data-wow-delay=".2s" style="color:white;"></i>
+	                <h2 class="section-heading">History</h2>
+	                <hr class="text-primary" style="border-color:white;">
+					<p>
+						Founded in Fusce sit amet tincidunt quam. Duis cursus sagittis nibh in interdum. Fusce auctor luctus eros non imperdiet. Praesent vel nibh nisi. Mauris eget dolor eu urna pharetra fermentum. Morbi egestas pretium molestie. Ut lobortis mauris sapien, ut condimentum felis consectetur non. Vivamus id magna et sem gravida rutrum.
+					</p>
+     
+					<p>
+						Sed pretium diam at justo aliquam condimentum. Curabitur condimentum posuere arcu non scelerisque. Mauris a nulla imperdiet, ullamcorper augue in, dignissim neque. Aenean hendrerit erat pellentesque massa ultricies, in ornare velit commodo. Morbi ac est orci. Proin suscipit at ipsum eu dictum.
+					</p>
+				</div> 
+            </div>
+        </div>
+    </section>
+
 
 <!-- FOOTER -->
     <section id="footer" class="divFooterDark" style="padding-top:40px; padding-bottom:60px;">
