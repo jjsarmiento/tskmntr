@@ -293,7 +293,8 @@ class AdminController extends \BaseController {
 
 //    public function categoryAndSkills(){
     public function skills(){
-        return View::make('admin.categoryAndSkills')->with('taskCategory', TaskCategory::orderBy('categoryCode', 'ASC')->get());
+        return View::make('admin.categoryAndSkills')
+            ->with('taskCategory', TaskCategory::orderBy('id', 'ASC')->paginate(10));
     }
 
     public function auditTrail($user_id){
@@ -1577,5 +1578,12 @@ class AdminController extends \BaseController {
     public function allJobAds_user($user_id){
         return View::make('admin.allJobAds_user')
             ->with('jobs', Job::where('user_id', $user_id)->get());
+    }
+
+    public function doEditCategory(){
+        TaskCategory::where('id', Input::get('category_id'))->update([
+            'categoryname'  =>  Input::get('category_name')
+        ]);
+        return Redirect::back();
     }
 }

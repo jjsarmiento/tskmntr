@@ -148,6 +148,9 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::post('/UPDATESUBSCRIPTION', 'AdminController@UPDATESUBSCRIPTION');
 
     // SKILLS ROUTE
+    Route::get('/skills', 'AdminController@skills');
+    Route::get('/editCategory={category}', 'AdminController@editCategory');
+    Route::post('/doEditCategory', 'AdminController@doEditCategory');
     Route::get('/customSkills', 'AdminController@customSkills');
     Route::get('/DELCSTSKLL={skillID}', 'AdminController@DELCSTSKLL');
 
@@ -157,8 +160,6 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/ADMINJbSrch:{keyword}:{regcode}:{citycode}:{hiringType}:{orderBy}:{category}:{skill}', 'AdminController@ADMINJbSrch');
     Route::get('/ADMIN_DELETEJOB={jobId}', 'AdminController@ADMIN_DELETEJOB');
 
-    // SKILLS ROUTE
-    Route::get('/skills', 'AdminController@skills');
 
     // AUDIT TRAIL NEW -- Jan Sarmiento
     Route::get('/auditTrail={user_id}', 'AdminController@auditTrail');
