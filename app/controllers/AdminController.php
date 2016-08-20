@@ -1600,4 +1600,18 @@ class AdminController extends \BaseController {
         ]);
         return Redirect::back();
     }
+
+    public function doAddSkillToCategory(){
+        $maxSkillCode = str_replace(Input::get('category_code'), '', TaskItem::where('item_categorycode', Input::get('category_code'))->max('itemcode'));
+        $maxSkillCode = ++$maxSkillCode;
+        $maxSkillCode = str_pad($maxSkillCode, 3, '0', STR_PAD_LEFT);
+        TaskItem::insert([
+            'itemname' => Input::get('skill_name'),
+            'itemcode' => Input::get('category_code').''.$maxSkillCode,
+            'item_categorycode' => Input::get('category_code')
+
+        ]);
+
+        return Redirect::back();
+    }
 }

@@ -97,7 +97,7 @@
                                                     data-editmode="#EDIT_MODE_{{$s->id}}"
                                                 ><i class="fa fa-edit"></i></a>
                                                 &nbsp;
-                                                <a href="#"><i class="fa fa-trash"></i></a>
+                                                <a href="#" class="a-validate" data-href="deleteSkill={{$s->itemcode}}" data-message="Are you sure you want to delete this skill - {{$s->itemname}}"><i class="fa fa-trash"></i></a>
                                             </div>
                                             <div  id="EDIT_MODE_{{$s->id}}" style="display:none;">
                                                 <a href="#"
@@ -122,7 +122,7 @@
             <div class="col-md-4">
                 <div class="widget-container fluid-height padded" style="background-color: #ffffff;">
                     <form method="POST" action="doAddSkillToCategory">
-                        <input type="hidden" name="category_id" value="{{$cat->id}}" />
+                        <input type="hidden" name="category_code" value="{{$cat->categorycode}}" />
                         <div class="form-group">
                             <label>Skill Name</label>
                             <input type="text" name="skill_name" class="form-control" placeholder="Enter skill name" required="required"/>
