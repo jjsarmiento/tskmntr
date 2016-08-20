@@ -10,7 +10,6 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="frontend/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="frontend/font-awesome/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="frontend/adminres/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="frontend/adminres/dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="frontend/adminres/plugins/iCheck/flat/blue.css">
@@ -19,6 +18,7 @@
     <link rel="stylesheet" href="frontend/adminres/plugins/datepicker/datepicker3.css">
     <link rel="stylesheet" href="frontend/adminres/plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="frontend/adminres/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    {{ HTML::style('frontend/font-awesome/css/font-awesome.min.css') }}
 
     <script src="js/jquery-1.11.0.min.js"></script>
     {{ HTML::script('frontend/js/html5shiv.js') }}
@@ -28,7 +28,7 @@
 <div class="wrapper">
     <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="#" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>P</b>VK</span>
             <!-- logo for regular state and mobile devices -->
@@ -47,9 +47,67 @@
             <ul class="sidebar-menu">
                 <!-- ITEMS FOR `CONTENT_EDITOR` -->
                 @if(AdminController::IF_ADMIN_IS(['ADMINISTRATOR'], Auth::user()->id))
-                @elseif(AdminController::IF_ADMIN_IS(['CONTENT_EDITOR'], Auth::user()->id))
+                    <li class="header">ADMINISTRATOR</li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-users"></i>
+                            <span>Manage User Accounts</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="text-red fa fa-circle-o"></i> Pending Users</a></li>
+                            <li><a href="#"><i class="text-green fa fa-circle-o"></i> Workers</a></li>
+                            <li><a href="#"><i class="text-blue fa fa-circle-o"></i> Companies</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#"><i class="fa fa-briefcase"></i> <span>Manage Job Ads</span></a></li>
                 @elseif(AdminController::IF_ADMIN_IS(['SUPPORT'], Auth::user()->id))
+                    <li class="header">SUPPORT</li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-users"></i>
+                            <span>View User Accounts</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="text-red fa fa-circle-o"></i> Pending Users</a></li>
+                            <li><a href="#"><i class="text-green fa fa-circle-o"></i> Workers</a></li>
+                            <li><a href="#"><i class="text-blue fa fa-circle-o"></i> Companies</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#"><i class="fa fa-briefcase"></i> <span>View Job Ads</span></a></li>
                 @endif
+
+                @if(AdminController::IF_ADMIN_IS(['CONTENT_EDITOR'], Auth::user()->id))
+                    <li class="header">CONTENT EDITOR</li>
+                    <li><a href="#"><i class="fa fa-gavel"></i> <span>Terms Of Service</span></a></li>
+                    <li><a href="#"><i class="fa fa-eye"></i> <span>Policy</span></a></li>
+                @endif
+
+                <!--
+                @if(AdminController::IF_ADMIN_IS(['SUPPORT'], Auth::user()->id))
+                    <li class="header">SUPPORT</li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-users"></i>
+                            <span>View User Accounts</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="text-red fa fa-circle-o"></i> Pending Users</a></li>
+                            <li><a href="#"><i class="text-green fa fa-circle-o"></i> Workers</a></li>
+                            <li><a href="#"><i class="text-blue fa fa-circle-o"></i> Companies</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#"><i class="fa fa-briefcase"></i> <span>View Job Ads</span></a></li>
+                @endif
+                -->
                 <!--
                 <li>
                 <a href="pages/widgets.html">

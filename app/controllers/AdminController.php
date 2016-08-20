@@ -368,7 +368,8 @@ class AdminController extends \BaseController {
 
     public function index(){
         if(!AdminController::IF_ADMIN_IS(['SUPER_ADMINISTRATOR'], Auth::user()->id)){
-            return View::make('admin.subadmin.dashboard');
+            return View::make('admin.subadmin.dashboard')
+                ->with('roles', $this->GET_USER_ADMIN_ROLES(Auth::user()->id));
         }else{
             $users = User::leftJoin('regions', 'regions.regcode', '=', 'users.region')
                 ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
@@ -1673,17 +1674,5 @@ class AdminController extends \BaseController {
             ->count();
 
         return ($roles > 0) ? true : false;
-    }
-
-    public function admn(){
-
-    }
-
-    public function asprt(){
-
-    }
-
-    public function ace(){
-
     }
 }

@@ -18,6 +18,26 @@
     @stop
 
     @section('body')
-    
+        <div class="row">
+            @foreach($roles as $r)
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-user"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Administrator</span>
+                        <span class="info-box-number">
+                            @if($r == 'CONTENT_EDITOR')
+                                Content Editor
+                            @elseif($r == 'ADMINISTRATOR')
+                                Administrator
+                            @elseif($r == 'SUPPORT')
+                                Support
+                            @endif
+                        </span>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
     @stop
 @stop
