@@ -182,7 +182,7 @@
         </div>
     </section>
 
-    <section id="works" style="padding: 50px; background: url('../images/BGQuote.jpg')">
+    <section id="works" style="padding: 50px; background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('../images/BGQuote.jpg'); background-position: center top;">
         <div class="container-fluid container">
             <div class="row desk text-center">
 				<div class="col-md-12" style="color:white;">

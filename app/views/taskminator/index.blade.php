@@ -150,6 +150,10 @@
     p.content{
         margin-bottom: 10px !important;
     }
+    img.portrait.dp{
+        width: 90px;
+        height: 90px;
+    }
 </style>
 
 <script>
@@ -180,9 +184,9 @@
                     <div class="col-md-4" style="">
                         <div class="thumbnail">
                             @if(Auth::user()->profilePic)
-                                <a href="/editProfile"><img src="{{ Auth::user()->profilePic }}" class="portrait"/></a><br>
+                                <a href="/editProfile"><img src="{{ Auth::user()->profilePic }}" class="portrait dp"/></a><br>
                             @else
-                                <a href="/editProfile"><img src="/images/default_profile_pic.png" class="portrait"/></a><br>
+                                <a href="/editProfile"><img src="/images/default_profile_pic.png" class="portrait dp"/></a><br>
                             @endif
                         </div>                            
                     </div>

@@ -35,8 +35,8 @@
             transform: translate(-50%,-50%);
         }
         .thumbnail img.portrait {
-            width: 100%;
-            height: auto;
+            width: 150px;
+            height: 150px;
         }
         .form-control {
             padding:5px !important;
