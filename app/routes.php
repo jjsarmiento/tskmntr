@@ -106,9 +106,33 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+    Route::group(['before' => 'SUPER_ADMINISTRATOR'], function(){
+        // MANAGE ADMIN
+        Route::get('/CREATE_ADMIN', 'AdminController@CREATE_ADMIN');
+        Route::post('/doCREATE_ADMIN', 'AdminController@doCREATE_ADMIN');
+        Route::get('/DELETE_ADMIN:{user_id}', 'AdminController@DELETE_ADMIN');
+        Route::get('/EDIT_ADMIN:{user_id}', 'AdminController@EDIT_ADMIN');
+        Route::post('/doEDIT_ADMIN', 'AdminController@doEDIT_ADMIN');
+        Route::get('/DEACTIVATE_ADMIN:{user_id}', 'AdminController@DEACTIVATE_ADMIN');
+        Route::get('/ACTIVATE_ADMIN:{user_id}', 'AdminController@ACTIVATE_ADMIN');
+
+        // POINTS
+        Route::get('/points={user_id}', 'AdminController@points');
+        Route::post('/doAddPoints', 'AdminController@doAddPoints');
+        Route::post('/doSubtractPoints', 'AdminController@doSubtractPoints');
+
+        // ADD SUBSCRIPTION TO USER
+        Route::get('/addSubscription={user_id}', 'AdminController@addSubscription');
+        Route::post('/doAddSubscription', 'AdminController@doAddSubscription');
+        Route::get('/RMVSBSCRPTN={sub_id}', 'AdminController@RMVSBSCRPTN');
+    });
 
     Route::group(['before' => 'ADMINISTRATOR'], function(){
-
+        // JOB ADS ROUTES
+        Route::get('/showJobAds', 'AdminController@showJobAds');
+        Route::get('/ADMIN_jobDetails={job_id}', 'AdminController@ADMIN_jobDetails');
+        Route::get('/ADMINJbSrch:{keyword}:{regcode}:{citycode}:{hiringType}:{orderBy}:{category}:{skill}', 'AdminController@ADMINJbSrch');
+        Route::get('/ADMIN_DELETEJOB={jobId}', 'AdminController@ADMIN_DELETEJOB');
     });
 
     Route::group(['before' => 'CONTENT_EDITOR'], function(){
@@ -116,29 +140,10 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     });
 
     Route::group(['before' => 'SUPPORT'], function(){
-
     });
 
     Route::get('/allJobAds_user/{user_id}', 'AdminController@allJobAds_user');
 
-    // POINTS
-    Route::get('/points={user_id}', 'AdminController@points');
-    Route::post('/doAddPoints', 'AdminController@doAddPoints');
-    Route::post('/doSubtractPoints', 'AdminController@doSubtractPoints');
-
-    // MANAGE ADMIN
-    Route::get('/CREATE_ADMIN', 'AdminController@CREATE_ADMIN');
-    Route::post('/doCREATE_ADMIN', 'AdminController@doCREATE_ADMIN');
-    Route::get('/DELETE_ADMIN:{user_id}', 'AdminController@DELETE_ADMIN');
-    Route::get('/EDIT_ADMIN:{user_id}', 'AdminController@EDIT_ADMIN');
-    Route::post('/doEDIT_ADMIN', 'AdminController@doEDIT_ADMIN');
-    Route::get('/DEACTIVATE_ADMIN:{user_id}', 'AdminController@DEACTIVATE_ADMIN');
-    Route::get('/ACTIVATE_ADMIN:{user_id}', 'AdminController@ACTIVATE_ADMIN');
-
-    // ADD SUBSCRIPTION TO USER
-    Route::get('/addSubscription={user_id}', 'AdminController@addSubscription');
-    Route::post('/doAddSubscription', 'AdminController@doAddSubscription');
-    Route::get('/RMVSBSCRPTN={sub_id}', 'AdminController@RMVSBSCRPTN');
 
     // SYSTEM SETTINGS ROUTE
     Route::get('/SYSTEMSETTINGS', 'AdminController@SYSTEMSETTINGS');
@@ -170,16 +175,9 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::post('/doEditCategorySkill', 'AdminController@doEditCategorySkill');
     Route::post('/doAddSkillToCategory', 'AdminController@doAddSkillToCategory');
     Route::post('/doAddCategory', 'AdminController@doAddCategory');
-//    Route::post('/newSkill', 'AdminController@newSkill');
-//    Route::post('/newCategory', 'AdminController@newCategory');
     Route::get('/deleteCategory={categorycode}', 'AdminController@deleteCategory');
     Route::get('/deleteSkill={skillcode}', 'AdminController@deleteSkill');
 
-    // JOB ADS ROUTES
-    Route::get('/showJobAds', 'AdminController@showJobAds');
-    Route::get('/ADMIN_jobDetails={job_id}', 'AdminController@ADMIN_jobDetails');
-    Route::get('/ADMINJbSrch:{keyword}:{regcode}:{citycode}:{hiringType}:{orderBy}:{category}:{skill}', 'AdminController@ADMINJbSrch');
-    Route::get('/ADMIN_DELETEJOB={jobId}', 'AdminController@ADMIN_DELETEJOB');
 
 
     // AUDIT TRAIL NEW -- Jan Sarmiento
@@ -190,51 +188,17 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/userList', 'AdminController@userList');
     Route::get('/userListTaskminators', 'AdminController@userListTaskminators');
     Route::get('/UsrAccntLstCMPNY', 'AdminController@UsrAccntLstCMPNY');
-//    Route::get('/userListClientIndi', 'AdminController@userListClientIndi');
-//    Route::get('/userListClientComp', 'AdminController@userListClientComp');
     Route::get('/adminActivate/{id}', 'AdminController@adminActivate');
     Route::get('/viewUserProfile/{id}', 'AdminController@viewUserProfile');
-
-//    Route::get('/pendingTskmntr', 'AdminController@pendingTskmntr');
-//    Route::get('/pendingClientIndi', 'AdminController@pendingClientIndi');
-//    Route::get('/pendingClientComp', 'AdminController@pendingClientComp');
-//    Route::get('/pendingTskmntr=search={searchBy}={searchWord}', 'AdminController@pendingTskmntrSearch');
-//    Route::get('/pendingClientIndi=search={searchBy}={searchWord}', 'AdminController@pendingClientIndiSearch');
-//    Route::get('/pendingClientComp=search={searchBy}={searchWord}', 'AdminController@pendingClientCompSearch');
-
-//    Route::get('/categoryAndSkills', 'AdminController@categoryAndSkills');
     Route::get('/adminDeactivate/{id}', 'AdminController@adminDeactivate');
-//    Route::get('/AT_{role}', 'AdminController@auditTrail');
-//    Route::get('/userAuditTrail_{id}', 'AdminController@userAuditTrail');
     Route::get('/admin/taskDetails/{taskid}', 'AdminController@taskDetails');
     Route::get('/viewRatings={tskmntrId}', 'AdminController@viewRatings');
-    Route::get('/taskListBidding', 'AdminController@taskListBidding');
-    Route::get('/taskListBidding=search={searchBy}={searchWord}={workTimeValue}={status}', 'AdminController@taskListBiddingSearch');
-    Route::get('/taskListAuto', 'AdminController@taskListAuto');
-    Route::get('/taskListAuto=search={searchBy}={searchWord}={workTimeValue}={status}', 'AdminController@taskListAutoSearch');
-    Route::get('/taskListDirect', 'AdminController@taskListDirect');
-    Route::get('/taskListDirect=search={searchBy}={searchWord}={workTimeValue}={status}', 'AdminController@taskListDirectSearch');
-
-//    Route::post('/userListTaskminators=search', 'AdminController@adminTskmntrSearch');
     Route::get('/searchWorker:{acctStatus}:{rating}:{hiring}:{orderBy}:{keyword}:{checkout}', 'AdminController@searchWorker');
-
-//    Route::post('/userListClientIndi=search', 'AdminController@adminClientIndiSearch');
-//    Route::post('/userListClientComp=search', 'AdminController@adminClientCompSearch');
-    Route::post('/pendingTskmntr=search', 'AdminController@pendingTskmntrsSearch');
-    Route::post('/pendingClientIndi=search', 'AdminController@pendingClientIndiSearch');
-    Route::post('/pendingClientComp=search', 'AdminController@pendingClientCompSearch');
-//    Route::post('/taskListBidding=search', 'AdminController@taskListBiddingSearch');
-//    Route::post('/taskListAuto=search', 'AdminController@taskListAutoSearch');
-    Route::post('/taskListDirect=search', 'AdminController@taskListDirectSearch');
-//    Route::get('/viewUsersTasks/{clientid}', 'AdminController@viewUsersTasks');
-    Route::post('/viewUsersTasks=search', 'AdminController@viewUsersTasksSearch');
     Route::get('/userListTaskminators=search={searchBy}={searchWord}', 'AdminController@userListTaskminatorsSearch');
     Route::get('/userListClientIndi=search={keyword}={acctStatus}={acctType}={orderBy}={searchBy}={region}={city}={province}', 'AdminController@userListClientIndiSearch');
     Route::get('/userListClientComp=search={searchBy}={searchWord}', 'AdminController@userListClientCompSearch');
     Route::get('/adminDoSearch', 'searchTestController@doSearch');
-//    Route::get('/jobAds={adType}', 'AdminController@jobAds');
     Route::get('/search_PUSR={keyword}={acctType}={orderBy}', 'AdminController@search_PUSR');
-//    Route::get('/pendingUserSearch={searchBy}={searchUserType}={searchVal}', 'AdminController@pendingUserSearch');
 
     Route::post('/adminSearchChatUser', 'AdminController@adminSearchChatUser');
     Route::get('/getCHAT={with_userId}', 'AdminController@getCHAT');
@@ -243,16 +207,37 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/ADMINGETNEWMSG={userid}={senderid}', 'AdminController@ADMINGETNEWMSG');
     Route::get('/adminMessages', 'TaskminatorController@adminMessages');
     Route::get('/ADMINNavSearch={keyword}', 'AdminController@ADMINNavSearch');
+
+    /*
+    Route::get('/taskListBidding', 'AdminController@taskListBidding');
+    Route::get('/taskListBidding=search={searchBy}={searchWord}={workTimeValue}={status}', 'AdminController@taskListBiddingSearch');
+    Route::get('/taskListAuto', 'AdminController@taskListAuto');
+    Route::get('/taskListAuto=search={searchBy}={searchWord}={workTimeValue}={status}', 'AdminController@taskListAutoSearch');
+    Route::get('/taskListDirect', 'AdminController@taskListDirect');
+    Route::get('/taskListDirect=search={searchBy}={searchWord}={workTimeValue}={status}', 'AdminController@taskListDirectSearch');
+    Route::post('/userListClientIndi=search', 'AdminController@adminClientIndiSearch');
+    Route::post('/userListClientComp=search', 'AdminController@adminClientCompSearch');
+    Route::post('/pendingTskmntr=search', 'AdminController@pendingTskmntrsSearch');
+    Route::post('/pendingClientIndi=search', 'AdminController@pendingClientIndiSearch');
+    Route::post('/pendingClientComp=search', 'AdminController@pendingClientCompSearch');
+    Route::post('/taskListBidding=search', 'AdminController@taskListBiddingSearch');
+    Route::post('/taskListAuto=search', 'AdminController@taskListAutoSearch');
+    Route::post('/taskListDirect=search', 'AdminController@taskListDirectSearch');
+    Route::get('/viewUsersTasks/{clientid}', 'AdminController@viewUsersTasks');
+    Route::post('/viewUsersTasks=search', 'AdminController@viewUsersTasksSearch');
+    Route::get('/jobAds={adType}', 'AdminController@jobAds');
+    Route::get('/pendingUserSearch={searchBy}={searchUserType}={searchVal}', 'AdminController@pendingUserSearch');
+    */
 });
 
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::get('/wprofileProgress', 'TaskminatorController@wprofileProgress');
     Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){
-        Route::get('/WRKR_INVTS', 'TaskminatorController@WRKR_INVTS');
+//        Route::get('/APPLYFRJB:{jobId}', 'TaskminatorController@APPLYFRJB');
 //        Route::get('/WRKR_HIRED', 'TaskminatorController@WRKR_HIRED');
+        Route::get('/WRKR_INVTS', 'TaskminatorController@WRKR_INVTS');
         Route::get('/WRKR_APPLCTNS', 'TaskminatorController@WRKR_APPLCTNS');
         Route::get('/jbdtls={jobId}', 'TaskminatorController@jbdtls');
-//    Route::get('/APPLYFRJB:{jobId}', 'TaskminatorController@APPLYFRJB');
         Route::post('/APPLYFRJB', 'TaskminatorController@APPLYFRJB');
         Route::get('/jobSearch:{keyword}:{workDuration}:{region}:{city}:{category}:{skill}:{orderBy}', 'TaskminatorController@jobSearch');
     });
