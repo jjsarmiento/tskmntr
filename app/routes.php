@@ -106,6 +106,19 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+
+    Route::group(['before' => 'ADMINISTRATOR'], function(){
+
+    });
+
+    Route::group(['before' => 'CONTENT_EDITOR'], function(){
+
+    });
+
+    Route::group(['before' => 'SUPPORT'], function(){
+
+    });
+
     Route::get('/allJobAds_user/{user_id}', 'AdminController@allJobAds_user');
 
     // POINTS

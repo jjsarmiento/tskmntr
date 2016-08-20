@@ -1661,4 +1661,13 @@ class AdminController extends \BaseController {
         foreach($roles as $o){ array_push($myArr, $o->role); }
         return $myArr;
     }
+
+    public static function IF_ADMIN_IS($roles, $user_id){
+        $roles = AdminRole::join('admin_has_roles', 'admin_roles.id', '=', 'admin_has_roles.admin_role_id')
+            ->where('admin_has_roles.user_id', $user_id)
+            ->whereIn('admin_roles.roles', $roles)
+            ->count();
+
+        return ($roles > 0) ? true : false;
+    }
 }

@@ -69,6 +69,34 @@ Route::filter('guest', function()
 	if (Auth::check()) return Redirect::to('/');
 });
 
+Route::filter('SUPER_ADMINISTRATOR', function(){
+    if(!AdminController::IF_ADMIN_IS(['SUPER_ADMINISTRATOR'], Auth::user()->id)){
+        return View::make('admin.ADMIN_ROLE_ERROR')
+            ->with('message', 'Your account does not have the proper privilege to complete this action.');
+    }
+});
+
+Route::filter('ADMINISTRATOR', function(){
+    if(!AdminController::IF_ADMIN_IS(['ADMINISTRATOR', 'SUPER_ADMINISTRATOR'], Auth::user()->id)){
+        return View::make('admin.ADMIN_ROLE_ERROR')
+            ->with('message', 'Your account does not have the proper privilege to complete this action.');
+    }
+});
+
+Route::filter('CONTENT_EDITOR', function(){
+    if(!AdminController::IF_ADMIN_IS(['CONTENT_EDITOR', 'SUPER_ADMINISTRATOR'], Auth::user()->id)){
+        return View::make('admin.ADMIN_ROLE_ERROR')
+            ->with('message', 'Your account does not have the proper privilege to complete this action.');
+    }
+});
+
+Route::filter('SUPPORT', function(){
+    if(!AdminController::IF_ADMIN_IS(['SUPPORT', 'SUPER_ADMINISTRATOR'], Auth::user()->id)){
+        return View::make('admin.ADMIN_ROLE_ERROR')
+            ->with('message', 'Your account does not have the proper privilege to complete this action.');
+    }
+});
+
 Route::filter('ADMIN-ONLY', function(){
    if(Auth::check()){
        switch(Auth::user()->status){
