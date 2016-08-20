@@ -272,6 +272,12 @@
                                             <label>Password</label>
                                             <input required="required" type="password" class="form-control" name="admin_cpassword" placeholder="ADMIN REPEAT PASSWORD" />
                                         </div>
+                                        <div class="form-group">
+                                            <input type="checkbox" name="admin_role[]" value="SUPERADMIN"/> Super Administrator<br/>
+                                            <input type="checkbox" name="admin_role[]" value="ADMIN"/> Administrator<br/>
+                                            <input type="checkbox" name="admin_role[]" value="CONTENT_EDITOR"/> Content Editor<br/>
+                                            <input type="checkbox" name="admin_role[]" value="SUPPORT"/> Support<br/>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">

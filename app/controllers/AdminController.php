@@ -1439,6 +1439,7 @@ class AdminController extends \BaseController {
     }
 
     public function doCREATE_ADMIN(){
+        return Input::all();
         if(Input::get('admin_fname') && Input::get('admin_lname') && Input::get('admin_username') && Input::get('admin_password') && Input::get('admin_cpassword')){
             if(strcmp(Input::get('admin_password'), Input::get('admin_cpassword')) == 0){
                 if(User::where('username', Input::get('admin_username'))->count() == 0){
