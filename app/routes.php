@@ -106,7 +106,16 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+    Route::get('/admin', 'AdminController@index');
     Route::group(['before' => 'SUPER_ADMINISTRATOR'], function(){
+
+        Route::get('/allJobAds_user/{user_id}', 'AdminController@allJobAds_user');
+        // JOB ADS ROUTES
+        Route::get('/showJobAds', 'AdminController@showJobAds');
+        Route::get('/ADMIN_jobDetails={job_id}', 'AdminController@ADMIN_jobDetails');
+        Route::get('/ADMINJbSrch:{keyword}:{regcode}:{citycode}:{hiringType}:{orderBy}:{category}:{skill}', 'AdminController@ADMINJbSrch');
+        Route::get('/ADMIN_DELETEJOB={jobId}', 'AdminController@ADMIN_DELETEJOB');
+
         // MANAGE ADMIN
         Route::get('/CREATE_ADMIN', 'AdminController@CREATE_ADMIN');
         Route::post('/doCREATE_ADMIN', 'AdminController@doCREATE_ADMIN');
@@ -125,14 +134,70 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
         Route::get('/addSubscription={user_id}', 'AdminController@addSubscription');
         Route::post('/doAddSubscription', 'AdminController@doAddSubscription');
         Route::get('/RMVSBSCRPTN={sub_id}', 'AdminController@RMVSBSCRPTN');
+
+        // SYSTEM SETTINGS ROUTE
+        Route::get('/SYSTEMSETTINGS', 'AdminController@SYSTEMSETTINGS');
+        Route::post('/doSYSTEMSETTINGS','AdminController@doSYSTEMSETTINGS');
+        Route::get('/DELETEDOC:{docID}', 'AdminController@DELETEDOC');
+        Route::get('/DISABLEDOC:{doctypeID}', 'AdminController@DISABLEDOC');
+        Route::get('/ENABLEDOC:{doctypeID}', 'AdminController@ENABLEDOC');
+        Route::post('/SYS_ADD_DOC', 'AdminController@SYS_ADD_DOC');
+        Route::get('/COMPANYDOCUMENTS', 'AdminController@COMPANYDOCUMENTS');
+        Route::get('/WORKERDOCUMENTS', 'AdminController@WORKERDOCUMENTS');
+        Route::get('/TOS', 'AdminController@TOS');
+        Route::post('/TOS_SAVE_ES', 'AdminController@TOS_SAVE_ES');
+        Route::post('/TOS_SAVE_TG', 'AdminController@TOS_SAVE_TG');
+        Route::get('/POLICY', 'AdminController@POLICY');
+        Route::post('/POLICY_SAVE_ES', 'AdminController@POLICY_SAVE_ES');
+        Route::post('/POLICY_SAVE_TG', 'AdminController@POLICY_SAVE_TG');
+
+        //SUBSCRIPTIONS
+        Route::get('/subscriptions:{subsID}', 'AdminController@subscriptions');
+        Route::post('/UPDATESUBSCRIPTION', 'AdminController@UPDATESUBSCRIPTION');
+
+        // SKILLS ROUTE
+        Route::get('/skills', 'AdminController@skills');
+        Route::get('/editCategory={category}', 'AdminController@editCategory');
+        Route::post('/doEditCategory', 'AdminController@doEditCategory');
+        Route::get('/categoryFullDetails={cat_id}', 'AdminController@categoryFullDetails');
+        Route::get('/customSkills', 'AdminController@customSkills');
+        Route::get('/DELCSTSKLL={skillID}', 'AdminController@DELCSTSKLL');
+        Route::post('/doEditCategorySkill', 'AdminController@doEditCategorySkill');
+        Route::post('/doAddSkillToCategory', 'AdminController@doAddSkillToCategory');
+        Route::post('/doAddCategory', 'AdminController@doAddCategory');
+        Route::get('/deleteCategory={categorycode}', 'AdminController@deleteCategory');
+        Route::get('/deleteSkill={skillcode}', 'AdminController@deleteSkill');
+
+        // AUDIT TRAIL NEW -- Jan Sarmiento
+        Route::get('/auditTrail={user_id}', 'AdminController@auditTrail');
+
+        // THE ROLE BASED ROUTES FOR ADMINISTRATORS GOES HERE
+        Route::get('/userList', 'AdminController@userList');
+        Route::get('/userListTaskminators', 'AdminController@userListTaskminators');
+        Route::get('/UsrAccntLstCMPNY', 'AdminController@UsrAccntLstCMPNY');
+        Route::get('/adminActivate/{id}', 'AdminController@adminActivate');
+        Route::get('/viewUserProfile/{id}', 'AdminController@viewUserProfile');
+        Route::get('/adminDeactivate/{id}', 'AdminController@adminDeactivate');
+        Route::get('/admin/taskDetails/{taskid}', 'AdminController@taskDetails');
+        Route::get('/viewRatings={tskmntrId}', 'AdminController@viewRatings');
+        Route::get('/searchWorker:{acctStatus}:{rating}:{hiring}:{orderBy}:{keyword}:{checkout}', 'AdminController@searchWorker');
+        Route::get('/userListTaskminators=search={searchBy}={searchWord}', 'AdminController@userListTaskminatorsSearch');
+        Route::get('/userListClientIndi=search={keyword}={acctStatus}={acctType}={orderBy}={searchBy}={region}={city}={province}', 'AdminController@userListClientIndiSearch');
+        Route::get('/userListClientComp=search={searchBy}={searchWord}', 'AdminController@userListClientCompSearch');
+        Route::get('/adminDoSearch', 'searchTestController@doSearch');
+        Route::get('/search_PUSR={keyword}={acctType}={orderBy}', 'AdminController@search_PUSR');
+
+        Route::post('/adminSearchChatUser', 'AdminController@adminSearchChatUser');
+        Route::get('/getCHAT={with_userId}', 'AdminController@getCHAT');
+        Route::post('/ADMINSENDMESSAGE', 'AdminController@ADMINSENDMESSAGE');
+
+        Route::get('/ADMINGETNEWMSG={userid}={senderid}', 'AdminController@ADMINGETNEWMSG');
+        Route::get('/adminMessages', 'TaskminatorController@adminMessages');
+        Route::get('/ADMINNavSearch={keyword}', 'AdminController@ADMINNavSearch');
     });
 
     Route::group(['before' => 'ADMINISTRATOR'], function(){
-        // JOB ADS ROUTES
-        Route::get('/showJobAds', 'AdminController@showJobAds');
-        Route::get('/ADMIN_jobDetails={job_id}', 'AdminController@ADMIN_jobDetails');
-        Route::get('/ADMINJbSrch:{keyword}:{regcode}:{citycode}:{hiringType}:{orderBy}:{category}:{skill}', 'AdminController@ADMINJbSrch');
-        Route::get('/ADMIN_DELETEJOB={jobId}', 'AdminController@ADMIN_DELETEJOB');
+        Route::get('/subadmin/pending_users', 'SubAdminController@pending_users');
     });
 
     Route::group(['before' => 'CONTENT_EDITOR'], function(){
@@ -141,73 +206,6 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 
     Route::group(['before' => 'SUPPORT'], function(){
     });
-
-    Route::get('/allJobAds_user/{user_id}', 'AdminController@allJobAds_user');
-
-
-    // SYSTEM SETTINGS ROUTE
-    Route::get('/SYSTEMSETTINGS', 'AdminController@SYSTEMSETTINGS');
-    Route::post('/doSYSTEMSETTINGS','AdminController@doSYSTEMSETTINGS');
-    Route::get('/DELETEDOC:{docID}', 'AdminController@DELETEDOC');
-    Route::get('/DISABLEDOC:{doctypeID}', 'AdminController@DISABLEDOC');
-    Route::get('/ENABLEDOC:{doctypeID}', 'AdminController@ENABLEDOC');
-    Route::post('/SYS_ADD_DOC', 'AdminController@SYS_ADD_DOC');
-    Route::get('/COMPANYDOCUMENTS', 'AdminController@COMPANYDOCUMENTS');
-    Route::get('/WORKERDOCUMENTS', 'AdminController@WORKERDOCUMENTS');
-    Route::get('/TOS', 'AdminController@TOS');
-    Route::post('/TOS_SAVE_ES', 'AdminController@TOS_SAVE_ES');
-    Route::post('/TOS_SAVE_TG', 'AdminController@TOS_SAVE_TG');
-    Route::get('/POLICY', 'AdminController@POLICY');
-    Route::post('/POLICY_SAVE_ES', 'AdminController@POLICY_SAVE_ES');
-    Route::post('/POLICY_SAVE_TG', 'AdminController@POLICY_SAVE_TG');
-
-    //SUBSCRIPTIONS
-    Route::get('/subscriptions:{subsID}', 'AdminController@subscriptions');
-    Route::post('/UPDATESUBSCRIPTION', 'AdminController@UPDATESUBSCRIPTION');
-
-    // SKILLS ROUTE
-    Route::get('/skills', 'AdminController@skills');
-    Route::get('/editCategory={category}', 'AdminController@editCategory');
-    Route::post('/doEditCategory', 'AdminController@doEditCategory');
-    Route::get('/categoryFullDetails={cat_id}', 'AdminController@categoryFullDetails');
-    Route::get('/customSkills', 'AdminController@customSkills');
-    Route::get('/DELCSTSKLL={skillID}', 'AdminController@DELCSTSKLL');
-    Route::post('/doEditCategorySkill', 'AdminController@doEditCategorySkill');
-    Route::post('/doAddSkillToCategory', 'AdminController@doAddSkillToCategory');
-    Route::post('/doAddCategory', 'AdminController@doAddCategory');
-    Route::get('/deleteCategory={categorycode}', 'AdminController@deleteCategory');
-    Route::get('/deleteSkill={skillcode}', 'AdminController@deleteSkill');
-
-
-
-    // AUDIT TRAIL NEW -- Jan Sarmiento
-    Route::get('/auditTrail={user_id}', 'AdminController@auditTrail');
-
-    // THE ROLE BASED ROUTES FOR ADMINISTRATORS GOES HERE
-    Route::get('/admin', 'AdminController@index');
-    Route::get('/userList', 'AdminController@userList');
-    Route::get('/userListTaskminators', 'AdminController@userListTaskminators');
-    Route::get('/UsrAccntLstCMPNY', 'AdminController@UsrAccntLstCMPNY');
-    Route::get('/adminActivate/{id}', 'AdminController@adminActivate');
-    Route::get('/viewUserProfile/{id}', 'AdminController@viewUserProfile');
-    Route::get('/adminDeactivate/{id}', 'AdminController@adminDeactivate');
-    Route::get('/admin/taskDetails/{taskid}', 'AdminController@taskDetails');
-    Route::get('/viewRatings={tskmntrId}', 'AdminController@viewRatings');
-    Route::get('/searchWorker:{acctStatus}:{rating}:{hiring}:{orderBy}:{keyword}:{checkout}', 'AdminController@searchWorker');
-    Route::get('/userListTaskminators=search={searchBy}={searchWord}', 'AdminController@userListTaskminatorsSearch');
-    Route::get('/userListClientIndi=search={keyword}={acctStatus}={acctType}={orderBy}={searchBy}={region}={city}={province}', 'AdminController@userListClientIndiSearch');
-    Route::get('/userListClientComp=search={searchBy}={searchWord}', 'AdminController@userListClientCompSearch');
-    Route::get('/adminDoSearch', 'searchTestController@doSearch');
-    Route::get('/search_PUSR={keyword}={acctType}={orderBy}', 'AdminController@search_PUSR');
-
-    Route::post('/adminSearchChatUser', 'AdminController@adminSearchChatUser');
-    Route::get('/getCHAT={with_userId}', 'AdminController@getCHAT');
-    Route::post('/ADMINSENDMESSAGE', 'AdminController@ADMINSENDMESSAGE');
-
-    Route::get('/ADMINGETNEWMSG={userid}={senderid}', 'AdminController@ADMINGETNEWMSG');
-    Route::get('/adminMessages', 'TaskminatorController@adminMessages');
-    Route::get('/ADMINNavSearch={keyword}', 'AdminController@ADMINNavSearch');
-
     /*
     Route::get('/taskListBidding', 'AdminController@taskListBidding');
     Route::get('/taskListBidding=search={searchBy}={searchWord}={workTimeValue}={status}', 'AdminController@taskListBiddingSearch');

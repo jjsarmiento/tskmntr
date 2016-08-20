@@ -1,5 +1,5 @@
 @extends('layouts.admin.master')
-    @section('header')
+    @section('head')
     @stop
 
     @section('title')

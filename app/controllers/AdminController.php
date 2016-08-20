@@ -20,7 +20,7 @@ class AdminController extends \BaseController {
                     ->leftJoin('barangays', 'barangays.bgycode', '=', 'users.barangay')
 
                     ->where('user_has_role.role_id', '=', '2')
-                    ->whereNotIn('users.status', ['PRE_ACTIVATED'])
+                    ->whereNotIn('users.status', ['PRE_ACTIVATED', 'VERIFY_EMAIL_REGISTRATION'])
                     ->select([
                         'users.id',
                         'users.fullName',
@@ -373,7 +373,7 @@ class AdminController extends \BaseController {
         }else{
             $users = User::leftJoin('regions', 'regions.regcode', '=', 'users.region')
                 ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
-                ->where('users.status', 'PRE_ACTIVATED')
+                ->whereIn('users.status', ['PRE_ACTIVATED', 'VERIFY_EMAIL_REGISTRATION'])
                 ->orderBy('users.created_at', 'ASC')
                 ->select([
                     'users.id as userID',
@@ -884,7 +884,7 @@ class AdminController extends \BaseController {
     public function pendingUserSearch($searchBy, $searchUserType, $searchWord){
         $userList = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
             ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
-            ->where('users.status', ['PRE_ACTIVATED']);
+            ->whereIn('users.status', ['PRE_ACTIVATED', 'VERIFY_EMAIL_REGISTRATION']);
 
         if($searchUserType != 'ALL'){
             $userList->where('user_has_role.role_id', $searchUserType);
@@ -922,13 +922,13 @@ class AdminController extends \BaseController {
     }
 
     public function countPendingUsers(){
-        return User::where('status', 'PRE_ACTIVATED')->count();
+        return User::where('status', ['PRE_ACTIVATED', 'VERIFY_EMAIL_REGISTRATION'])->count();
     }
 
     public function search_PUSR($keyword, $acctType, $orderBy){
         $userList = User::join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
             ->join('roles', 'roles.id', '=', 'user_has_role.role_id')
-            ->where('users.status', ['PRE_ACTIVATED']);
+            ->whereIn('users.status', ['PRE_ACTIVATED', 'VERIFY_EMAIL_REGISTRATION']);
 
         if($keyword != "NONE"){
             $userList = $userList
@@ -1151,7 +1151,7 @@ class AdminController extends \BaseController {
             ->leftJoin('regions', 'regions.regcode', '=', 'users.region')
             ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
             ->whereIn('user_has_role.role_id', ['3', '4'])
-            ->whereNotIn('users.status', ['PRE_ACTIVATED'])
+            ->whereNotIn('users.status', ['PRE_ACTIVATED', 'VERIFY_EMAIL_REGISTRATION'])
             ->orderBy('users.created_at', 'DESC')
             ->select([
                 'users.id',
