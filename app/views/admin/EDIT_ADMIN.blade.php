@@ -163,7 +163,26 @@
                 if(confirm($(this).data('msg'))){
                     location.href = $(this).data('href');
                 }
-            })
+            });
+
+            $('.admin-chkbx').click(function() {
+                if($(this).prop('checked')){
+                    $('.role-chkbx').prop('disabled', true);
+                }else{
+                    $('.role-chkbx').prop('disabled', false);
+                }
+            });
+
+            $('#CREATE_ADMIN_FORM').submit(function(e){
+                if($('.req-chkbx:checked').length == 0){
+                    alert('Please select a role for this Administrator account');
+                    e.preventDefault();
+                }
+            });
+
+            if($('.admin-chkbx').prop('checked')){
+                $('.role-chkbx').prop('disabled', true);
+            }
         });
     </script>
 @stop
@@ -238,7 +257,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="widget-container fluid-height padded" style="background-color: #ffffff;">
-                            <form method="POST" action="doEDIT_ADMIN">
+                            <form method="POST" action="doEDIT_ADMIN" id="CREATE_ADMIN_FORM">
                                 <input type="hidden" name="admin_id" value="{{$admin->id}}" />
                                 <div class="row">
                                     <div class="col-md-6">
@@ -267,6 +286,13 @@
                                         <div class="form-group">
                                             <label>Password</label>
                                             <input required="required" type="password" class="form-control" name="admin_cpassword" placeholder="ADMIN REPEAT PASSWORD" />
+                                        </div>
+                                        <div class="form-group">
+                                            <span style="color: red;"><b>Super Administrator</b> grants all privileges to account</span><br/>
+                                            <input type="checkbox" <?php if(in_array('SUPER_ADMINISTRATOR', $roles)){ echo 'checked'; } ?> class="req-chkbx admin-chkbx" name="admin_role[]" value="SUPER_ADMINISTRATOR"/> Super Administrator<br/>
+                                            <input type="checkbox" <?php if(in_array('ADMINISTRATOR', $roles)){ echo 'checked'; } ?> class="req-chkbx role-chkbx" name="admin_role[]" value="ADMINISTRATOR"/> Administrator<br/>
+                                            <input type="checkbox" <?php if(in_array('CONTENT_EDITOR', $roles)){ echo 'checked'; } ?> class="req-chkbx role-chkbx" name="admin_role[]" value="CONTENT_EDITOR"/> Content Editor<br/>
+                                            <input type="checkbox" <?php if(in_array('SUPPORT', $roles)){ echo 'checked'; } ?> class="req-chkbx role-chkbx" name="admin_role[]" value="SUPPORT"/> Support<br/>
                                         </div>
                                     </div>
                                 </div>

@@ -171,7 +171,14 @@
                 }else{
                     $('.role-chkbx').prop('disabled', false);
                 }
-            })
+            });
+
+            $('#CREATE_ADMIN_FORM').submit(function(e){
+                if($('.req-chkbx:checked').length == 0){
+                    alert('Please select a role for this Administrator account');
+                    e.preventDefault();
+                }
+            });
         });
     </script>
 @stop
@@ -251,7 +258,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="widget-container fluid-height padded" style="background-color: #ffffff;">
-                            <form method="POST" action="doCREATE_ADMIN">
+                            <form method="POST" action="doCREATE_ADMIN" id="CREATE_ADMIN_FORM">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -282,10 +289,10 @@
                                         </div>
                                         <div class="form-group">
                                             <span style="color: red;"><b>Super Administrator</b> grants all privileges to account</span><br/>
-                                            <input type="checkbox" class="admin-chkbx" name="admin_role[]" value="SUPERADMIN"/> Super Administrator<br/>
-                                            <input type="checkbox" class="role-chkbx" name="admin_role[]" value="ADMIN"/> Administrator<br/>
-                                            <input type="checkbox" class="role-chkbx" name="admin_role[]" value="CONTENT_EDITOR"/> Content Editor<br/>
-                                            <input type="checkbox" class="role-chkbx" name="admin_role[]" value="SUPPORT"/> Support<br/>
+                                            <input type="checkbox" class="req-chkbx admin-chkbx" name="admin_role[]" value="SUPER_ADMINISTRATOR"/> Super Administrator<br/>
+                                            <input type="checkbox" class="req-chkbx role-chkbx" name="admin_role[]" value="ADMINISTRATOR"/> Administrator<br/>
+                                            <input type="checkbox" class="req-chkbx role-chkbx" name="admin_role[]" value="CONTENT_EDITOR"/> Content Editor<br/>
+                                            <input type="checkbox" class="req-chkbx role-chkbx" name="admin_role[]" value="SUPPORT"/> Support<br/>
                                         </div>
                                     </div>
                                 </div>

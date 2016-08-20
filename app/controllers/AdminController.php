@@ -1439,7 +1439,6 @@ class AdminController extends \BaseController {
     }
 
     public function doCREATE_ADMIN(){
-        return Input::all();
         if(Input::get('admin_fname') && Input::get('admin_lname') && Input::get('admin_username') && Input::get('admin_password') && Input::get('admin_cpassword')){
             if(strcmp(Input::get('admin_password'), Input::get('admin_cpassword')) == 0){
                 if(User::where('username', Input::get('admin_username'))->count() == 0){
@@ -1458,6 +1457,15 @@ class AdminController extends \BaseController {
                         'user_id'           =>  $ADMIN_ID,
                         'role_id'           =>  1,
                     ));
+
+                    foreach(Input::get('admin_role') as $ar){
+                        $ADMIN_ROLE_ID = AdminRole::where('role', $ar)->pluck('id');
+                        AdminHasRole::insert([
+                            'user_id'       =>  $ADMIN_ID,
+                            'admin_role_id' =>  $ADMIN_ROLE_ID
+                        ]);
+                    }
+
                     Session::flash('successMsg', 'New administrator created');
                 }else{
                     Session::flash('errorMsg', 'Username already exists');
@@ -1493,6 +1501,7 @@ class AdminController extends \BaseController {
             ->paginate(10);
 
         return View::make('admin.EDIT_ADMIN')
+            ->with('roles', $this->GET_USER_ADMIN_ROLES($user_id))
             ->with('admins', $admins)
             ->with('admin', User::where('id', $user_id)->first());
     }
@@ -1509,6 +1518,17 @@ class AdminController extends \BaseController {
                         'lastName'  =>  Input::get('admin_lname'),
                         'fullName'  =>  Input::get('admin_fname').' '.Input::get('admin_mname').' '.Input::get('admin_lname'),
                     ]);
+
+                    AdminHasRole::where('user_id', Input::get('admin_id'))->delete();
+
+                    foreach(Input::get('admin_role') as $ar){
+                        $ADMIN_ROLE_ID = AdminRole::where('role', $ar)->pluck('id');
+                        AdminHasRole::insert([
+                            'user_id'       =>  Input::get('admin_id'),
+                            'admin_role_id' =>  $ADMIN_ROLE_ID
+                        ]);
+                    }
+
                     Session::flash('successMsg', 'Administrator account edited');
                 }else{
                     Session::flash('errorMsg', 'Username already exists');
@@ -1630,5 +1650,15 @@ class AdminController extends \BaseController {
         ));
 
         return Redirect::back();
+    }
+
+    public function GET_USER_ADMIN_ROLES($user_id){
+        $roles = AdminRole::join('admin_has_roles', 'admin_roles.id', '=', 'admin_has_roles.admin_role_id')
+            ->where('admin_has_roles.user_id', $user_id)
+            ->get();
+
+        $myArr = array();
+        foreach($roles as $o){ array_push($myArr, $o->role); }
+        return $myArr;
     }
 }
