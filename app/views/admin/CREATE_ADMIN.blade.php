@@ -163,6 +163,14 @@
                 if(confirm($(this).data('msg'))){
                     location.href = $(this).data('href');
                 }
+            });
+
+            $('.admin-chkbx').click(function() {
+                if($(this).prop('checked')){
+                    $('.role-chkbx').prop('disabled', true);
+                }else{
+                    $('.role-chkbx').prop('disabled', false);
+                }
             })
         });
     </script>
@@ -273,10 +281,11 @@
                                             <input required="required" type="password" class="form-control" name="admin_cpassword" placeholder="ADMIN REPEAT PASSWORD" />
                                         </div>
                                         <div class="form-group">
-                                            <input type="checkbox" name="admin_role[]" value="SUPERADMIN"/> Super Administrator<br/>
-                                            <input type="checkbox" name="admin_role[]" value="ADMIN"/> Administrator<br/>
-                                            <input type="checkbox" name="admin_role[]" value="CONTENT_EDITOR"/> Content Editor<br/>
-                                            <input type="checkbox" name="admin_role[]" value="SUPPORT"/> Support<br/>
+                                            <span style="color: red;"><b>Super Administrator</b> grants all privileges to account</span><br/>
+                                            <input type="checkbox" class="admin-chkbx" name="admin_role[]" value="SUPERADMIN"/> Super Administrator<br/>
+                                            <input type="checkbox" class="role-chkbx" name="admin_role[]" value="ADMIN"/> Administrator<br/>
+                                            <input type="checkbox" class="role-chkbx" name="admin_role[]" value="CONTENT_EDITOR"/> Content Editor<br/>
+                                            <input type="checkbox" class="role-chkbx" name="admin_role[]" value="SUPPORT"/> Support<br/>
                                         </div>
                                     </div>
                                 </div>
