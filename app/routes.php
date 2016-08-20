@@ -156,6 +156,11 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/DELCSTSKLL={skillID}', 'AdminController@DELCSTSKLL');
     Route::post('/doEditCategorySkill', 'AdminController@doEditCategorySkill');
     Route::post('/doAddSkillToCategory', 'AdminController@doAddSkillToCategory');
+    Route::post('/doAddCategory', 'AdminController@doAddCategory');
+//    Route::post('/newSkill', 'AdminController@newSkill');
+//    Route::post('/newCategory', 'AdminController@newCategory');
+    Route::get('/deleteCategory={categorycode}', 'AdminController@deleteCategory');
+    Route::get('/deleteSkill={skillcode}', 'AdminController@deleteSkill');
 
     // JOB ADS ROUTES
     Route::get('/showJobAds', 'AdminController@showJobAds');
@@ -213,10 +218,6 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/userListTaskminators=search={searchBy}={searchWord}', 'AdminController@userListTaskminatorsSearch');
     Route::get('/userListClientIndi=search={keyword}={acctStatus}={acctType}={orderBy}={searchBy}={region}={city}={province}', 'AdminController@userListClientIndiSearch');
     Route::get('/userListClientComp=search={searchBy}={searchWord}', 'AdminController@userListClientCompSearch');
-    Route::post('/newSkill', 'AdminController@newSkill');
-    Route::post('/newCategory', 'AdminController@newCategory');
-    Route::get('/deleteCategory={categorycode}', 'AdminController@deleteCategory');
-    Route::get('/deleteSkill={skillcode}', 'AdminController@deleteSkill');
     Route::get('/adminDoSearch', 'searchTestController@doSearch');
 //    Route::get('/jobAds={adType}', 'AdminController@jobAds');
     Route::get('/search_PUSR={keyword}={acctType}={orderBy}', 'AdminController@search_PUSR');

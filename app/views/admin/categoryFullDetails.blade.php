@@ -73,6 +73,7 @@
                         <table class="table table-striped table-condensed table-hover">
                             <thead>
                                 <th>Skill Name</th>
+                                <th>Skill Code</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
@@ -87,6 +88,7 @@
                                                 </form>
                                             </div>
                                         </td>
+                                        <td>{{$s->itemcode}}</td>
                                         <td>
                                             <div id="DFLT_MODE_{{$s->id}}">
                                                 <a href="#"
@@ -95,6 +97,7 @@
                                                     data-inputfield="#inputfield_{{$s->id}}"
                                                     data-dfltmode="#DFLT_MODE_{{$s->id}}"
                                                     data-editmode="#EDIT_MODE_{{$s->id}}"
+                                                    title="Edit skill"
                                                 ><i class="fa fa-edit"></i></a>
                                                 &nbsp;
                                                 <a href="#" class="a-validate" data-href="deleteSkill={{$s->itemcode}}" data-message="Are you sure you want to delete this skill - {{$s->itemname}}"><i class="fa fa-trash"></i></a>
@@ -106,6 +109,7 @@
                                                     data-inputfield="#inputfield_{{$s->id}}"
                                                     data-editmode="#EDIT_MODE_{{$s->id}}"
                                                     data-dfltmode="#DFLT_MODE_{{$s->id}}"
+                                                    title="Delete Skill"
                                                 ><i class="fa fa-close"></i></a>
                                             </div>
                                         </td>

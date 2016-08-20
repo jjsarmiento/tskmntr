@@ -294,7 +294,7 @@ class AdminController extends \BaseController {
 //    public function categoryAndSkills(){
     public function skills(){
         return View::make('admin.categoryAndSkills')
-            ->with('taskCategory', TaskCategory::orderBy('id', 'ASC')->paginate(10));
+            ->with('taskCategory', TaskCategory::orderBy('categoryname', 'ASC')->paginate(10));
     }
 
     public function auditTrail($user_id){
@@ -787,6 +787,7 @@ class AdminController extends \BaseController {
             ->with('users', $query->orderBy('fullName', 'ASC')->paginate(10));
     }
 
+    /*
     public function newSkill(){
         if(strlen(trim(Input::get('newSkillInput'))) == 0){
             Session::flash('errorm', 'New skill cannot be empty');
@@ -835,6 +836,7 @@ class AdminController extends \BaseController {
 
         return Redirect::to('/skills')->with('succmsg', 'New category is successfully added');
     }
+    */
 
     public function deleteCategory($categorycode){
         TaskCategory::where('categorycode', $categorycode)->delete();
@@ -1611,6 +1613,20 @@ class AdminController extends \BaseController {
             'item_categorycode' => Input::get('category_code')
 
         ]);
+
+        return Redirect::back();
+    }
+
+    public function doAddCategory(){
+
+        $maxCatCode = TaskCategory::whereNotIn('categoryname', ['Others'])->max('categorycode');
+        $maxCatCode = ++$maxCatCode;
+        $maxCatCode = str_pad($maxCatCode, 3, '0', STR_PAD_LEFT);
+
+        TaskCategory::insert(array(
+            'categoryname'      =>  Input::get('category_name'),
+            'categorycode'      =>  $maxCatCode
+        ));
 
         return Redirect::back();
     }

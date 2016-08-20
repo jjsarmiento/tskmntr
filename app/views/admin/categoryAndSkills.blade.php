@@ -64,11 +64,12 @@
         @endif
         <br/>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="widget-container fluid-height padded" style="background-color: #ffffff;">
                     <table class="table table-striped table-condensed table-hover">
                         <thead>
                             <th>Categories</th>
+                            <th>Category Code</th>
                             <th>Skills Qty</th>
                             <th>Action</th>
                         </thead>
@@ -82,6 +83,7 @@
                                             <input type="hidden" name="category_id" value="{{$c->categorycode}}" />
                                         </form>
                                     </td>
+                                    <td>{{$c->categorycode}}</td>
                                     <td>
                                         {{ TaskItem::where('item_categorycode', $c->categorycode)->count() }}
                                     </td>
@@ -125,37 +127,15 @@
                     <center>{{$taskCategory->links()}}</center>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-7">
-                        Add New Skill
-                        <form method="POST" action="/newSkill">
-                            <div class="form-group">
-                                <select class="form-control newSkill" id="category" name="category" >
-                                    @foreach($taskCategory as $tc)
-                                        <option value="{{ $tc->categorycode }}">{{ $tc->categoryname }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" type="text" id="newSkillInput" name="newSkillInput" placeholder="enter new skill here" required="required"/>
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-success" type="submit">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-5">
-                        Add New Category
-                        <form method="POST" action="/newCategory">
-                            <div class="form-group">
-                                <input class="form-control" type="text" id="newCategoryInput" name="newCategoryInput" placeholder="enter new skill here" required="required" />
-                            </div>
-                            <div class="form-group pull-right">
-                                <button type="submit" class="newCategory btn btn-success">Save</button>
-                            </div>
-                        </form>
-                    </div>
+            <div class="col-md-4">
+                <div class="widget-container fluid-height padded" style="background-color: #ffffff;">
+                    <form method="POST" action="doAddCategory">
+                        <div class="form-group">
+                            <label>Category Name</label>
+                            <input class="form-control" type="text" name="category_name" placeholder="Category Name" required="required" />
+                        </div>
+                        <button type="submit" class="btn btn-success">Add Category</button>
+                    </form>
                 </div>
             </div>
         </div>
