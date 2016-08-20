@@ -367,7 +367,11 @@ class AdminController extends \BaseController {
     }
 
     public function index(){
-        $users = User::leftJoin('regions', 'regions.regcode', '=', 'users.region')
+        if(!AdminController::IF_ADMIN_IS(['SUPER_ADMINISTRATOR'], Auth::user()->id)){
+            return View::make('admin.subadmin.dashboard')
+                ->with('roles', $this->GET_USER_ADMIN_ROLES(Auth::user()->id));
+        }else{
+            $users = User::leftJoin('regions', 'regions.regcode', '=', 'users.region')
                 ->leftJoin('cities', 'cities.citycode', '=', 'users.city')
                 ->where('users.status', 'PRE_ACTIVATED')
                 ->orderBy('users.created_at', 'ASC')
@@ -383,11 +387,12 @@ class AdminController extends \BaseController {
                 ->groupBy('users.id')
                 ->paginate(10);
 
-        return View::make('admin.taskList')
-            ->with('pendingCount', $this->countPendingUsers())
-            ->with('pendingUsers', $users)
-            ->with('pageName', 'Proveek Admin | Dashboard')
-            ->with('formUrl', '/pendingUserSearch');
+            return View::make('admin.taskList')
+                ->with('pendingCount', $this->countPendingUsers())
+                ->with('pendingUsers', $users)
+                ->with('pageName', 'Proveek Admin | Dashboard')
+                ->with('formUrl', '/pendingUserSearch');
+        }
     }
 
     public function taskListBiddingSearch($searchBy, $searchWord, $workTimeValue, $status){
@@ -1665,7 +1670,7 @@ class AdminController extends \BaseController {
     public static function IF_ADMIN_IS($roles, $user_id){
         $roles = AdminRole::join('admin_has_roles', 'admin_roles.id', '=', 'admin_has_roles.admin_role_id')
             ->where('admin_has_roles.user_id', $user_id)
-            ->whereIn('admin_roles.roles', $roles)
+            ->whereIn('admin_roles.role', $roles)
             ->count();
 
         return ($roles > 0) ? true : false;
