@@ -64,49 +64,78 @@
         @endif
         <br/>
         <div class="row">
-            <div class="col-md-6 well">
-                <div style="overflow: scroll; max-height: 30em; overflow-x: hidden;">
-                    @foreach($taskCategory as $tc)
-                        <span style="font-weight: bolder; font-size: 1.3em;">{{ $tc->categoryname }} <a data-categorycode="{{$tc->categorycode}}" href="#" class="deleteCategory"><i class="fa fa-close"></i></a>:<br/></span>
-                        <ul>
-                            @foreach(TaskItem::where('item_categorycode', $tc->categorycode)->orderBy('id', 'ASC')->get() as $ti)
-                                <li>{{ $ti->itemname }} <a data-itemname="{{$ti->itemname}}" data-skillcode="{{$ti->itemcode}}" href="#" class="deleteSkill"><i class="fa fa-close"></i></a></li>
+            <div class="col-md-8">
+                <div class="widget-container fluid-height padded" style="background-color: #ffffff;">
+                    <table class="table table-striped table-condensed table-hover">
+                        <thead>
+                            <th>Categories</th>
+                            <th>Category Code</th>
+                            <th>Skills Qty</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            @foreach($taskCategory as $c)
+                                <tr>
+                                    <td>
+                                        <a href="/categoryFullDetails={{$c->categorycode}}" id="label_{{$c->categorycode}}" data-label="label_{{$c->categorycode}}">{{$c->categoryname}}</a>
+                                        <form method="POST" action="doEditCategory" id="form_{{$c->categorycode}}">
+                                            <input type="text" class="form-control" required="required" id="input_{{$c->categorycode}}" name="category_name" value="{{$c->categoryname}}" style="display: none;" />
+                                            <input type="hidden" name="category_id" value="{{$c->categorycode}}" />
+                                        </form>
+                                    </td>
+                                    <td>{{$c->categorycode}}</td>
+                                    <td>
+                                        {{ TaskItem::where('item_categorycode', $c->categorycode)->count() }}
+                                    </td>
+                                    <td>
+                                        {{--SAVE BUTTON--}}
+                                        <div id="edit_mode_actions_{{$c->categorycode}}" style="display: none;">
+                                            <a href="#"
+                                                class="cancel_edit"
+                                                data-editdiv="#edit_mode_actions_{{$c->categorycode}}"
+                                                data-defaultdiv="#default_actions_{{$c->categorycode}}"
+                                                data-label="#label_{{$c->categorycode}}"
+                                                data-form="#form_{{$c->categorycode}}"
+                                                data-txtfield="#input_{{$c->categorycode}}"
+                                            >
+
+                                                <i class="fa fa-close"></i>
+                                            </a>
+                                        </div>
+
+                                        <div id="default_actions_{{$c->categorycode}}">
+                                            <a class="EDIT-CATEGORY"
+                                                data-label="#label_{{$c->categorycode}}"
+                                                data-form="#form_{{$c->categorycode}}"
+                                                data-txtfield="#input_{{$c->categorycode}}"
+                                                data-editdiv="#edit_mode_actions_{{$c->categorycode}}"
+                                                data-defaultdiv="#default_actions_{{$c->categorycode}}"
+                                                href="#" data-href="/editCategory={{$c->categorycode}}
+                                            ">
+                                                <i class="fa fa-edit" title="Edit category - {{$c->categoryname}}"></i>
+                                            </a>
+                                            &nbsp;
+                                            <a href="#" data-href="/deleteCategory={{$c->categorycode}}" class="a-validate" data-message="Are you sure you want to delete {{$c->categoryname}}">
+                                                <i class="fa fa-trash" title="Delete category - {{$c->categoryname}}"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
                             @endforeach
-                        </ul>
-                    @endforeach
+                        </tbody>
+                    </table>
+                    <center>{{$taskCategory->links()}}</center>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-7">
-                        Add New Skill
-                        <form method="POST" action="/newSkill">
-                            <div class="form-group">
-                                <select class="form-control newSkill" id="category" name="category" >
-                                    @foreach($taskCategory as $tc)
-                                        <option value="{{ $tc->categorycode }}">{{ $tc->categoryname }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" type="text" id="newSkillInput" name="newSkillInput" placeholder="enter new skill here" required="required"/>
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-success" type="submit">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-5">
-                        Add New Category
-                        <form method="POST" action="/newCategory">
-                            <div class="form-group">
-                                <input class="form-control" type="text" id="newCategoryInput" name="newCategoryInput" placeholder="enter new skill here" required="required" />
-                            </div>
-                            <div class="form-group pull-right">
-                                <button type="submit" class="newCategory btn btn-success">Save</button>
-                            </div>
-                        </form>
-                    </div>
+            <div class="col-md-4">
+                <div class="widget-container fluid-height padded" style="background-color: #ffffff;">
+                    <form method="POST" action="doAddCategory">
+                        <div class="form-group">
+                            <label>Category Name</label>
+                            <input class="form-control" type="text" name="category_name" placeholder="Category Name" required="required" />
+                        </div>
+                        <button type="submit" class="btn btn-success">Add Category</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -118,17 +147,21 @@
 @section('body-scripts')
 <script>
     $(document).ready(function(){
-        $('.deleteCategory').click(function(){
-            if(confirm('If you delete this category, all the skills related to it will also be deleted. Do you want to proceed?')){
-                location.href = '/deleteCategory='+$(this).data('categorycode');
-            }
+        $('.EDIT-CATEGORY').click(function(){
+            $($(this).data('defaultdiv')).toggle();
+            $($(this).data('editdiv')).toggle();
+            $($(this).data('label')).toggle();
+            $($(this).data('txtfield')).toggle();
         });
 
-        $('.deleteSkill').click(function(){
-            if(confirm('Please confirm the deleteion of the skill '+$(this).data('itemname'))){
-                location.href = '/deleteSkill='+$(this).data('skillcode');
-            }
-        });
+       $('.cancel_edit').click(function(){
+            $($(this).data('editdiv')).toggle();
+            $($(this).data('defaultdiv')).toggle();
+            $($(this).data('label')).toggle();
+            $($(this).data('txtfield')).toggle();
+       });
+
+//       $('.do-save').click()
     })
 </script>
 @stop

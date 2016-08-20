@@ -293,7 +293,8 @@ class AdminController extends \BaseController {
 
 //    public function categoryAndSkills(){
     public function skills(){
-        return View::make('admin.categoryAndSkills')->with('taskCategory', TaskCategory::orderBy('categoryCode', 'ASC')->get());
+        return View::make('admin.categoryAndSkills')
+            ->with('taskCategory', TaskCategory::orderBy('categoryname', 'ASC')->paginate(10));
     }
 
     public function auditTrail($user_id){
@@ -661,11 +662,11 @@ class AdminController extends \BaseController {
             ->with('searchWord', Input::get('searchWord'));
     }
 
-    public function viewUsersTasks($clientid){
-        return View::make('admin.clientTask')
-                ->with('tasks', Task::where('user_id', $clientid)->orderBy('created_at', 'DESC')->paginate(10))
-                ->with('client', User::where('id', $clientid)->first());
-    }
+//    public function viewUsersTasks($clientid){
+//        return View::make('admin.clientTask')
+//                ->with('tasks', Task::where('user_id', $clientid)->orderBy('created_at', 'DESC')->paginate(10))
+//                ->with('client', User::where('id', $clientid)->first());
+//    }
 
     public function viewUsersTasksSearch(){
         $query = Task::where('user_id', Input::get('clientid'));
@@ -786,6 +787,7 @@ class AdminController extends \BaseController {
             ->with('users', $query->orderBy('fullName', 'ASC')->paginate(10));
     }
 
+    /*
     public function newSkill(){
         if(strlen(trim(Input::get('newSkillInput'))) == 0){
             Session::flash('errorm', 'New skill cannot be empty');
@@ -834,6 +836,7 @@ class AdminController extends \BaseController {
 
         return Redirect::to('/skills')->with('succmsg', 'New category is successfully added');
     }
+    */
 
     public function deleteCategory($categorycode){
         TaskCategory::where('categorycode', $categorycode)->delete();
@@ -1454,6 +1457,15 @@ class AdminController extends \BaseController {
                         'user_id'           =>  $ADMIN_ID,
                         'role_id'           =>  1,
                     ));
+
+                    foreach(Input::get('admin_role') as $ar){
+                        $ADMIN_ROLE_ID = AdminRole::where('role', $ar)->pluck('id');
+                        AdminHasRole::insert([
+                            'user_id'       =>  $ADMIN_ID,
+                            'admin_role_id' =>  $ADMIN_ROLE_ID
+                        ]);
+                    }
+
                     Session::flash('successMsg', 'New administrator created');
                 }else{
                     Session::flash('errorMsg', 'Username already exists');
@@ -1489,6 +1501,7 @@ class AdminController extends \BaseController {
             ->paginate(10);
 
         return View::make('admin.EDIT_ADMIN')
+            ->with('roles', $this->GET_USER_ADMIN_ROLES($user_id))
             ->with('admins', $admins)
             ->with('admin', User::where('id', $user_id)->first());
     }
@@ -1505,6 +1518,17 @@ class AdminController extends \BaseController {
                         'lastName'  =>  Input::get('admin_lname'),
                         'fullName'  =>  Input::get('admin_fname').' '.Input::get('admin_mname').' '.Input::get('admin_lname'),
                     ]);
+
+                    AdminHasRole::where('user_id', Input::get('admin_id'))->delete();
+
+                    foreach(Input::get('admin_role') as $ar){
+                        $ADMIN_ROLE_ID = AdminRole::where('role', $ar)->pluck('id');
+                        AdminHasRole::insert([
+                            'user_id'       =>  Input::get('admin_id'),
+                            'admin_role_id' =>  $ADMIN_ROLE_ID
+                        ]);
+                    }
+
                     Session::flash('successMsg', 'Administrator account edited');
                 }else{
                     Session::flash('errorMsg', 'Username already exists');
@@ -1572,5 +1596,78 @@ class AdminController extends \BaseController {
             return Redirect::back();
         }
 
+    }
+
+    public function allJobAds_user($user_id){
+        return View::make('admin.allJobAds_user')
+            ->with('jobs', Job::where('user_id', $user_id)->get());
+    }
+
+    public function doEditCategory(){
+        TaskCategory::where('id', Input::get('category_id'))->update([
+            'categoryname'  =>  strip_tags(trim(Input::get('category_name')))
+        ]);
+        return Redirect::back();
+    }
+
+    public function categoryFullDetails($cat_id){
+        return View::make('admin.categoryFullDetails')
+            ->with('skills', TaskItem::where('item_categorycode', $cat_id)->paginate(10))
+            ->with('cat', TaskCategory::where('categorycode', $cat_id)->first());
+    }
+
+    public function doEditCategorySkill(){
+//        return Input::all();
+        TaskItem::where('id', Input::get('skill_id'))->update([
+            'itemname' => strip_tags(trim(Input::get('skill_name')))
+        ]);
+        return Redirect::back();
+    }
+
+    public function doAddSkillToCategory(){
+        $maxSkillCode = str_replace(Input::get('category_code'), '', TaskItem::where('item_categorycode', Input::get('category_code'))->max('itemcode'));
+        $maxSkillCode = ++$maxSkillCode;
+        $maxSkillCode = str_pad($maxSkillCode, 3, '0', STR_PAD_LEFT);
+        TaskItem::insert([
+            'itemname' => Input::get('skill_name'),
+            'itemcode' => Input::get('category_code').''.$maxSkillCode,
+            'item_categorycode' => Input::get('category_code')
+
+        ]);
+
+        return Redirect::back();
+    }
+
+    public function doAddCategory(){
+
+        $maxCatCode = TaskCategory::whereNotIn('categoryname', ['Others'])->max('categorycode');
+        $maxCatCode = ++$maxCatCode;
+        $maxCatCode = str_pad($maxCatCode, 3, '0', STR_PAD_LEFT);
+
+        TaskCategory::insert(array(
+            'categoryname'      =>  Input::get('category_name'),
+            'categorycode'      =>  $maxCatCode
+        ));
+
+        return Redirect::back();
+    }
+
+    public function GET_USER_ADMIN_ROLES($user_id){
+        $roles = AdminRole::join('admin_has_roles', 'admin_roles.id', '=', 'admin_has_roles.admin_role_id')
+            ->where('admin_has_roles.user_id', $user_id)
+            ->get();
+
+        $myArr = array();
+        foreach($roles as $o){ array_push($myArr, $o->role); }
+        return $myArr;
+    }
+
+    public static function IF_ADMIN_IS($roles, $user_id){
+        $roles = AdminRole::join('admin_has_roles', 'admin_roles.id', '=', 'admin_has_roles.admin_role_id')
+            ->where('admin_has_roles.user_id', $user_id)
+            ->whereIn('admin_roles.roles', $roles)
+            ->count();
+
+        return ($roles > 0) ? true : false;
     }
 }

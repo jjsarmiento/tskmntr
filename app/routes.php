@@ -106,6 +106,21 @@ Route::group(array('before' => 'auth'), function(){
 });
 
 Route::group(array('before' => 'ADMIN-ONLY'), function(){
+
+    Route::group(['before' => 'ADMINISTRATOR'], function(){
+
+    });
+
+    Route::group(['before' => 'CONTENT_EDITOR'], function(){
+
+    });
+
+    Route::group(['before' => 'SUPPORT'], function(){
+
+    });
+
+    Route::get('/allJobAds_user/{user_id}', 'AdminController@allJobAds_user');
+
     // POINTS
     Route::get('/points={user_id}', 'AdminController@points');
     Route::post('/doAddPoints', 'AdminController@doAddPoints');
@@ -146,8 +161,19 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::post('/UPDATESUBSCRIPTION', 'AdminController@UPDATESUBSCRIPTION');
 
     // SKILLS ROUTE
+    Route::get('/skills', 'AdminController@skills');
+    Route::get('/editCategory={category}', 'AdminController@editCategory');
+    Route::post('/doEditCategory', 'AdminController@doEditCategory');
+    Route::get('/categoryFullDetails={cat_id}', 'AdminController@categoryFullDetails');
     Route::get('/customSkills', 'AdminController@customSkills');
     Route::get('/DELCSTSKLL={skillID}', 'AdminController@DELCSTSKLL');
+    Route::post('/doEditCategorySkill', 'AdminController@doEditCategorySkill');
+    Route::post('/doAddSkillToCategory', 'AdminController@doAddSkillToCategory');
+    Route::post('/doAddCategory', 'AdminController@doAddCategory');
+//    Route::post('/newSkill', 'AdminController@newSkill');
+//    Route::post('/newCategory', 'AdminController@newCategory');
+    Route::get('/deleteCategory={categorycode}', 'AdminController@deleteCategory');
+    Route::get('/deleteSkill={skillcode}', 'AdminController@deleteSkill');
 
     // JOB ADS ROUTES
     Route::get('/showJobAds', 'AdminController@showJobAds');
@@ -155,8 +181,6 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/ADMINJbSrch:{keyword}:{regcode}:{citycode}:{hiringType}:{orderBy}:{category}:{skill}', 'AdminController@ADMINJbSrch');
     Route::get('/ADMIN_DELETEJOB={jobId}', 'AdminController@ADMIN_DELETEJOB');
 
-    // SKILLS ROUTE
-    Route::get('/skills', 'AdminController@skills');
 
     // AUDIT TRAIL NEW -- Jan Sarmiento
     Route::get('/auditTrail={user_id}', 'AdminController@auditTrail');
@@ -202,15 +226,11 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 //    Route::post('/taskListBidding=search', 'AdminController@taskListBiddingSearch');
 //    Route::post('/taskListAuto=search', 'AdminController@taskListAutoSearch');
     Route::post('/taskListDirect=search', 'AdminController@taskListDirectSearch');
-    Route::get('/viewUsersTasks/{clientid}', 'AdminController@viewUsersTasks');
+//    Route::get('/viewUsersTasks/{clientid}', 'AdminController@viewUsersTasks');
     Route::post('/viewUsersTasks=search', 'AdminController@viewUsersTasksSearch');
     Route::get('/userListTaskminators=search={searchBy}={searchWord}', 'AdminController@userListTaskminatorsSearch');
     Route::get('/userListClientIndi=search={keyword}={acctStatus}={acctType}={orderBy}={searchBy}={region}={city}={province}', 'AdminController@userListClientIndiSearch');
     Route::get('/userListClientComp=search={searchBy}={searchWord}', 'AdminController@userListClientCompSearch');
-    Route::post('/newSkill', 'AdminController@newSkill');
-    Route::post('/newCategory', 'AdminController@newCategory');
-    Route::get('/deleteCategory={categorycode}', 'AdminController@deleteCategory');
-    Route::get('/deleteSkill={skillcode}', 'AdminController@deleteSkill');
     Route::get('/adminDoSearch', 'searchTestController@doSearch');
 //    Route::get('/jobAds={adType}', 'AdminController@jobAds');
     Route::get('/search_PUSR={keyword}={acctType}={orderBy}', 'AdminController@search_PUSR');

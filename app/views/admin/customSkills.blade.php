@@ -45,28 +45,22 @@
 <section class="lato-text">
     <div class="container">
         <div class="row">
-            <div class="col-md-7">
-                <div class="widget-container">
+            <div class="col-md-8">
+                <div class="widget-container fluid-height">
                     <div class="heading">
                         <h5><i class="fa fa-list"></i> &nbsp;Custom Skills</h5><br/>
                     </div>
                     <div class="widget-content padded">
-                        @foreach($customSkill as $cs)
-                            <p class="detele-cust-skills">
-                                <span style="font-weight: bolder;">{{ $cs->skill }}</span> created by <a target="_tab" href="/viewUserProfile/{{$cs->userID}}">{{$cs->fullName}}</a>
-                                <i class="pull-right fa fa-trash DELETE-CUST-SKILL" data-href="/DELCSTSKLL={{$cs->customSkillID}}" style="cursor: pointer;"></i>
-                            </p>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="widget-container">
-                    <div class="heading">
-                        {{--<h5><i class="fa fa-list"></i> &nbsp;Add Custom</h5><br/>--}}
-                    </div>
-                    <div class="widget-content">
-
+                        @if($customSkill->count() > 0)
+                            @foreach($customSkill as $cs)
+                                <p class="detele-cust-skills">
+                                    <span style="font-weight: bolder;">{{ $cs->skill }}</span> created by <a target="_tab" href="/viewUserProfile/{{$cs->userID}}">{{$cs->fullName}}</a>
+                                    <i class="pull-right fa fa-trash DELETE-CUST-SKILL" data-href="/DELCSTSKLL={{$cs->customSkillID}}" style="cursor: pointer;"></i>
+                                </p>
+                            @endforeach
+                        @else
+                            <center>No data available</center>
+                        @endif
                     </div>
                 </div>
             </div>

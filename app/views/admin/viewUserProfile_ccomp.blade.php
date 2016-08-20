@@ -45,7 +45,9 @@
                             <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
                         @endif
                         <br/>
-                        <a href="/viewUsersTasks/{{$user->id}}" class="btn btn-primary">View all tasks for this user</a>
+
+                        <a href="/allJobAds_user/{{$user->id}}" class="btn btn-primary">View all Job Ads for this user</a>
+                        {{--<a href="/viewUsersTasks/{{$user->id}}" class="btn btn-primary">View all tasks for this user</a>--}}
                     </div>
                     <div class="col-sm-9">
                         <div class="heading">

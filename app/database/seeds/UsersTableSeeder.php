@@ -230,26 +230,10 @@ class UsersTableSeeder extends Seeder {
             'role_id'           =>  1,
         ));
 
-        User::create(array(
-            'id'                =>  7,
-            'username'          =>  'necycapuno',
-            'password'          =>  Hash::make('necycapuno'),
-            'firstName'         =>  'Necy',
-            'midName'           =>  '',
-            'lastName'          =>  'Capuno',
-            'fullName'          =>  'Necy Capuno',
-            'gender'            =>  'FEMALE',
-            'birthdate'         =>  '0000-00-00',
-            'country'           =>  'PHILIPPINES',
-            'confirmationCode'  =>  md5(uniqid(rand(), true)),
-            'status'            =>  'ACTIVATED',
-//            'created_at'        =>  '2015-04-30 21:03:32',
-//            'updated_at'        =>  '2015-04-30 21:03:32',
-        ));
-        UserHasRole::create(array(
-            'user_id'           =>  7,
-            'role_id'           =>  1,
-        ));
+        AdminHasRole::create([
+            'user_id'       => 6,
+            'admin_role_id' => 1,
+        ]);
 
         DB::insert("INSERT INTO `contacts` (`user_id`, `ctype`, `content`) VALUES
             (1, 'email', 'clientindi@client.com'),

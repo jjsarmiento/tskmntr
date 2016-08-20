@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder {
 		 $this->call('DocumentTypesSeeder');
 		 $this->call('SystemSubscriptionsSeeder');
 		 $this->call('TestSeeder');
+		 $this->call('AdminRoleSeeder');
 	}
 }
