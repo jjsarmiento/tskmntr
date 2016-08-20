@@ -1142,7 +1142,11 @@ class AdminController extends \BaseController {
         JobApplication::where('job_id', $jobId)->delete();
         CustomSkill::where('company_job_id', $jobId)->delete();
 
-        return Redirect::to('/showJobAds');
+        if(AdminController::IF_ADMIN_IS(['SUPER_ADMINISTRATOR'], Auth::user()->id)){
+            return Redirect::to('/showJobAds');
+        }else{
+            return Redirect::to('/subadmin/jobads');
+        }
     }
 
     public function UsrAccntLstCMPNY(){

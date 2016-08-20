@@ -48,4 +48,31 @@ class SubAdminController extends \BaseController {
             ->with('title', 'Employers - User Accounts List')
             ->with('users', $users);
     }
+
+    public function jobads(){
+        $jobs = Job::join('users', 'users.id', '=', 'jobs.user_id')
+            ->leftJoin('cities', 'cities.citycode', '=', 'jobs.citycode')
+            ->leftJoin('regions', 'regions.regcode', '=', 'jobs.regcode')
+            ->leftJoin('provinces', 'provinces.provcode', '=', 'jobs.provcode')
+            ->select([
+                'users.fullName',
+                'users.id as user_id',
+                'jobs.title',
+                'jobs.id as job_id',
+                'jobs.expires_at',
+                'jobs.salary',
+                'jobs.created_at',
+                'jobs.description',
+                'jobs.hiring_type',
+                'cities.cityname',
+                'regions.regname',
+                'provinces.provname',
+            ])
+            ->orderBy('jobs.created_at', 'DESC')
+            ->groupBy('jobs.id')
+            ->paginate(10);
+
+        return View::make('admin.subadmin.jobads')
+            ->with('jobs', $jobs);
+    }
 }

@@ -112,9 +112,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
         Route::get('/allJobAds_user/{user_id}', 'AdminController@allJobAds_user');
         // JOB ADS ROUTES
         Route::get('/showJobAds', 'AdminController@showJobAds');
-        Route::get('/ADMIN_jobDetails={job_id}', 'AdminController@ADMIN_jobDetails');
         Route::get('/ADMINJbSrch:{keyword}:{regcode}:{citycode}:{hiringType}:{orderBy}:{category}:{skill}', 'AdminController@ADMINJbSrch');
-        Route::get('/ADMIN_DELETEJOB={jobId}', 'AdminController@ADMIN_DELETEJOB');
 
         // MANAGE ADMIN
         Route::get('/CREATE_ADMIN', 'AdminController@CREATE_ADMIN');
@@ -198,11 +196,15 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
         Route::get('/subadmin/pending_users', 'SubAdminController@pending_users');
         Route::get('/subadmin/workers', 'SubAdminController@workers');
         Route::get('/subadmin/employers', 'SubAdminController@employers');
+        Route::get('/subadmin/jobads', 'SubAdminController@jobads');
 
         // INHERITED ROUTES
         Route::get('/adminDeactivate/{id}', 'AdminController@adminDeactivate');
         Route::get('/adminActivate/{id}', 'AdminController@adminActivate');
         Route::get('/viewUserProfile/{id}', 'AdminController@viewUserProfile');
+        Route::get('/ADMIN_jobDetails={job_id}', 'AdminController@ADMIN_jobDetails');
+
+        Route::get('/ADMIN_DELETEJOB={jobId}', 'AdminController@ADMIN_DELETEJOB');
     });
 
     Route::group(['before' => 'CONTENT_EDITOR'], function(){

@@ -48,7 +48,7 @@
                 <!-- ITEMS FOR `CONTENT_EDITOR` -->
                 @if(AdminController::IF_ADMIN_IS(['ADMINISTRATOR'], Auth::user()->id))
                     <li class="header">ADMINISTRATOR</li>
-                    <li class="treeview active">
+                    <li class="treeview">
                         <a href="#">
                             <i class="fa fa-users"></i>
                             <span>Manage User Accounts</span>
@@ -62,7 +62,7 @@
                             <li><a href="/subadmin/employers"><i class="text-blue fa fa-circle-o"></i> Employers</a></li>
                         </ul>
                     </li>
-                    <li><a href="#"><i class="fa fa-briefcase"></i> <span>Manage Job Ads</span></a></li>
+                    <li><a href="/subadmin/jobads"><i class="fa fa-briefcase"></i> <span>Manage Job Ads</span></a></li>
                 @elseif(AdminController::IF_ADMIN_IS(['SUPPORT'], Auth::user()->id))
                     <li class="header">SUPPORT</li>
                     <li class="treeview">
