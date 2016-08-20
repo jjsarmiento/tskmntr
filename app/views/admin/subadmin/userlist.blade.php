@@ -3,18 +3,17 @@
     @stop
 
     @section('title')
-        Admin Proveek
+        {{$title}} | Proveek
     @stop
 
     @section('content_header')
-      <h1>
-          Pending User Accounts List
+      <h1>{{$title}}
         <small>Control Panel</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="/admin">Dashboard</a></li>
-        <li>Pending User Account List</li>
+        <li>{{$title}}</li>
       </ol>
     @stop
 
@@ -35,14 +34,14 @@
                                 <tbody>
                                     @foreach($users as $u)
                                         <tr>
-                                            <td>{{$u->username}}</td>
-                                            <td>{{$u->fullName}}</td>
+                                            <td><a href="/{{$u->username}}">{{$u->username}}</a></td>
+                                            <td><a href="/viewUserProfile/{{$u->id}}">{{$u->fullName}}</a></td>
                                             <td>{{$u->created_at}}</td>
                                             <td>{{$u->status}}</td>
                                             <td>
                                                 @if($u->status == 'ACTIVATED')
                                                     <a data-message="Confirm account DEACTIVATION of {{$u->fullName}}" class="btn-block a-validate  btn btn-danger btn-xs" data-href="/adminDeactivate/{{$u->id}}">DEACTIVATE</a>
-                                                @elseif($u->status == 'DEACTIVATED' || $u->status == 'SELF_DEACTIVATED')
+                                                @elseif($u->status == 'DEACTIVATED' || $u->status == 'SELF_DEACTIVATED' || $u->status == 'ADMIN_DEACTIVATED')
                                                     <a data-message="Confirm account ACTIVATION of {{$u->fullName}}" class="btn-block a-validate  btn btn-success btn-xs" data-href="/adminActivate/{{$u->id}}">ACTIVATE</a>
                                                 @else
                                                     <a data-message="Confirm account DEACTIVATION of {{$u->fullName}}" class="btn-block a-validate btn btn-danger btn-xs" data-href="/adminDeactivate/{{$u->id}}">DEACTIVATE</a>

@@ -175,9 +175,6 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
         Route::get('/userList', 'AdminController@userList');
         Route::get('/userListTaskminators', 'AdminController@userListTaskminators');
         Route::get('/UsrAccntLstCMPNY', 'AdminController@UsrAccntLstCMPNY');
-        Route::get('/adminActivate/{id}', 'AdminController@adminActivate');
-        Route::get('/viewUserProfile/{id}', 'AdminController@viewUserProfile');
-        Route::get('/adminDeactivate/{id}', 'AdminController@adminDeactivate');
         Route::get('/admin/taskDetails/{taskid}', 'AdminController@taskDetails');
         Route::get('/viewRatings={tskmntrId}', 'AdminController@viewRatings');
         Route::get('/searchWorker:{acctStatus}:{rating}:{hiring}:{orderBy}:{keyword}:{checkout}', 'AdminController@searchWorker');
@@ -197,7 +194,15 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     });
 
     Route::group(['before' => 'ADMINISTRATOR'], function(){
+        // EXCLUSIVE ROUTES
         Route::get('/subadmin/pending_users', 'SubAdminController@pending_users');
+        Route::get('/subadmin/workers', 'SubAdminController@workers');
+        Route::get('/subadmin/employers', 'SubAdminController@employers');
+
+        // INHERITED ROUTES
+        Route::get('/adminDeactivate/{id}', 'AdminController@adminDeactivate');
+        Route::get('/adminActivate/{id}', 'AdminController@adminActivate');
+        Route::get('/viewUserProfile/{id}', 'AdminController@viewUserProfile');
     });
 
     Route::group(['before' => 'CONTENT_EDITOR'], function(){

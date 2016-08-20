@@ -58,8 +58,8 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="/subadmin/pending_users"><i class="text-red fa fa-circle-o"></i> Pending Users</a></li>
-                            <li><a href="#"><i class="text-green fa fa-circle-o"></i> Workers</a></li>
-                            <li><a href="#"><i class="text-blue fa fa-circle-o"></i> Companies</a></li>
+                            <li><a href="/subadmin/workers"><i class="text-green fa fa-circle-o"></i> Workers</a></li>
+                            <li><a href="/subadmin/employers"><i class="text-blue fa fa-circle-o"></i> Employers</a></li>
                         </ul>
                     </li>
                     <li><a href="#"><i class="fa fa-briefcase"></i> <span>Manage Job Ads</span></a></li>
