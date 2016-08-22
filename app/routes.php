@@ -212,6 +212,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     });
 
     Route::group(['before' => 'SUPPORT'], function(){
+        Route::get('/subadmin/view_pending_users','SubAdminController@pending_users');
     });
     /*
     Route::get('/taskListBidding', 'AdminController@taskListBidding');
