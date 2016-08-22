@@ -32,19 +32,22 @@
                         @endif
                         <h3 style="margin-top: 1em;">{{ $user->companyName }}</h3>
                         <br/>
-                        @if($user->status == 'PRE_ACTIVATED')
-                            <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Fully Activate Account</a><br/>
-                            <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger">Deactivate Account</a><br/>
-                        @elseif($user->status == 'ACTIVATED')
-                            <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger">Deactivate Account</a><br/>
-                        @elseif($user->status == 'DEACTIVATED')
-                            <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
-                        @elseif($user->status == 'SELF_DEACTIVATED')
-                            <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
-                        @elseif($user->status == 'ADMIN_DEACTIVATED')
-                            <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
+
+                        @if(AdminController::IF_ADMIN_IS(['ADMINISTRATOR', 'SUPER_ADMINISTRATOR'], Auth::user()->id))
+                            @if($user->status == 'PRE_ACTIVATED')
+                                <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Fully Activate Account</a><br/>
+                                <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger">Deactivate Account</a><br/>
+                            @elseif($user->status == 'ACTIVATED')
+                                <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger">Deactivate Account</a><br/>
+                            @elseif($user->status == 'DEACTIVATED')
+                                <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
+                            @elseif($user->status == 'SELF_DEACTIVATED')
+                                <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
+                            @elseif($user->status == 'ADMIN_DEACTIVATED')
+                                <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
+                            @endif
+                            <br/>
                         @endif
-                        <br/>
 
                         <a href="/allJobAds_user/{{$user->id}}" class="btn btn-primary">View all Job Ads for this user</a>
                         {{--<a href="/viewUsersTasks/{{$user->id}}" class="btn btn-primary">View all tasks for this user</a>--}}

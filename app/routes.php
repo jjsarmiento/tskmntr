@@ -109,7 +109,6 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::get('/admin', 'AdminController@index');
     Route::group(['before' => 'SUPER_ADMINISTRATOR'], function(){
 
-        Route::get('/allJobAds_user/{user_id}', 'AdminController@allJobAds_user');
         // JOB ADS ROUTES
         Route::get('/showJobAds', 'AdminController@showJobAds');
         Route::get('/ADMINJbSrch:{keyword}:{regcode}:{citycode}:{hiringType}:{orderBy}:{category}:{skill}', 'AdminController@ADMINJbSrch');
@@ -208,11 +207,14 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 
     Route::group(['before' => 'ADMINISTRATOR_SUPPORT'], function(){
         Route::get('/viewUserProfile/{id}', 'AdminController@viewUserProfile');
+        Route::get('/allJobAds_user/{user_id}', 'AdminController@allJobAds_user');
     });
 
     Route::group(['before' => 'SUPPORT'], function(){
         Route::get('/subadmin/view_pending_users','SubAdminController@pending_users');
         Route::get('/subadmin/view_workers','SubAdminController@workers');
+        Route::get('/subadmin/view_employers','SubAdminController@employers');
+        Route::get('/subadmin/view_jobads','SubAdminController@jobads');
     });
 
     Route::group(['before' => 'CONTENT_EDITOR'], function(){

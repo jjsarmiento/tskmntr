@@ -76,10 +76,10 @@
                         <ul class="treeview-menu">
                             <li><a href="/subadmin/view_pending_users"><i class="text-red fa fa-circle-o"></i> Pending Users</a></li>
                             <li><a href="/subadmin/view_workers"><i class="text-green fa fa-circle-o"></i> Workers</a></li>
-                            <li><a href="#"><i class="text-blue fa fa-circle-o"></i> Companies</a></li>
+                            <li><a href="/subadmin/view_employers"><i class="text-blue fa fa-circle-o"></i> Companies</a></li>
                         </ul>
                     </li>
-                    <li><a href="#"><i class="fa fa-briefcase"></i> <span>View Job Ads</span></a></li>
+                    <li><a href="/subadmin/view_jobads"><i class="fa fa-briefcase"></i> <span>View Job Ads</span></a></li>
                 @endif
 
                 @if(AdminController::IF_ADMIN_IS(['CONTENT_EDITOR'], Auth::user()->id))
