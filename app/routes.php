@@ -201,18 +201,22 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
         // INHERITED ROUTES
         Route::get('/adminDeactivate/{id}', 'AdminController@adminDeactivate');
         Route::get('/adminActivate/{id}', 'AdminController@adminActivate');
-        Route::get('/viewUserProfile/{id}', 'AdminController@viewUserProfile');
         Route::get('/ADMIN_jobDetails={job_id}', 'AdminController@ADMIN_jobDetails');
 
         Route::get('/ADMIN_DELETEJOB={jobId}', 'AdminController@ADMIN_DELETEJOB');
     });
 
-    Route::group(['before' => 'CONTENT_EDITOR'], function(){
-
+    Route::group(['before' => 'ADMINISTRATOR_SUPPORT'], function(){
+        Route::get('/viewUserProfile/{id}', 'AdminController@viewUserProfile');
     });
 
     Route::group(['before' => 'SUPPORT'], function(){
         Route::get('/subadmin/view_pending_users','SubAdminController@pending_users');
+        Route::get('/subadmin/view_workers','SubAdminController@workers');
+    });
+
+    Route::group(['before' => 'CONTENT_EDITOR'], function(){
+
     });
     /*
     Route::get('/taskListBidding', 'AdminController@taskListBidding');

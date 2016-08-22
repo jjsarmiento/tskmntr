@@ -69,6 +69,10 @@ Route::filter('guest', function()
 	if (Auth::check()) return Redirect::to('/');
 });
 
+Route::filter('ADMINISTRATOR_SUPPORT', function(){
+
+});
+
 Route::filter('SUPER_ADMINISTRATOR', function(){
     if(!AdminController::IF_ADMIN_IS(['SUPER_ADMINISTRATOR'], Auth::user()->id)){
         return View::make('admin.ADMIN_ROLE_ERROR')

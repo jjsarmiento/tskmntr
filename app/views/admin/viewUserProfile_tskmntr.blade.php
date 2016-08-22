@@ -46,25 +46,27 @@
                 <div class="widget-container fluid-height">
                     <div class="widget-content padded row" style="padding-bottom: 30px">
                         <div class="col-sm-3" style="text-align: center; align-content: center; align-items: center;">
-                            <br/>
-                            @if($user->profilePic)
-                                <img src="{{$user->profilePic}}" width="90%" style="border-radius: 0.6em; box-shadow: 0 0 10px 1px #7F8C8D;" />
-                            @else
-                                <img src="/images/default_profile_pic.png" width="90%" style="border-radius: 0.6em; box-shadow: 0 0 10px 1px #7F8C8D;" />
-                            @endif
-                            <h3 style="margin-top: 1em;" class="lato-text">{{ $user->firstName }} {{ $user->midName }} {{ $user->lastName }}</h3>
-                            <br/>
-                            @if($user->status == 'PRE_ACTIVATED')
-                                <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Fully Activate Account</a><br/>
-                                <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger">Deactivate Account</a><br/>
-                            @elseif($user->status == 'ACTIVATED')
-                                <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger">Deactivate Account</a><br/>
-                            @elseif($user->status == 'DEACTIVATED')
-                                <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
-                            @elseif($user->status == 'SELF_DEACTIVATED')
-                                <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
-                            @elseif($user->status == 'ADMIN_DEACTIVATED')
-                                <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
+                                <br/>
+                                @if($user->profilePic)
+                                    <img src="{{$user->profilePic}}" width="90%" style="border-radius: 0.6em; box-shadow: 0 0 10px 1px #7F8C8D;" />
+                                @else
+                                    <img src="/images/default_profile_pic.png" width="90%" style="border-radius: 0.6em; box-shadow: 0 0 10px 1px #7F8C8D;" />
+                                @endif
+                                <h3 style="margin-top: 1em;" class="lato-text">{{ $user->firstName }} {{ $user->midName }} {{ $user->lastName }}</h3>
+                                <br/>
+                            @if(AdminController::IF_ADMIN_IS(['ADMINISTRATOR', 'SUPER_ADMINISTRATOR'], Auth::user()->id))
+                                @if($user->status == 'PRE_ACTIVATED')
+                                    <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Fully Activate Account</a><br/>
+                                    <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger">Deactivate Account</a><br/>
+                                @elseif($user->status == 'ACTIVATED')
+                                    <a href="/adminDeactivate/{{$user->id}}" class="btn btn-danger">Deactivate Account</a><br/>
+                                @elseif($user->status == 'DEACTIVATED')
+                                    <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
+                                @elseif($user->status == 'SELF_DEACTIVATED')
+                                    <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
+                                @elseif($user->status == 'ADMIN_DEACTIVATED')
+                                    <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
+                                @endif
                             @endif
                         </div>
                         <div class="col-sm-9">
