@@ -87,6 +87,12 @@ Route::filter('ADMINISTRATOR', function(){
     }
 });
 
+Route::filter('XCLSV_ADMINISTRATOR', function(){
+    if(!AdminController::IF_ADMIN_IS(['ADMINISTRATOR'], Auth::user()->id)){
+            return Redirect::to('/');
+    }
+});
+
 Route::filter('CONTENT_EDITOR', function(){
     if(!AdminController::IF_ADMIN_IS(['CONTENT_EDITOR', 'SUPER_ADMINISTRATOR'], Auth::user()->id)){
         return View::make('admin.ADMIN_ROLE_ERROR')
@@ -94,10 +100,22 @@ Route::filter('CONTENT_EDITOR', function(){
     }
 });
 
+Route::filter('XCLSV_CONTENT_EDITOR', function(){
+    if(!AdminController::IF_ADMIN_IS(['CONTENT_EDITOR'], Auth::user()->id)){
+        return Redirect::to('/');
+    }
+});
+
 Route::filter('SUPPORT', function(){
     if(!AdminController::IF_ADMIN_IS(['SUPPORT', 'SUPER_ADMINISTRATOR'], Auth::user()->id)){
         return View::make('admin.ADMIN_ROLE_ERROR')
             ->with('message', 'Your account does not have the proper privilege to complete this action.');
+    }
+});
+
+Route::filter('XCLSV_SUPPORT', function(){
+    if(!AdminController::IF_ADMIN_IS(['SUPPORT'], Auth::user()->id)){
+        return Redirect::to('/');
     }
 });
 

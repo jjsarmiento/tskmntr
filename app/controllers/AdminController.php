@@ -1689,4 +1689,13 @@ class AdminController extends \BaseController {
 
         return ($roles > 0) ? true : false;
     }
+
+    public static function IS_SUPERADMIN($user_id){
+        $flag = AdminRole::join('admin_has_roles', 'admin_roles.id', '=', 'admin_has_roles.admin_role_id')
+            ->where('admin_has_roles.user_id', $user_id)
+            ->whereIn('admin_roles.role', ['SUPER_ADMINISTRATOR'])
+            ->count();
+
+        return ($flag == 1) ? true : false;
+    }
 }

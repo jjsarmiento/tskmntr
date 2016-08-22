@@ -191,13 +191,15 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     });
 
     Route::group(['before' => 'ADMINISTRATOR'], function(){
-        // EXCLUSIVE ROUTES
-        Route::get('/subadmin/pending_users', 'SubAdminController@pending_users');
-        Route::get('/subadmin/workers', 'SubAdminController@workers');
-        Route::get('/subadmin/employers', 'SubAdminController@employers');
-        Route::get('/subadmin/jobads', 'SubAdminController@jobads');
+        // EXCLUSIVE ROUTES FOR ADMINISTRATOR
+        Route::group(['before' => 'XCLSV_ADMINISTRATOR'], function(){
+            Route::get('/subadmin/pending_users', 'SubAdminController@pending_users');
+            Route::get('/subadmin/workers', 'SubAdminController@workers');
+            Route::get('/subadmin/employers', 'SubAdminController@employers');
+            Route::get('/subadmin/jobads', 'SubAdminController@jobads');
+        });
 
-        // INHERITED ROUTES
+        // INHERITED ROUTES - ROLE AND SUPER_ADMIN CAN ACCESS THESE ROUTES
         Route::get('/adminDeactivate/{id}', 'AdminController@adminDeactivate');
         Route::get('/adminActivate/{id}', 'AdminController@adminActivate');
 
@@ -211,13 +213,20 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     });
 
     Route::group(['before' => 'SUPPORT'], function(){
-        Route::get('/subadmin/view_pending_users','SubAdminController@pending_users');
-        Route::get('/subadmin/view_workers','SubAdminController@workers');
-        Route::get('/subadmin/view_employers','SubAdminController@employers');
-        Route::get('/subadmin/view_jobads','SubAdminController@jobads');
+        // EXCLUSIVE ROUTES FOR SUPPORT
+        Route::group(['before' => 'XCLSV_SUPPORT'], function(){
+            Route::get('/subadmin/view_pending_users','SubAdminController@pending_users');
+            Route::get('/subadmin/view_workers','SubAdminController@workers');
+            Route::get('/subadmin/view_employers','SubAdminController@employers');
+            Route::get('/subadmin/view_jobads','SubAdminController@jobads');
+        });
     });
 
     Route::group(['before' => 'CONTENT_EDITOR'], function(){
+        // EXCLUSIVE ROUTES FOR CONTENT EDITOR
+        Route::group(['before' => 'XCLSV_CONTENT_EDITOR'], function(){
+
+        });
 
     });
     /*

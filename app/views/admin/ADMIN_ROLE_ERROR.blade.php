@@ -16,7 +16,7 @@
     <body>
         <center>
         <div style="margin-top: 3em;">
-            <img src="frontend/img/proveek-logo-300.png" class="img-responsive center-block">
+            <img src="/frontend/img/proveek-logo-300.png" class="img-responsive center-block">
             <div class="col-md-6 col-md-offset-3">
                 <div class="widget-container padded" style="min-height: 1em;">
                     <div class="widget-content">
