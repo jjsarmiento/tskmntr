@@ -56,9 +56,11 @@
                     <div class="widget-content padded">
                         <h3 class="lato-text" style="font-weight: bold; margin:0 !important; color:#2980b9">
                             {{ $job->title}}
-                            <a href="#" data-href="/ADMIN_DELETEJOB={{$job->id}}" type="button" class="close DELETE_JOB_BTN" style="opacity: 100;">
-                                <i class="fa fa-trash" style="background-color: #C0392B; color: white; border: 1px solid #C0392B; padding: 0.3em; border-radius: 0.2em;"></i>
-                            </a>
+                            @if(AdminController::IF_ADMIN_IS(['ADMINISTRATOR', 'SUPER_ADMIN'], Auth::user()->id))
+                                <a href="#" data-href="/ADMIN_DELETEJOB={{$job->id}}" type="button" class="close DELETE_JOB_BTN" style="opacity: 100;">
+                                    <i class="fa fa-trash" style="background-color: #C0392B; color: white; border: 1px solid #C0392B; padding: 0.3em; border-radius: 0.2em;"></i>
+                                </a>
+                            @endif
                         </h3>
                         <span class="text-right" style="padding:0;margin:0; color:#ccc;">
                             Created at {{ date('m/d/y', strtotime($job->created_at)) }} by <a href="/{{$job->username}}">{{$job->fullName}}</a>

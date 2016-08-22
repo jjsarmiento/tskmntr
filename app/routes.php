@@ -200,7 +200,6 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
         // INHERITED ROUTES
         Route::get('/adminDeactivate/{id}', 'AdminController@adminDeactivate');
         Route::get('/adminActivate/{id}', 'AdminController@adminActivate');
-        Route::get('/ADMIN_jobDetails={job_id}', 'AdminController@ADMIN_jobDetails');
 
         Route::get('/ADMIN_DELETEJOB={jobId}', 'AdminController@ADMIN_DELETEJOB');
     });
@@ -208,6 +207,7 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
     Route::group(['before' => 'ADMINISTRATOR_SUPPORT'], function(){
         Route::get('/viewUserProfile/{id}', 'AdminController@viewUserProfile');
         Route::get('/allJobAds_user/{user_id}', 'AdminController@allJobAds_user');
+        Route::get('/ADMIN_jobDetails={job_id}', 'AdminController@ADMIN_jobDetails');
     });
 
     Route::group(['before' => 'SUPPORT'], function(){
