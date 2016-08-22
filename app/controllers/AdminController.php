@@ -1516,34 +1516,44 @@ class AdminController extends \BaseController {
     }
 
     public function doEDIT_ADMIN(){
-        if(Input::get('admin_fname') && Input::get('admin_lname') && Input::get('admin_username') && Input::get('admin_password') && Input::get('admin_cpassword')){
-            if(strcmp(Input::get('admin_password'), Input::get('admin_cpassword')) == 0){
-                if(User::where('username', Input::get('admin_username'))->whereNotIn('id', [Input::get('admin_id')])->count() == 0){
+        if(Input::get('admin_fname') && Input::get('admin_lname') && Input::get('admin_username')){
+            if(User::where('username', Input::get('admin_username'))->whereNotIn('id', [Input::get('admin_id')])->count() == 0){
+                if(Input::has('admin_password')){
+                    if(strcmp(Input::get('admin_password'), Input::get('admin_cpassword')) == 0){
+                        User::where('id', Input::get('admin_id'))->update([
+                            'username'  =>  Input::get('admin_username'),
+                            'password'  =>  Hash::make(Input::get('admin_password')),
+                            'firstName' =>  Input::get('admin_fname'),
+                            'midName'   =>  Input::get('admin_mname'),
+                            'lastName'  =>  Input::get('admin_lname'),
+                            'fullName'  =>  Input::get('admin_fname').' '.Input::get('admin_mname').' '.Input::get('admin_lname'),
+                        ]);
+                        Session::flash('successMsg', 'Administrator account edited');
+                    }else{
+                        Session::flash('errorMsg', 'Password does not match');
+                    }
+                }else{
                     User::where('id', Input::get('admin_id'))->update([
                         'username'  =>  Input::get('admin_username'),
-                        'password'  =>  Hash::make(Input::get('admin_password')),
                         'firstName' =>  Input::get('admin_fname'),
                         'midName'   =>  Input::get('admin_mname'),
                         'lastName'  =>  Input::get('admin_lname'),
                         'fullName'  =>  Input::get('admin_fname').' '.Input::get('admin_mname').' '.Input::get('admin_lname'),
                     ]);
+                }
 
-                    AdminHasRole::where('user_id', Input::get('admin_id'))->delete();
 
-                    foreach(Input::get('admin_role') as $ar){
-                        $ADMIN_ROLE_ID = AdminRole::where('role', $ar)->pluck('id');
-                        AdminHasRole::insert([
-                            'user_id'       =>  Input::get('admin_id'),
-                            'admin_role_id' =>  $ADMIN_ROLE_ID
-                        ]);
-                    }
+                AdminHasRole::where('user_id', Input::get('admin_id'))->delete();
 
-                    Session::flash('successMsg', 'Administrator account edited');
-                }else{
-                    Session::flash('errorMsg', 'Username already exists');
+                foreach(Input::get('admin_role') as $ar){
+                    $ADMIN_ROLE_ID = AdminRole::where('role', $ar)->pluck('id');
+                    AdminHasRole::insert([
+                        'user_id'       =>  Input::get('admin_id'),
+                        'admin_role_id' =>  $ADMIN_ROLE_ID
+                    ]);
                 }
             }else{
-                Session::flash('errorMsg', 'Password does not match');
+                Session::flash('errorMsg', 'Username already exists');
             }
         }else{
             Session::flash('errorMsg', 'Required fields must be filled out');

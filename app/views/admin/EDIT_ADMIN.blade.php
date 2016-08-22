@@ -281,11 +281,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input required="required" type="password" class="form-control" name="admin_password" placeholder="ADMIN PASSWORD" />
+                                            <input type="password" class="form-control" name="admin_password" placeholder="ADMIN PASSWORD" />
                                         </div>
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input required="required" type="password" class="form-control" name="admin_cpassword" placeholder="ADMIN REPEAT PASSWORD" />
+                                            <input type="password" class="form-control" name="admin_cpassword" placeholder="ADMIN REPEAT PASSWORD" />
                                         </div>
                                         <div class="form-group">
                                             <span style="color: red;"><b>Super Administrator</b> grants all privileges to account</span><br/>
