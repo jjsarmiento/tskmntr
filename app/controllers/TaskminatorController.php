@@ -482,8 +482,8 @@ class TaskminatorController extends \BaseController {
             'city'              =>  Input::get('city-task'),
             'barangay'          =>  Input::get('barangay-task'),
             'province'          =>  Input::get('edt_prov'),
-            'educationalBackground'          =>  Input::get('educBg'),
-            'experience'        =>  Input::get('experience'),
+//            'educationalBackground'          =>  Input::get('educBg'),
+//            'experience'        =>  Input::get('experience'),
             'marital_status'    =>  Input::get('marital_status'),
         ));
         $this->INSERT_AUDIT_TRAIL(Auth::user()->id, 'Edited personal information');
@@ -1168,5 +1168,38 @@ class TaskminatorController extends \BaseController {
 
         return View::make('wprofileProgress')
             ->with('reqs', $ARRAY);
+    }
+
+    public function editEducationalBackground(){
+        return View::make('taskminator.editEducationalBackground')
+            ->with('educs', WorkerEducation::where('user_id', Auth::user()->id)->get());
+    }
+
+    public function doEditEducationalBackground(){
+        if(Input::has('course')){
+            WorkerEducation::insert([
+                'user_id'       =>  Auth::user()->id,
+                'course_major'  =>  Input::get('course'),
+                'level'         =>  Input::get('level'),
+                'school_name'   =>  Input::get('school_name'),
+                'school_year'   =>  Input::get('school_year'),
+                'awards'        =>  Input::get('awards')
+            ]);
+        }else{
+            WorkerEducation::insert([
+                'user_id'       =>  Auth::user()->id,
+                'level'         =>  Input::get('level'),
+                'school_name'   =>  Input::get('school_name'),
+                'school_year'   =>  Input::get('school_year'),
+                'awards'        =>  Input::get('awards')
+            ]);
+        }
+
+        return Redirect::back();
+    }
+
+    public function deleteEduc($educ_id){
+        WorkerEducation::where('id', $educ_id)->delete();
+        return Redirect::back();
     }
 }

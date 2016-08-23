@@ -254,6 +254,11 @@ Route::group(array('before' => 'ADMIN-ONLY'), function(){
 });
 
 Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
+    // EDIT EDUCATIONAL BACKGROUND -- JAN
+    Route::get('/editEducationalBackground', 'TaskminatorController@editEducationalBackground');
+    Route::post('/doEditEducationalBackground', 'TaskminatorController@doEditEducationalBackground');
+    Route::get('/deleteEduc={educ_id}', 'TaskminatorController@deleteEduc');
+
     Route::get('/wprofileProgress', 'TaskminatorController@wprofileProgress');
     Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){
 //        Route::get('/APPLYFRJB:{jobId}', 'TaskminatorController@APPLYFRJB');

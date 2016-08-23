@@ -20,7 +20,7 @@ class CreateWorkerEducationsTable extends Migration {
             $table->string('school_name')->nullable();
             $table->string('course_major')->nullable();
             $table->string('school_year')->nullable();
-            $table->string('awards')->nullable();
+            $table->longText('awards')->nullable();
 			$table->timestamps();
 		});
 	}

@@ -226,18 +226,6 @@
                                     <option <?php if($user->marital_status == 'WIDOWED'){ echo 'selected'; } ?> value="WIDOWED">Widowed</option>
                                 </select><br/>
                             </div>
-                            <div class="col-md-3">
-                                Educational Background
-                            </div>
-                            <div class="col-md-9">
-                                <textarea class="form-control" id="educBg" name="educBg" placeholder="Enter your educational background" rows="5">{{Auth::user()->educationalBackground}}</textarea><br/>
-                            </div>
-                            <div class="col-md-3">
-                                Experience
-                            </div>
-                            <div class="col-md-9">
-                                <textarea class="form-control" id="experience" name="experience" placeholder="Enter experiences working" rows="5">{{Auth::user()->experience}}</textarea><br/>
-                            </div>
                             <br/><div class="text-right padded"><button type="submit" class="btn btn-primary">Edit</button></div>
                         </form>
                     </div>
