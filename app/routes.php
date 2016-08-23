@@ -258,6 +258,8 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::get('/editEducationalBackground', 'TaskminatorController@editEducationalBackground');
     Route::post('/doEditEducationalBackground', 'TaskminatorController@doEditEducationalBackground');
     Route::get('/deleteEduc={educ_id}', 'TaskminatorController@deleteEduc');
+    Route::get('/editEduc={educ_id}', 'TaskminatorController@editEduc');
+    Route::post('/doEditEduc', 'TaskminatorController@doEditEduc');
 
     // EDIT EXPERIENCE -- JAN
     Route::get('/editExperience', 'TaskminatorController@editExperience');

@@ -1205,6 +1205,34 @@ class TaskminatorController extends \BaseController {
         return Redirect::back();
     }
 
+    public function editEduc($educ_id){
+        return View::make('taskminator.editEduc')
+            ->with('e', WorkerEducation::where('id', $educ_id)->first());
+    }
+
+    public function doEditEduc(){
+        if(Input::has('course')){
+            WorkerEducation::where('id', Input::get('educ_id'))->update([
+                'course_major'  =>  Input::get('course'),
+                'level'         =>  Input::get('level'),
+                'school_name'   =>  Input::get('school_name'),
+                'school_year'   =>  Input::get('school_year'),
+                'awards'        =>  Input::get('awards'),
+                'created_at'    =>  Carbon::now()
+            ]);
+
+        }else{
+            WorkerEducation::where('id', Input::get('educ_id'))->update([
+                'level'         =>  Input::get('level'),
+                'school_name'   =>  Input::get('school_name'),
+                'school_year'   =>  Input::get('school_year'),
+                'awards'        =>  Input::get('awards'),
+                'updated_at'    =>  Carbon::now()
+            ]);
+        }
+        return Redirect::back();
+    }
+
     public function editExperience(){
         return View::make('taskminator.editExperience')
             ->with('exps', WorkerExperience::where('user_id', Auth::user()->id)->get());

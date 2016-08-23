@@ -156,6 +156,7 @@
                                 School Name : {{$e->school_name}}<br/>
                                 School Year : {{$e->school_year}}<br/>
                                 Awards : {{$e->awards}}<br/>
+                                <a href="/editEduc={{$e->id}}" class="btn btn-xs btn-success">EDIT</a>
                                 <a href="#" data-message="Are you sure you want to delete this data?" data-href="/deleteEduc={{$e->id}}" class="a-validate btn btn-xs btn-danger">Delete</a>
                                 <hr/>
                             @endforeach
