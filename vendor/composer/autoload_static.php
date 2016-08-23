@@ -287,6 +287,7 @@ class ComposerStaticInit953d5428e89260dd4741ae6cbf12205e
         'SMSAPIController' => __DIR__ . '/../..' . '/app/controllers/SMSAPIController.php',
         'SessionHandlerInterface' => __DIR__ . '/..' . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
         'Sms' => __DIR__ . '/../..' . '/app/models/Sms.php',
+        'SubAdminController' => __DIR__ . '/../..' . '/app/controllers/SubAdminController.php',
         'SystemSetting' => __DIR__ . '/../..' . '/app/models/SystemSetting.php',
         'SystemSettingsSeeder' => __DIR__ . '/../..' . '/app/database/seeds/SystemSettingsSeeder.php',
         'SystemSubscription' => __DIR__ . '/../..' . '/app/models/SystemSubscription.php',

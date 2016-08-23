@@ -92,6 +92,7 @@ return array(
     'SMSAPIController' => $baseDir . '/app/controllers/SMSAPIController.php',
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
     'Sms' => $baseDir . '/app/models/Sms.php',
+    'SubAdminController' => $baseDir . '/app/controllers/SubAdminController.php',
     'SystemSetting' => $baseDir . '/app/models/SystemSetting.php',
     'SystemSettingsSeeder' => $baseDir . '/app/database/seeds/SystemSettingsSeeder.php',
     'SystemSubscription' => $baseDir . '/app/models/SystemSubscription.php',
