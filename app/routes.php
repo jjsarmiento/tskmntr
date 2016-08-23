@@ -82,6 +82,8 @@ Route::group(array('before' => 'auth'), function(){
     // NOTIF -- 2016 Jan Sarmiento
     Route::get('/n_{notifID}:/{destinationUrl}', 'HomeController@catchNotif');
 
+    Route::get('/editContactPerson', 'HomeController@editContactPerson');
+    Route::post('/doEditContactPerson', 'HomeController@doEditContactPerson');
     Route::get('/editProfile', 'HomeController@editProfile');
     Route::post('/uploadProfilePic', 'HomeController@uploadProfilePic');
     Route::get('/getNotification', 'HomeController@getNotification');

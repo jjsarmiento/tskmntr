@@ -69,6 +69,7 @@ class UsersTableSeeder extends Seeder {
             'user_id'           =>  2,
             'role_id'           =>  4,
         ));
+        /*
         ContactPerson::create(array(
             'user_id'           =>  2,
             'firstName'         =>  'Client Keyperon Firstname',
@@ -79,6 +80,7 @@ class UsersTableSeeder extends Seeder {
             'position'          =>  'Client Keyperon Position',
             'country'           =>  'PHILIPPINES',
         ));
+        */
         UserSubscription::insert([
             'user_id'                   =>  2,
             'system_subscription_id'    =>  1,
@@ -115,6 +117,7 @@ class UsersTableSeeder extends Seeder {
             'user_id'           =>  3,
             'role_id'           =>  2,
         ));
+        /*
         ContactPerson::create(array(
             'user_id'           =>  3,
             'firstName'         =>  'PPerson Fistname',
@@ -125,7 +128,7 @@ class UsersTableSeeder extends Seeder {
             'position'          =>  'PPerson Position',
             'country'           =>  'PHILIPPINES',
         ));
-
+        */
         // TASKMINATOR 2
         User::create(array(
             'id'                =>  4,
@@ -156,6 +159,7 @@ class UsersTableSeeder extends Seeder {
             'user_id'           =>  4,
             'role_id'           =>  2,
         ));
+        /*
         ContactPerson::create(array(
             'user_id'           =>  4,
             'firstName'         =>  'PPerson Fistname',
@@ -166,7 +170,7 @@ class UsersTableSeeder extends Seeder {
             'position'          =>  'PPerson Position',
             'country'           =>  'PHILIPPINES',
         ));
-
+        */
         // TASKMINATOR 3
         User::create(array(
             'id'                =>  5,
@@ -197,6 +201,7 @@ class UsersTableSeeder extends Seeder {
             'user_id'           =>  5,
             'role_id'           =>  2,
         ));
+        /*
         ContactPerson::create(array(
             'user_id'           =>  5,
             'firstName'         =>  'PPerson Fistname',
@@ -207,7 +212,7 @@ class UsersTableSeeder extends Seeder {
             'position'          =>  'PPerson Position',
             'country'           =>  'PHILIPPINES',
         ));
-
+        */
         // ADMINISTRATORS
         User::create(array(
             'id'                =>  6,

@@ -248,15 +248,13 @@ class HomeController extends BaseController {
                     'role_id'   =>  '4'
                 ));
 
-                ContactPerson::insert(array(
+                ContactPerson::insert([
                     'user_id'       => $userId,
-                    'firstName'     => Input::get('fName'),
-                    'midName'       => NULL,
-                    'lastName'      => Input::get('lName'),
-                    'contactNum'    => NULL,
-                    'position'      => NULL,
-                    'country'       => 'PHILIPPINES'
-                ));
+                    'name'          => Input::get('fName').' '.Input::get('lName'),
+                    'position'      => null,
+                    'contact_number'=> Input::get('mobileNum'),
+                    'email'         => Input::get('txtEmail')
+                ]);
 
                 Contact::insert(array(
                     array(
@@ -1344,7 +1342,8 @@ class HomeController extends BaseController {
     public function editProfile(){
         switch(UserHasRole::where('user_id', Auth::user()->id)->pluck('role_id')){
             case '1'    :
-                return View::make('editProfile_admin')->with('user', User::where('id', Auth::user()->id)->first());
+                return View::make('editProfile_admin')
+                    ->with('user', User::where('id', Auth::user()->id)->first());
             case '2'    : // WORKER
                 $pincode = Contact::where('user_id',  Auth::user()->id)->pluck('pincode');
                 $docs = Document::join('document_types', 'document_types.sys_doc_type', '=', 'documents.type')->select(['document_types.sys_doc_label'])->where('documents.user_id', Auth::user()->id)->get();
@@ -1357,6 +1356,7 @@ class HomeController extends BaseController {
             case '4'    :
                 $docs = Document::join('document_types', 'document_types.sys_doc_type', '=', 'documents.type')->select(['document_types.sys_doc_label'])->where('documents.user_id', Auth::user()->id)->get();
                 return View::make('editProfile_client')
+                    ->with('cperson', ContactPerson::where('user_id', Auth::user()->id)->first())
                     ->with('docs', $docs)
                     ->with('user', User::where('id', Auth::user()->id)->first())
                     ->with('contacts', Contact::where('user_id', Auth::user()->id)->get());
@@ -2016,6 +2016,23 @@ class HomeController extends BaseController {
             ->with('provinces', $provinces)
             ->with('categories', TaskCategory::orderBy('categoryname', 'ASC')->get())
             ->with('categorySkills', TaskItem::where('item_categorycode', $categoryId)->orderBy('itemname', 'ASC')->get());
+    }
+
+    public function editContactPerson(){
+        return View::make('client.editContactPerson')
+            ->with('cperson', ContactPerson::where('user_id', Auth::user()->id)->first());
+    }
+
+    public function doEditContactPerson(){
+        ContactPerson::where('user_id', Auth::user()->id)
+            ->update([
+                'name'          =>  Input::get('cp_name'),
+                'position'      =>  Input::get('cp_position'),
+                'contact_number'=>  Input::get('cp_contactnumber'),
+                'email'         =>  Input::get('cp_email')
+            ]);
+
+        return Redirect::back();
     }
 }
 

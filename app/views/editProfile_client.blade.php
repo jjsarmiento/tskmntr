@@ -274,17 +274,14 @@
                                 <div class="heading" style="font-size:14pt; color:#2980b9">
                                     <i class="glyphicon glyphicon-phone-alt" style="font-size:14pt; color:#2980b9"></i>
                                     Key Contact Person
-                                    <button onclick="#" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</button>
+                                    <a href="/editContactPerson" class="btn btn-xs btn-default pull-right" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</a>
                                 </div>
                                 <div style="padding-left: 23px">
-                                    <span><b>Name: </b></span><br>
-                                    <span><b>Position: </b></span><br>
-                                    <span style="text-transform: capitalize; font-weight: 600; margin-right: 5px;">
-                                         @if($contact->ctype == "mobileNum") Mobile No :
-                                         @endif
-                                    </span>
-                                    <span style="margin-left: 5px">{{ $contact->content }}</span><br/>
-                                    <span><b>Email: </b></span>
+
+                                    <span><b>Name: </b></span> {{$cperson->name}}<br>
+                                    <span><b>Position: </b></span> {{$cperson->position}}<br>
+                                    <span><b>Contact #: </b></span> {{$cperson->contact_number}}<br>
+                                    <span><b>Email: </b> {{$cperson->email}}</span>
                                 </div>
                             </div>
                         </div>

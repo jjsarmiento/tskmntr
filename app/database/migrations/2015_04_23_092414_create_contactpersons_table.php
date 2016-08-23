@@ -15,6 +15,13 @@ class CreateContactpersonsTable extends Migration {
         Schema::create('contactpersons', function(Blueprint $table)
         {
             $table->increments('id');
+            $table->string('user_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('position')->nullable();
+            $table->string('email')->nullable();
+
+            /*
             $table->integer('user_id')->nullable();
             $table->string('firstName')->nullable();
             $table->string('midName')->nullable();
@@ -23,6 +30,8 @@ class CreateContactpersonsTable extends Migration {
             $table->string('email')->nullable();
             $table->string('position')->nullable();
             $table->string('country')->nullable();
+            */
+
             $table->timestamps();
         });
     }
