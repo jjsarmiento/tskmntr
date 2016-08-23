@@ -25,6 +25,48 @@
             min-width: 100%;
             height:1px;
         }
+        /* Added by Jups */
+        section{
+            background: url("../frontend/img/slideshow/10admin.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: auto;
+        }
+        h1.lato-text{
+            color: white;
+        }
+        .widget-container{
+            background-color: rgba(245,245,245,0.3);
+        }
+        .breadcrumb, .panel-heading{
+            background-color: rgba(245,245,245,0.7);
+        }
+        .breadcrumb>li{
+            color: white !important;
+        }
+        a.sidemenu {
+            color: white;
+        }
+        a.sidemenu:hover {
+            transition: 0.3s;
+            color: #d9d9d9;
+            text-decoration: none;
+        }
+
+        .heading {
+            background: rgba(3, 127, 180, 0.5) !important;
+            border-radius: 5px;
+            margin-bottom: 10px !important;
+            color: white !important;
+            height: 55px !important;
+        }
+        .col-sm-12 > img{
+            width: 260px;
+        }
+        span b, li b {
+            color:white;
+        }
+        /*-----------------*/
     </style>
 @stop
 
@@ -45,14 +87,14 @@
             <div class="col-sm-12">
                 <div class="widget-container fluid-height">
                     <div class="widget-content padded row" style="padding-bottom: 30px">
-                        <div class="col-sm-3" style="text-align: center; align-content: center; align-items: center;">
+                        <div class="col-sm-12" style="text-align: center; align-content: center; align-items: center;">
                                 <br/>
                                 @if($user->profilePic)
                                     <img src="{{$user->profilePic}}" width="90%" style="border-radius: 0.6em; box-shadow: 0 0 10px 1px #7F8C8D;" />
                                 @else
                                     <img src="/images/default_profile_pic.png" width="90%" style="border-radius: 0.6em; box-shadow: 0 0 10px 1px #7F8C8D;" />
                                 @endif
-                                <h3 style="margin-top: 1em;" class="lato-text">{{ $user->firstName }} {{ $user->midName }} {{ $user->lastName }}</h3>
+                                <h3 style="margin-top: 1em; color:white; font-weight:bold;" class="lato-text">{{ $user->firstName }} {{ $user->midName }} {{ $user->lastName }}</h3>
                                 <br/>
                             @if(AdminController::IF_ADMIN_IS(['ADMINISTRATOR', 'SUPER_ADMINISTRATOR'], Auth::user()->id))
                                 @if($user->status == 'PRE_ACTIVATED')
@@ -68,62 +110,127 @@
                                     <a href="/adminActivate/{{$user->id}}" class="btn btn-success">Activate Account</a><br/>
                                 @endif
                             @endif
+                            <br><br>
                         </div>
-                        <div class="col-sm-9">
-                            <div class="heading" style="font-size:14pt;">
-                                <i class="glyphicon glyphicon-info-sign"></i>General Information
+                        <div class="col-sm-12">
+                            <div class="col-md-6">
+                                <div class="heading" style="font-size:14pt;">
+                                    <i class="glyphicon glyphicon-info-sign"></i>Personal Information
+                                </div>
+                                <div style="padding: 0 12px; color:#dddddd;">
+                                    <span style="text-transform: capitalize; color: white; margin-right: 5px; font-weight:600;">Address</span>
+                                     : <span style="margin-left: 5px">{{Auth::user()->address}}{{ Region::where('regcode', $user->region)->pluck('regname') }} {{ Province::where('provcode', $user->province)->pluck('provname') }} {{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }} {{ City::where('citycode', $user->city)->pluck('cityname') }}</span><br/>
+                                    <span style="text-transform: capitalize; color: white; margin-right: 5px; font-weight:600;">Birthdate</span>
+                                     : <span style="margin-left: 5px">{{$user->birthdate}}</span><br/>
+                                    <span style="text-transform: capitalize; color: white; margin-right: 5px; font-weight:600;">Gender</span>
+                                     : <span style="margin-left: 5px">{{$user->gender}}</span><br/>
+                                    <span style="text-transform: capitalize; color: white; margin-right: 5px; font-weight:600;">Marital Status</span>
+                                     : <span style="margin-left: 5px"></span><br/>
+                                    <span style="text-transform: capitalize; color: white; margin-right: 5px; font-weight:600;">Status</span>
+                                     : <span style="margin-left: 5px">{{$user->status}}</span><br/>
+                                    <span style="text-transform: capitalize; color: white; margin-right: 5px; font-weight:600;">Account Created at</span>
+                                     : <span style="margin-left: 5px">{{$user->created_at}}</span><br/>
+                                </div>
                             </div>
-                            <div style="padding: 0 12px;">
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Address</span>
-                                 : <span style="margin-left: 5px">{{$user->address}}</span><br/>
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Birthdate</span>
-                                 : <span style="margin-left: 5px">{{$user->birthdate}}</span><br/>
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">City</span>
-                                 : <span style="margin-left: 5px">{{$user->city}}</span><br/>
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Barangay</span>
-                                 : <span style="margin-left: 5px">{{$user->barangay}}</span><br/>
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Gender</span>
-                                 : <span style="margin-left: 5px">{{$user->gender}}</span><br/>
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Status</span>
-                                 : <span style="margin-left: 5px">{{$user->status}}</span><br/>
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Account Created at</span>
-                                 : <span style="margin-left: 5px">{{$user->created_at}}</span><br/>
+                            <div class="col-md-6">
+                                <div class="heading" style="font-size:14pt;">
+                                    <i class="glyphicon glyphicon-phone"></i>Contact Details
+                                </div>
+                                <div style="padding: 0 12px; color:#dddddd;">
+                                    @foreach(Contact::where('user_id', $user->id)->get() as $conts)
+                                        <span style="text-transform: capitalize; color: white; margin-right: 5px; font-weight:600;">{{ $conts->ctype }}</span>
+                                         : <span style="margin-left: 5px">{{ $conts->content }}</span><br/>
+                                    @endforeach
+                                </div>
                             </div>
+                            <div style="clear:both;"></div>
                             <hr class="hrLine" />
-                            <div class="heading" style="font-size:14pt;">
-                                <i class="glyphicon glyphicon-phone"></i>Contact Details
+
+
+                            <div class="col-md-6">
+                                <div class="heading" style="font-size:14pt;">
+                                    <i class="fa fa-graduation-cap" style="margin-right: 10px;"></i>Educational Background
+                                </div>
+                                <div class="col-md-12" style="padding: 0 12px; color:#dddddd;">
+                                    <span><b>College/Vocational: </b></span>
+                                    <ul>
+                                        <li><b>School Name: </b>Lorem ipsum</li>
+                                        <li><b>Course: </b>BSIT</li>
+                                        <li><b>School Year: </b>2001/2015</li>
+                                        <li><b>Awards: </b>N/A</li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-md-6" style="padding: 0 12px; color:#dddddd;">
+                                    <span><b>High School: </b></span>
+                                    <ul>
+                                        <li><b>School Name: </b>Lorem ipsum</li>
+                                        <li><b>School Year: </b>1996/2001</li>
+                                        <li><b>Awards: </b>N/A</li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-md-6" style="padding: 0 12px; color:#dddddd;">
+                                    <span><b>Elementary: </b></span>
+                                    <ul>
+                                        <li><b>School Name: </b>Lorem ipsum</li>
+                                        <li><b>School Year: </b>1990/1996</li>
+                                        <li><b>Awards: </b>N/A</li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div style="padding: 0 12px;">
-                                @foreach(Contact::where('user_id', $user->id)->get() as $conts)
-                                    <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">{{ $conts->ctype }}</span>
-                                     : <span style="margin-left: 5px">{{ $conts->content }}</span><br/>
-                                @endforeach
+                            <div class="col-md-6">
+                                <div class="heading" style="font-size:14pt;">
+                                    <i class="glyphicon glyphicon-wrench"></i>Skills
+                                </div>
+                                <div style="padding: 0 12px;">
+                                    @foreach($skills as $skill)
+                                        <span class="" style="padding:8px; background: rgba(3, 127, 180, 0.5); border: 1px solid; display:inline-block; color: white; border-radius: 0.2em; font-size: 12pt; margin:5px;">{{ TaskItem::where('itemcode', $skill->taskitem_code)->pluck('itemname') }}</span>
+                                    @endforeach
+                                </div>
                             </div>
+                            <div style="clear:both;"></div>
                             <hr class="hrLine" />
-                            <div class="heading" style="font-size:14pt;">
-                                <i class="glyphicon glyphicon-wrench"></i>Skills
+
+                            <div class="col-md-12">
+                                <div class="heading" style="font-size:14pt;">
+                                    <i class="fa fa-lightbulb-o" style="margin-right: 10px;"></i>Experience
+                                </div>    
+                                @for($i=0; $i<3; $i++)
+                                    <div class="col-md-4" style="padding: 0 12px; color:#dddddd;">
+                                        <ul>
+                                            <li><b>Position: </b><b style="font-size:18px;">Lorem Ipsum</b></li>
+                                            <li><b>Company Name: </b><b style="font-size:15px;">Company Sample name</b></li>
+                                            <li><b>Location: </b>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper fringilla tellus in mattis. Quisque nec nisi lacus. Fusce ac sem sem. Nam tristique congue egestas.</li>
+                                            <li><b>Time Period: </b>2015 - Present</li>
+                                            <li><b>Roles and Responsibilities: </b>Sit dolor amet</li>
+                                        </ul>
+                                    </div>
+                                @endfor
+
+
                             </div>
-                            <div style="padding: 0 12px;">
-                                @foreach($skills as $skill)
-                                    <span class="" style="border:2px solid white; padding:8px; background-color: #BDC3C7; display:inline-block; color: white; border-radius: 0.2em; font-size: 12pt;">{{ TaskItem::where('itemcode', $skill->taskitem_code)->pluck('itemname') }}</span>
-                                @endforeach
-                            </div>
+                            <div style="clear:both;"></div>
                             <hr class="hrLine" />
-                            <div class="heading" style="font-size:14pt;">
-                                <i class="glyphicon glyphicon-star"></i>Ratings
-                            </div>
-                            <div style="padding: 0 12px;">
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Number of ratings</span>
-                                 : <span style="margin-left: 5px">{{ $ratings }}</span><br/>
-                                <span style="text-transform: capitalize; color: rgb(72, 157, 179); margin-right: 5px;">Total Ratings</span>
-                                 : <span style="margin-left: 5px">{{ $starRatings }} stars</span><br/><br/>
-                                <a href="/viewRatings={{$user->id}}" class="btn btn-primary">View Ratings</a>
-                            </div>
-                            <hr class="hrLine" />
-                            <div class="col-sm-12">
+
+                            <!-- <div class="col-md-12">
+                                <div class="heading" style="font-size:14pt;">
+                                    <i class="glyphicon glyphicon-star"></i>Ratings
+                                </div>
+                                <div style="padding: 0 12px;">
+                                    <span style="text-transform: capitalize; color: white; margin-right: 5px; font-weight:600;">Number of ratings</span>
+                                     : <span style="margin-left: 5px">{{ $ratings }}</span><br/>
+                                    <span style="text-transform: capitalize; color: white; margin-right: 5px; font-weight:600;">Total Ratings</span>
+                                     : <span style="margin-left: 5px">{{ $starRatings }} stars</span><br/><br/>
+                                    <a href="/viewRatings={{$user->id}}" class="btn btn-primary">View Ratings</a>
+                                </div>
+                            </div> 
+                            <hr class="hrLine" />-->
+
+                            <div class="col-sm-12" style="color:white;">
                                 <div class="col-sm-6">
                                     <div class="heading">
-                                        <i class="glyphicon glyphicon-folder-open"></i>Documents (Click to download)
+                                        <i class="glyphicon glyphicon-folder-open"></i>Supporting (Click to download)
                                     </div>
                                     <div style="padding: 0 35px;">
                                         @if($docs->count() == 0)
@@ -137,7 +244,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="heading">
-                                        <i class="glyphicon glyphicon-folder-open"></i>Key Skill Certification
+                                        <i class="fa fa-certificate" style="margin-right: 10px;"></i>Certification
                                     </div>
                                     <div style="padding: 0 35px;">
                                         @if($keyskills->count() == 0)
@@ -152,7 +259,7 @@
                                 <br/><br/>
                             </div>
                             <hr class="hrLine" style="padding-top:70px; margin-top: 70px" />
-                            <div class="col-sm-12">
+<!--                             <div class="col-sm-12">
                                 <div class="col-sm-6">
                                     <div class="heading">
                                         <i class="glyphicon glyphicon-folder-open"></i>Misc. Documents
@@ -181,7 +288,7 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

@@ -197,7 +197,7 @@
                             <div class="col-md-12" style="padding-left: 27px;">
                                 <span><b>Name: </b>{{ $user->fullName }}</span><br>
                                 <span><b>Birthdate: </b> {{Auth::user()->birthdate}}</span><br>
-                                <span><b>Age: </b> {{ \Carbon\Carbon::now()->diffInYears(\Carbon\Carbon::parse(Auth::user()->birthdate)) }} y/o</span><br>
+                                <!-- <span><b>Age: </b> {{ \Carbon\Carbon::now()->diffInYears(\Carbon\Carbon::parse(Auth::user()->birthdate)) }} y/o</span><br> -->
                                 <span><b>Gender: </b>{{ Auth::user()->gender }}</span><br>
                                 <span><b>Marital Status: </b> {{ Auth::user()->marital_status }}</span><br>
                                 <span ><b>Address: </b>{{Auth::user()->address}}{{ Region::where('regcode', $user->region)->pluck('regname') }} {{ Province::where('provcode', $user->province)->pluck('provname') }} {{ Barangay::where('bgycode', $user->barangay)->pluck('bgyname') }} {{ City::where('citycode', $user->city)->pluck('cityname') }}</span><br>
