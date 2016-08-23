@@ -12,6 +12,31 @@
         body{
             background-color:#E9EAED;
         }
+        /* Added by Jups */
+        section{
+            background: url("../frontend/img/slideshow/10admin.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: auto;
+        }
+        h1.lato-text{
+            color: white;
+        }
+        .breadcrumb, .panel-heading{
+            background-color: rgba(245,245,245,0.7);
+        }
+        .breadcrumb>li{
+            color: white !important;
+        }
+        a.sidemenu {
+            color: white;
+        }
+        a.sidemenu:hover, a:hover {
+            transition: 0.3s;
+            color: #d9d9d9;
+            text-decoration: none;
+        }
+        /*-----------------*/
     </style>
     <script>
         $(document).ready(function() {
@@ -35,7 +60,7 @@
                         <a href="/"><i class="fa fa-home"></i></a>
                     </li>
                     <li>
-                        <a href="/SYSTEMSETTINGS"><i class="fa fa-gear"></i> System Settings</a>
+                        <a class="sidemenu" href="/SYSTEMSETTINGS"><i class="fa fa-gear"></i> System Settings</a>
                     </li>
                     <li class="active">
                         Worker Documents
