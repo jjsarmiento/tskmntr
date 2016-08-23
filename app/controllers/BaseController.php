@@ -387,14 +387,59 @@ class BaseController extends Controller {
 
     public static function PROVEEK_PROFILE_PERCENTAGE_WORKER($user_id){
         $user = User::where('id', $user_id)->first();
+        $facebook = Contact::where('user_id', $user->id)->where('ctype', 'facebook')->pluck('content');
         $mobile = Contact::where('user_id', $user->id)->where('ctype', 'mobileNum')->pluck('content');
         $email = Contact::where('user_id', $user->id)->where('ctype', 'email')->pluck('content');
         // documents
+        $doc_count = Document::where('user_id', $user_id)->count();
+        /*
         $PASSPORT = Document::where('user_id', $user_id)->where('type', 'PASSPORT')->count();
         $NBI = Document::where('user_id', $user_id)->where('type', 'NBI')->count();
         $VOTERS_ID = Document::where('user_id', $user_id)->where('type', 'VOTERS_ID')->count();
         $TIN = Document::where('user_id', $user_id)->where('type', 'TIN_ID')->count();
+        */
+        $exp = WorkerExperience::where('user_id', $user_id)->count();
+        $edu = WorkerEducation::where('user_id', $user_id)->count();
+        // skill
+        $skill_count = TaskminatorHasSkill::where('user_id', $user->id)->count() + CustomSkill::where('created_by', $user->id)->count();
 
+        // first 50% - 10 items
+        $base = 0;
+        $base = ($user->fullName    != null) ? ++$base : $base;
+        $base = ($user->birthdate   != null) ? ++$base : $base;
+        $base = ($user->gender      != null) ? ++$base : $base;
+        $base = ($user->address     != null) ? ++$base : $base;
+        $base = ($edu                   >=1) ? ++$base : $base;
+        $base = ($exp                   >=1) ? ++$base : $base;
+        $base = ($skill_count           >=1) ? ++$base : $base;
+        $base = ($skill_count           >=2) ? ++$base : $base;
+        $base = ($mobile            != null) ? ++$base : $base;
+        $base = ($email             != null) ? ++$base : $base;
+        $FIRST_50 = $base * (50/10);
+        $base = 0;
+
+        // second 50% - 10 items
+        $base = ($user->marital_status  != null) ? ++$base : $base;
+        $base = ($edu                       >=2) ? ++$base : $base;
+        $base = ($edu                       >=3) ? ++$base : $base;
+        $base = ($skill_count               >=3) ? ++$base : $base;
+        $base = ($skill_count               >=4) ? ++$base : $base;
+        $base = ($user->profilePic      != null) ? ++$base : $base;
+        $base = ($doc_count                 >=1) ? ++$base : $base;
+        $base = ($doc_count                 >=2) ? ++$base : $base;
+        $base = ($exp                       >=2) ? ++$base : $base;
+        $base = ($facebook              != null) ? ++$base : $base;
+        $SECOND_50 = $base * (50/10);
+        $FINAL_PERCENTAGE = $FIRST_50 + $SECOND_50;
+
+        // UPDATE total_profile_progress column on users table
+        User::where('id', $user->id)->update([
+            'total_profile_progress' =>  $FINAL_PERCENTAGE
+        ]);
+
+        return $FINAL_PERCENTAGE;
+
+        /*
         // 1st 50%
         $base = 0; // INITIALIZE
         $base = ($user->firstName       == null) ? $base : ++$base;
@@ -437,6 +482,7 @@ class BaseController extends Controller {
         ]);
 
         return $FINAL_PERCENTAGE;
+        */
     }
 
     public function GET_WORKER_APPLICATIONS($workerID){
