@@ -223,7 +223,7 @@
 <input type="hidden" id="SYSSETTINGS_CHECKOUTPRICE" value="{{SystemSetting::where('type', 'SYSSETTINGS_CHECKOUTPRICE')->pluck('value')}}">
 <!-- NAVIGATION MASTER USER LAYOUT -->
     @if(Auth::check())
-    @if(AdminController::IF_ADMIN_IS(['SUPER_ADMINISTRATOR'], Auth::user()->id))
+    @if(!AdminController::IF_ADMIN_IS(['CONTENT_ROLE', 'ADMINISTRATOR', 'CONTENT_EDITOR', 'SUPPORT'], Auth::user()->id))
 	<nav id="mainNav" class="navbar navbar-default navbar-fixed-top affix" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
