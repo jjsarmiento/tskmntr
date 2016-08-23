@@ -1183,7 +1183,8 @@ class TaskminatorController extends \BaseController {
                 'level'         =>  Input::get('level'),
                 'school_name'   =>  Input::get('school_name'),
                 'school_year'   =>  Input::get('school_year'),
-                'awards'        =>  Input::get('awards')
+                'awards'        =>  Input::get('awards'),
+                'created_at'    =>  Carbon::now()
             ]);
         }else{
             WorkerEducation::insert([
@@ -1191,7 +1192,8 @@ class TaskminatorController extends \BaseController {
                 'level'         =>  Input::get('level'),
                 'school_name'   =>  Input::get('school_name'),
                 'school_year'   =>  Input::get('school_year'),
-                'awards'        =>  Input::get('awards')
+                'awards'        =>  Input::get('awards'),
+                'created_at'    =>  Carbon::now()
             ]);
         }
 
@@ -1200,6 +1202,30 @@ class TaskminatorController extends \BaseController {
 
     public function deleteEduc($educ_id){
         WorkerEducation::where('id', $educ_id)->delete();
+        return Redirect::back();
+    }
+
+    public function editExperience(){
+        return View::make('taskminator.editExperience')
+            ->with('exps', WorkerExperience::where('user_id', Auth::user()->id)->get());
+    }
+
+    public function doEditExperience(){
+        WorkerExperience::insert([
+            'user_id'           =>  Auth::user()->id,
+            'company_name'      =>  Input::get('company_name'),
+            'position'          =>  Input::get('position'),
+            'location'          =>  Input::get('location'),
+            'time_period'       =>  Input::get('time_period'),
+            'roles_and_resp'    =>  Input::get('roles_and_resp'),
+            'created_at'        =>  Carbon::now()
+        ]);
+
+        return Redirect::back();
+    }
+
+    public function deleteExp($exp_id){
+        WorkerExperience::where('id', $exp_id)->delete();
         return Redirect::back();
     }
 }

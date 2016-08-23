@@ -274,7 +274,7 @@
                         <div class="col-md-12 padded">
                             <div class="heading" style="font-size:14pt; color:#2980b9">
                                <i class="fa fa-lightbulb-o" style="font-size:14pt; color:#2980b9"></i>&nbsp Experience
-                               <a class="btn btn-xs btn-default pull-right" href="/editPersonalInfo" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</a>
+                               <a class="btn btn-xs btn-default pull-right" href="/editExperience" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</a>
                             </div>
                             <!-- @if(Auth::user()->experience)
                                 {{Auth::user()->experience}}

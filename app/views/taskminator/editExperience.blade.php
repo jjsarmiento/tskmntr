@@ -109,35 +109,29 @@
             <div class="col-md-6">
                 <div class="widget-container fluid-height padded">
                     <div class="widget-content">
-                        <form method="POST" action="doEditEducationalBackground">
+                        <form method="POST" action="doEditExperience">
                             <div class="form-group">
-                                <label>Education Level</label>
-                                <select name="level" id="level" class="form-control" required="required">
-                                    <option value="COLLEGE">College</option>
-                                    <option value="HIGH_SCHOOL">High School</option>
-                                    <option value="ELEMENTARY">Elementary</option>
-                                    <option value="VOCATIONAL">Vocational</option>
-                                    <option value="OTHER">Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group" id="COURSE_DIV">
-                                <label>Course / Major</label>
-                                <input type="text" class="form-control" name="course" id="course" placeholder="Course / Major" required="required" />
+                                <label>Company Name</label>
+                                <input name="company_name" id="company_name" placeholder="Company Name" class="form-control" type="text" required="required"/>
                             </div>
                             <div class="form-group">
-                                <label>School Name</label>
-                                <input type="text" class="form-control" name="school_name" id="school_name" placeholder="School Name" required="required" />
+                                <label>Position</label>
+                                <input name="position" id="position" placeholder="Position in company" class="form-control" type="text" required="required" />
                             </div>
                             <div class="form-group">
-                                <label>School Year</label>
-                                <input type="text" class="form-control" name="school_year" id="school_year" placeholder="School Year" required="required" />
+                                <label>Location</label>
+                                <input name="location" id="location" placeholder="Location of company" class="form-control" type="text" required="required" />
                             </div>
                             <div class="form-group">
-                                <label>Awards</label>
-                                <textarea name="awards" rows="10" id="awards" class="form-control" placeholder="Awards" required="required"></textarea>
+                                <label>Time Period</label>
+                                <input name="time_period" id="time_period" placeholder="Time Period" class="form-control" type="text" required="required" />
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success">Add Education</button>
+                                <label>Roles and Responsibilities</label>
+                                <textarea name="roles_and_resp" id="roles_and_resp" placeholder="Roles and Responsibilities" class="form-control" rows="10"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Add Experience</button>
                             </div>
                         </form>
                     </div>
@@ -147,20 +141,18 @@
             <div class="col-md-6">
                 <div class="widget-container fluid-height padded">
                     <div class="widget-content" style="word-wrap: break-word;">
-                        @if($educs->count() > 0)
-                            @foreach($educs as $e)
-                                Education : {{$e->level}}<br/>
-                                @if($e->level == 'COLLEGE' || $e->level == 'VOCATIONAL')
-                                    Course / Major : {{$e->course_major}}<br/>
-                                @endif
-                                School Name : {{$e->school_name}}<br/>
-                                School Year : {{$e->school_year}}<br/>
-                                Awards : {{$e->awards}}<br/>
-                                <a href="#" data-message="Are you sure you want to delete this data?" data-href="/deleteEduc={{$e->id}}" class="a-validate btn btn-xs btn-danger">Delete</a>
+                        @if($exps->count() > 0)
+                            @foreach($exps as $e)
+                                Company Name : {{$e->company_name}}<br/>
+                                Position : {{$e->position}}<br/>
+                                Location : {{$e->location}}<br/>
+                                Time Period : {{$e->time_period}}<br/>
+                                Roles and Responsibilities : {{$e->roles_and_resp}}<br/>
+                                <a href="#" data-message="Are you sure you want to delete this data?" data-href="/deleteExp={{$e->id}}" class="a-validate btn btn-danger btn-xs">Delete</a>
                                 <hr/>
                             @endforeach
                         @else
-                            <center>No educational information yet</center>
+                            <center>No data available</center>
                         @endif
                     </div>
                 </div>

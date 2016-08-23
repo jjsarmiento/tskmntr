@@ -20,7 +20,7 @@ class CreateWorkerExperiencesTable extends Migration {
             $table->string('company_name')->nullable();
             $table->string('location')->nullable();
             $table->string('time_period')->nullable();
-            $table->string('roles_and_resp')->nullable();
+            $table->longText('roles_and_resp')->nullable();
 			$table->timestamps();
 		});
 	}
