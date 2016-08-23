@@ -60,14 +60,6 @@
                     $('#course').prop('disabled', true);
                 }
             })
-
-            if($('#level').val() == 'COLLEGE' || $('#level').val() == 'VOCATIONAL'){
-                $('#COURSE_DIV').show();
-                $('#course').prop('disabled', false);
-            }else{
-                $('#COURSE_DIV').hide();
-                $('#course').prop('disabled', true);
-            }
         });
     </script>
 @stop
@@ -81,7 +73,7 @@
     <div class="container">
         <div class="page-title">
             <h1 class="lato-text">
-                Edit Educational Information
+                Edit Experience Information
             </h1>
         </div>
         <div class="row">
@@ -94,7 +86,7 @@
                         <a href="/editProfile">Edit Profile</a>
                     </li>
                     <li class="active">
-                        Edit Educational Information
+                        Edit Experience Information
                     </li>
                 </ul>
             </div>
@@ -117,44 +109,34 @@
             <div class="col-md-12">
                 <div class="widget-container fluid-height padded">
                     <div class="widget-content">
-                        <form method="POST" action="doEditEduc">
-                            <input type="hidden" name="educ_id" value="{{$e->id}}" />
+                        <form method="POST" action="doEditExp">
+                            <input type="hidden" name="exp_id" value="{{$e->id}}" />
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Education Level</label>
-                                        <select name="level" id="level" class="form-control" required="required">
-                                            <option <?php if($e->level == 'COLLEGE'){ echo 'selected'; } ?> value="COLLEGE">College</option>
-                                            <option <?php if($e->level == 'HIGH_SCHOOL'){ echo 'selected'; } ?> value="HIGH_SCHOOL">High School</option>
-                                            <option <?php if($e->level == 'ELEMENTARY'){ echo 'selected'; } ?> value="ELEMENTARY">Elementary</option>
-                                            <option <?php if($e->level == 'VOCATIONAL'){ echo 'selected'; } ?> value="VOCATIONAL">Vocational</option>
-                                            <option <?php if($e->level == 'OTHER'){ echo 'selected'; } ?> value="OTHER">Other</option>
-                                        </select>
-                                    </div>
-                                    @if($e->level == 'COLLEGE' || $e->level == 'VOCATIONAL')
-                                        <div class="form-group" id="COURSE_DIV" style="display: none;">
-                                    @else
-                                        <div class="form-group" id="COURSE_DIV">
-                                    @endif
-                                        <label>Course / Major</label>
-                                        <input value="{{$e->course_major}}" type="text" class="form-control" name="course" id="course" placeholder="Course / Major" required="required" />
+                                        <label>Company Name</label>
+                                        <input value="{{$e->company_name}}" name="company_name" id="company_name" placeholder="Company Name" class="form-control" type="text" required="required"/>
                                     </div>
                                     <div class="form-group">
-                                        <label>School Name</label>
-                                        <input value="{{$e->school_name}}" type="text" class="form-control" name="school_name" id="school_name" placeholder="School Name" required="required" />
+                                        <label>Position</label>
+                                        <input value="{{$e->position}}" name="position" id="position" placeholder="Position in company" class="form-control" type="text" required="required" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Location</label>
+                                        <input value="{{$e->location}}" name="location" id="location" placeholder="Location of company" class="form-control" type="text" required="required" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>School Year</label>
-                                        <input value="{{$e->school_year}}" type="text" class="form-control" name="school_year" id="school_year" placeholder="School Year" required="required" />
+                                        <label>Time Period</label>
+                                        <input value="{{$e->time_period}}" name="time_period" id="time_period" placeholder="Time Period" class="form-control" type="text" required="required" />
                                     </div>
                                     <div class="form-group">
-                                        <label>Awards</label>
-                                        <textarea name="awards" rows="10" id="awards" class="form-control" placeholder="Awards" required="required">{{$e->awards}}</textarea>
+                                        <label>Roles and Responsibilities</label>
+                                        <textarea name="roles_and_resp" id="roles_and_resp" placeholder="Roles and Responsibilities" class="form-control" rows="10">{{$e->roles_and_resp}}</textarea>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-success">Edit Education</button>
+                                        <button type="submit" class="btn btn-primary">Edit Experience</button>
                                     </div>
                                 </div>
                             </div>
@@ -162,6 +144,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 </section>
 @stop

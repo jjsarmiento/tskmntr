@@ -73,7 +73,7 @@
     <div class="container">
         <div class="page-title">
             <h1 class="lato-text">
-                Edit Educational Information
+                Edit Experience Information
             </h1>
         </div>
         <div class="row">
@@ -86,7 +86,7 @@
                         <a href="/editProfile">Edit Profile</a>
                     </li>
                     <li class="active">
-                        Edit Educational Information
+                        Edit Experience Information
                     </li>
                 </ul>
             </div>
@@ -148,6 +148,7 @@
                                 Location : {{$e->location}}<br/>
                                 Time Period : {{$e->time_period}}<br/>
                                 Roles and Responsibilities : {{$e->roles_and_resp}}<br/>
+                                <a href="/editExp={{$e->id}}" class="btn btn-xs btn-success">EDIT</a>
                                 <a href="#" data-message="Are you sure you want to delete this data?" data-href="/deleteExp={{$e->id}}" class="a-validate btn btn-danger btn-xs">Delete</a>
                                 <hr/>
                             @endforeach

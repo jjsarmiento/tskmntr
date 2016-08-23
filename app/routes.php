@@ -265,6 +265,8 @@ Route::group(array('before' => 'TASKMINATOR-ONLY'), function(){
     Route::get('/editExperience', 'TaskminatorController@editExperience');
     Route::post('/doEditExperience', 'TaskminatorController@doEditExperience');
     Route::get('/deleteExp={exp_id}', 'TaskminatorController@deleteExp');
+    Route::get('/editExp={exp_id}', 'TaskminatorController@editExp');
+    Route::post('/doEditExp', 'TaskminatorController@doEditExp');
 
     Route::get('/wprofileProgress', 'TaskminatorController@wprofileProgress');
     Route::group(array('before' => 'WORKER-UPDATE-PROFILE-PROGRESS'), function(){

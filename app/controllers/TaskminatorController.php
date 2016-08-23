@@ -1256,4 +1256,22 @@ class TaskminatorController extends \BaseController {
         WorkerExperience::where('id', $exp_id)->delete();
         return Redirect::back();
     }
+
+    public function editExp($exp_id){
+        return View::make('taskminator.editExp')
+            ->with('e', WorkerExperience::where('id', $exp_id)->first());
+    }
+
+    public function doEditExp(){
+        WorkerExperience::where('id', Input::get('exp_id'))->update([
+            'company_name'      =>  Input::get('company_name'),
+            'position'          =>  Input::get('position'),
+            'location'          =>  Input::get('location'),
+            'time_period'       =>  Input::get('time_period'),
+            'roles_and_resp'    =>  Input::get('roles_and_resp'),
+            'updated_at'        =>  Carbon::now()
+        ]);
+
+        return Redirect::back();
+    }
 }
