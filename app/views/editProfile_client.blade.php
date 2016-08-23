@@ -195,7 +195,7 @@
                             </div>
                         @endif
 
-                        <h3 class="lato-text">{{ $user->companyName }}</h3>
+                        <!-- <h3 class="lato-text">{{ $user->companyName }}</h3> -->
                     </div>
                     <div class="row padded bord">
                         <div class="heading" style="font-size:14pt; color:#2980b9">
