@@ -278,10 +278,10 @@
                                 </div>
                                 <div style="padding-left: 23px">
 
-                                    <span><b>Name: </b></span> {{$cperson->name}}<br>
-                                    <span><b>Position: </b></span> {{$cperson->position}}<br>
-                                    <span><b>Contact #: </b></span> {{$cperson->contact_number}}<br>
-                                    <span><b>Email: </b> {{$cperson->email}}</span>
+                                    <span><b>Name: </b></span> {{@$cperson->name}}<br>
+                                    <span><b>Position: </b></span> {{@$cperson->position}}<br>
+                                    <span><b>Contact #: </b></span> {{@$cperson->contact_number}}<br>
+                                    <span><b>Email: </b> {{@$cperson->email}}</span>
                                 </div>
                             </div>
                         </div>

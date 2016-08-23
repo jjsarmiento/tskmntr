@@ -2024,13 +2024,23 @@ class HomeController extends BaseController {
     }
 
     public function doEditContactPerson(){
-        ContactPerson::where('user_id', Auth::user()->id)
-            ->update([
+        if(ContactPerson::where('user_id', Auth::user()->id)->count() > 0){
+            ContactPerson::where('user_id', Auth::user()->id)
+                ->update([
+                    'name'          =>  Input::get('cp_name'),
+                    'position'      =>  Input::get('cp_position'),
+                    'contact_number'=>  Input::get('cp_contactnumber'),
+                    'email'         =>  Input::get('cp_email')
+                ]);
+        }else{
+            ContactPerson::insert([
+                'user_id'       =>  Auth::user()->id,
                 'name'          =>  Input::get('cp_name'),
                 'position'      =>  Input::get('cp_position'),
                 'contact_number'=>  Input::get('cp_contactnumber'),
                 'email'         =>  Input::get('cp_email')
             ]);
+        }
 
         return Redirect::back();
     }

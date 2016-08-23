@@ -62,7 +62,7 @@
         <div class="container">
             <div class="page-title">
                 <h1 class="lato-text">
-                    Edit Company Information
+                    Edit Contact Person Information
                 </h1>
             </div>
             <div class="row">
@@ -102,18 +102,18 @@
                                 <form method="POST" action="/doEditContactPerson">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input value="{{$cperson->name}}" required="required" type="text" class="form-control" placeholder="Name" name="cp_name" />
+                                            <input value="{{@$cperson->name}}" required="required" type="text" class="form-control" placeholder="Name" name="cp_name" />
                                         </div>
                                         <div class="form-group">
-                                            <input value="{{$cperson->position}}" required="required" type="text" class="form-control" placeholder="Position" name="cp_position" />
+                                            <input value="{{@$cperson->position}}" required="required" type="text" class="form-control" placeholder="Position" name="cp_position" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input value="{{$cperson->contact_number}}" required="required" type="text" class="form-control" placeholder="Contact Number" name="cp_contactnumber" />
+                                            <input value="{{@$cperson->contact_number}}" required="required" type="text" class="form-control" placeholder="Contact Number" name="cp_contactnumber" />
                                         </div>
                                         <div class="form-group">
-                                            <input value="{{$cperson->email}}" required="required" type="email" class="form-control" placeholder="Email" name="cp_email" />
+                                            <input value="{{@$cperson->email}}" required="required" type="email" class="form-control" placeholder="Email" name="cp_email" />
                                         </div>
                                     </div>
                                     <div class="col-md-12">
