@@ -1345,9 +1345,13 @@ class HomeController extends BaseController {
                 return View::make('editProfile_admin')
                     ->with('user', User::where('id', Auth::user()->id)->first());
             case '2'    : // WORKER
+                $exp = WorkerExperience::where('user_id', Auth::user()->id)->get();
+                $edu = WorkerEducation::where('user_id', Auth::user()->id)->get();
                 $pincode = Contact::where('user_id',  Auth::user()->id)->pluck('pincode');
                 $docs = Document::join('document_types', 'document_types.sys_doc_type', '=', 'documents.type')->select(['document_types.sys_doc_label'])->where('documents.user_id', Auth::user()->id)->get();
                 return View::make('editProfile_tskmntr')
+                            ->with('exp', $exp)
+                            ->with('edu', $edu)
                             ->with('user', User::where('id', Auth::user()->id)->first())
                             ->with('pincode', $pincode)
                             ->with('customSkills', CustomSkill::where('created_by', Auth::user()->id)->get())

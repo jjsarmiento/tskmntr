@@ -235,64 +235,48 @@
                                 <a class="btn btn-xs btn-default pull-right" href="/editEducationalBackground" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</a>
                             </div> 
                             <div style="padding-left:27px;">
-                                <!-- <span>
-                                    {{Auth::user()->educationalBackground}}
-                                </span> -->
-                                <div class="col-md-4">
-                                    <span><b>College/Vocational: </b></span>
-                                    <ul>
-                                        <li><b>School Name: </b>Lorem ipsum</li>
-                                        <li><b>Course: </b>BSIT</li>
-                                        <li><b>School Year: </b>2001/2015</li>
-                                        <li><b>Awards: </b>N/A</li>
-                                    </ul>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <span><b>High School: </b></span>
-                                    <ul>
-                                        <li><b>School Name: </b>Lorem ipsum</li>
-                                        <li><b>School Year: </b>1996/2001</li>
-                                        <li><b>Awards: </b>N/A</li>
-                                    </ul>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <span><b>Elementary: </b></span>
-                                    <ul>
-                                        <li><b>School Name: </b>Lorem ipsum</li>
-                                        <li><b>School Year: </b>1990/1996</li>
-                                        <li><b>Awards: </b>N/A</li>
-                                    </ul>
-                                </div>
+                                @if($edu->count() > 0)
+                                    @foreach($edu as $e)
+                                        <div class="col-md-4" style="word-wrap: break-word;">
+                                            <span><b>{{$e->level}}</b></span>
+                                            <ul>
+                                                <li><b>School Name: </b>{{$e->school_name}}</li>
+                                                @if($e->level == 'COLLEGE' || $e->level == 'VOCATIONAL')
+                                                    <li><b>Course/Major: </b>{{$e->course_major}}</li>
+                                                @endif
+                                                <li><b>School Year: </b>{{$e->school_year}}</li>
+                                                <li><b>Awards: </b>{{$e->awards}}</li>
+                                            </ul>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <center>N/A</center>
+                                @endif
                             </div>      
                         </div>
 
                     </div>
 
                     <div class="row" style="border-bottom: 1px solid #cdcdcd;">
-                        <div class="col-md-12 padded">
+                        <div class="col-md-12 padded" style="word-wrap: break-word;">
                             <div class="heading" style="font-size:14pt; color:#2980b9">
                                <i class="fa fa-lightbulb-o" style="font-size:14pt; color:#2980b9"></i>&nbsp Experience
                                <a class="btn btn-xs btn-default pull-right" href="/editExperience" style="padding: 2px 10px 2px 10px; text-transform: none;"><i class="fa fa-pencil-square-o"></i>&nbsp Edit</a>
                             </div>
-                            <!-- @if(Auth::user()->experience)
-                                {{Auth::user()->experience}}
+                            @if($exp->count() > 0)
+                                @foreach($exp as $e)
+                                    <ul>
+                                        <li><b>Position: </b><b style="font-size:18px;">{{$e->position}}</b></li>
+                                        <li><b>Company Name: </b><b style="font-size:15px;">{{$e->company_name}}</b></li>
+                                        <li><b>Location: </b> {{$e->location}}</li>
+                                        <li><b>Time Period: </b> {{$e->time_period}}</li>
+                                        <li><b>Roles and Responsibilities: </b>{{$e->roles_and_resp}}</li>
+                                    </ul>
+                                    <hr>
+                                @endforeach
                             @else
-                                N/A
-                            @endif -->
-                            @for($i=0; $i<3; $i++)
-                                <ul>
-                                    <li><b>Position: </b><b style="font-size:18px;">Lorem Ipsum</b></li>
-                                    <li><b>Company Name: </b><b style="font-size:15px;">Company Sample name</b></li>
-                                    <li><b>Location: </b>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper fringilla tellus in mattis. Quisque nec nisi lacus. Fusce ac sem sem. Nam tristique congue egestas.</li>
-                                    <li><b>Time Period: </b>2015 - Present</li>
-                                    <li><b>Roles and Responsibilities: </b>Sit dolor amet</li>
-                                </ul>
-                                @if($i < 2)
-                                <hr>
-                                @endif
-                            @endfor
+                                <center>N/A</center>
+                            @endif
                         </div>
 
                     </div>
